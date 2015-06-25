@@ -23,10 +23,16 @@ class CommandeType extends AbstractType
 	
 	
 	protected $em;
+	
+	//tableau qui contient les collectivites
+	protected $tabColl;
 
     function __construct(EntityManager $em)
     {
         $this->em = $em;
+        
+		$this->tabColl = $this->em->getRepository('JCCommandeBundle:Collectivite')->findAllOrdreAlpha();
+
     }
     
     
@@ -39,12 +45,11 @@ class CommandeType extends AbstractType
     {
 	    
 	    //$tabColl = array('Nancy' =>'Nancy', 'Grand-Nancy' =>'Grand-Nancy', 'Tomblaine' =>'Tomblaine', 'Saint-Max' =>'Saint-Max', 'Essey-lès-Nancy' =>'Essey-lès-Nancy', 'Saulxures' =>'Saulxures');
-	    $tabColl = $this->em->getRepository('JCCommandeBundle:Collectivite')->findAllOrdreAlpha();
 		
 		$tabNom= array();
 
-		foreach($tabColl as $coll){
-                    $tabNom[$coll->getNom()] = $coll->getNom();
+		foreach($this->tabColl as $coll){
+            $tabNom[$coll->getNom()] = $coll->getNom();
 		}
 		
         $builder
@@ -140,9 +145,11 @@ class CommandeType extends AbstractType
             ;
                                                                         
              
-            foreach($tabColl as $coll){
+            foreach($this->tabColl as $coll){
                 $nom = "repartition".$coll->getId();
-                $builder -> add($nom, 'hidden', array('mapped'=>false));
+                $builder -> add($nom, 'hidden', array('mapped'=>false,
+                									  'error_bubbling' => true,
+                								      'attr' => array('attr_nom_ville' => $coll->getNom())));
             }                                                   
                                                                         
             $builder ->getForm();
@@ -155,12 +162,73 @@ class CommandeType extends AbstractType
         $villeValidator = function(FormEvent $event){
 	        
             $form = $event->getForm();
-            $villes = $form->get('villes_concernees')->getData();
             
-            if ( sizeof($villes) < 1) {
-              $form['villes_concernees']->addError(new FormError("Vous devez sélectionner au moins une ville."));
-            }
-        };
+            //Si c'est une commande mutualisee, 
+            if ($form->get('ventilation')->getData() == "Mutualisee"){
+	            
+	            //Pour que le form soit valide, il faut qu'au moins une ville soit selectionnee
+
+	            //On récupère les villes selectionnees
+	            $villes = $form->get('villes_concernees')->getData();	            
+	            
+	            //On s'assure qu'il y en ai au moins une
+	            if ( sizeof($villes) < 1) {
+	              $form['villes_concernees']->addError(new FormError("Vous devez sélectionner au moins une ville."));
+	            }
+	        }
+	    
+			//Si c'est une commande directe
+			else if($form->get('ventilation')->getData() == "Directe"){
+			
+				//Pour que le formulaire soit valide, il faut qu'au moins un champs cache 
+				// ai une 'value' non vide
+				
+				//On récupère les champs caches
+	            $villes = $form->get('villes_concernees')->getData();	
+	            
+	            //On comptera le nombre de char non numeric
+		        $pourcentageAdditione = 0;
+		        
+		        //On comptera le nombre d'input vide
+				$nombreChampsVide = 0;
+	            
+	            //On parcours les collectivite afin de retrouver tous les champs caches
+	            foreach($this->tabColl as $coll){
+		            
+		            $champsCache = $form->get('repartition'.$coll->getId())->getData();	
+		            
+					echo ('b : '.$champsCache."</br>");
+		            
+					//Si le champs est vide
+					if( (sizeof($champsCache) == 0) or ($champsCache == '')){
+						$nombreChampsVide +=1;
+						
+					//Si un champs contient des char non numeric
+					} else if ( ! is_numeric($champsCache) ){
+			            	              
+			           	$form['repartition'.$coll->getId()]->addError(new FormError("Le champs de ".$coll->getNom()." doit être un numérique"));
+
+
+		            } else {
+						$pourcentageAdditione += $champsCache;			            
+		            }
+	            
+	            }
+			
+
+				//Si aucun champs n'est rempli
+				if($nombreChampsVide == sizeof($this->tabColl)){
+	              	$form['villes_concernees']->addError(new FormError("Vous devez affecter la commande à au moins une collectivite."));
+				
+				
+				//Si le total des pourcentages ne fait pas 100
+				} else if($pourcentageAdditione != 100){
+	              	$form['villes_concernees']->addError(new FormError("Le total des pourcentages doit faire 100."));
+				}
+			
+			}
+	    
+	    };
 
         // adding the validator to the FormBuilderInterface
         $builder->addEventListener(FormEvents::POST_BIND, $villeValidator);

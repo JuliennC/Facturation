@@ -2,27 +2,44 @@
 /*
 *	Fonction qui coche les checbox de la ville pass√©e en paramettre
 */
- function checkMutualise(nomVille, idVille, repartition){
+ function metVille(ventilation, nomColl, idColl, repartition){
 
+ 	if(ventilation == "Mutualisee"){
+        
         //On marque le checkbox
         
-        //On recupere la ville selectionnÈe
-	var checkbox = document.getElementById("jc_commandebundle_commande_villes_concernees_"+nomVille);
-        //Dans les deux cas (mutualisÈ et directe) on met check le checkbox
-	checkbox.setAttribute('checked', 'checked');
+        //On recupere la ville selectionnee
+		var checkbox = document.getElementById("jc_commandebundle_commande_villes_concernees_"+nomColl);
+        //Dans les deux cas (mutualise et directe) on met check le checkbox
+		checkbox.setAttribute('checked', 'checked');
         
-        //On enregistre la valeur de la rÈpartition
-        //On recupere la ville selectionnÈe
-	var hidden = document.getElementById("jc_commandebundle_commande_repartition"+idVille);
-        //On sauvegarde la rÈpartition
-	hidden.setAttribute('value', repartition);
+	} else if(ventilation == "Directe"){
+		
+		document.getElementById('input_repartition_'+nomColl).setAttribute('value',repartition);
+		document.getElementById('jc_commandebundle_commande_repartition'+idColl).setAttribute('value',repartition);
+	
+	} else {
+		alerte ("Erreur de ventilation.. ");
+	}
+	
+}
+
+
+
+/*
+*	Fonction qui remet les valeurs en commande directe
+*	d'un precedent formulaire (avec fautes)
+*/
+function remetValeur(nomColl, idColl){
+	document.getElementById('input_repartition_'+nomColl).setAttribute('value',$('#jc_commandebundle_commande_repartition'+idColl).val());
+	
 }
 
 
 
 
 	/* 
-	*	Fonction appel√© lorsque l'utilisateur veut changer l'Ètat d'une commmande, 
+	*	Fonction appel√© lorsque l'utilisateur veut changer l'etat d'une commmande, 
 	*	Elle envoie la requete et indique la r√©ponse
 	*/
 function changementEtatCommande(etatC){
@@ -31,7 +48,7 @@ function changementEtatCommande(etatC){
 
 	$(".save").click();
 		   
-   }
+}
    
 
 
@@ -79,9 +96,9 @@ function calcul_TTC(id){
 
 
 function metEnPlaceVentilation(ventil){
-	if(ventil == 'Directe') { $('#boutonDirecte').click(); alert("directe");}
-	else if(ventil == 'Mutualisée'){ $('#bouttonMutualisee').click(); alert("mut");}
-	else {alert("Erreur de ventilation..")}
+	if(ventil.indexOf('Directe')>-1) { $('#boutonDirecte').click();}
+	else if(ventil.indexOf('Mutualisee')>-1){ $('#boutonMutualisee').click();}
+	else {alert("Erreur de ventilation.. '"+ventil+"'");}
 }
 
 
@@ -218,21 +235,15 @@ $(document).ready(function() {
 	*	Elle g√®re l'affichage des villes suivant le choix "mutualis√©e" ou "directe"
 	*/
 	$('#select-ventilation a').click(function(){
-	alert("bo");
+
 		if( $(this).attr("id") == 'boutonDirecte'){
 			
-			//On affiche les bouton en conséquence
+			//On affiche les bouton en consequence
 			$('#boutonDirecte').attr('class', 'btn btn-success col-md-4 col-md-offset-2');
 			$('#boutonMutualisee').attr('class', 'btn noActive col-md-4');
 
 			//On met l'attribut ventilation
-			$(".hidden_ventilation").attr('value','Directe');
-			
-			
-			//On leur ajoute un intput text			
-			
-			//$("<span> <input type='text' class='form-control input_repartition' style='width : 5px'/> </span>").insertBefore($('.label_ville'));
-			
+			$(".hidden_ventilation").attr('value','Directe');						
 			
 			//On affiche les input
 			$(".contientInput").show();
@@ -241,26 +252,25 @@ $(document).ready(function() {
 			$('.contientCheck').hide();
 			
 
-			
-
-			
+						
 			//On cache et on affiche
 			//$("#form_villes_mutualisees").hide();
 			
 		} else if( $(this).attr("id") == 'boutonMutualisee'){
 			
-			//On met les boutons en conséquence
+			//On met les boutons en consequence
 			$('#boutonDirecte').attr('class', 'btn noActive col-md-4 col-md-offset-2');
 			$('#boutonMutualisee').attr('class', 'btn btn-success col-md-4');		
 			
 			//On met la valeur de ventilation
-			$(".hidden_ventilation").attr('value','Mutualisée');
+			$(".hidden_ventilation").attr('value','Mutualisee');
 			
 			//On chache les input
 			$(".contientInput").hide();
 			
 			//On remet le checkbox visible
 			$('.contientCheck').show();
+			
 			
 
 
@@ -285,6 +295,21 @@ $(document).ready(function() {
 
 
 
+
+
+	$('.contientInput input').on('keyup',function(){
+		
+		//On recupere la ville concernee
+		var villeConcernee = $(this).attr('for');
+		
+		//On met à jour le champs cache concerne
+		var hidden = $('input[attr_nom_ville='+villeConcernee+']');
+
+        //On sauvegarde la repartition
+		hidden.attr('value', $(this).val());
+		
+		console.log(hidden);
+	});
 	
 	
 

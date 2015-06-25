@@ -14,8 +14,8 @@
 			<div class='well'>
 				<legend>Livraison 
 				
-                                    {# On ne donne la possibilitÈ de choisir une livraison qu'au moment de crÈer la commande #}
-                                    {% if commande.etat == "CrÈÈe"%}
+                                    {# On ne donne la possibilite de choisir une livraison qu'au moment de creer la commande #}
+                                    {% if commande.etat == "Creee"%}
                                     
                                         <!-- Bouton execution modal -->
                                         <div class='pull-right'>
@@ -32,7 +32,7 @@
                                                         <div class="panel panel-primary filterable">
                                                             <div class="panel-heading">
                                                                 <div class='row'>
-                                                                    <h3 class="panel-title col-md-6">Livraisons enregistrÈes</h3>
+                                                                    <h3 class="panel-title col-md-6">Livraisons enregistrees</h3>
                                                                     <a type="hiden" id="bouton_close_modal_Livraison" class="close" data-dismiss="modal" aria-label="Close"></a>
                                                                 </div>
                                                             </div>
@@ -75,7 +75,7 @@
 				</div>
 				
 				<div class='row'>	          	
-					<p class='col-md-4'><b>Compl√©ment</b> : <div> {{ form_widget(form.complementAdresseLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+					<p class='col-md-4'><b>Complement</b> : <div> {{ form_widget(form.complementAdresseLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
 				</div>
 								
 				<div class='row'>	          	
@@ -83,7 +83,7 @@
 				</div>
 				
 				<div class='row'>	          	
-					<p class='col-md-4'><b>T√©l√©phone *</b> : <div> {{ form_widget(form.telephoneLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+					<p class='col-md-4'><b>Telephone *</b> : <div> {{ form_widget(form.telephoneLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
 				</div>
 				
 			</div>
@@ -95,8 +95,8 @@
 				<legend>Fournisseur 
                                     <!-- Bouton execution modal -->
                                     
-                                    {# On ne donne la possibilitÈ de choisir une livraison qu'au moment de crÈer la commande #}
-                                    {% if commande.etat == "CrÈÈe"%}
+                                    {# On ne donne la possibilite de choisir une livraison qu'au moment de creer la commande #}
+                                    {% if commande.etat == "Creee"%}
                                     
                                         <div class='pull-right'>
                                             <a class="clickable" data-toggle="modal" data-target="#modalFournisseur" data-container="body">
@@ -113,7 +113,7 @@
                                                         <div class="panel panel-primary filterable">
                                                             <div class="panel-heading">
                                                                 <div class='row'>
-                                                                    <h3 class="panel-title col-md-6">Fournisseurs enregistrÈs</h3>
+                                                                    <h3 class="panel-title col-md-6">Fournisseurs enregistres</h3>
                                                                     <a type="hiden" id="bouton_close_modal_Fournisseur" class="close" data-dismiss="modal" aria-label="Close"></a>
                                                                 </div>
                                                             </div>
@@ -154,7 +154,7 @@
 				</div>
 		
 				<div class='row'>	          	
-					<p class='col-md-4'><b>Compl√©ment</b> : <div> {{ form_widget(form.complementAdresseFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+					<p class='col-md-4'><b>Complement</b> : <div> {{ form_widget(form.complementAdresseFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
 				</div>
 				
 				<div class='row'>	          	
@@ -162,7 +162,7 @@
 				</div>
   							
   				<div class='row'>	          	
-					<p class='col-md-4'><b>T√©l√©phone *</b> : <div> {{ form_widget(form.telephoneFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+					<p class='col-md-4'><b>Telephone *</b> : <div> {{ form_widget(form.telephoneFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
 				</div>				
   			
 			</div>		
@@ -190,12 +190,12 @@
 						</div>
 						
 						<div class='row'>
-							<p class='col-md-4'><b>Num√©ro d'application</b> :</p>    
+							<p class='col-md-4'><b>Numero d'application</b> :</p>    
 							<div> {{ form_widget(form.application, {'attr': {'class':'col-md-6 choix_application'}} )}} </div>
 						</div>
 						
 						<div class='row'>	          	
-							<div class='col-md-4'  ><b>R√©f√©rence interne</b> :</div> <div class='col-md-4'> {{ form_widget(form.reference) }}</div>
+							<div class='col-md-4'  ><b>Reference interne</b> :</div> <div class='col-md-4'> {{ form_widget(form.reference) }}</div>
 						</div>
 
 					</div>
@@ -205,7 +205,7 @@
 							<p class='col-md-4'><b>Suivi par</b> :</p>    
 							<div> {{ form_widget(form.utilisateur, {'attr': {'class':'col-md-6'}} )}} </div>
 						</div> 
-						<p><b>Date cr√©ation</b> : {{ date()|date('d/m/Y') }}
+						<p><b>Date creation</b> : {{ date()|date('d/m/Y') }}
 						
 						<p><b>Date d'envoi</b> : {{ form_widget(form.dateEnvoi, {'attr' : {'class':'datepicker'}}) }}							
 
@@ -224,12 +224,12 @@
 				
 					<div class='col-md-5 col-md-offset-1'>
 						<div class='row'>
-							<p class='col-md-6'><b>Num√©ro CORIOLIS</b> :</p>    
+							<p class='col-md-6'><b>Numero CORIOLIS</b> :</p>    
 							<div> {{ form_widget(form.bonCoriolis, {'attr': {'class':'col-md-6'}} )}} </div>
 						</div> 
 						
 						<div class='row'>
-							<p class='col-md-6'><b>Num√©ro d'engagement</b> :</p>    
+							<p class='col-md-6'><b>Numero d'engagement</b> :</p>    
 							<div> {{ form_widget(form.engagement, {'attr': {'class':'col-md-6'}} )}} </div>
 						</div> 
 						
@@ -262,7 +262,7 @@
 			    		<div id="select-ventilation">
 			    			
 			    			<a class="btn btn-success col-md-4 col-md-offset-2" id='boutonDirecte'> Directe </a>
-			    			<a class="btn noActive col-md-4" id='boutonMutualisee'> Mutualis√©e </a>
+			    			<a class="btn noActive col-md-4" id='boutonMutualisee'> Mutualisee </a>
 			    			
 							{{ form_widget(form.ventilation, {'attr': {'class':'hidden_ventilation' , 'value': commande.ventilation, 'label_render': 'false'}} )}}
 			    		</div>
@@ -300,8 +300,8 @@
 			        <tr>
 			          <th class='col-md-2'>Libelle</th>
 			          <th class='col-md-2'>Commentaire</th>
-			          <th class='col-md-2'>R√©f√©rence</th>
-			          <th class='col-md-1'>Quantit√©</th>
+			          <th class='col-md-2'>Reference</th>
+			          <th class='col-md-1'>Quantite</th>
 			          <th class='col-md-2'>Prix Unitaire</th>
 			          <th class='col-md-1'>TVA</th>
 			          <th class='col-md-2'>Total TTC</th>
@@ -312,7 +312,7 @@
 			      
 			      <tr>
 		      
-		      		<td colspan='7'> <a class='btn btn-success btn_ajouter' id='ajouter_ligne_commande' > Cr√©er une ligne </a> </td>
+		      		<td colspan='7'> <a class='btn btn-success btn_ajouter' id='ajouter_ligne_commande' > Creer une ligne </a> </td>
 		      	
 			  	</tr>
                                 
@@ -349,7 +349,7 @@
   
     
   
-	{# On met le champs hidden de l'Ètat de la commande #}
+	{# On met le champs hidden de l'etat de la commande #}
 	{{ form_widget(form.etat, {'attr': {'class':'hidden_etat' , 'value': commande.etat, 'label_render': 'false'}} )}}
 
   
@@ -361,27 +361,30 @@
 
 
         
-        {% for transition in tabVillesSelect %}
-            <script>						
-				checkMutualise('{{transition.collectivite.nom}}','{{transition.collectivite.id}}', '{{transition.repartition}}');
-            </script>
-        {% endfor %}
-
-
-		{# On appelle la fonction qui va gËre la ventilation de la commande #}
-		{# Moche ... Mais pour l'instant ... #}
-		{% if commande.ventilation == 'Directe' %}
-			<script>
-				metEnPlaceVentilation('Directe');
-			</script>
-			
-		{% elseif commande.ventilation == 'MutualisÈe' %}
-			<script>
-				metEnPlaceVentilation('MutusalisÈe');
-			</script>
-
-		{% endif %}
+        
 		
+		<script>
+ 
+			$( document ).ready(function() {
+				
+				{# On coche les villes selectionnees dans la database #}
+				{% for ccc in cCCDejaBDD %}
+					metVille('{{commande.ventilation}}','{{ccc.collectivite.nom}}','{{ccc.collectivite.id}}','{{ccc.repartition}}');
+				{% endfor %}
+				
+				{# On remet les value saisie si une erreur etait dans le form #}
+				{% for ville in tabVilles %}
+					remetValeur('{{ville.nom}}','{{ville.id}}');
+				{% endfor %}
+				
+				
+				
+				{# On regarde la ventilation de la commande #}								
+				metEnPlaceVentilation('{{commande.ventilation|json_encode()|raw}}');
+
+ 			});
+
+		</script>
 
  
 
