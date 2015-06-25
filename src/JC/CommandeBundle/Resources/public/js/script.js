@@ -15,9 +15,14 @@
         
 	} else if(ventilation == "Directe"){
 		
-		document.getElementById('input_repartition_'+nomColl).setAttribute('value',repartition);
-		document.getElementById('jc_commandebundle_commande_repartition'+idColl).setAttribute('value',repartition);
-	
+		//Si la commande était au parravant mutualisée
+		//Et qu'on la change en directe, si une erreur dans le form, alors repartition sera
+		//La clé de repartition de l'applicatoin (ce que l'on stock lorqu'une commande est mutualisées)
+		if($.isNumeric(repartition)){
+			document.getElementById('input_repartition_'+nomColl).setAttribute('value',repartition);
+			document.getElementById('jc_commandebundle_commande_repartition'+idColl).setAttribute('value',repartition);
+		}
+		
 	} else {
 		alerte ("Erreur de ventilation.. ");
 	}
