@@ -1,0 +1,4 @@
+services:
+#    jc_accueil.example:
+#        class: JC\AccueilBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

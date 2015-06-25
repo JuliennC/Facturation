@@ -1,0 +1,227 @@
+{% extends "JCCommandeBundle::layout.html.twig" %}
+
+
+
+{% block title %}{{ parent() }} - Détail{% endblock %}
+
+{% block jccommande_body %}
+
+	<div class='row'>
+		<div class='h3 col-md-6'>Modification d'une commande</div>
+		<div class='pull-right  col-md-6'> 
+			
+			<p class='col-md-5 h3'>Etat : {{commande.etat}} </p>
+	
+			{# ----- Si la commande est "Envoyée", on propose de la passer "Payée" ----- #}
+					
+			{% if commande.etat == "Envoyée" %}
+				<button class='btn btn-warning col-md-3' data-toggle="modal" data-target="#modalPayer">Payer</button>
+							
+				<!-- Modal -->
+				<div class="modal fade" id="modalPayer" tabindex="-1" role="dialog" aria-labelledby="modalPayer">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+							    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							    <h4 class="modal-title">Êtes-vous sûr ?</h4>
+							</div>
+							<div class="modal-body">
+								<p>En marquant cette commande comme "Payée" vous ne pourrez-plus revenir à un état précédent.</p>
+								<p>Êtes-vous sur de vouloir changer le statut de la commande ?</p>
+							</div>
+							<div class="modal-footer">
+					        	<button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
+								<button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande('Payée')">Confirmer</button>
+							</div>
+						</div>
+					</div>
+				</div>
+		
+			{% endif %}
+		
+		</div>
+	  </div>
+	  
+  
+  <div class='row top30'>
+
+	<div class='container col-md-5'>
+		<div class='well'>
+			<legend>Livraison</legend>
+				          	
+			<p><b>Nom</b> : {{ commande.livraison.nom }}
+			<p><b>Adresse</b> : {{ commande.livraison.adresse }} </span>
+			<p><b>Complément</b> : {{ commande.livraison.complementAdresse }}
+			<p><b>Code postal</b> : {{ commande.livraison.codePostal }} {{ commande.livraison.ville }}
+			<p><b>Téléphone</b> : {{ commande.livraison.telephone }}
+  							
+				
+  							
+		</div>
+	</div>
+
+
+	<div class='container col-md-5 pull-right'>
+		<div class='well'>
+			<legend>Fournisseur</legend>
+				          	
+			<p><b>Nom</b> : {{ commande.fournisseur.nom }} 
+			<p><b>Adresse</b> : {{ commande.fournisseur.adresse }}
+			<p><b>Complément</b> : {{ commande.fournisseur.complementAdresse }}
+			<p><b>Code postal</b> : {{ commande.fournisseur.codePostal }} {{ commande.fournisseur.ville }}
+			<p><b>Téléphone</b> : {{ commande.fournisseur.telephone }}
+			
+			{# Mettre le numéro de fax ? #}
+			{# <p>Fax : {{ commande.fournisseur.fax }} #}
+  							
+		</div>		
+  							
+	</div>
+
+</div>
+
+
+
+<div class='row'>
+
+	<div class='container col-md-offset-1 col-md-10 top30'>
+		<div class='well'>
+			<legend>Informations commande</legend>
+
+			<div class='row'>
+				<div class='col-md-7'>
+					<p><b>Numéro d'application</b> : {{ commande.application.nom }}
+					<p><b>Code activité</b> : {{ commande.application.activite.nom }}
+					<p><b>Référence interne</b> : <span id='reference'>{{ commande.reference }} </span>
+				</div>
+				
+				<div class='col-md-5 '>
+					<p><b>Suivi par</b> : {{ commande.utilisateur.nom }} {{ commande.utilisateur.prenom }}
+					<p><b>Date création</b> : {{ commande.dateCreation|date('d/m/Y') }}
+					
+					{% if commande.dateEnvoi %}
+						<p><b>Date d'envoi</b> : {{ commande.dateEnvoi|date('d/m/Y') }}
+					{% else %}
+						<p><b>Date d'envoi</b> : 
+					{% endif %}
+					
+					{% if commande.dateLivraison %}
+						<p><b>Date de livraison</b> : {{ commande.dateLivraison|date('d/m/Y') }}
+					{% else %}
+						<p><b>Date de livraison</b> : 
+					{% endif %}
+				</div>
+			</div>
+			
+			<div class='row'>	
+			
+				<hr class='class="bs-docs-separator"'>
+	
+				<div class='col-md-6'>
+					<p><b>Libelle pour la facturation</b>
+					<p> {{ commande.libelleFacturation }}</p>
+				</div>			
+			
+				<div class='col-md-5 col-md-offset-1'>
+					<p><b>N° CORIOLIS</b> : {{ commande.bonCoriolis }}
+					<p><b>N° engagmenet</b> : {{ commande.engagement }}
+					<p><b>Imputation</b> : {{ commande.imputation }}
+				</div>
+			
+			</div>
+			
+		</div>
+	</div>
+	
+</div>
+
+
+
+
+<div class='row'>
+
+	<div class='container col-md-offset-1 col-md-10 top30'>
+		<div class='well'>
+			<legend>Ventilation : {{ commande.ventilation }} <span class='pull-right'>Clé de répartition : {{ commande.application.cleRepartition.nom }} </span></legend>
+			
+			
+			{% set i = 0 %}
+
+			
+			{% for transition in tabTransition %}
+				
+				{%if i == 0 %}
+					
+					<div class='row top30'>
+					
+				{% endif %}
+
+			
+			
+				{% set i = i+1 %}
+				
+					<p class='col-md-3 center'> {{ transition.collectivite.nom }} : {{ transition.pourcentage }}%
+				
+				{%if i == 4 %}					
+					</div>
+					
+					{% set i = 0 %}
+
+				{% endif %}
+			
+			{% endfor %}
+			
+			</div>
+			
+		
+			
+		</div>
+	</div>
+	
+</div>
+
+
+
+
+
+
+	<div class='row top30'>
+		<div class='panel panel-success'>
+			<table class="table table-striped table_center" id="table_ligne_commande">
+			      <thread>
+			        <tr>
+			          <th class='col-md-3'>Libelle</th>
+			          <th class='col-md-2'>Commentaire</th>
+			          <th class='col-md-2'>Référence</th>
+			          <th class='col-md-1'>Quantité</th>
+			          <th class='col-md-1'>Prix Unitaire</th>
+			          <th class='col-md-1'>TVA</th>
+			          <th class='col-md-1'>Total TTC</th>
+			        </tr>
+			      </thread>
+			      
+			      <tbody>
+			      
+			      		      
+			      {% for ligne in commande.listeLignesCommande %}
+			        <tr>
+						<td> {{ ligne.libelle }} </td>
+						<td> {{ ligne.commentaire }} </td>
+						<td> {{ ligne.reference }} </td>
+						<td> {{ligne.quantite }} </td>
+						<td> {{ ligne.prixUnitaire|number_format(2, ',', ' ') }} €</td>
+						<td> 20,5% </td>
+						<td> {{ ligne.totalTTC|number_format(2, ',', ' ') }} €</td>
+					</tr>
+					
+					{% endfor %}
+			  
+			    </tbody>
+			</table>
+		</div>
+	</div>
+
+
+	
+	
+{% endblock %}

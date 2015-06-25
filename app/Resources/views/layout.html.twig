@@ -1,0 +1,120 @@
+{# app/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {#<meta http-equiv="X-UA-Compatible" content="IE=edge">#} 
+  <title>{% block title %}Facturation{% endblock %}</title>
+  
+  {% block import %}
+	  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+	  {% stylesheets 
+	  	'%kernel.root_dir%/../app/Resources/public/bootstrap/css/bootstrap.css'
+	  	'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/ui-lightness/jquery-ui.css'
+	  	'//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css'
+	  	'%kernel.root_dir%/../app/Resources/public/css/style.css'
+	  %}
+	  	<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+	  {% endstylesheets %}
+	  
+	  	 
+	  {# '%kernel.root_dir%/../vendor/components/jquery/jquery.min.js' //for production #}
+
+	  	{% javascripts '%kernel.root_dir%/../vendor/components/jquery/jquery.js'
+					  	'//code.jquery.com/ui/1.11.4/jquery-ui.js' 
+	  					'%kernel.root_dir%/../app/Resources/public/bootstrap/js/bootstrap.js'
+	  					'%kernel.root_dir%/../app/Resources/public/js/script.js'
+	  	%}
+			<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+		
+		<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+		<script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+	  
+   {% endblock %}
+
+</head>
+
+<body>
+    
+    {# On met la navbar en place, elle sera présente dans toutes les vues #}
+	
+	<div id="navBarre">
+      {{ render(controller("JCAccueilBundle:Accueil:navBarre")) }}
+    </div>
+    
+    
+    
+    {# On regarde s'il y a des messages flash #}
+    
+    {% for msg in app.session.flashbag.get("Error") %}
+    
+		<div class="alert alert-danger alert-dismissible col-md-6 col-md-offset-3" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <p> {{ msg }} </p>
+		</div>
+	
+	{% endfor %}
+	
+	
+	
+	{% for msg in app.session.flashbag.get("Success") %}
+    
+		<div class="alert alert-success alert-dismissible col-md-6 col-md-offset-3" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <p> {{ msg }} </p>
+		</div>
+	
+	{% endfor %}
+	
+	
+	
+	{% for msg in app.session.flashbag.get("Info") %}
+    
+		<div class="alert alert-info alert-dismissible col-md-6 col-md-offset-3" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <p> {{ msg }} </p>
+		</div>
+	
+	{% endfor %}
+	
+	
+	
+	{% for msg in app.session.flashbag.get("warning") %}
+    
+		<div class="alert alert-warning alert-dismissible col-md-6 col-md-offset-3" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <p> {{ msg }} </p>
+		</div>
+	
+	{% endfor %}
+	
+	
+
+  <div class="container">
+
+    <div class="row">
+      <div id="content" class="col-md-12">
+        {% block body %}
+        {% endblock %}
+      </div>
+    </div>
+	
+
+
+
+
+    <hr>
+
+    <footer>
+      <p>DSIT © {{ 'now'|date('Y') }}.</p>
+    </footer>
+  </div>
+
+ 
+</body>
+</html>

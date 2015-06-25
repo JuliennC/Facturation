@@ -1,0 +1,388 @@
+{% form_theme form 'JCCommandeBundle:Form:fields.html.twig' %}
+
+	      
+      
+	{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+  
+	<div class='row col-md-12'>
+		{{ form_errors(form) }}
+	</div>
+
+	<div class='row top30'>
+
+		<div class='container col-md-5'>
+			<div class='well'>
+				<legend>Livraison 
+				
+                                    {# On ne donne la possibilitÈ de choisir une livraison qu'au moment de crÈer la commande #}
+                                    {% if commande.etat == "CrÈÈe"%}
+                                    
+                                        <!-- Bouton execution modal -->
+                                        <div class='pull-right'>
+                                            <a class="clickable" data-toggle="modal" data-target="#modalLivraison" data-container="body">
+                                                <i class="glyphicon glyphicon-list"></i>
+                                            </a>
+                                        </div>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalLivraison" tabindex="-1" role="dialog" aria-labelledby="livraisonLabel">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-body">
+                                                        <div class="panel panel-primary filterable">
+                                                            <div class="panel-heading">
+                                                                <div class='row'>
+                                                                    <h3 class="panel-title col-md-6">Livraisons enregistrÈes</h3>
+                                                                    <a type="hiden" id="bouton_close_modal_Livraison" class="close" data-dismiss="modal" aria-label="Close"></a>
+                                                                </div>
+                                                            </div>
+
+                                                            <table class="table table_center">
+
+                                                                <thead>
+                                                                    <tr class="filters">
+                                                                        <th ><input type="text" class="form-control"></th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody>
+
+                                                                    {% for livraison in listeLivraisons %}
+                                                                        <tr>
+                                                                            <td onclick="setInfos('Livraison','{{livraison.nom}}', '{{livraison.adresse}}', '{{livraison.complementAdresse}}', '{{livraison.ville}}',
+                                                                                    '{{livraison.codePostal}}','{{livraison.telephone}}')">{{ livraison.nom }}</td>
+                                                                        </tr>
+                                                                    {% endfor %}
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+                                    {%endif%}
+                                </legend>
+                            
+                                                            
+                                                            
+				<div class='row'>	          	
+					<p class='col-md-4'><b>Nom *</b> : <div> {{ form_widget(form.nomLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+				</div>
+				
+				<div class='row'>	          	
+					<p class='col-md-4'><b>Adresse *</b> : <div> {{ form_widget(form.adresseLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+				</div>
+				
+				<div class='row'>	          	
+					<p class='col-md-4'><b>Compl√©ment</b> : <div> {{ form_widget(form.complementAdresseLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+				</div>
+								
+				<div class='row'>	          	
+					<p class='col-md-4'><b>Ville *</b> : <div> {{ form_widget(form.villeLivraison, {'attr': {'class':'col-md-4' , 'placeholder':'Ex : Nancy'}}) }}</div> <div> 																							{{ form_widget(form.codePostalLivraison, {'attr': {'class':'col-md-3 pull-right' , 'placeholder':'Ex : 54000'}}) }}</div>
+				</div>
+				
+				<div class='row'>	          	
+					<p class='col-md-4'><b>T√©l√©phone *</b> : <div> {{ form_widget(form.telephoneLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		<div class='container col-md-5 pull-right'>
+			<div class='well'>
+				<legend>Fournisseur 
+                                    <!-- Bouton execution modal -->
+                                    
+                                    {# On ne donne la possibilitÈ de choisir une livraison qu'au moment de crÈer la commande #}
+                                    {% if commande.etat == "CrÈÈe"%}
+                                    
+                                        <div class='pull-right'>
+                                            <a class="clickable" data-toggle="modal" data-target="#modalFournisseur" data-container="body">
+                                                <i class="glyphicon glyphicon-list"></i>
+                                            </a>
+                                        </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalFournisseur" tabindex="-1" role="dialog" aria-labelledby="fournisseurLabel">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-body">
+                                                        <div class="panel panel-primary filterable">
+                                                            <div class="panel-heading">
+                                                                <div class='row'>
+                                                                    <h3 class="panel-title col-md-6">Fournisseurs enregistrÈs</h3>
+                                                                    <a type="hiden" id="bouton_close_modal_Fournisseur" class="close" data-dismiss="modal" aria-label="Close"></a>
+                                                                </div>
+                                                            </div>
+
+                                                            <table class="table table_center">
+
+                                                                <thead>
+                                                                    <tr class="filters">
+                                                                        <th ><input type="text" class="form-control"></th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody>
+
+                                                                    {% for fournisseur in listeFournisseurs %}
+                                                                        <tr>
+                                                                            <td onclick="setInfos('Fournisseur','{{fournisseur.nom}}', '{{fournisseur.adresse}}', '{{fournisseur.complementAdresse}}', '{{fournisseur.ville}}',
+                                                                                    '{{fournisseur.codePostal}}','{{fournisseur.telephone}}')">{{ fournisseur.nom }}</td>
+                                                                        </tr>
+                                                                    {% endfor %}
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+                                    {%endif%}
+                                </legend>
+					          	
+				<div class='row'>	          	
+					<p class='col-md-4'><b>Nom *</b> : <div> {{ form_widget(form.nomFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+				</div>								
+								
+				<div class='row'>	          	
+					<p class='col-md-4'><b>Adresse *</b> : <div> {{ form_widget(form.adresseFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+				</div>
+		
+				<div class='row'>	          	
+					<p class='col-md-4'><b>Compl√©ment</b> : <div> {{ form_widget(form.complementAdresseFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+				</div>
+				
+				<div class='row'>	          	
+					<p class='col-md-4'><b>Ville *</b> : <div> {{ form_widget(form.villeFournisseur, {'attr': {'class':'col-md-4' , 'placeholder':'Ex : Nancy'}}) }}</div> <div> 																							{{ form_widget(form.codePostalFournisseur, {'attr': {'class':'col-md-3 pull-right' , 'placeholder':'Ex : 54000'}}) }}</div>
+				</div>
+  							
+  				<div class='row'>	          	
+					<p class='col-md-4'><b>T√©l√©phone *</b> : <div> {{ form_widget(form.telephoneFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div>
+				</div>				
+  			
+			</div>		
+  							
+		</div>
+		
+	</div>
+  
+  
+  
+  
+  
+	<div class='row'>
+		<div class='container col-md-offset-1 col-md-10 top30'>
+			<div class='well'>
+				<legend>Informations commande</legend>
+	
+				<div class='row'>
+					<div class='col-md-7'>
+											
+						
+						<div class='row'>
+							<p class='col-md-4'><b>Activite</b> :</p>    
+							<div> {{ form_widget(form.activite, {'attr': {'class':'col-md-6 choix_activite'}} )}} </div>
+						</div>
+						
+						<div class='row'>
+							<p class='col-md-4'><b>Num√©ro d'application</b> :</p>    
+							<div> {{ form_widget(form.application, {'attr': {'class':'col-md-6 choix_application'}} )}} </div>
+						</div>
+						
+						<div class='row'>	          	
+							<div class='col-md-4'  ><b>R√©f√©rence interne</b> :</div> <div class='col-md-4'> {{ form_widget(form.reference) }}</div>
+						</div>
+
+					</div>
+					
+					<div class='col-md-5 '>
+						<div class='row'>
+							<p class='col-md-4'><b>Suivi par</b> :</p>    
+							<div> {{ form_widget(form.utilisateur, {'attr': {'class':'col-md-6'}} )}} </div>
+						</div> 
+						<p><b>Date cr√©ation</b> : {{ date()|date('d/m/Y') }}
+						
+						<p><b>Date d'envoi</b> : {{ form_widget(form.dateEnvoi, {'attr' : {'class':'datepicker'}}) }}							
+
+						<p><b>Date de livraison</b> : {{ form_widget(form.dateLivraison, {'attr' : {'class':'datepicker'}}) }}					
+					</div>
+				</div>
+				
+				<div class='row'>	
+				
+					<hr class='bs-docs-separator'>
+		
+					<div class='col-md-6'>
+						<p><b>Libelle pour la facturation *</b>
+						<div>{{ form_widget(form.libelleFacturation, {'attr' : {'class':'col-md-12'}}) }}</div>
+					</div>			
+				
+					<div class='col-md-5 col-md-offset-1'>
+						<div class='row'>
+							<p class='col-md-6'><b>Num√©ro CORIOLIS</b> :</p>    
+							<div> {{ form_widget(form.bonCoriolis, {'attr': {'class':'col-md-6'}} )}} </div>
+						</div> 
+						
+						<div class='row'>
+							<p class='col-md-6'><b>Num√©ro d'engagement</b> :</p>    
+							<div> {{ form_widget(form.engagement, {'attr': {'class':'col-md-6'}} )}} </div>
+						</div> 
+						
+						<div class='row'>
+							<p class='col-md-6'><b>Imputation</b> :</p>    
+							<div> {{ form_widget(form.imputation, {'attr': {'class':'col-md-6'}} )}} </div>
+						</div> 
+						
+					
+					</div>
+				
+				</div>
+				
+			</div>
+		</div>
+		
+	</div>
+
+
+
+	<div class='row'>
+		<div class='container col-md-offset-1 col-md-10 top30'>
+			<div class='well'>
+				<legend>Ventilation</legend>
+	
+				<div class='row '>
+								
+								
+			    	<div class="input-group col-md-12">
+			    		<div id="select-ventilation">
+			    			
+			    			<a class="btn btn-success col-md-4 col-md-offset-2" id='boutonDirecte'> Directe </a>
+			    			<a class="btn noActive col-md-4" id='boutonMutualisee'> Mutualis√©e </a>
+			    			
+							{{ form_widget(form.ventilation, {'attr': {'class':'hidden_ventilation' , 'value': commande.ventilation, 'label_render': 'false'}} )}}
+			    		</div>
+			    	</div>
+				
+				</div>
+				
+				
+				<div id='form_villes_concernees' class='row top30'>
+				
+					<div class="col-md-12">
+						{{ form_widget(form.villes_concernees) }}
+					</div>
+					
+					
+
+				</div>
+				
+				
+				
+			</div>
+		</div>
+	</div>	
+  
+  
+  
+  
+  
+
+
+	<div class='row top30'>
+		<div class='panel panel-success'>
+			<table class="table table-striped table_center" id="table_ligne_commande">
+			      <thread>
+			        <tr>
+			          <th class='col-md-2'>Libelle</th>
+			          <th class='col-md-2'>Commentaire</th>
+			          <th class='col-md-2'>R√©f√©rence</th>
+			          <th class='col-md-1'>Quantit√©</th>
+			          <th class='col-md-2'>Prix Unitaire</th>
+			          <th class='col-md-1'>TVA</th>
+			          <th class='col-md-2'>Total TTC</th>
+			        </tr>
+			      </thread>
+			      
+			      <tbody id='tbody_corps' data-prototype="{{ form_widget(form.listeLignesCommande.vars.prototype)|e }}">
+			      
+			      <tr>
+		      
+		      		<td colspan='7'> <a class='btn btn-success btn_ajouter' id='ajouter_ligne_commande' > Cr√©er une ligne </a> </td>
+		      	
+			  	</tr>
+                                
+                                {% set i = 0 %}
+                                {% for ligne in form.listeLignesCommande %}
+
+                                    <tr>
+						<td> {{ form_widget(ligne.libelle, {'attr': {'class':'col-md-11 col-md-offset-1'}}) }} </td>
+						<td> {{ form_widget(ligne.commentaire, {'attr': {'class':'col-md-11 col-md-offset-1'}}) }} </td>
+						<td> {{ form_widget(ligne.reference, {'attr': {'class':'col-md-11 col-md-offset-1'}}) }} </td>
+						<td> {{ form_widget(ligne.quantite, {'attr': {'class':'col-md-11 col-md-offset-1', 'onkeyup':'calcul_TTC('~i~');'}}) }} </td>
+						<td> {{ form_widget(ligne.prixUnitaire, {'attr': {'class':'col-md-8 col-md-offset-2 ', 'onkeyup':'calcul_TTC('~i~');'}}) }} ‚Ç¨</td>
+						<td> {{ form_widget(ligne.tva, {'attr': {'class':'col-md-11 col-md-offset-1', 'onchange':'calcul_TTC('~i~');'}}) }}</td>
+                                                <td> <label class='col-md-11 col-md-offset-1' id='total_TTC_{{i}}' value='0.00 Ä'></label> </td>
+                                                {{ form_widget(ligne.totalTTC) }}
+						
+                                                <script> calcul_TTC({{i}}); </script>
+                                                {# |number_format(2, ',', ' ') #}
+					</tr>
+					{% set i = i+1 %}
+
+					{% endfor %}
+			  
+			    </tbody>
+			</table>
+  
+		</div>
+	</div>
+  
+  
+
+
+  
+  
+    
+  
+	{# On met le champs hidden de l'Ètat de la commande #}
+	{{ form_widget(form.etat, {'attr': {'class':'hidden_etat' , 'value': commande.etat, 'label_render': 'false'}} )}}
+
+  
+	<div class='top30'>
+		{{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary col-md-8 col-md-offset-2 save top30' }}, { 'label': 'Enregistrer la commande'}) }}
+	</div>
+  
+	{{ form_end(form) }}
+
+
+        
+        {% for transition in tabVillesSelect %}
+            <script>						
+				checkMutualise('{{transition.collectivite.nom}}','{{transition.collectivite.id}}', '{{transition.repartition}}');
+            </script>
+        {% endfor %}
+
+
+		{# On appelle la fonction qui va gËre la ventilation de la commande #}
+		{# Moche ... Mais pour l'instant ... #}
+		{% if commande.ventilation == 'Directe' %}
+			<script>
+				metEnPlaceVentilation('Directe');
+			</script>
+			
+		{% elseif commande.ventilation == 'MutualisÈe' %}
+			<script>
+				metEnPlaceVentilation('MutusalisÈe');
+			</script>
+
+		{% endif %}
+		
+
+ 
+
+

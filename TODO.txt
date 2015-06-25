@@ -1,0 +1,44 @@
+﻿TODO liste :
+
+
+
+	
+	-> FAIT : Enlever les référence à 'Projet'
+	-> FAIT les bouton « envoyer » , « Annuler »
+	-> FAIT un bonbon « modifier » si la commande n’est pas envoyé
+	-> FAIT un bonbon « modifier » sur la liste des commandes
+	-> FAIT Intégrer la gestion des lignes de commande
+	-> FAIT Faire un trie pour la table des commandes
+	-> FAIT le total automatique dans les lignes commandes
+	-> FAIT Gérer la TVA
+	-> FAIT un bouton pour sélectionner les fournisseurs et livraison
+	-> FAIT Changer le "no results found" de la recherche des tables (mettre en francais)
+
+	-> Faire les commande direct (voir pour faire une collection dans le form, plus simple peut être)
+		- faire en sorte que lorsque l'on clique sur "direct" des inputs text se mettent au dessus des 
+			checkbox
+
+		- detecter lorsqu'une touche se leve des input (cidessus) pour modifier la value du hidden
+			correspondant
+	
+		- sauvegarder le nom de la clé dans la répartition, lorsque l'on sauvegarde une ccc
+
+	
+	-> Faire : Voire pour les placeholder dans IE
+
+	-> Vérifier dans validator qu’une commande qui passe envoyé à bien n° coriolis etc
+		(voir avec severine)
+	-> Terminer la création d'une commande
+	-> Séparer la liste des commandes en « commande enregistrée », « commande envoyée » etc…
+	-> faire une table état (et ainsi éviter que de mauvais paramêtre au changement d’état ne se glisse
+	
+
+
+	-> Faire une méthode qui calcule le cout d'une commande pour une collectivite donée
+	-> Gérer les états des commandes (avec une entité état);
+	-> gérer les années (pour commande, informations collectivite, etc)
+	-> Gérer les services avec leur budget par année
+
+
+
+

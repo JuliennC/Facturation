@@ -1,0 +1,175 @@
+/* 
+*	TOUTES LES PAGES
+*/
+
+
+
+	
+	
+body {
+	padding-top: 60px;
+}
+
+
+
+.center{
+	text-align: center;
+	vertical-align: middle;
+}
+
+
+
+.top30{
+	margin-top: 30px;
+}
+
+
+.bordered {
+	border: 1px #e4e4e4 solid;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 6px #ccc;
+  background-color: #fff;}
+
+
+
+
+
+.table_center tbody>tr>td {
+    vertical-align: middle;
+	text-align: center;
+}
+
+.table_center tbody>tr>th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+
+.table_center thead>tr>th>input {
+    vertical-align: middle;
+	text-align: center;
+}
+
+
+
+
+.clickable{
+    cursor: pointer;
+}
+
+/* ----------- Lien BOOTSTRAP ---------- */
+	
+	
+
+.navbar-default {
+  background-color: #bce6f2;
+  border-color: #006a9a;
+}
+.navbar-default .navbar-brand {
+  color: #006a9a;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+  color: #72a7d0;
+}
+.navbar-default .navbar-text {
+  color: #006a9a;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #006a9a;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: #72a7d0;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: #72a7d0;
+  background-color: #006a9a;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  color: #72a7d0;
+  background-color: #006a9a;
+}
+.navbar-default .navbar-toggle {
+  border-color: #006a9a;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: #006a9a;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #006a9a;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #006a9a;
+}
+.navbar-default .navbar-link {
+  color: #006a9a;
+}
+.navbar-default .navbar-link:hover {
+  color: #72a7d0;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #006a9a;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #72a7d0;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #72a7d0;
+    background-color: #006a9a;
+  }
+}
+
+
+
+
+hr.message-inner-separator
+{
+    clear: both;
+    margin-top: 10px;
+    margin-bottom: 13px;
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
+    background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+    background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+    background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+}
+
+
+
+
+
+
+
+
+/* --------------- BOOTSNIPP ---------------*/
+	
+	
+.filterable {
+    margin-top: 15px;
+}
+.filterable .panel-heading .pull-right {
+    margin-top: -20px;
+}
+.filterable .filters input[disabled] {
+    background-color: transparent;
+    border: none;
+    cursor: auto;
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+}
+.filterable .filters input[disabled]::-webkit-input-placeholder {
+    color: #333;
+}
+.filterable .filters input[disabled]::-moz-placeholder {
+    color: #333;
+}
+.filterable .filters input[disabled]:-ms-input-placeholder {
+    color: #333;
+}
+
+

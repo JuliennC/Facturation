@@ -1,0 +1,11 @@
+{% extends "JCCommandeBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Création{% endblock %}
+
+{% block jccommande_body %}
+
+  <h3>Création d'une commande</h3>
+  
+  {{ include("JCCommandeBundle:Commande:form.html.twig") }}
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "JCAccueilBundle::layout.html.twig" %}
+
+
+{% block title %}{{ parent() }} - Facturation{% endblock %}
+
+
+{% block jcaccueil_body %}
+
+  <h3>Bienvenue dans l'espace Facturation </h3>
+  
+  
+<div class='row top30'>
+
+	<div class='container col-md-5'>
+		<div class='well'>
+			<legend>Infos</legend>
+				          	  							
+				
+				  				
+		</div>
+	</div>
+
+	<div class='container col-md-5 center'>
+		
+		<a class='btn btn-success col-md-12' href="{{ path('jc_facturation_calcul') }}"> Lancer la facturaction </a>
+		  				
+	</div>
+
+
+
+</div>
+	
+	
+
+  <div class='row'>
+	<div class='container col-md-5 col-md-offset-1 top30 bordered'>
+			<legend>Commandes directes</legend>
+				          	  							
+				<table class="table table-striped table_center">
+			    	<thread>
+					</thread>
+			      
+					<tbody>
+			      
+						
+						
+			  
+					</tbody>
+			   </table>
+
+  				
+	</div>
+
+
+	<div class='container col-md-5 col-md-offset-1 top30 bordered'>
+	
+			<legend>Commandes mutualisées</legend>
+				          	  							
+				<table class="table table-striped table_center">
+			    	<thread>
+					</thread>
+			      
+					<tbody>
+			      
+						
+						
+			  
+					</tbody>
+			   </table>
+	</div>
+</div>
+
+
+{% endblock %}

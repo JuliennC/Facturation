@@ -1,0 +1,14 @@
+jc_facturation:
+    resource: "@JCFacturationBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jc_accueil:
+    resource: "@JCAccueilBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jc_commande:
+    resource: "@JCCommandeBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

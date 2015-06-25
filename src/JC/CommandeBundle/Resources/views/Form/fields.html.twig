@@ -1,0 +1,121 @@
+{# fields_errors.html.twig #}
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+        
+        
+        <div class="col-md-offset-3 col-md-6">
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã—</button>
+                <span class="glyphicon glyphicon-hand-right"></span> <strong> Danger Message</strong>
+                <hr class="message-inner-separator">
+                
+                <ul class="error_list">
+		            {% for error in errors %}
+		                <li>{{
+		                    error.messagePluralization is null
+		                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
+		                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+		                }}</li>
+		            {% endfor %}
+		        </ul>
+
+            </div>
+        </div>	
+        
+        
+		{% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+
+
+
+
+
+
+
+
+{# On redŽfini les checkbox pour les villes mutualisŽes #}
+{% block checkbox_widget %}
+{% spaceless %}
+					
+			
+         <div class=" col-md-3">
+		 	<div class="form-group">
+            <input type="checkbox"  name="jc_commandebundle_commande[villes_concernees][]" id="jc_commandebundle_commande_villes_concernees_{{value}}" autocomplete="off" value='{{value}}' tag='checkbox_{{label}}'/>
+             
+            
+                        
+                <div class="btn-group contientCheck">
+					
+                    <label for="jc_commandebundle_commande_villes_concernees_{{value}}" class="btn btn-default" style="width:55px">
+	                        <span class="glyphicon glyphicon-ok"></span>
+							<span class="glyphicon_bis">Â </span>
+					</label>
+					
+					
+                    <label for="jc_commandebundle_commande_villes_concernees_{{value}}" class=" btn btn-default active">
+                        {{label}}
+                    </label>
+                    
+                </div>
+               
+               
+                <div class="input-group contientInput">
+					
+                    <input id="input_repartition_{{label}}" class="form-control" style="width:55px" >
+						
+					<span  class="input-group-btn pull-left">
+						<span class="btn btn-default active btn_input_repartition" for="input_repartition_{{label}}" >
+							{{label}}
+						</span>
+					</span>
+                    
+                    
+                    
+                </div>
+               
+			</div>
+              
+                    
+            
+                    
+         </div>
+
+                    
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+
+
+
+
+
+
+
+{# On met en forme la partie du formulaire concernant les villes concernees #}
+{% block _jc_commandebundle_commande_villes_concernees_widget %}
+{% spaceless %}
+	
+	
+
+	{% for child in form %}
+	
+
+		
+
+        {{ form_widget(child) }}
+    
+    
+		
+    {% endfor %}
+   
+		
+{% endspaceless %}
+{% endblock _jc_commandebundle_commande_villes_concernees_widget %}
+
+
+
+
+

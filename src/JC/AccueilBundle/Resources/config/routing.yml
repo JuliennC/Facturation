@@ -1,0 +1,8 @@
+jc_accueil_homepage:
+    path:     /
+    defaults: { _controller: JCAccueilBundle:Accueil:index }
+
+
+jc_accueil_recherche:
+    path:     /recherche/
+    defaults: { _controller: JCAccueilBundle:Accueil:recherche }

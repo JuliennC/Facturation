@@ -1,0 +1,8 @@
+jc_facturation_homepage:
+    path:     /facturation/
+    defaults: { _controller: JCFacturationBundle:Facturation:index }
+
+
+jc_facturation_calcul:
+    path:     /facturation/calcul
+    defaults: { _controller: JCFacturationBundle:Facturation:calcul }

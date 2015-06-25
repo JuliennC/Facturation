@@ -1,0 +1,73 @@
+{% extends "JCCommandeBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Liste des commandes{% endblock %}
+
+{% block jccommande_body %}
+  <h2>Afficher la liste des commandes !</h2>
+  
+  
+  
+  
+    
+    
+    
+    <div class="row">
+        <div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <h3 class="panel-title">Users</h3>
+                <div class="pull-right">
+                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
+                </div>
+            </div>
+            <table class="table   table_center">
+            
+                <thead>
+                	<tr class="filters">
+                		<th ><input type="text" class="form-control col-md-1" placeholder="Numéro" disabled></th>
+                		<th><input type="text" class="form-control col-md-1" placeholder="Service" disabled></th>
+                		<th><input type="text" class="form-control col-md-2" placeholder="Utilisateur" disabled></th>
+                		<th><input type="text" class="form-control col-md-1" placeholder="Fournisseur" disabled></th>
+                		<th><input type="text" class="form-control col-md-2" placeholder="Total TTC" disabled></th>
+                		<th><input type="text" class="form-control col-md-2" placeholder="Date" disabled></th>
+						<th class='col-md-2'></th>
+			        </tr>
+                </thead>
+
+                <tbody>
+                    
+                <tr>
+            		<td colspan='7'> <a class='btn btn-success btn_ajouter' href="{{ path('jc_commande_creation') }}" > Créer une commande </a> </td>
+				</tr>    
+                    
+                    
+                {% for commande in tabCommande %}
+			        <tr>
+						<td>{{ commande.id }}</td>
+						<td>à définir</td>
+						<td>{{ commande.utilisateur.Nom }} {{ commande.utilisateur.prenom }}</td>
+						<td>{{ commande.fournisseur.nom }}</td>
+						<td>à définir</td>
+						<td>{{ commande.dateCreation|date('d/m/Y') }}</td>
+						<td> 
+						
+							{% if (commande.etat == "Envoyée") or (commande.etat == "Payée") %}
+								<a class='btn btn-info col-md-10 col-md-offset-1' href="{{ path('jc_commande_detail', {'id': commande.id}) }}" >Voir détail</a> 
+						 	
+						 	{% else %}
+							 	<a class='btn btn-warning col-md-10 col-md-offset-1' href="{{ path('jc_commande_modification', {'id': commande.id}) }}" >Modification</a> 
+							{% endif %}
+						</td>
+					</tr>
+					
+				{% endfor %}
+   
+                    
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+  
+   
+  
+{% endblock %}

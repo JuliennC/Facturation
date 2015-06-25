@@ -1,0 +1,48 @@
+jc_commande_liste:
+    path:      /commande
+    defaults:  { _controller: JCCommandeBundle:Commande:liste }
+    
+    
+jc_commande_detail:
+    path:      /commande/{id}
+    defaults:  { _controller: JCCommandeBundle:Commande:detail }
+    requirements:
+        id:    ([0-9]+)
+    options:
+        expose: true
+
+jc_commande_creation:
+    path:      /commande/creation
+    defaults:  { _controller: JCCommandeBundle:Commande:creation }
+ 
+
+jc_commande_modification:
+    path:      /commande/modification/{id}
+    defaults:  { _controller: JCCommandeBundle:Commande:modification }
+    requirements:
+        id:    ([0-9]+)
+    options:
+        expose: true
+
+
+#Route pour action ajax
+jc_commande_get_tva:
+    path:	/commande/get_tva
+    defaults:  { _controller: JCCommandeBundle:Commande:getTVA }
+    options:
+        expose: true
+
+jc_commande_application_pour_activite:
+    path:	/commande/applicationPourActivite
+    defaults:  { _controller: JCCommandeBundle:Commande:applicationPourActivite }
+
+
+
+
+#a supprimer par la suite, sert uniquement à remplir la base de donnée
+jc_commande_bdd:
+    path:      /commande/insert_donnees
+    defaults:  { _controller: JCCommandeBundle:Commande:bdd }
+ 
+ 
+ 
