@@ -504,27 +504,32 @@ class CommandeController extends Controller
 		// Creation d'un utilisateur
 		$service1 = new Service();
 		$service1->setNom("Bureautique");
+		$em->persist($service1);
 
 		$service2 = new Service();
 		$service2->setNom("Etude");
-		
+		$em->persist($service2);
+
 		
 		//Cration des annes
 		$annee1 = new Annee();
 		$annee1->setLibelle('2015');
-		
+		$em->persist($annee1);
+
 
 		//Cration des budgets
 		$budget1 = new Budget();
 		$budget1->setMontant(350000);
 		$budget1->setAnnee($annee1);
 		$budget1->setService($service1);
-		
+		$em->persist($budget1);
+
 		$budget2 = new Budget();
 		$budget2->setMontant(425000);
 		$budget2->setAnnee($annee1);
 		$budget2->setService($service2);
-		
+		$em->persist($budget2);
+
 		
 		// Creation d'un utilisateur
 		$utilisateur = new Utilisateur();

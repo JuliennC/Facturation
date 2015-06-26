@@ -35,7 +35,7 @@ class FacturationController extends Controller
 	   		$budget = $em->getRepository('JCCommandeBundle:Budget')->findBudgetAvecAnneeEtService($em->getRepository('JCCommandeBundle:Annee')->findOneByLibelle($date), $service);
 
 			//On cree un tableau pour y stocker les informations du service
-			$infoServices[$service->getNom()] = array('nom'=>$service->getNom(),'budget'=>$budget,'nbCommandesPassees'=>0 , 'montantCommandesPassees'=>0);
+			$infoServices[$service->getNom()] = array('nom'=>$service->getNom(),'budget'=>$budget[0]->getMontant(),'nbCommandesPassees'=>0 , 'montantCommandesPassees'=>0);
 			
 			
 			
