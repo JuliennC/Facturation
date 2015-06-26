@@ -326,7 +326,7 @@
 						<td> {{ form_widget(ligne.quantite, {'attr': {'class':'col-md-11 col-md-offset-1', 'onkeyup':'calcul_TTC('~i~');'}}) }} </td>
 						<td> {{ form_widget(ligne.prixUnitaire, {'attr': {'class':'col-md-8 col-md-offset-2 ', 'onkeyup':'calcul_TTC('~i~');'}}) }} â‚¬</td>
 						<td> {{ form_widget(ligne.tva, {'attr': {'class':'col-md-11 col-md-offset-1', 'onchange':'calcul_TTC('~i~');'}}) }}</td>
-                                                <td> <label class='col-md-11 col-md-offset-1' id='total_TTC_{{i}}' value='0.00 €'></label> </td>
+                                                <td> <label class='col-md-11 col-md-offset-1' id='total_TTC_{{i}}' value='0.00 Û'></label> </td>
                                                 {{ form_widget(ligne.totalTTC) }}
 						
                                                 <script> calcul_TTC({{i}}); </script>

@@ -36,6 +36,17 @@ class Utilisateur
     private $prenom;
 
 
+// ---------- Cles étrangeres ----------
+
+	/**
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Service", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+   private $service;
+   
+   
+   
+   
 
 // ---------- Fonctions ----------
 
@@ -103,5 +114,30 @@ class Utilisateur
     public function getPrenom()
     {
         return $this->prenom;
+    }
+    
+    
+    
+    /**
+     * Set service
+     *
+     * @param Service $service
+     * @return Utilisateur
+     */
+    public function setService($service)
+    {
+        $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * Get service
+     *
+     * @return Service 
+     */
+    public function getService()
+    {
+        return $this->service;
     }
 }

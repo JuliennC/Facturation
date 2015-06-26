@@ -196,9 +196,7 @@ class CommandeType extends AbstractType
 	            foreach($this->tabColl as $coll){
 		            
 		            $champsCache = $form->get('repartition'.$coll->getId())->getData();	
-		            
-					echo ('b : '.$champsCache."</br>");
-		            
+		            		            
 					//Si le champs est vide
 					if( (sizeof($champsCache) == 0) or ($champsCache == '')){
 						$nombreChampsVide +=1;

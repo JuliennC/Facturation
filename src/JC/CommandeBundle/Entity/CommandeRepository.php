@@ -24,4 +24,21 @@ class CommandeRepository extends EntityRepository
 
 		;
 	}
+
+
+
+	public function findCommandesAvecAnnee($annee){
+		
+		return $this
+		->createQueryBuilder('c')
+		->where('c.dateCreation = :annee')
+		->setParameter('annee', $anne)
+		->getQuery()	
+		->getResult()
+
+		;
+
+	}
+
+	
 }

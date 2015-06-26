@@ -5,19 +5,22 @@ namespace JC\CommandeBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\exception\NotFoundHttpexception;
-use JC\CommandeBundle\entity\Commande;
-use JC\CommandeBundle\entity\Utilisateur;
-use JC\CommandeBundle\entity\Fournisseur;
-use JC\CommandeBundle\entity\LigneCommande;
-use JC\CommandeBundle\entity\Application;
-use JC\CommandeBundle\entity\Activite;
-use JC\CommandeBundle\entity\Livraison;
-use JC\CommandeBundle\entity\CleRepartition;
-use JC\CommandeBundle\entity\Collectivite;
-use JC\CommandeBundle\entity\CommandeConcerneCollectivite;
-use JC\CommandeBundle\entity\etatCommande;
-use JC\CommandeBundle\entity\TVA;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use JC\CommandeBundle\Entity\Commande;
+use JC\CommandeBundle\Entity\Utilisateur;
+use JC\CommandeBundle\Entity\Fournisseur;
+use JC\CommandeBundle\Entity\LigneCommande;
+use JC\CommandeBundle\Entity\Application;
+use JC\CommandeBundle\Entity\Activite;
+use JC\CommandeBundle\Entity\Livraison;
+use JC\CommandeBundle\Entity\CleRepartition;
+use JC\CommandeBundle\Entity\Collectivite;
+use JC\CommandeBundle\Entity\CommandeConcerneCollectivite;
+use JC\CommandeBundle\Eentity\etatCommande;
+use JC\CommandeBundle\Entity\TVA;
+use JC\CommandeBundle\Entity\Service;
+use JC\CommandeBundle\Entity\Budget;
+use JC\CommandeBundle\Entity\Annee;
 
 use JC\CommandeBundle\Form\CommandeType;
 
@@ -485,23 +488,6 @@ class CommandeController extends Controller
 	  	  
 	  	  
 	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
-	  	  
 	  
 	  
 	 
@@ -514,18 +500,44 @@ class CommandeController extends Controller
 		// On recupere l'entityManager
 		$em = $this->getDoctrine()->getManager();
 
+		
+		// Creation d'un utilisateur
+		$service1 = new Service();
+		$service1->setNom("Bureautique");
 
+		$service2 = new Service();
+		$service2->setNom("Etude");
+		
+		
+		//CrŽation des annŽes
+		$annee1 = new Annee();
+		$annee1->setLibelle('2015');
+		
 
+		//CrŽation des budgets
+		$budget1 = new Budget();
+		$budget1->setMontant(350000);
+		$budget1->setAnnee($annee1);
+		$budget1->setService($service1);
+		
+		$budget2 = new Budget();
+		$budget2->setMontant(425000);
+		$budget2->setAnnee($annee1);
+		$budget2->setService($service2);
+		
+		
 		// Creation d'un utilisateur
 		$utilisateur = new Utilisateur();
 		$utilisateur->setNom('DUPONT');
 		$utilisateur->setPrenom('Paul');
+		$utilisateur->setService($service1);
 		$em->persist($utilisateur);
 
 		// Creation d'un utilisateur
 		$utilisateur2 = new Utilisateur();
 		$utilisateur2 ->setNom('GeRMAIN');
 		$utilisateur2 ->setPrenom('Pierre');
+		$utilisateur2 ->setService($service2);
 		$em->persist($utilisateur2);
 
 		
@@ -644,17 +656,17 @@ class CommandeController extends Controller
 		$commande -> setetat("enregistree");
 		$commande -> setLibelleFacturation("llll");
         $commande -> setNomLivraison($livraison->getNom());
-                $commande -> setAdresseLivraison($livraison->getAdresse());
-                $commande -> setComplementAdresseLivraison($livraison->getComplementAdresse());
-                $commande -> setTelephoneLivraison($livraison->getTelephone());
-                $commande -> setVilleLivraison($livraison->getVille());
-                $commande -> setCodePostalLivraison($livraison->getCodePostal());
-                $commande -> setNomFournisseur($fournisseur->getNom());
-                $commande -> setAdresseFournisseur($fournisseur->getAdresse());
-                $commande -> setComplementAdresseFournisseur($fournisseur->getComplementAdresse());
-                $commande -> setTelephoneFournisseur($fournisseur->getTelephone());
-                $commande -> setVilleFournisseur($fournisseur->getVille());
-                $commande -> setCodePostalFournisseur($fournisseur->getCodePostal());
+        $commande -> setAdresseLivraison($livraison->getAdresse());
+        $commande -> setComplementAdresseLivraison($livraison->getComplementAdresse());
+        $commande -> setTelephoneLivraison($livraison->getTelephone());
+        $commande -> setVilleLivraison($livraison->getVille());
+        $commande -> setCodePostalLivraison($livraison->getCodePostal());
+        $commande -> setNomFournisseur($fournisseur->getNom());
+        $commande -> setAdresseFournisseur($fournisseur->getAdresse());
+        $commande -> setComplementAdresseFournisseur($fournisseur->getComplementAdresse());
+        $commande -> setTelephoneFournisseur($fournisseur->getTelephone());
+        $commande -> setVilleFournisseur($fournisseur->getVille());
+        $commande -> setCodePostalFournisseur($fournisseur->getCodePostal());
 		$em->persist($commande);
 		
 		
@@ -670,18 +682,18 @@ class CommandeController extends Controller
 		$commande2 -> setLivraison($livraison);
 		$commande2 -> setetat("enregistree");
 		$commande2 -> setLibelleFacturation("llll");
-                $commande2 -> setNomLivraison($livraison->getNom());
-                $commande2 -> setAdresseLivraison($livraison->getAdresse());
-                $commande2 -> setComplementAdresseLivraison($livraison->getComplementAdresse());
-                $commande2 -> setTelephoneLivraison($livraison->getTelephone());
-                $commande2 -> setVilleLivraison($livraison->getVille());
-                $commande2 -> setCodePostalLivraison($livraison->getCodePostal());
-                $commande2 -> setNomFournisseur($fournisseur->getNom());
-                $commande2 -> setAdresseFournisseur($fournisseur->getAdresse());
-                $commande2 -> setComplementAdresseFournisseur($fournisseur->getComplementAdresse());
-                $commande2 -> setTelephoneFournisseur($fournisseur->getTelephone());
-                $commande2 -> setVilleFournisseur($fournisseur->getVille());
-                $commande2 -> setCodePostalFournisseur($fournisseur->getCodePostal());
+        $commande2 -> setNomLivraison($livraison->getNom());
+        $commande2 -> setAdresseLivraison($livraison->getAdresse());
+        $commande2 -> setComplementAdresseLivraison($livraison->getComplementAdresse());
+        $commande2 -> setTelephoneLivraison($livraison->getTelephone());
+        $commande2 -> setVilleLivraison($livraison->getVille());
+        $commande2 -> setCodePostalLivraison($livraison->getCodePostal());
+        $commande2 -> setNomFournisseur($fournisseur->getNom());
+        $commande2 -> setAdresseFournisseur($fournisseur->getAdresse());
+        $commande2 -> setComplementAdresseFournisseur($fournisseur->getComplementAdresse());
+        $commande2 -> setTelephoneFournisseur($fournisseur->getTelephone());
+        $commande2 -> setVilleFournisseur($fournisseur->getVille());
+        $commande2 -> setCodePostalFournisseur($fournisseur->getCodePostal());
 		$em->persist($commande2);
 		
 
@@ -697,19 +709,19 @@ class CommandeController extends Controller
 		$commande3 -> setLivraison($livraison);
 		$commande3 -> setetat("enregistree");
 		$commande3 -> setLibelleFacturation("llll");
-                $commande3 -> setNomLivraison($livraison->getNom());
-                $commande3 -> setAdresseLivraison($livraison->getAdresse());
-                $commande3 -> setComplementAdresseLivraison($livraison->getComplementAdresse());
-                $commande3 -> setTelephoneLivraison($livraison->getTelephone());
-                $commande3 -> setVilleLivraison($livraison->getVille());
-                $commande3 -> setCodePostalLivraison($livraison->getCodePostal());
+        $commande3 -> setNomLivraison($livraison->getNom());
+        $commande3 -> setAdresseLivraison($livraison->getAdresse());
+        $commande3 -> setComplementAdresseLivraison($livraison->getComplementAdresse());
+        $commande3 -> setTelephoneLivraison($livraison->getTelephone());
+        $commande3 -> setVilleLivraison($livraison->getVille());
+        $commande3 -> setCodePostalLivraison($livraison->getCodePostal());
 		$commande3 -> setNomFournisseur($fournisseur2->getNom());
-                $commande3 -> setAdresseFournisseur($fournisseur2->getAdresse());
-                $commande3 -> setComplementAdresseFournisseur($fournisseur2->getComplementAdresse());
-                $commande3 -> setTelephoneFournisseur($fournisseur2->getTelephone());
-                $commande3 -> setVilleFournisseur($fournisseur2->getVille());
-                $commande3 -> setCodePostalFournisseur($fournisseur2->getCodePostal());
-                $em->persist($commande3);
+        $commande3 -> setAdresseFournisseur($fournisseur2->getAdresse());
+        $commande3 -> setComplementAdresseFournisseur($fournisseur2->getComplementAdresse());
+        $commande3 -> setTelephoneFournisseur($fournisseur2->getTelephone());
+        $commande3 -> setVilleFournisseur($fournisseur2->getVille());
+        $commande3 -> setCodePostalFournisseur($fournisseur2->getCodePostal());
+        $em->persist($commande3);
                 
 		
 		$commande4 = new Commande();
@@ -724,18 +736,18 @@ class CommandeController extends Controller
 		$commande4 -> setLivraison($livraison);
 		$commande4 -> setetat("enregistree");
 		$commande4 -> setLibelleFacturation("llll");
-                $commande4 -> setNomLivraison($livraison->getNom());
-                $commande4 -> setAdresseLivraison($livraison->getAdresse());
-                $commande4 -> setComplementAdresseLivraison($livraison->getComplementAdresse());
-                $commande4 -> setTelephoneLivraison($livraison->getTelephone());
-                $commande4 -> setVilleLivraison($livraison->getVille());
-                $commande4 -> setCodePostalLivraison($livraison->getCodePostal());
-                $commande4 -> setNomFournisseur($fournisseur2->getNom());
-                $commande4 -> setAdresseFournisseur($fournisseur2->getAdresse());
-                $commande4 -> setComplementAdresseFournisseur($fournisseur2->getComplementAdresse());
-                $commande4 -> setTelephoneFournisseur($fournisseur2->getTelephone());
-                $commande4 -> setVilleFournisseur($fournisseur2->getVille());
-                $commande4 -> setCodePostalFournisseur($fournisseur2->getCodePostal());
+        $commande4 -> setNomLivraison($livraison->getNom());
+        $commande4 -> setAdresseLivraison($livraison->getAdresse());
+        $commande4 -> setComplementAdresseLivraison($livraison->getComplementAdresse());
+        $commande4 -> setTelephoneLivraison($livraison->getTelephone());
+        $commande4 -> setVilleLivraison($livraison->getVille());
+        $commande4 -> setCodePostalLivraison($livraison->getCodePostal());
+        $commande4 -> setNomFournisseur($fournisseur2->getNom());
+        $commande4 -> setAdresseFournisseur($fournisseur2->getAdresse());
+        $commande4 -> setComplementAdresseFournisseur($fournisseur2->getComplementAdresse());
+        $commande4 -> setTelephoneFournisseur($fournisseur2->getTelephone());
+        $commande4 -> setVilleFournisseur($fournisseur2->getVille());
+        $commande4 -> setCodePostalFournisseur($fournisseur2->getCodePostal());
 		$em->persist($commande4);
 
 		
@@ -853,7 +865,7 @@ class CommandeController extends Controller
 	      throw new NotFoundHttpexception('Ok, bien insere.');
 	      
 	      
-	     	  }
+	   }
 	  
 	  
 	  

@@ -5,7 +5,7 @@ $(document).ready(function()
     $('#li_recherche_commande').click(function() 
     { 
 	    //On change le placeholder
-	    $("#form_objetRecherche").attr("placeholder", "Entrez le numéro de la commande..");
+	    $("#form_objetRecherche").attr("placeholder", "Entrez le numero de la commande..");
 		$("#form_objetRecherche").focus();
 		$("#form_objetRecherche").attr("role","commande");
 		
@@ -16,7 +16,7 @@ $(document).ready(function()
     $('#li_recherche_facture').click(function() 
     { 
 	    //On change le placeholder
-	    $("#form_objetRecherche").attr("placeholder", "Entrez le numéro de la facture..");
+	    $("#form_objetRecherche").attr("placeholder", "Entrez le numero de la facture..");
 		$("#form_objetRecherche").focus();
 		$("#form_objetRecherche").attr("role","facture");
 
@@ -25,7 +25,7 @@ $(document).ready(function()
     
         
     
-    //---------- Fonction lorsque la barre de recherche est sélectionnée ----------
+    //---------- Fonction lorsque la barre de recherche est selectionnee ----------
 	  $('#form_objetRecherche').focusin(function() 
     { 
 	    //On agrandit la barre
@@ -38,7 +38,7 @@ $(document).ready(function()
 
 
 
-	    //---------- Fonction lorsque la barre de recherche est déselectionnée ----------
+	    //---------- Fonction lorsque la barre de recherche est deselectionnee ----------
 	  $('#form_objetRecherche').focusout(function() 
     { 
 	    $("#form_objetRecherche").attr("placeholder", "Recherche..");
@@ -94,7 +94,7 @@ $(document).ready(function()
         $filteredRows.hide();
         /* Prepend no-result row if all rows are filtered */
         if ($filteredRows.length === $rows.length) {
-            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">Aucun r�sultat trouv�..</td></tr>'));
+            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">Aucun resultat trouve..</td></tr>'));
         }
     });
   

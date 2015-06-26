@@ -8,14 +8,21 @@
 
   <h3>Bienvenue dans l'espace Facturation </h3>
   
-  
+   
+   
 <div class='row top30'>
 
 	<div class='container col-md-5'>
 		<div class='well'>
-			<legend>Infos</legend>
-				          	  							
+			<legend>Infos <span class='pull-right'> {{ annee }} </span></legend>          	  				
+							
+				<p> {{infoCommandes['nombreCommandesPassees']|number_format(0, '.', ' ')}} commandes passees, pour un total de {{infoCommandes['montantCommandesPassees']|number_format(2, ',', ' ')}} € </p>
 				
+				<ul>
+					<li> {{infoCommandes['nombreCommandesDirectes']|number_format(0, '.', ' ')}} commandes directes, pour un total de {{infoCommandes['montantCommandesDirectes']|number_format(2, ',', ' ')}} € </li>
+					<li>  {{infoCommandes['nombreCommandesMutualisees']|number_format(0, '.', ' ')}} commandes directes, pour un total de {{infoCommandes['montantCommandesMutualisees']|number_format(2, ',', ' ')}} € </li>
+				</ul>
+
 				  				
 		</div>
 	</div>
@@ -31,44 +38,40 @@
 </div>
 	
 	
-
-  <div class='row'>
-	<div class='container col-md-5 col-md-offset-1 top30 bordered'>
-			<legend>Commandes directes</legend>
-				          	  							
-				<table class="table table-striped table_center">
-			    	<thread>
-					</thread>
-			      
-					<tbody>
-			      
-						
-						
-			  
-					</tbody>
-			   </table>
-
-  				
-	</div>
-
-
-	<div class='container col-md-5 col-md-offset-1 top30 bordered'>
 	
-			<legend>Commandes mutualisées</legend>
-				          	  							
-				<table class="table table-striped table_center">
-			    	<thread>
-					</thread>
-			      
-					<tbody>
-			      
-						
-						
-			  
-					</tbody>
-			   </table>
-	</div>
+	
+<div>
+
+	{# On affiche les infos de chaque service #}
+	
+	{% for service in infoServices %}
+    <div class="col-md-4 text-center">
+    	<div class="panel panel-success panel-pricing">
+			
+			<div class="panel-heading">
+                <h3> {{service['nom']}} </h3>
+            </div>
+            
+            <div class="panel-body text-center">
+                <p><strong> {{service['nbCommandesPassees']}} commande(s) : {{service['montantCommandesPassees']|number_format(2, ',', ' ')}} €</strong></p>
+            </div>
+            
+            <ul class="list-group text-center">
+                <li class="list-group-item"><i class="fa fa-check"></i> Budget de l'annee : {{ service['budget']|number_format(2, ',', ' ') }}</li>
+                <li class="list-group-item"><i class="fa fa-check"></i> Unlimited projects</li>
+                <li class="list-group-item"><i class="fa fa-check"></i> 27/7 support</li>
+            </ul>
+            
+            <div class="panel-footer">
+                <a class="btn btn-lg btn-block btn-success" href="#">BUY NOW!</a>
+            </div>
+        
+        </div>
+    </div>
+	
+	{% endfor %}
 </div>
+
 
 
 {% endblock %}

@@ -23,12 +23,12 @@
             
                 <thead>
                 	<tr class="filters">
-                		<th ><input type="text" class="form-control col-md-1" placeholder="Numéro" disabled></th>
+                	    <th><input type="text" class="form-control col-md-2" placeholder="Date" disabled></th>
+                	    <th><input type="text" class="form-control col-md-2" placeholder="Etat" disabled></th>
                 		<th><input type="text" class="form-control col-md-1" placeholder="Service" disabled></th>
                 		<th><input type="text" class="form-control col-md-2" placeholder="Utilisateur" disabled></th>
                 		<th><input type="text" class="form-control col-md-1" placeholder="Fournisseur" disabled></th>
                 		<th><input type="text" class="form-control col-md-2" placeholder="Total TTC" disabled></th>
-                		<th><input type="text" class="form-control col-md-2" placeholder="Date" disabled></th>
 						<th class='col-md-2'></th>
 			        </tr>
                 </thead>
@@ -42,12 +42,12 @@
                     
                 {% for commande in tabCommande %}
 			        <tr>
-						<td>{{ commande.id }}</td>
-						<td>à définir</td>
+						<td>{{ commande.dateCreation|date('d/m/Y') }}</td>
+						<td>{{ commande.etat }}</td>
+						<td>{{ commande.utilisateur.service.nom }}</td>
 						<td>{{ commande.utilisateur.Nom }} {{ commande.utilisateur.prenom }}</td>
 						<td>{{ commande.fournisseur.nom }}</td>
 						<td>à définir</td>
-						<td>{{ commande.dateCreation|date('d/m/Y') }}</td>
 						<td> 
 						
 							{% if (commande.etat == "Envoyée") or (commande.etat == "Payée") %}
