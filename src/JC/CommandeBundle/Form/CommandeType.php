@@ -109,24 +109,22 @@ class CommandeType extends AbstractType
 			// On s'oocupe des différentes villes
 			->add('villes_concernees', 'choice', array('choices' => $tabNom, 
 											'mapped' => false,
-											'multiple'=>true,
+											'multiple'=> true,
 											'expanded' => true,
 											'error_bubbling' => true))
 			
-
-                     
             ->add('enregistrer',      'submit')
-						
+			
 			->add('listeLignesCommande', 'collection', array(
+				'label' => false,
 		        'type'         => new LigneCommandeType(),
 		        'allow_add'    => true,
 		        'allow_delete' => true,
 		        'error_bubbling' => true,
 		        'by_reference' => false
-		        
 		      ))			
 			
-                                                                                
+                                                                              
                                                                                 
             ->add('nomLivraison', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('adresseLivraison', 'text', array('required' => true , 'error_bubbling' => true))

@@ -658,7 +658,7 @@ class CommandeController extends Controller
 		$commande -> setUtilisateur($utilisateur);
 		$commande -> setApplication($application);
 		$commande -> setLivraison($livraison);
-		$commande -> setetat("enregistree");
+		$commande -> setetat("Enregistree");
 		$commande -> setLibelleFacturation("llll");
         $commande -> setNomLivraison($livraison->getNom());
         $commande -> setAdresseLivraison($livraison->getAdresse());
@@ -685,7 +685,7 @@ class CommandeController extends Controller
 		$commande2 -> setUtilisateur($utilisateur);
 		$commande2 -> setApplication($application);
 		$commande2 -> setLivraison($livraison);
-		$commande2 -> setetat("enregistree");
+		$commande2 -> setetat("Enregistree");
 		$commande2 -> setLibelleFacturation("llll");
         $commande2 -> setNomLivraison($livraison->getNom());
         $commande2 -> setAdresseLivraison($livraison->getAdresse());
@@ -739,7 +739,7 @@ class CommandeController extends Controller
 		$commande4 -> setUtilisateur($utilisateur);
 		$commande4 -> setApplication($application);
 		$commande4 -> setLivraison($livraison);
-		$commande4 -> setetat("enregistree");
+		$commande4 -> setetat("Enregistree");
 		$commande4 -> setLibelleFacturation("llll");
         $commande4 -> setNomLivraison($livraison->getNom());
         $commande4 -> setAdresseLivraison($livraison->getAdresse());

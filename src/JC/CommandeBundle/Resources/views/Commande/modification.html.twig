@@ -10,9 +10,9 @@
 			
 			<p class='col-md-5 h3'>Etat : {{commande.etat}} </p>
 			
-			{# ----- Si la commande est "Enregistrée", on propose de la passer "Envoyer" ----- #}
+			{# ----- Si la commande est "Enregistree", on propose de la passer "Envoyer" ----- #}
 			
-			{% if commande.etat == "Enregistrée" %}
+			{% if commande.etat == "Enregistree" %}
 				<button class='btn btn-warning col-md-3' data-toggle="modal" data-target="#modalEnvoyer">Envoyer</button>
 				
 				<!-- Modal -->
@@ -24,12 +24,12 @@
 				        <h4 class="modal-title">Êtes-vous sûr ?</h4>
 				      </div>
 				      <div class="modal-body">
-					  	<p>En marquant cette commande comme "Envoyée" vous ne pourrez-plus la modifier.</p>
+					  	<p>En marquant cette commande comme "Envoyee" vous ne pourrez-plus la modifier.</p>
 					  	<p>Êtes-vous sur de vouloir changer le statut de la commande ?</p>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
-				        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande('Envoyée')">Confirmer</button>
+				        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande('Envoyee')">Confirmer</button>
 				      </div>
 				    </div>
 				  </div>
@@ -46,12 +46,12 @@
 				        <h4 class="modal-title">Êtes-vous sûr ?</h4>
 				      </div>
 				      <div class="modal-body">
-					  	<p>En marquant cette commande comme "Supprimée" vous ne pourrez-plus la modifier.</p>
+					  	<p>En marquant cette commande comme "Supprimee" vous ne pourrez-plus la modifier.</p>
 					  	<p>Êtes-vous sur de vouloir changer le statut de la commande ?</p>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
-				        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande('Supprimée')">Confirmer</button>
+				        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande('Supprimee')">Confirmer</button>
 				      </div>
 				    </div>
 				  </div>
