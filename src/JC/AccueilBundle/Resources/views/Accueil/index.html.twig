@@ -9,11 +9,81 @@
   <h3>Bienvenue dans l'accueil </h3>
   
 
-  {# Emplacement des evenements marquants #}
 
-  <div class='row'>
-  df
-  <div> 
+   
+   
+<div class='row top30'>
 
+	<div class='container col-md-5'>
+		<div class='well'>
+			<legend>Infos <span class='pull-right'> {{ annee }} </span></legend>          	  				
+							
+				<p> {{infoCommandes['nombreCommandesPassees']|number_format(0, '.', ' ')}} commandes passees, pour un total de {{infoCommandes['montantCommandesPassees']|number_format(2, ',', ' ')}} € </p>
+				
+				<ul>
+					<li> {{infoCommandes['nombreCommandesDirectes']|number_format(0, '.', ' ')}} commandes directes, pour un total de {{infoCommandes['montantCommandesDirectes']|number_format(2, ',', ' ')}} € </li>
+					<li>  {{infoCommandes['nombreCommandesMutualisees']|number_format(0, '.', ' ')}} commandes directes, pour un total de {{infoCommandes['montantCommandesMutualisees']|number_format(2, ',', ' ')}} € </li>
+				</ul>
+
+				  				
+		</div>
+	</div>
+
+	
+
+</div>
+	
+	
+	
+	
+<div>
+
+	{# On affiche les infos de chaque service #}
+	<div class="center">
+		{% for service in infoServices %}
+		    <div class="col-md-4 text-center top30">
+		    	<div class="panel panel-success panel-pricing">
+					
+					<div class="panel-heading">
+		                <h3> {{service['nom']}} </h3>
+		            </div>
+		            
+		            <div class="panel-body text-center">
+		                <strong> {{service['nbCommandesPassees']}} commande(s) : {{service['montantCommandesPassees']|number_format(2, ',', ' ')}} €</strong>
+		            </div>
+		            
+		            <ul class="list-group text-center">
+		                <li class="list-group-item"><i class="fa fa-check"></i> Budget de l'annee : {{ service['budget']|number_format(2, ',', ' ') }} €</li>
+		
+		                <li class="list-group-item"><i class="fa fa-check "></i> 
+		
+						{% set ratio = (service['montantCommandesPassees'] / service['budget'] )*100 %}
+		                {% if ratio < 65 %}
+		                	{% set class = "success" %}
+		                {% elseif ratio < 85 %}
+		                	{% set class = "warning" %}
+		                {% else %}
+		                	{% set class = "danger" %}
+		                {% endif %}
+		                    <div class="progress progress">
+		                        <div class="progress-bar progress-bar-{{class}}" role="progressbar" aria-valuenow="{{ratio}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ratio}}%">
+		                            <span class="sr-only">{{ratio|number_format(2)}}%</span>
+		                        </div>
+							</div>
+							
+		                </li>
+		
+		            </ul>
+		            
+		            <div class="panel-footer">
+		                <a class="btn btn-success" href="{{ path('jc_commande_liste', {'service': service.nom}) }}">Voir les commandes du service {{service.nom}}</a>
+		            </div>
+		        
+		        </div>
+		    </div>
+		
+		{% endfor %}
+	</div>
+</div>
 
 {% endblock %}

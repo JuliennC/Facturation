@@ -319,18 +319,18 @@
                                 {% set i = 0 %}
                                 {% for ligne in form.listeLignesCommande %}
 
-                                    <tr>
+                    <tr>
 						<td> {{ form_widget(ligne.libelle, {'attr': {'class':'col-md-11 col-md-offset-1'}}) }} </td>
 						<td> {{ form_widget(ligne.commentaire, {'attr': {'class':'col-md-11 col-md-offset-1'}}) }} </td>
 						<td> {{ form_widget(ligne.reference, {'attr': {'class':'col-md-11 col-md-offset-1'}}) }} </td>
 						<td> {{ form_widget(ligne.quantite, {'attr': {'class':'col-md-11 col-md-offset-1', 'onkeyup':'calcul_TTC('~i~');'}}) }} </td>
 						<td> {{ form_widget(ligne.prixUnitaire, {'attr': {'class':'col-md-8 col-md-offset-2 ', 'onkeyup':'calcul_TTC('~i~');'}}) }} â‚¬</td>
 						<td> {{ form_widget(ligne.tva, {'attr': {'class':'col-md-11 col-md-offset-1', 'onchange':'calcul_TTC('~i~');'}}) }}</td>
-                                                <td> <label class='col-md-11 col-md-offset-1' id='total_TTC_{{i}}' value='0.00 Û'></label> </td>
-                                                {{ form_widget(ligne.totalTTC) }}
+                        <td> <label class='col-md-11 col-md-offset-1' id='total_TTC_{{i}}' value='0.00 Û'></label> </td>
+                        	{{ form_widget(ligne.totalTTC) }}
 						
-                                                <script> calcul_TTC({{i}}); </script>
-                                                {# |number_format(2, ',', ' ') #}
+                            <script> calcul_TTC({{i}}); </script>
+                            {# |number_format(2, ',', ' ') #}
 					</tr>
 					{% set i = i+1 %}
 

@@ -26,6 +26,22 @@ class CommandeRepository extends EntityRepository
 	}
 
 
+	public function findByStatuEtAnnee($statu, $annee){
+		
+		return $this
+		->createQueryBuilder('c')
+		->where('c.etat = :statu')
+		->setParameter('statu', $statu)
+		->andWhere('c.annee = :annee')
+		->setParameter('annee', $annee)
+		->getQuery()	
+		->getResult()
+
+		;
+	}
+
+
+
 
 	public function findCommandesAvecAnnee($annee){
 		

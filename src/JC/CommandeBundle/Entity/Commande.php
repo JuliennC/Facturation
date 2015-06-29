@@ -111,7 +111,7 @@ class Commande
 	/**
      * @var string
      *
-     * @ORM\Column(name="Prix_Unitaire", type="decimal", scale=2, nullable=false)
+     * @ORM\Column(name="Total_TTC", type="decimal", scale=2, nullable=false)
      */
     private $totalTTC;
     
@@ -573,7 +573,7 @@ public function __construct() {
 	    // La date de création est la date d'aujourd'hui
 		$this->dateCreation = new \Datetime();
 		
-		$this->etat = "Créée";
+		$this->etat = "Creee";
 		
 		$this->totalTTC = "0";
 

@@ -1,10 +1,10 @@
 jc_commande_liste:
-    path:      /commande
-    defaults:  { _controller: JCCommandeBundle:Commande:liste }
+    path:      /commande/{service}
+    defaults:  { _controller: JCCommandeBundle:Commande:liste, service: html}
     
     
 jc_commande_detail:
-    path:      /commande/{id}
+    path:      /commande/detail/{id}
     defaults:  { _controller: JCCommandeBundle:Commande:detail }
     requirements:
         id:    ([0-9]+)
@@ -41,7 +41,7 @@ jc_commande_application_pour_activite:
 
 #a supprimer par la suite, sert uniquement à remplir la base de donnée
 jc_commande_bdd:
-    path:      /commande/insert_donnees
+    path:      /insert_donnees
     defaults:  { _controller: JCCommandeBundle:Commande:bdd }
  
  

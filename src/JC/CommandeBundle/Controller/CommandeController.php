@@ -16,7 +16,7 @@ use JC\CommandeBundle\Entity\Livraison;
 use JC\CommandeBundle\Entity\CleRepartition;
 use JC\CommandeBundle\Entity\Collectivite;
 use JC\CommandeBundle\Entity\CommandeConcerneCollectivite;
-use JC\CommandeBundle\Eentity\etatCommande;
+use JC\CommandeBundle\Eentity\EtatCommande;
 use JC\CommandeBundle\Entity\TVA;
 use JC\CommandeBundle\Entity\Service;
 use JC\CommandeBundle\Entity\Budget;
@@ -37,12 +37,30 @@ class CommandeController extends Controller
 	/*
 	*	Page principale, remplace en quelque sorte index
 	*/
-	  public function listeAction()
+	  public function listeAction($service)
 	  {
 		$em = $this->getDoctrine()->getManager();
 		
-		// On recupete toutes les commandes
-		$listeCommande = $em->getRepository('JCCommandeBundle:Commande')->findAll();  
+		
+		
+		if($service != "html"){
+
+			//On recupere le service
+			$s = $em->getRepository('JCCommandeBundle:Service')->findOneByNom($service);
+			
+			//On recupre toutes les personnes du service
+			$pers = $em->getRepository('JCCommandeBundle:Utilisateur')->findByService($s);
+			
+			//Et on recupere les commande
+			$listeCommande = $em->getRepository('JCCommandeBundle:Commande')->findByUtilisateur($pers);  	
+
+			
+		} else {
+		
+			// On recupere toutes les commandes
+			$listeCommande = $em->getRepository('JCCommandeBundle:Commande')->findAll();  	
+		}
+		
 
 	    return $this->render( 'JCCommandeBundle:Commande:liste.html.twig', array('tabCommande' => $listeCommande) );
 	  }
@@ -68,9 +86,16 @@ class CommandeController extends Controller
 
 		// On recupere l'entite correspondante Ã  l'id $id
 		$commande = $repository->find($id);
+		
+		//S'il n'y a pas de commande correspondante ˆ l'id
+	    if ($commande === null) {
+	      // On declenche une exception NotFoundHttpexception
+	      throw new NotFoundHttpexception('Commande "'.$id.'" inexistante.');
+	    } 
+		
 
 		//	Si la commande n'est ni payee, ni envoyee, on redirige vers la page de moficiation
-		if( ($commande->getetat() === "Creee") || ($commande->getetat() === "enregistree")){
+		if( ($commande->getEtat() === "Creee") || ($commande->getEtat() === "Enregistree")){
 								
 			//Si la commande est envoye ou payee, on ne peux pas la modifier. en renvoie donc sur la page detail
 			return $this->redirect($this->generateUrl('jc_commande_modification', array('id' => $commande->getId())));
@@ -100,17 +125,7 @@ class CommandeController extends Controller
 		$tabTransition = $repository->findCommandeConcerneCollectiviteAvecCommande($commande->getId());
 	    
 
-	 	    	    
-	    	    
-	    //S'il n'y a pas de commande correspondante Ã  l'id
-	    if ($commande === null) {
-	      // On declenche une exception NotFoundHttpexception, cela va afficher
-	      // une page d'erreur 404 (qu'on pourra personnaliser plus tard d'ailleurs)
-	      throw new NotFoundHttpexception('Commande "'.$id.'" inexistante.');
-	    
-	    } 
-
-		
+	 	    	    		
 			return $this->render( 'JCCommandeBundle:Commande:detail.html.twig', array('commande' => $commande ,
 																						'tabTransition' => $tabTransition) );
 	    
@@ -159,7 +174,7 @@ class CommandeController extends Controller
 
 
 			//	On verifie l'etat de la commande
-			if( ($commande->getetat() === "envoyee") || ($commande->getetat() === "Payee")){
+			if( ($commande->getEtat() === "Envoyee") || ($commande->getEtat() === "Payee")){
 				
 				//Si la commande est envoye ou payee, on ne peux pas la modifier. en renvoie donc sur la page detail
 				return $this->redirect($this->generateUrl('jc_commande_detail', array('id' => $commande->getId())));
@@ -217,7 +232,7 @@ class CommandeController extends Controller
 			   
 			    //	On enregistre l'etat de la commande
 			    $etat = $form->get('etat')->getData();
-			    $commande -> setetat($etat);
+			    $commande -> setEtat($etat);
 
                             
                 //On enregistre le lien entre le lieu de livraison et la commande,
@@ -285,22 +300,24 @@ class CommandeController extends Controller
 	            }
                  
                
-                                
-                                
-                          
-			
-				
 				
 				
 				//On enregistre les ligne de commandes entrees
 			    $nouveauTabLigneCommande = $form->get('listeLignesCommande')->getData();
 			    
+			    $montantCommande = 0;
+			    
 			    foreach($nouveauTabLigneCommande as $n){
+				    
+				    //On additionne le montant total de la commande
+				    $montantCommande += $n->getTotalTTC();
+				    
 					$n -> setCommande($commande);
 					$em->persist($n);
 			    }
 
-
+				//On remet le bon montant de la commnande
+				$commande -> setTotalTTC($montantCommande);
 					
 				$em->persist($commande);
 				$em->flush();
@@ -378,7 +395,7 @@ class CommandeController extends Controller
                                 $commande->setFournisseur($fournisseur);
                                 
                                 
-                                $commande->setetat("enregistree");
+                                $commande->setEtat("enregistree");
                                 return $commande;
                 }
         
@@ -540,7 +557,7 @@ class CommandeController extends Controller
 
 		// Creation d'un utilisateur
 		$utilisateur2 = new Utilisateur();
-		$utilisateur2 ->setNom('GeRMAIN');
+		$utilisateur2 ->setNom('GERMAIN');
 		$utilisateur2 ->setPrenom('Pierre');
 		$utilisateur2 ->setService($service2);
 		$em->persist($utilisateur2);
@@ -648,31 +665,31 @@ class CommandeController extends Controller
 				
 		
 				
-		$commande = new Commande();
-		$commande -> setVentilation("Mutualisee");
-		$commande -> setReference("ReFint78_1");
-		$commande -> setBonCoriolis("bonC 65");
-		$commande -> setengagement("engag 90");
-		$commande -> setImputation("imput 87");
-		$commande -> setFournisseur($fournisseur);
-		$commande -> setUtilisateur($utilisateur);
-		$commande -> setApplication($application);
-		$commande -> setLivraison($livraison);
-		$commande -> setetat("Enregistree");
-		$commande -> setLibelleFacturation("llll");
-        $commande -> setNomLivraison($livraison->getNom());
-        $commande -> setAdresseLivraison($livraison->getAdresse());
-        $commande -> setComplementAdresseLivraison($livraison->getComplementAdresse());
-        $commande -> setTelephoneLivraison($livraison->getTelephone());
-        $commande -> setVilleLivraison($livraison->getVille());
-        $commande -> setCodePostalLivraison($livraison->getCodePostal());
-        $commande -> setNomFournisseur($fournisseur->getNom());
-        $commande -> setAdresseFournisseur($fournisseur->getAdresse());
-        $commande -> setComplementAdresseFournisseur($fournisseur->getComplementAdresse());
-        $commande -> setTelephoneFournisseur($fournisseur->getTelephone());
-        $commande -> setVilleFournisseur($fournisseur->getVille());
-        $commande -> setCodePostalFournisseur($fournisseur->getCodePostal());
-		$em->persist($commande);
+		$commande1 = new Commande();
+		$commande1 -> setVentilation("Mutualisee");
+		$commande1 -> setReference("ReFint78_1");
+		$commande1 -> setBonCoriolis("bonC 65");
+		$commande1 -> setengagement("engag 90");
+		$commande1 -> setImputation("imput 87");
+		$commande1 -> setFournisseur($fournisseur);
+		$commande1 -> setUtilisateur($utilisateur);
+		$commande1 -> setApplication($application);
+		$commande1 -> setLivraison($livraison);
+		$commande1 -> setEtat("Enregistree");
+		$commande1 -> setLibelleFacturation("llll");
+        $commande1 -> setNomLivraison($livraison->getNom());
+        $commande1 -> setAdresseLivraison($livraison->getAdresse());
+        $commande1 -> setComplementAdresseLivraison($livraison->getComplementAdresse());
+        $commande1 -> setTelephoneLivraison($livraison->getTelephone());
+        $commande1 -> setVilleLivraison($livraison->getVille());
+        $commande1 -> setCodePostalLivraison($livraison->getCodePostal());
+        $commande1 -> setNomFournisseur($fournisseur->getNom());
+        $commande1 -> setAdresseFournisseur($fournisseur->getAdresse());
+        $commande1 -> setComplementAdresseFournisseur($fournisseur->getComplementAdresse());
+        $commande1 -> setTelephoneFournisseur($fournisseur->getTelephone());
+        $commande1 -> setVilleFournisseur($fournisseur->getVille());
+        $commande1 -> setCodePostalFournisseur($fournisseur->getCodePostal());
+		$em->persist($commande1);
 		
 		
 		$commande2 = new Commande();
@@ -685,7 +702,7 @@ class CommandeController extends Controller
 		$commande2 -> setUtilisateur($utilisateur);
 		$commande2 -> setApplication($application);
 		$commande2 -> setLivraison($livraison);
-		$commande2 -> setetat("Enregistree");
+		$commande2 -> setEtat("Enregistree");
 		$commande2 -> setLibelleFacturation("llll");
         $commande2 -> setNomLivraison($livraison->getNom());
         $commande2 -> setAdresseLivraison($livraison->getAdresse());
@@ -709,10 +726,10 @@ class CommandeController extends Controller
 		$commande3 -> setengagement("engag 90");
 		$commande3 -> setImputation("imput 87");
 		$commande3 -> setFournisseur($fournisseur2);
-		$commande3 -> setUtilisateur($utilisateur);
+		$commande3 -> setUtilisateur($utilisateur2);
 		$commande3 -> setApplication($application);
 		$commande3 -> setLivraison($livraison);
-		$commande3 -> setetat("enregistree");
+		$commande3 -> setEtat("Enregistree");
 		$commande3 -> setLibelleFacturation("llll");
         $commande3 -> setNomLivraison($livraison->getNom());
         $commande3 -> setAdresseLivraison($livraison->getAdresse());
@@ -736,10 +753,10 @@ class CommandeController extends Controller
 		$commande4 -> setengagement("engag 90");
 		$commande4 -> setImputation("imput 87");
 		$commande4 -> setFournisseur($fournisseur2);
-		$commande4 -> setUtilisateur($utilisateur);
+		$commande4 -> setUtilisateur($utilisateur2);
 		$commande4 -> setApplication($application);
 		$commande4 -> setLivraison($livraison);
-		$commande4 -> setetat("Enregistree");
+		$commande4 -> setEtat("Enregistree");
 		$commande4 -> setLibelleFacturation("llll");
         $commande4 -> setNomLivraison($livraison->getNom());
         $commande4 -> setAdresseLivraison($livraison->getAdresse());
@@ -759,24 +776,76 @@ class CommandeController extends Controller
 		
 		//On ne se sert de la table de transition QUe pour les commandes directes
 		$concerne1 = new CommandeConcerneCollectivite();
-		$concerne1 -> setRepartition('75');
-		$concerne1 -> setCommande($commande2);
+		$concerne1 -> setRepartition("Nombre d'habitant");
+		$concerne1 -> setCommande($commande1);
 		$concerne1 -> setCollectivite($coll1);
-		$em->persist($concerne1);		
-
-
+		$em->persist($concerne1);	
+		
 		$concerne2 = new CommandeConcerneCollectivite();
-		$concerne2 -> setRepartition('25');
-		$concerne2 -> setCommande($commande2);
-		$concerne2 -> setCollectivite($coll2);
-		$em->persist($concerne2);		
+		$concerne2 -> setRepartition("Nombre d'habitant");
+		$concerne2 -> setCommande($commande1);
+		$concerne2 -> setCollectivite($coll3);
+		$em->persist($concerne2);	
+		
+		$concerne4 = new CommandeConcerneCollectivite();
+		$concerne4 -> setRepartition("Nombre d'habitant");
+		$concerne4 -> setCommande($commande1);
+		$concerne4 -> setCollectivite($coll4);
+		$em->persist($concerne4);	
+		
+		$concerne5 = new CommandeConcerneCollectivite();
+		$concerne5 -> setRepartition("Nombre d'habitant");
+		$concerne5 -> setCommande($commande2);
+		$concerne5 -> setCollectivite($coll6);
+		$em->persist($concerne5);		
 
-		$concerne3 = new CommandeConcerneCollectivite();
-		$concerne3 -> setRepartition('100');
-		$concerne3 -> setCommande($commande4);
-		$concerne3 -> setCollectivite($coll5);
-		$em->persist($concerne3);
 
+		$concerne6 = new CommandeConcerneCollectivite();
+		$concerne6 -> setRepartition('25');
+		$concerne6 -> setCommande($commande2);
+		$concerne6 -> setCollectivite($coll2);
+		$em->persist($concerne6);		
+
+		$concerne7 = new CommandeConcerneCollectivite();
+		$concerne7 -> setRepartition('75');
+		$concerne7 -> setCommande($commande2);
+		$concerne7 -> setCollectivite($coll5);
+		$em->persist($concerne7);
+
+
+		$concerne8 = new CommandeConcerneCollectivite();
+		$concerne8 -> setRepartition("Nombre d'habitant");
+		$concerne8 -> setCommande($commande3);
+		$concerne8 -> setCollectivite($coll5);
+		$em->persist($concerne8);
+
+		$concerne9 = new CommandeConcerneCollectivite();
+		$concerne9 -> setRepartition("Nombre d'habitant");
+		$concerne9 -> setCommande($commande3);
+		$concerne9 -> setCollectivite($coll2);
+		$em->persist($concerne9);
+		
+		
+		$concerne10 = new CommandeConcerneCollectivite();
+		$concerne10 -> setRepartition("30");
+		$concerne10 -> setCommande($commande4);
+		$concerne10 -> setCollectivite($coll6);
+		$em->persist($concerne10);		
+
+
+		$concerne11 = new CommandeConcerneCollectivite();
+		$concerne11 -> setRepartition('30');
+		$concerne11 -> setCommande($commande4);
+		$concerne11 -> setCollectivite($coll2);
+		$em->persist($concerne11);		
+
+		$concerne12 = new CommandeConcerneCollectivite();
+		$concerne12 -> setRepartition('40');
+		$concerne12 -> setCommande($commande4);
+		$concerne12 -> setCollectivite($coll1);
+		$em->persist($concerne12);
+		
+		
 
 		//Creation des TVA
 		$tva1 = new TVA();
@@ -796,10 +865,10 @@ class CommandeController extends Controller
 		$ligneCommande -> setLibelle("Ligne 1 de la commande numero 1 pour le service bureautique");
 		$ligneCommande -> setReference("RF321BUR");
 		$ligneCommande -> setQuantite(10);
-		$ligneCommande -> setPrixUnitaire(1050,2);
-		$ligneCommande -> setTotalTTC(10502);
+		$ligneCommande -> setPrixUnitaire(13050,2);
+		$ligneCommande -> setTotalTTC(130502);
 		$ligneCommande -> setCommentaire("Aucun commentaire");
-		$ligneCommande -> setCommande($commande);
+		$ligneCommande -> setCommande($commande1);
 		$ligneCommande -> setTVA($tva1);
 		$em->persist($ligneCommande);			
 		
@@ -811,48 +880,48 @@ class CommandeController extends Controller
 		$ligneCommande2 -> setPrixUnitaire(3550,2);
 		$ligneCommande2 -> setTotalTTC(10503);
 		$ligneCommande2 -> setCommentaire("Aucun commentaire 1");
-		$ligneCommande2 -> setCommande($commande);
+		$ligneCommande2 -> setCommande($commande1);
 		$ligneCommande2 -> setTVA($tva2);
 		$em->persist($ligneCommande2);
 		
-		$commande->setTotalTTC(10502+10503);
-		$em->persist($commande);
+		$commande1->setTotalTTC(130502+10503);
+		$em->persist($commande1);
 		
 		
 		$ligneCommande3 = new LigneCommande();
 		$ligneCommande3 -> setLibelle("Ligne 1 de la commande numero 2 pour le service bureautique");
 		$ligneCommande3 -> setReference("RF321BUR");
-		$ligneCommande3 -> setQuantite(18);
-		$ligneCommande3 -> setPrixUnitaire(1050,2);
-		$ligneCommande3 -> setTotalTTC(10502);
+		$ligneCommande3 -> setQuantite(1);
+		$ligneCommande3 -> setPrixUnitaire(24050,2);
+		$ligneCommande3 -> setTotalTTC(24050,2);
 		$ligneCommande3 -> setCommentaire("Aucun commentaire");
 		$ligneCommande3 -> setCommande($commande2);
 		$ligneCommande3 -> setTVA($tva3);
 		$em->persist($ligneCommande3);			
 
-		$commande2->setTotalTTC(10502);
+		$commande2->setTotalTTC(24050,2);
 		$em->persist($commande2);
 
 
 		$ligneCommande4 = new LigneCommande();
 		$ligneCommande4 -> setLibelle("Ligne 1 de la commande numero 3 pour le service bureautique");
 		$ligneCommande4 -> setReference("RF321BUR");
-		$ligneCommande4 -> setQuantite(7);
-		$ligneCommande4 -> setPrixUnitaire(1050,2);
-		$ligneCommande4 -> setTotalTTC(10502);
+		$ligneCommande4 -> setQuantite(12);
+		$ligneCommande4 -> setPrixUnitaire(24050,2);
+		$ligneCommande4 -> setTotalTTC(288600);
 		$ligneCommande4 -> setCommentaire("Aucun commentaire");
 		$ligneCommande4 -> setCommande($commande3);
 		$ligneCommande4 -> setTVA($tva1);
 		$em->persist($ligneCommande4);			
 
-		$commande3->setTotalTTC(10502);
+		$commande3->setTotalTTC(288600);
 		$em->persist($commande3);
 
 
 		$ligneCommande5 = new LigneCommande();
 		$ligneCommande5 -> setLibelle("Ligne 1 de la commande numero 4 pour le service bureautique");
 		$ligneCommande5 -> setReference("RF321BUR");
-		$ligneCommande5 -> setQuantite(19);
+		$ligneCommande5 -> setQuantite(10);
 		$ligneCommande5 -> setPrixUnitaire(1050,2);
 		$ligneCommande5 -> setTotalTTC(10502);
 		$ligneCommande5 -> setCommentaire("Aucun commentaire");

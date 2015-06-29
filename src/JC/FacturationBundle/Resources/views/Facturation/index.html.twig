@@ -1,75 +1,55 @@
-{% extends "JCAccueilBundle::layout.html.twig" %}
+{% extends "JCFacturationBundle::layout.html.twig" %}
 
 
 {% block title %}{{ parent() }} - Facturation{% endblock %}
 
 
-{% block jcaccueil_body %}
+{% block jcfacturation_body %}
 
-  <h3>Bienvenue dans l'espace Facturation </h3>
+  	<h3>Bienvenue dans l'espace Facturation </h3>
   
+  	
+	
+
+
    
    
-<div class='row top30'>
 
-	<div class='container col-md-5'>
-		<div class='well'>
-			<legend>Infos <span class='pull-right'> {{ annee }} </span></legend>          	  				
-							
-				<p> {{infoCommandes['nombreCommandesPassees']|number_format(0, '.', ' ')}} commandes passees, pour un total de {{infoCommandes['montantCommandesPassees']|number_format(2, ',', ' ')}} € </p>
-				
-				<ul>
-					<li> {{infoCommandes['nombreCommandesDirectes']|number_format(0, '.', ' ')}} commandes directes, pour un total de {{infoCommandes['montantCommandesDirectes']|number_format(2, ',', ' ')}} € </li>
-					<li>  {{infoCommandes['nombreCommandesMutualisees']|number_format(0, '.', ' ')}} commandes directes, pour un total de {{infoCommandes['montantCommandesMutualisees']|number_format(2, ',', ' ')}} € </li>
-				</ul>
-
-				  				
-		</div>
-	</div>
-
-	<div class='container col-md-5 center'>
-		
-		<a class='btn btn-success col-md-12' href="{{ path('jc_facturation_calcul') }}"> Lancer la facturaction </a>
-		  				
-	</div>
-
-
-
-</div>
 	
 	
 	
 	
 <div>
 
-	{# On affiche les infos de chaque service #}
-	
-	{% for service in infoServices %}
-    <div class="col-md-4 text-center">
-    	<div class="panel panel-success panel-pricing">
-			
-			<div class="panel-heading">
-                <h3> {{service['nom']}} </h3>
-            </div>
-            
-            <div class="panel-body text-center">
-                <p><strong> {{service['nbCommandesPassees']}} commande(s) : {{service['montantCommandesPassees']|number_format(2, ',', ' ')}} €</strong></p>
-            </div>
-            
-            <ul class="list-group text-center">
-                <li class="list-group-item"><i class="fa fa-check"></i> Budget de l'annee : {{ service['budget']|number_format(2, ',', ' ') }} €</li>
-                <li class="list-group-item"><i class="fa fa-check"></i> Unlimited projects</li>
-                <li class="list-group-item"><i class="fa fa-check"></i> 27/7 support</li>
-            </ul>
-            
-            <div class="panel-footer">
-                <a class="btn btn-lg btn-block btn-success" href="#">BUY NOW!</a>
-            </div>
-        
-        </div>
-    </div>
-	
-	{% endfor %}
+	{# On affiche les infos de chaque collectivite #}
+	<div class="center">
+		{% for coll in infosCollectivites %}
+		    <div class="col-md-4 text-center top30">
+		    	<div class="panel panel-info panel-pricing">
+					
+					<div class="panel-heading">
+		                <h3> {{coll['nom']}} </h3>
+		            </div>
+		            
+		          
+		            
+		            <ul class="list-group text-center">
+		                <li class="list-group-item"><i class="fa fa-check"></i> {{coll['Mutualisee']|length}} commande(s) Mutualisees </li>
+		
+		                <li class="list-group-item"><i class="fa fa-check "></i> {{coll['Directe']|length}} commande(s) Directes </li>
+		
+						
+		            </ul>
+		            
+		            <div class="panel-footer">
+		                <a class="btn btn-info" href="{{ path('jc_commande_liste') }}">Lancer la facturation pour {{coll['nom']}}</a>
+		            </div>
+		        
+		        </div>
+		    </div>
+		
+		{% endfor %}
+	</div>
 </div>
 
 

@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - Liste des commandes{% endblock %}
 
 {% block jccommande_body %}
-  <h2>Afficher la liste des commandes !</h2>
+  <h2>Liste des commandes !</h2>
   
   
   
@@ -47,7 +47,7 @@
 						<td>{{ commande.utilisateur.service.nom }}</td>
 						<td>{{ commande.utilisateur.Nom }} {{ commande.utilisateur.prenom }}</td>
 						<td>{{ commande.fournisseur.nom }}</td>
-						<td>à définir</td>
+						<td>{{ commande.totalTTC|number_format(2, ',', ' ')}}</td>
 						<td> 
 						
 							{% if (commande.etat == "Envoyée") or (commande.etat == "Payée") %}
