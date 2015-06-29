@@ -6,7 +6,7 @@
 
 {% block jcfacturation_body %}
 
-  	<h3>Bienvenue dans l'espace Facturation </h3>
+  	<h3>Facturation pour l'annee {{annee}} </h3>
   
   	
 	
@@ -34,9 +34,9 @@
 		          
 		            
 		            <ul class="list-group text-center">
-		                <li class="list-group-item"><i class="fa fa-check"></i> {{coll['Mutualisee']|length}} commande(s) Mutualisees </li>
+		                <li class="list-group-item"><i class="fa fa-check"></i> {{coll['Mutualisee']}} commande(s) Mutualisees </li>
 		
-		                <li class="list-group-item"><i class="fa fa-check "></i> {{coll['Directe']|length}} commande(s) Directes </li>
+		                <li class="list-group-item"><i class="fa fa-check "></i> {{coll['Directe']}} commande(s) Directes </li>
 		
 						
 		            </ul>

@@ -15,7 +15,7 @@ class FacturationController extends Controller
 {
     
     
-    public function indexAction()
+    public function indexAction($annee)
     {
 	  	$em = $this->getDoctrine()->getManager();
 	  	
@@ -34,10 +34,10 @@ class FacturationController extends Controller
 		    $tabColl[$coll->getNom()]['nom'] = $coll->getNom();
 		    
 		    //On stockera les commande mutualisees
-   		    $tabColl[$coll->getNom()]['Mutualisee'] = array();
+   		    $tabColl[$coll->getNom()]['Mutualisee'] = 0;
 
    			//On stockera les commande directes
-   		    $tabColl[$coll->getNom()]['Directe'] = array();
+   		    $tabColl[$coll->getNom()]['Directe'] = 0;
 
 	    }
 	    
@@ -48,10 +48,10 @@ class FacturationController extends Controller
 		foreach($listeCcc as $ccc) {
 			
 			//On regarde dispatche suivant la collectivite, et suivant la ventilation de la commande
-			array_push($tabColl[$ccc->getCollectivite()->getNom()][$ccc->getCommande()->getVentilation()], $ccc);
+			$tabColl[$ccc->getCollectivite()->getNom()][$ccc->getCommande()->getVentilation()] += 1;
 		}
 
-        return $this->render('JCFacturationBundle:Facturation:index.html.twig', array('infosCollectivites'=>$tabColl));
+        return $this->render('JCFacturationBundle:Facturation:index.html.twig', array('infosCollectivites'=>$tabColl, 'annee'=>$annee));
     }
     
     
@@ -61,14 +61,17 @@ class FacturationController extends Controller
     
     
     
-    public function calculAction($annee) {
+    public function calculAction($nomCollectivite) {
+	    
+	    //Pour l'instant, le calcul se fait sur l'annee courrante
+	    $annee = date('Y');
 	    
    	    $em = $this->getDoctrine()->getManager();
 	    
-	    // On récupète toutes les commandes
-		$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->findByStatuEtAnnee("Enregistree");
+	    // On récupète toutes les ccc correspondante à la collectivite, à l'année, et au statu
+		$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->findByStatuEtAnnee("Enregistree", $annees);
 
-		// On récupète toutes les collectivites
+		// On récupère toutes la  collectivites
 		$listeCollectivites = $em->getRepository('JCCommandeBundle:Collectivite')->findAll();
 
 		
