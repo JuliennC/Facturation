@@ -1,8 +1,9 @@
 jc_facturation_homepage:
-    path:     /facturation/
+    path:     /facturation/{annee}
     defaults: { _controller: JCFacturationBundle:Facturation:index }
-
+    requirements:
+        annee:    ([0-9]+)
 
 jc_facturation_calcul:
-    path:     /facturation/calcul
+    path:     /facturation/calcul/{nomCollectivite}
     defaults: { _controller: JCFacturationBundle:Facturation:calcul }

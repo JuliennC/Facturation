@@ -35,7 +35,7 @@ class CommandeConcerneCollectiviteRepository extends EntityRepository
 		
 	}
         
-        /*
+    /*
 	*	Recherche des CommandeConcerneCollectivite avec l'id d'une commande et de la collectivite	
 	*/
         public function findCommandeConcerneCollectiviteAvecCommandeEtCollectivite($idCommande, $idCollectivite) {
@@ -43,8 +43,8 @@ class CommandeConcerneCollectiviteRepository extends EntityRepository
 	    $qb = $this->createQueryBuilder('ccc');
 
 		$qb ->where('ccc.commande = :idCommande')
-			->setParameter('idCommande', $idCommande) AND
-                    where('ccc.collectivite = :idCollectivite')
+			->setParameter('idCommande', $idCommande) 
+            ->andWhere('ccc.collectivite = :idCollectivite')
 			->setParameter('idCollectivite', $idCollectivite)
 		;
 
@@ -54,5 +54,25 @@ class CommandeConcerneCollectiviteRepository extends EntityRepository
 		
 	}
 	
+	
+	
+	/*
+	*	Recherche des CommandeConcerneCollectivite avec l'id de la collectivite, l'année
+	*/
+        /*public function findCommandeConcerneCollectiviteAvecCommandeEtCollectivite($idCommande, $idCollectivite) {
+		
+	    $qb = $this->createQueryBuilder('ccc');
+
+		$qb ->where('ccc.commande = :idCommande')
+			->setParameter('idCommande', $idCommande) 
+            ->andWhere('ccc.collectivite = :idCollectivite')
+			->setParameter('idCollectivite', $idCollectivite)
+		;
+
+		return $qb ->getQuery()
+		->getResult()
+		;
+		
+	}*/
 	
 }

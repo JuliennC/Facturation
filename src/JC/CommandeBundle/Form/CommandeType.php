@@ -58,12 +58,6 @@ class CommandeType extends AbstractType
             ->add('reference', 'text' , array('error_bubbling' => true))
             ->add('libelleFacturation', 'textarea' , array('error_bubbling' => true))
 
-            ->add('dateEnvoi', 'date', array(	'widget' => 'single_text',
-                                                'input' => 'datetime',
-                                                'format' => 'dd/MM/yyyy',
-                                                'attr' => array('class' => 'date'),
-                                                'error_bubbling' => true
-                                                ))
                                                 
             //->add('dateCreation', 'date')
             ->add('dateLivraison', 'date', array(	'widget' => 'single_text',
