@@ -7,7 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use JC\AccueilBundle\Entity\Recherche;
-
+use JC\CommandeBundle\Entity\EtatCommande;
+use JC\CommandeBundle\Entity\CommandePasseEtat;
 
 class AccueilController extends Controller
 {
@@ -59,7 +60,7 @@ class AccueilController extends Controller
 		foreach($listeCommandes as $commande){
 			
 			//Si la commande a ete passee dans l'annee courrante
-			if ($commande->getDateCreation() > $date){
+			if ($commande->getCommandePasseEtat("Creee")->getDatePassage() > $date){
 				
 				//On calcule le nombre total de commandes 
 				$infoCommandes['nombreCommandesPassees'] += 1;

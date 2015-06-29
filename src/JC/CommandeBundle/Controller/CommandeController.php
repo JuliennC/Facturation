@@ -16,17 +16,17 @@ use JC\CommandeBundle\Entity\Livraison;
 use JC\CommandeBundle\Entity\CleRepartition;
 use JC\CommandeBundle\Entity\Collectivite;
 use JC\CommandeBundle\Entity\CommandeConcerneCollectivite;
-use JC\CommandeBundle\Eentity\EtatCommande;
 use JC\CommandeBundle\Entity\TVA;
 use JC\CommandeBundle\Entity\Service;
 use JC\CommandeBundle\Entity\Budget;
 use JC\CommandeBundle\Entity\Annee;
+use JC\CommandeBundle\Entity\EtatCommande;
+use JC\CommandeBundle\Entity\CommandePasseEtat;
 
 use JC\CommandeBundle\Form\CommandeType;
 
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-//	    "components/jquery": "~2.1",
 
 
 
@@ -75,7 +75,7 @@ class CommandeController extends Controller
 	*/
 	  public function detailAction($id)
 	  {
-	    
+	   
 	    
 	    //---------- Recuperation de la commande ----------
 	    
@@ -86,7 +86,7 @@ class CommandeController extends Controller
 
 		// On recupere l'entite correspondante Ã  l'id $id
 		$commande = $repository->find($id);
-		
+
 		//S'il n'y a pas de commande correspondante ˆ l'id
 	    if ($commande === null) {
 	      // On declenche une exception NotFoundHttpexception
@@ -148,8 +148,16 @@ class CommandeController extends Controller
 
 			//On cree la commande
 			$commande = new Commande(); 
+            
+            $etatCree = new CommandePasseEtat();
+            $etatCree -> setCommande($commande);
+            $etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle("Creee"));
+            $etatCree -> setDatePassage(new \Datetime());
+ 			
+ 			$commande -> addEtat($etatCree);
+
                         
-                        return $this->miseenPlaceForm($request, $commande);
+            return $this->miseenPlaceForm($request, $commande);
 	  }
 	  
 	  
@@ -232,19 +240,17 @@ class CommandeController extends Controller
 			   
 			    //	On enregistre l'etat de la commande
 			    $etat = $form->get('etat')->getData();
-			    $commande -> setEtat($etat);
 
                             
                 //On enregistre le lien entre le lieu de livraison et la commande,
                 // et le lien du fournisseur et la commande
-                if($etat === "Cree"){
-                    creeeToenregistree($commande);
+
+                if($etat === "Creee"){
+                    $this->creeeToEnregistree($commande);
+                    $etat = "Enregistree";
                 }
-                         
-                            
-                            
-				
-        		
+                        
+                
                             
                 //On supprime toutes les villes concernees
                 foreach($cCCDejaBDD as $coll){
@@ -320,8 +326,21 @@ class CommandeController extends Controller
 				$commande -> setTotalTTC($montantCommande);
 					
 				$em->persist($commande);
-				$em->flush();
+        		$em->flush();
                                 
+                                 
+                $etats = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findEtatPourCommande($commande, $etat);            	
+
+            	if(sizeof($etats) === 0){ 
+					$etatCree = new CommandePasseEtat();
+					$etatCree -> setCommande($commande);
+					$etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle($etat));
+					$etatCree -> setDatePassage(new \Datetime());
+					$em->persist($etatCree);
+        		}
+        		$em->flush();
+
+        		
                                 //On redirige, il ne faut donc que l'id de la commande
 				return $this->redirect($this->generateUrl('jc_commande_modification', array('id'=>$commande->getId())));
 
@@ -350,8 +369,9 @@ class CommandeController extends Controller
                 * elle enregistre les changements dans les tables livraison et fournisseur
                 * elle retourne la commande
 	  	*/
-	  	public function creeeToenregistree($commande) {
-                    
+	  	public function creeeToEnregistree($commande) {
+                    			$em = $this->getDoctrine()->getManager();
+
                     // ----- On enregistre le lieux -----
                                 // On recherche si un lieu existe deja avec ce nom
                                 $liste = $em->getRepository('JCCommandeBundle:Livraison')->findByNom($commande->getNomLivraison());
@@ -374,9 +394,9 @@ class CommandeController extends Controller
                                 $commande->setLivraison($lieu);
                                 
                                 // ----- On enregistre le fournsieeur -----
-                                // On recherche si un lieu existe deja avec ce nom
+                                // On recherche si un fournisseur existe deja avec ce nom
                                 $liste = $em->getRepository('JCCommandeBundle:Fournisseur')->findByNom($commande->getNomFournisseur());
-                                
+
                                 // Si oui, on le met a jour
                                 if(sizeof($liste) > 0) {
                                     $fournisseur = $liste[0];
@@ -391,11 +411,11 @@ class CommandeController extends Controller
                                 $fournisseur->setVille($commande->getVilleFournisseur());
                                 $fournisseur->setTelephone($commande->getTelephoneFournisseur());
                                 $em->persist($fournisseur);
-                                                                    
+                                
                                 $commande->setFournisseur($fournisseur);
                                 
                                 
-                                $commande->setEtat("enregistree");
+                                
                                 return $commande;
                 }
         
@@ -661,10 +681,10 @@ class CommandeController extends Controller
 
 		$coll6 = new Collectivite();
 		$coll6 -> setNom('essey-les-Nancy');
-		$em->persist($coll6);		
-				
+		$em->persist($coll6);	
 		
-				
+	
+
 		$commande1 = new Commande();
 		$commande1 -> setVentilation("Mutualisee");
 		$commande1 -> setReference("ReFint78_1");
@@ -675,7 +695,6 @@ class CommandeController extends Controller
 		$commande1 -> setUtilisateur($utilisateur);
 		$commande1 -> setApplication($application);
 		$commande1 -> setLivraison($livraison);
-		$commande1 -> setEtat("Enregistree");
 		$commande1 -> setLibelleFacturation("llll");
         $commande1 -> setNomLivraison($livraison->getNom());
         $commande1 -> setAdresseLivraison($livraison->getAdresse());
@@ -702,7 +721,6 @@ class CommandeController extends Controller
 		$commande2 -> setUtilisateur($utilisateur);
 		$commande2 -> setApplication($application);
 		$commande2 -> setLivraison($livraison);
-		$commande2 -> setEtat("Enregistree");
 		$commande2 -> setLibelleFacturation("llll");
         $commande2 -> setNomLivraison($livraison->getNom());
         $commande2 -> setAdresseLivraison($livraison->getAdresse());
@@ -729,7 +747,6 @@ class CommandeController extends Controller
 		$commande3 -> setUtilisateur($utilisateur2);
 		$commande3 -> setApplication($application);
 		$commande3 -> setLivraison($livraison);
-		$commande3 -> setEtat("Enregistree");
 		$commande3 -> setLibelleFacturation("llll");
         $commande3 -> setNomLivraison($livraison->getNom());
         $commande3 -> setAdresseLivraison($livraison->getAdresse());
@@ -756,7 +773,6 @@ class CommandeController extends Controller
 		$commande4 -> setUtilisateur($utilisateur2);
 		$commande4 -> setApplication($application);
 		$commande4 -> setLivraison($livraison);
-		$commande4 -> setEtat("Enregistree");
 		$commande4 -> setLibelleFacturation("llll");
         $commande4 -> setNomLivraison($livraison->getNom());
         $commande4 -> setAdresseLivraison($livraison->getAdresse());
@@ -845,6 +861,73 @@ class CommandeController extends Controller
 		$concerne12 -> setCollectivite($coll1);
 		$em->persist($concerne12);
 		
+		// Creation des etats
+		$etat1 = new EtatCommande();
+		$etat1 -> setLibelle("Creee");
+		$em->persist($etat1);		
+
+		$etat2 = new EtatCommande();
+		$etat2 -> setLibelle("Enregistree");
+		$em->persist($etat2);		
+
+		$etat3 = new EtatCommande();
+		$etat3 -> setLibelle("Envoyee");
+		$em->persist($etat3);		
+
+		$etat4 = new EtatCommande();
+		$etat4 -> setLibelle("Payee");
+		$em->persist($etat4);
+		
+		
+		//On met les CommandePasseEtat
+		$cpe = new CommandePasseEtat();
+		$cpe -> setCommande($commande1);
+		$cpe -> setEtat($etat1);
+		$cpe -> setDatePassage(new \Datetime());
+		$em->persist($cpe);
+		
+		$cpe2 = new CommandePasseEtat();
+		$cpe2 -> setCommande($commande1);
+		$cpe2 -> setEtat($etat2);
+		$cpe2 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe2);
+		
+		$cpe3 = new CommandePasseEtat();
+		$cpe3 -> setCommande($commande2);
+		$cpe3 -> setEtat($etat1);
+		$cpe3 -> setDatePassage(new \Datetime());
+		$em->persist($cpe3);
+		
+		$cpe4 = new CommandePasseEtat();
+		$cpe4 -> setCommande($commande2);
+		$cpe4 -> setEtat($etat2);
+		$cpe4 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe4);
+		
+		
+		$cpe5 = new CommandePasseEtat();
+		$cpe5 -> setCommande($commande3);
+		$cpe5 -> setEtat($etat1);
+		$cpe5 -> setDatePassage(new \Datetime());
+		$em->persist($cpe5);
+		
+		$cpe6 = new CommandePasseEtat();
+		$cpe6 -> setCommande($commande3);
+		$cpe6 -> setEtat($etat2);
+		$cpe6 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe6);
+		
+		$cpe7 = new CommandePasseEtat();
+		$cpe7 -> setCommande($commande4);
+		$cpe7 -> setEtat($etat1);
+		$cpe7 -> setDatePassage(new \Datetime());
+		$em->persist($cpe7);
+		
+		$cpe8 = new CommandePasseEtat();
+		$cpe8 -> setCommande($commande4);
+		$cpe8 -> setEtat($etat2);
+		$cpe8 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe8);
 		
 
 		//Creation des TVA

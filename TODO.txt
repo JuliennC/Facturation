@@ -15,15 +15,15 @@ TODO liste :
 	-> FAIT Changer le "no results found" de la recherche des tables (mettre en francais)
 	-> FAIT les commande direct (voir pour faire une collection dans le form, plus simple peut être)
 	-> FAIT Terminer la création d'une commande
+	-> FAIT Gérer les services avec leur budget par année
 
 	-> Vérifier dans validator qu’une commande qui passe envoyé à bien n° coriolis etc
-		(voir avec severine) + Savoir à quel stade de la commande le num coriolis 		doit être entré, etc
+		(voir avec Severine) + Savoir à quel stade de la commande le num coriolis 		doit être entré, etc
 	
-		-> Séparer la liste des commandes en « commande enregistrée », « commande 	envoyée » etc…
 
 
-	-> Faire : Voire pour les placeholder dans IE
 
+	-> lors de passage par param, faire avec ID et non pas nom (éviter les problemes d’encodage)
 	
 	
 	-> faire une table état (et ainsi éviter que de mauvais paramêtre au changement d’état ne se glisse
@@ -32,5 +32,5 @@ TODO liste :
 
 	-> Faire une méthode qui calcule le cout d'une commande pour une collectivite donée
 	-> gérer les années (pour commande, informations collectivite, etc)
-	-> Gérer les services avec leur budget par année
+	
 	-> formatter le total d’une commande dans form.html.twig

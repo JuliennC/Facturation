@@ -32,21 +32,9 @@ class Commande
      */
     private $reference;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="Date_Envoi", type="datetime", nullable=true)
-	 * @Assert\DateTime()
-     */
-    private $dateEnvoi;
+    
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="Date_Creation", type="datetime", nullable=false)
-	 * @Assert\DateTime()
-     */
-    private $dateCreation;
+    
 
     /**
      * @var \DateTime
@@ -101,12 +89,6 @@ class Commande
     private $libelleFacturation;
 
 
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="etat", type="string", length=255, nullable=false)
-     */
-    private $etat;
 
 	/**
      * @var string
@@ -126,7 +108,7 @@ class Commande
    private $utilisateur;
 
 
-   /*
+   /**
    * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Application", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
    */
@@ -406,8 +388,16 @@ class Commande
      */
     private $telephoneLivraison;
 
+
+
+
    
-  /**
+   
+   
+   
+   
+   
+   /**
      * Set nomLivraison
      *
      * @param string $nomLivraison
@@ -558,6 +548,12 @@ class Commande
   
 
 
+	/**
+   * @ORM\OneToMany(targetEntity="JC\CommandeBundle\Entity\CommandePasseEtat", mappedBy="commande", cascade={"persist"})
+   */
+   private $etats;
+   
+   
 // FIN DES COLONNES - DEBUT PROPRIETE AUTRE
 
 	
@@ -569,19 +565,15 @@ class Commande
 // FONCTIONS 
 
 public function __construct() {
-
-	    // La date de création est la date d'aujourd'hui
-		$this->dateCreation = new \Datetime();
-		
-		$this->etat = "Creee";
-		
+				
 		$this->totalTTC = "0";
 
         $this->listelignesCommande = new ArrayCollection();
         
         $this->ventilation = "Directe";
-
-	}
+        
+        $this->etats = new ArrayCollection();
+}
 
 
 
@@ -590,7 +582,49 @@ public function __construct() {
 
 // GETTER ET SETTER
 
+	public function addEtat(CommandePasseEtat $etat){
+		$this->etats->add($etat);
+	}
 
+
+	public function getEtat(){
+		$etatID = 0;
+		$etat = null;
+		
+		foreach($this->etats as $e){
+			if($e->getEtat()->getId() >= $etatID){
+				$etatID = $e->getEtat()->getId();
+				$etat = $e;
+			}
+		}
+		
+		return $e->getEtat()->getLibelle();
+	}
+
+
+	public function getDateEnvoi(){
+		return $this->getCommandePasseEtat("Envoyee");
+	}
+
+	public function getDateCreation(){
+		return $this->getCommandePasseEtat("Cree");
+	}
+
+
+	/**
+     * Get etat
+     *
+     * @return CommandePasseEtat 
+     */
+    public function getCommandePasseEtat($etat)
+    {
+        foreach($this->etats as $e){
+	        if($e->getEtat()->getLibelle() === $etat){
+		        return $e->getDatePassage();
+	        }
+        }
+        
+    }
 	
 
     /**
@@ -626,40 +660,9 @@ public function __construct() {
         return $this->reference;
     }
 
-    /**
-     * Set dateEnvoi
-     *
-     * @param \DateTime $dateEnvoi
-     * @return Commande
-     */
-    public function setDateEnvoi($dateEnvoi)
-    {
-        $this->dateEnvoi = $dateEnvoi;
-
-        return $this;
-    }
-
-    /**
-     * Get dateEnvoi
-     *
-     * @return \DateTime 
-     */
-    public function getDateEnvoi()
-    {
-        return $this->dateEnvoi;
-    }
-
-   
     
-    /**
-     * Get dateCreation
-     *
-     * @return \DateTime 
-     */
-    public function getDateCreation()
-    {
-        return $this->dateCreation;
-    }
+
+    
 
     /**
      * Set dateLivraison
@@ -937,30 +940,6 @@ public function __construct() {
 
 
 
-	 /**
-     * Set etat
-     *
-     * @param string
-     * @return Commande
-     */
-    public function setEtat($etat)
-    {
-        $this->etat = $etat;
-
-        return $this;
-    }
-
-    /**
-     * Get etat
-     *
-     * @return string 
-     */
-    public function getEtat()
-    {
-        return $this->etat;
-    }
-
-
 	/**
      * Set libelleFacturation
      *
@@ -984,5 +963,8 @@ public function __construct() {
         return $this->libelleFacturation;
     }
 
+
+	
+	 
 
 }

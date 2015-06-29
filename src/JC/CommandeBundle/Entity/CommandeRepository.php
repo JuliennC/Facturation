@@ -26,7 +26,7 @@ class CommandeRepository extends EntityRepository
 	}
 
 
-	public function findByStatuEtAnnee($statu, $annee){
+	/*public function findByStatuEtAnnee($statu, $annee){
 		
 		return $this
 		->createQueryBuilder('c')
@@ -38,7 +38,7 @@ class CommandeRepository extends EntityRepository
 		->getResult()
 
 		;
-	}
+	}*/
 
 
 
