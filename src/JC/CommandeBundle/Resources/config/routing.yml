@@ -1,5 +1,5 @@
 jc_commande_liste:
-    path:      /commande/{service}
+    path:      /commande/liste/{service}
     defaults:  { _controller: JCCommandeBundle:Commande:liste, service: html}
     
     

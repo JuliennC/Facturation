@@ -27,7 +27,6 @@ use JC\CommandeBundle\Form\CommandeType;
 
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-//	    "components/jquery": "~2.1",
 
 
 
@@ -149,8 +148,16 @@ class CommandeController extends Controller
 
 			//On cree la commande
 			$commande = new Commande(); 
+            
+            $etatCree = new CommandePasseEtat();
+            $etatCree -> setCommande($commande);
+            $etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle("Creee"));
+            $etatCree -> setDatePassage(new \Datetime());
+ 			
+ 			$commande -> addEtat($etatCree);
+
                         
-                        return $this->miseenPlaceForm($request, $commande);
+            return $this->miseenPlaceForm($request, $commande);
 	  }
 	  
 	  
@@ -233,24 +240,17 @@ class CommandeController extends Controller
 			   
 			    //	On enregistre l'etat de la commande
 			    $etat = $form->get('etat')->getData();
-			    
-			    $nvlEtat = new CommandePasseEtat();
-			    $nvlEtat -> setDatePassage(new \Datetime());
-			    $nvlEtat -> setCommande($commande);
-			    $nvlEtat -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle($etat));
-			    $em -> persist($nvlEtat);
 
                             
                 //On enregistre le lien entre le lieu de livraison et la commande,
                 // et le lien du fournisseur et la commande
-                if($etat === "Cree"){
-                    creeeToenregistree($commande);
+
+                if($etat === "Creee"){
+                    $this->creeeToEnregistree($commande);
+                    $etat = "Enregistree";
                 }
-                         
-                            
-                            
-				
-        		
+                        
+                
                             
                 //On supprime toutes les villes concernees
                 foreach($cCCDejaBDD as $coll){
@@ -326,8 +326,21 @@ class CommandeController extends Controller
 				$commande -> setTotalTTC($montantCommande);
 					
 				$em->persist($commande);
-				$em->flush();
+        		$em->flush();
                                 
+                                 
+                $etats = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findEtatPourCommande($commande, $etat);            	
+
+            	if(sizeof($etats) === 0){ 
+					$etatCree = new CommandePasseEtat();
+					$etatCree -> setCommande($commande);
+					$etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle($etat));
+					$etatCree -> setDatePassage(new \Datetime());
+					$em->persist($etatCree);
+        		}
+        		$em->flush();
+
+        		
                                 //On redirige, il ne faut donc que l'id de la commande
 				return $this->redirect($this->generateUrl('jc_commande_modification', array('id'=>$commande->getId())));
 
@@ -356,8 +369,9 @@ class CommandeController extends Controller
                 * elle enregistre les changements dans les tables livraison et fournisseur
                 * elle retourne la commande
 	  	*/
-	  	public function creeeToenregistree($commande) {
-                    
+	  	public function creeeToEnregistree($commande) {
+                    			$em = $this->getDoctrine()->getManager();
+
                     // ----- On enregistre le lieux -----
                                 // On recherche si un lieu existe deja avec ce nom
                                 $liste = $em->getRepository('JCCommandeBundle:Livraison')->findByNom($commande->getNomLivraison());
@@ -380,9 +394,9 @@ class CommandeController extends Controller
                                 $commande->setLivraison($lieu);
                                 
                                 // ----- On enregistre le fournsieeur -----
-                                // On recherche si un lieu existe deja avec ce nom
+                                // On recherche si un fournisseur existe deja avec ce nom
                                 $liste = $em->getRepository('JCCommandeBundle:Fournisseur')->findByNom($commande->getNomFournisseur());
-                                
+
                                 // Si oui, on le met a jour
                                 if(sizeof($liste) > 0) {
                                     $fournisseur = $liste[0];
@@ -397,11 +411,11 @@ class CommandeController extends Controller
                                 $fournisseur->setVille($commande->getVilleFournisseur());
                                 $fournisseur->setTelephone($commande->getTelephoneFournisseur());
                                 $em->persist($fournisseur);
-                                                                    
+                                
                                 $commande->setFournisseur($fournisseur);
                                 
                                 
-                                $commande->setEtat("enregistree");
+                                
                                 return $commande;
                 }
         
