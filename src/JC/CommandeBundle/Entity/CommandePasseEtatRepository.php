@@ -44,4 +44,20 @@ class CommandePasseEtatRepository extends EntityRepository
 	}
 
 
+
+public function findPasseEtatDansLannee($etat, $annee) {
+
+	    return $qb = $this
+	    	->createQueryBuilder('cpe')
+			->leftJoin('cpe.etat','ec')
+			->where('ec.libelle = :etat')
+			->setParameter('etat', $etat) 
+            ->andWhere('cpe.datePassage > :annee')
+			->setParameter('annee', $annee)
+			->getQuery()
+	    	->getResult()
+	    	;
+	}
+	
+	
 }

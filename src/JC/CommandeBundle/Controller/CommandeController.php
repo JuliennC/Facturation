@@ -422,7 +422,7 @@ class CommandeController extends Controller
         
 	
 	  	/*
-	  	*		Fonction qui retourne les applications correspondantes Ã  une activite  
+	  	*		Fonction qui retourne les TVA
 	  	*/
 	  	public function getTVAAction() {
 		  
@@ -521,7 +521,41 @@ class CommandeController extends Controller
 	  	  
 	  	  
 	  	  
-	  	  
+	  	  /*
+	  	*		Fonction qui marque une commande ˆ payŽe
+	  	*/
+	  	public function marqueCommandePayeeAction($id) {
+		  
+		  	$request = $this->container->get('request');
+
+	  		if($request->isXmlHttpRequest() ) {
+		    
+	
+				$em = $this->getDoctrine()->getManager();
+	
+	            $com = $em->getRepository('JCCommandeBundle:Commande')->findOneById($id) ;
+				
+				$etatCree = new CommandePasseEtat();
+				$etatCree -> setCommande($com);
+				$etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle("Payee"));
+				$etatCree -> setDatePassage(new \Datetime());
+				$em->persist($etatCree);
+				
+				$em->flush();
+				//On prepare la reponse
+				$response = new JsonResponse(true);
+																			
+	            return $response;
+
+
+            }  else {
+	            
+	            $response = new JsonResponse("Non non ..");
+																			
+	            return $response;
+            }
+   	        	
+		}
 	  	  
 	  	  
 	  	  

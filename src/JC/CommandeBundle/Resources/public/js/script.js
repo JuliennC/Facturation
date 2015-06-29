@@ -47,12 +47,34 @@ function remetValeur(nomColl, idColl){
 	*	Fonction appel√© lorsque l'utilisateur veut changer l'etat d'une commmande, 
 	*	Elle envoie la requete et indique la r√©ponse
 	*/
-function changementEtatCommande(etatC){
-	  
-	$(".hidden_etat").attr('value',etatC);
+function changementEtatCommande(idC, etatC){
+	
+	if(etatC == "Payee"){
+		
+		//On appelle la route qui va mettre la commande à payée
+		$.ajax({
+				type: "POST",
+				url: Routing.generate('jc_commande_marque_payee'),
+				data: "id="+idC,
+				success: function(json){	
+	   			
+	           $.each(json, function(index, value){
+			   
+			   		alert(value);
+	
+				})
+	
+	        }
+	    });    
+	
+	
+	} else {
+		
+		$(".hidden_etat").attr('value',etatC);
 
-	$(".save").click();
+		$(".save").click();
 		   
+	}  
 }
    
 
