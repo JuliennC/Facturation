@@ -108,7 +108,7 @@ class Commande
    private $utilisateur;
 
 
-   /*
+   /**
    * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Application", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
    */
@@ -549,7 +549,7 @@ class Commande
 
 
 	/**
-   * @ORM\OneToMany(targetEntity="JC\CommandeBundle\Entity\CommandePasseEtat", mappedBy="commande")
+   * @ORM\OneToMany(targetEntity="JC\CommandeBundle\Entity\CommandePasseEtat", mappedBy="commande", cascade={"persist"})
    */
    private $etats;
    
@@ -582,6 +582,9 @@ public function __construct() {
 
 // GETTER ET SETTER
 
+	public function addEtat(CommandePasseEtat $etat){
+		$this->etats->add($etat);
+	}
 
 
 	public function getEtat(){
@@ -589,8 +592,8 @@ public function __construct() {
 		$etat = null;
 		
 		foreach($this->etats as $e){
-			if($e->getId() >= $etatID){
-				$etatID = $e->getId();
+			if($e->getEtat()->getId() >= $etatID){
+				$etatID = $e->getEtat()->getId();
 				$etat = $e;
 			}
 		}
@@ -617,7 +620,7 @@ public function __construct() {
     {
         foreach($this->etats as $e){
 	        if($e->getEtat()->getLibelle() === $etat){
-		        return $e;
+		        return $e->getDatePassage();
 	        }
         }
         

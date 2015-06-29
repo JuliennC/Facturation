@@ -7,14 +7,14 @@
 {% block jccommande_body %}
 
 	<div class='row'>
-		<div class='h3 col-md-6'>Modification d'une commande</div>
+		<div class='h3 col-md-6'>Detail de la commande n°{{commande.id}}</div>
 		<div class='pull-right  col-md-6'> 
 			
 			<p class='col-md-5 h3'>Etat : {{commande.etat}} </p>
 	
-			{# ----- Si la commande est "Envoyée", on propose de la passer "Payée" ----- #}
+			{# ----- Si la commande est "Envoyee", on propose de la passer "Payee" ----- #}
 					
-			{% if commande.etat == "Envoyée" %}
+			{% if commande.etat == "Envoyee" %}
 				<button class='btn btn-warning col-md-3' data-toggle="modal" data-target="#modalPayer">Payer</button>
 							
 				<!-- Modal -->
@@ -26,12 +26,12 @@
 							    <h4 class="modal-title">Êtes-vous sûr ?</h4>
 							</div>
 							<div class="modal-body">
-								<p>En marquant cette commande comme "Payée" vous ne pourrez-plus revenir à un état précédent.</p>
+								<p>En marquant cette commande comme "Payee" vous ne pourrez-plus revenir à un état précédent.</p>
 								<p>Êtes-vous sur de vouloir changer le statut de la commande ?</p>
 							</div>
 							<div class="modal-footer">
 					        	<button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
-								<button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande('Payée')">Confirmer</button>
+								<button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande('Payee')">Confirmer</button>
 							</div>
 						</div>
 					</div>
@@ -142,7 +142,13 @@
 
 	<div class='container col-md-offset-1 col-md-10 top30'>
 		<div class='well'>
-			<legend>Ventilation : {{ commande.ventilation }} <span class='pull-right'>Clé de répartition : {{ commande.application.cleRepartition.nom }} </span></legend>
+			<legend>Ventilation : {{ commande.ventilation }} <span class='pull-right'>
+			
+				{% if commande.ventilation == "Mutualisee" %}
+					Clé de répartition : {{ commande.application.cleRepartition.nom }} 
+				{% endif %}
+				
+				</span></legend>
 			
 			
 			{% set i = 0 %}
@@ -160,7 +166,7 @@
 			
 				{% set i = i+1 %}
 				
-					<p class='col-md-3 center'> {{ transition.collectivite.nom }} : {{ transition.pourcentage }}%
+					<p class='col-md-3 center'> {{ transition.collectivite.nom }} {% if commande.ventilation == "Directe" %} : {{ transition.repartition }} % {% endif %}
 				
 				{%if i == 4 %}					
 					</div>

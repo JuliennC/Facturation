@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CommandePasseEtat
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="JC\CommandeBundle\Entity\CommandePasseEtatRepository")
  */
 class CommandePasseEtat
 {
@@ -35,19 +35,17 @@ class CommandePasseEtat
 
 
    /**
-   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Commande", inversedBy="etats")
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Commande", inversedBy="etats", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
    */
    private $commande;
 
 
    /**
-   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\EtatCommande")
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\EtatCommande", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
    */
    private $etat;
-
-
 
 
 
@@ -87,9 +85,9 @@ class CommandePasseEtat
     {
         return $this->datePassage;
     }
-    
-    
-    /**
+
+
+	 /**
      * Set commande
      *
      * @param Commande 
@@ -138,6 +136,7 @@ class CommandePasseEtat
     {
         return $this->etat;
     }
+
 
 
 }
