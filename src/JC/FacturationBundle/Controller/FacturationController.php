@@ -95,7 +95,7 @@ class FacturationController extends Controller
 	    //On recupere les commandes concernant la collectivite
 	    // (On ne passe pas par CommandePasseEtat car il y a plus de CommandePasseEtat(Payee) que de CommandeConcerne(Collectivite))
 	    $listeCCC = $em->getRepository('JCCommandeBundle:Commande')->findCommandePourCollectiviteAvecStatutPourAnnee($collectivite, "Payee", $annee);  
-
+		
 		
 		//On crée le tableau qui contiendra les données
 		$infosColl = array();
@@ -108,10 +108,10 @@ class FacturationController extends Controller
 		
 		//On récupere les infos de la collectivite (clés de repartition)
 		$listInfosColl = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findToutesInfosPourCollectiviteEtAnnee($collectivite, $annee);
-		
+
 		//On stock les infos
 		foreach($listInfosColl as $info){
-			$infosColl[$info->getCleRepartition()->getNom()] = $info->getNombre();
+			$infosColl[$info->getCleRepartition()->getNom()] = $info;
 		}
 		
 		
@@ -149,7 +149,7 @@ class FacturationController extends Controller
 						
 						
 						
-						
+						$tabCommande[$commande->getId()]['repartition'] = "a définir";
 						
 						
 						
@@ -162,19 +162,30 @@ class FacturationController extends Controller
 					//			ratio = nbTotalHabitant / nbTotalHabitant_Collectivite_x
 					} else {
 						
-						echo("nb : ".$infosColl[$commande->getApplication()->getCleRepartition()->getNom()]);
+						//On récupere l'InformationCollectivite
+						$info = $infosColl[$commande->getApplication()->getCleRepartition()->getNom()];
+
+						//On récupere la "somme des clés", ceci afin de faire un ratio pour la collectivite
+						$totalCle = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findSommeDeCleEtAnnee($info->getCleRepartition(), $annee)[1];
+
+						//On fait le ratio
+						$ratio = $info->getNombre() / $totalCle;
 						
-						
+						//On calcule le montant à payer grâce au ratio
+						$montant = $ratio * $commande->getTotalTTC();
+					
+						//On stocke le ratio
+						$tabCommande[$commande->getId()]['repartition'] = ($ratio*100);
 					}
 					
 					
 
 
 					//On met les infos
-					$infosColl['montantMutualisees'] += $commande->getTotalTTC();
+					$infosColl['montantMutualisees'] += $montant;
 					$infosColl['nbMutualisees'] += 1;
-					$tabCommande[$commande->getId()]['montantAPayer'] = "A calculer";
-					$tabCommande[$commande->getId()]['repartition'] = $ccc->getRepartition();
+					$tabCommande[$commande->getId()]['montantAPayer'] = $montant;
+					//$tabCommande[$commande->getId()]['repartition'] = $ccc->getRepartition();
 				
 				
 				//Sinon, si c'est une commande directe
@@ -190,7 +201,7 @@ class FacturationController extends Controller
 					$infosColl['montantDirectes'] += $montant;
 					$infosColl['nbDirectes'] += 1;
 					$tabCommande[$commande->getId()]['montantAPayer'] = $montant;
-					$tabCommande[$commande->getId()]['repartition'] = $ccc->getRepartition()." %";
+					$tabCommande[$commande->getId()]['repartition'] = $ccc->getRepartition();
 				}			
 			
 			

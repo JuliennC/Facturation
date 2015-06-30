@@ -1012,6 +1012,12 @@ class CommandeController extends Controller
 		$cpe7 -> setDatePassage(new \Datetime());
 		$em -> persist($cpe7);
 		
+		$cpe7_bis = new CommandePasseEtat();
+		$cpe7_bis -> setCommande($commande2);
+		$cpe7_bis -> setEtat($etat4);
+		$cpe7_bis -> setDatePassage(new \Datetime());
+		$em -> persist($cpe7_bis);
+		
 		$cpe8 = new CommandePasseEtat();
 		$cpe8 -> setCommande($commande2);
 		$cpe8 -> setEtat($etat3);

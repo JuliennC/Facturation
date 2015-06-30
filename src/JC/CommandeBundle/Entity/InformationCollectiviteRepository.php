@@ -50,4 +50,24 @@ class InformationCollectiviteRepository extends EntityRepository
 	}
 	
 	
+	
+	public function findSommeDeCleEtAnnee($cle, $annee){
+		
+		return $qb = $this
+	    	->createQueryBuilder('ic')
+	    	->select('SUM(ic.nombre)')
+	    	
+			->andWhere('ic.cleRepartition = :cle')
+           	->setParameter('cle', $cle)
+           	
+           	->andWhere('ic.annee = :annee')
+           	->setParameter('annee', $annee)
+			
+			->getQuery()
+	    	->getSingleResult()
+	    	;
+	}
+	
+	
+	
 }

@@ -12,8 +12,8 @@
 <div class='container top30'>
 	
 	<div class="well">
-		<p> {{infosColl['nbMutualisees']}} commandes mutualisée(s), soit un total de {{infosColl['montantMutualisees']}} €
-		<p> {{infosColl['nbDirectes']}} commandes directe(s), soit un total de {{infosColl['montantDirectes']}} €
+		<p> {{infosColl['nbMutualisees']}} commandes mutualisée(s), soit un total de {{infosColl['montantMutualisees']|number_format(2, ',', ' ') }} €
+		<p> {{infosColl['nbDirectes']}} commandes directe(s), soit un total de {{infosColl['montantDirectes']|number_format(2, ',', ' ') }} €
 	</div>
 </div>
 
@@ -53,9 +53,9 @@
 						<td>{{ commande['ventilation'] }}</td>
 						<td>{{ commande['activite'] }}</td>
 						<td>{{ commande['dateCreation']|date('d/m/Y') }}</td>
-						<td>{{ commande['montant'] }}</td>
-						<td>{{ commande['repartition'] }}</td>
-						<td>{{ commande['montantAPayer'] }}</td>
+						<td>{{ commande['montant']|number_format(2, ',', ' ') }}</td>
+						<td>{{ commande['repartition']|number_format(2, ',', ' ') }} %</td>
+						<td>{{ commande['montantAPayer']|number_format(2, ',', ' ') }} €</td>
 						<td> <a class='btn btn-info col-md-10 col-md-offset-1' href="{{ path('jc_commande_detail', {'id': commande['id']}) }}" >Voir détail</a> </td>
 
 					</tr>
