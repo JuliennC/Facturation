@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new JC\AccueilBundle\JCAccueilBundle(),
             new JC\FacturationBundle\JCFacturationBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new JC\AdminBundle\JCAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

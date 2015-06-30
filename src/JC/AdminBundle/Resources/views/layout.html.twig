@@ -1,0 +1,35 @@
+{% extends "::layout.html.twig" %}
+
+{% block import %}
+	{{ parent() }}
+	    
+   {% stylesheets filter='cssrewrite' '@JCAdminBundle/Resources/public/css/*' %}
+
+     	<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+
+   	{% endstylesheets %}
+   	
+   	
+   	{% javascripts '@JCAdminBundle/Resources/public/js/*' %}
+    	<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+
+
+{% endblock %}
+
+
+{% block title %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
+
+
+  {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+  {% block jcadmin_body %}
+
+  {% endblock %}
+
+{% endblock %}

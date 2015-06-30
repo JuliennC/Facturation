@@ -1,3 +1,7 @@
+jc_admin:
+    resource: "@JCAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jc_facturation:
     resource: "@JCFacturationBundle/Resources/config/routing.yml"
     prefix:   /
