@@ -44,10 +44,27 @@ class FacturationController extends Controller
 		//On récupère toutes les ccc
 		//L'annee passé en paramêtre est l'année à laquelle la DSIT a payé la facture
 		// Généralement n-1
-
 		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansLannee("Payee", $annee);  
 		
-		echo sizeof($listePasseEtat);
+		
+		//On parcours les passages d'états,
+		//Dans lesquels on pourra récupérer la commande
+		foreach($listePasseEtat as $etat){
+			
+			//On récupère la commande
+			$commande = $etat->getCommande();
+			
+			//On récupere les collectivites concernées
+			$listeTransition = $em->getRepository('JCCommandeBundle:CommandeConcerneCollectivite')->findByCommande($commande);
+			
+			//On dispatche la commande avec les collectivites concernées
+			foreach($listeTransition as $t){
+				
+				$tabColl[$t->getCollectivite()->getNom()][$commande->getVentilation()] += 1;
+			}
+			
+		}
+
 
         return $this->render('JCFacturationBundle:Facturation:index.html.twig', array('infosCollectivites'=>$tabColl, 'annee'=>$annee));
     }
