@@ -1,6 +1,9 @@
 $(document).ready(function() 
  {
 	 
+	 $('.popoverData').popover();
+	 
+	 
 	//---------- Fonction lorsqu'on clique sur recherche de commande ----------
     $('#li_recherche_commande').click(function() 
     { 

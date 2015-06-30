@@ -133,6 +133,7 @@ class FacturationController extends Controller
 			$tabCommande[$commande->getId()]['activite'] = $commande->getApplication()->getActivite()->getNom();
 			$tabCommande[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
 			$tabCommande[$commande->getId()]['montant'] = $commande->getTotalTTC();
+			$tabCommande[$commande->getId()]['ventilation'] = $commande->getVentilation();
 
 				//On vérifie que la commande a bien 
 				//Si la commande est une commande mutualisée,
@@ -176,6 +177,10 @@ class FacturationController extends Controller
 					
 						//On stocke le ratio
 						$tabCommande[$commande->getId()]['repartition'] = ($ratio*100);
+
+						//On explique le ratio
+						$tabCommande[$commande->getId()]['infoRatioText'] = $info->getNombre()." sur un total de ".$totalCle;
+						$tabCommande[$commande->getId()]['infoRatioTitre'] = $ccc->getRepartition();
 					}
 					
 					

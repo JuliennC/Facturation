@@ -54,7 +54,20 @@
 						<td>{{ commande['activite'] }}</td>
 						<td>{{ commande['dateCreation']|date('d/m/Y') }}</td>
 						<td>{{ commande['montant']|number_format(2, ',', ' ') }}</td>
-						<td>{{ commande['repartition']|number_format(2, ',', ' ') }} %</td>
+						
+						<td>
+							{% if(commande['ventilation'] == 'Mutualisee') %}
+								<a class="popoverData" data-content="{{commande['infoRatioText']}}" rel="popover" data-placement="top" data-original-title="{{commande['infoRatioTitre']}} :" data-trigger="hover">
+									{{ commande['repartition']|number_format(2, ',', ' ') }} %
+								</a>
+
+							{% else %}
+							
+								{{ commande['repartition']|number_format(2, ',', ' ') }} %
+							
+							{% endif %}
+						</td>
+						
 						<td>{{ commande['montantAPayer']|number_format(2, ',', ' ') }} €</td>
 						<td> <a class='btn btn-info col-md-10 col-md-offset-1' href="{{ path('jc_commande_detail', {'id': commande['id']}) }}" >Voir détail</a> </td>
 
@@ -68,7 +81,6 @@
             </table>
         </div>
     </div>
-
 
 
 {% endblock %}
