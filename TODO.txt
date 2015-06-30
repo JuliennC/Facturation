@@ -25,8 +25,8 @@ TODO liste :
 		(voir avec Severine) + Savoir à quel stade de la commande le num coriolis 		doit être entré, etc
 
 	-> lors de passage par param, faire avec ID et non pas nom (éviter les problemes d’encodage)
-	
-
+	-> ajouter le cout de la masse salarial
+	-> tester en supprimant la table année
 	-> afficher la date d’envoie et de paiement dans « detail » quand une commande est envoyée ou payée
 	-> Faire une méthode qui calcule le cout d'une commande pour une collectivite donée
 	-> gérer les années (pour commande, informations collectivite, etc)

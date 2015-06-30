@@ -1,6 +1,6 @@
 jc_facturation_homepage:
     path:     /facturation/{annee}
-    defaults: { _controller: JCFacturationBundle:Facturation:index }
+    defaults: { _controller: JCFacturationBundle:Facturation:index, annee: html }
     requirements:
         annee:    ([0-9]+)
 

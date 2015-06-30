@@ -19,9 +19,9 @@ use JC\CommandeBundle\Entity\CommandeConcerneCollectivite;
 use JC\CommandeBundle\Entity\TVA;
 use JC\CommandeBundle\Entity\Service;
 use JC\CommandeBundle\Entity\Budget;
-use JC\CommandeBundle\Entity\Annee;
 use JC\CommandeBundle\Entity\EtatCommande;
 use JC\CommandeBundle\Entity\CommandePasseEtat;
+use JC\CommandeBundle\Entity\InformationCollectivite;
 
 use JC\CommandeBundle\Form\CommandeType;
 
@@ -586,22 +586,17 @@ class CommandeController extends Controller
 		$em->persist($service2);
 
 		
-		//CrŽation des annŽes
-		$annee1 = new Annee();
-		$annee1->setLibelle('2015');
-		$em->persist($annee1);
-
-
+		
 		//CrŽation des budgets
 		$budget1 = new Budget();
 		$budget1->setMontant(350000);
-		$budget1->setAnnee($annee1);
+		$budget1->setAnnee("2015");
 		$budget1->setService($service1);
 		$em->persist($budget1);
 
 		$budget2 = new Budget();
 		$budget2->setMontant(425000);
-		$budget2->setAnnee($annee1);
+		$budget2->setAnnee("2015");
 		$budget2->setService($service2);
 		$em->persist($budget2);
 
@@ -696,32 +691,89 @@ class CommandeController extends Controller
 		
 		
 		
-		// Creation d'une collectivite
+		// Creation d'une collectivite et de ses informations
 		$coll1 = new Collectivite();
 		$coll1 -> setNom('Grand-Nancy');		
 		$em->persist($coll1);		
+		
+		$info_Coll_1 = new InformationCollectivite();
+		$info_Coll_1 -> setNombre('105000');		
+		$info_Coll_1 -> setAnnee("2015");	
+		$info_Coll_1 -> setCleRepartition($cle);	
+		$info_Coll_1 -> setCollectivite($coll1);	
+		$em->persist($info_Coll_1);
+
+
+
 
 		$coll2 = new Collectivite();
 		$coll2 -> setNom('Saint-Max');
 		$em->persist($coll2);		
 		
+		$info_Coll_2 = new InformationCollectivite();
+		$info_Coll_2 -> setNombre('9870');		
+		$info_Coll_2 -> setAnnee("2015");		
+		$info_Coll_2 -> setCleRepartition($cle);	
+		$info_Coll_2 -> setCollectivite($coll2);	
+		$em->persist($info_Coll_2);
+		
+		
+		
+		
 		$coll3 = new Collectivite();
 		$coll3 -> setNom('Vandoeuvre');
-		$em->persist($coll3);		
+		$em->persist($coll3);
+
+		$info_Coll_3 = new InformationCollectivite();
+		$info_Coll_3 -> setNombre('22000');		
+		$info_Coll_3 -> setAnnee("2015");
+		$info_Coll_3 -> setCleRepartition($cle);	
+		$info_Coll_3 -> setCollectivite($coll3);	
+		$em->persist($info_Coll_3);
+
+
+
 
 		$coll4 = new Collectivite();
 		$coll4 -> setNom('Malzeville');
 		$em->persist($coll4);		
 		
+		$info_Coll_4 = new InformationCollectivite();
+		$info_Coll_4 -> setNombre('5640');		
+		$info_Coll_4 -> setAnnee("2015");
+		$info_Coll_4 -> setCleRepartition($cle);	
+		$info_Coll_4 -> setCollectivite($coll4);	
+		$em->persist($info_Coll_4);
+		
+		
+		
+
 		$coll5 = new Collectivite();
 		$coll5 -> setNom('Tomblaine');
 		$em->persist($coll5);		
+		
+		$info_Coll_5 = new InformationCollectivite();
+		$info_Coll_5 -> setNombre('13028');		
+		$info_Coll_5 -> setAnnee("2015");	
+		$info_Coll_5 -> setCleRepartition($cle);
+		$info_Coll_5 -> setCollectivite($coll5);	
+		$em->persist($info_Coll_5);
+		
+		
+
 
 		$coll6 = new Collectivite();
 		$coll6 -> setNom('essey-les-Nancy');
 		$em->persist($coll6);	
 		
+		$info_Coll_6 = new InformationCollectivite();
+		$info_Coll_6 -> setNombre('7892');		
+		$info_Coll_6 -> setAnnee("2015");	
+		$info_Coll_6 -> setCleRepartition($cle);	
+		$info_Coll_6 -> setCollectivite($coll6);	
+		$em->persist($info_Coll_6);
 	
+
 
 		$commande1 = new Commande();
 		$commande1 -> setVentilation("Mutualisee");
@@ -838,7 +890,7 @@ class CommandeController extends Controller
 		$concerne2 = new CommandeConcerneCollectivite();
 		$concerne2 -> setRepartition("Nombre d'habitant");
 		$concerne2 -> setCommande($commande1);
-		$concerne2 -> setCollectivite($coll3);
+		$concerne2 -> setCollectivite($coll2);
 		$em->persist($concerne2);	
 		
 		$concerne4 = new CommandeConcerneCollectivite();
@@ -931,41 +983,76 @@ class CommandeController extends Controller
 		$em -> persist($cpe2);
 		
 		$cpe3 = new CommandePasseEtat();
-		$cpe3 -> setCommande($commande2);
-		$cpe3 -> setEtat($etat1);
+		$cpe3 -> setCommande($commande1);
+		$cpe3 -> setEtat($etat3);
 		$cpe3 -> setDatePassage(new \Datetime());
-		$em->persist($cpe3);
+		$em -> persist($cpe3);
 		
 		$cpe4 = new CommandePasseEtat();
-		$cpe4 -> setCommande($commande2);
-		$cpe4 -> setEtat($etat2);
+		$cpe4 -> setCommande($commande1);
+		$cpe4 -> setEtat($etat4);
 		$cpe4 -> setDatePassage(new \Datetime());
 		$em -> persist($cpe4);
 		
-		
 		$cpe5 = new CommandePasseEtat();
-		$cpe5 -> setCommande($commande3);
+		$cpe5 -> setCommande($commande2);
 		$cpe5 -> setEtat($etat1);
 		$cpe5 -> setDatePassage(new \Datetime());
 		$em->persist($cpe5);
 		
 		$cpe6 = new CommandePasseEtat();
-		$cpe6 -> setCommande($commande3);
+		$cpe6 -> setCommande($commande2);
 		$cpe6 -> setEtat($etat2);
 		$cpe6 -> setDatePassage(new \Datetime());
 		$em -> persist($cpe6);
 		
 		$cpe7 = new CommandePasseEtat();
-		$cpe7 -> setCommande($commande4);
-		$cpe7 -> setEtat($etat1);
+		$cpe7 -> setCommande($commande2);
+		$cpe7 -> setEtat($etat3);
 		$cpe7 -> setDatePassage(new \Datetime());
-		$em->persist($cpe7);
+		$em -> persist($cpe7);
 		
 		$cpe8 = new CommandePasseEtat();
-		$cpe8 -> setCommande($commande4);
-		$cpe8 -> setEtat($etat2);
+		$cpe8 -> setCommande($commande2);
+		$cpe8 -> setEtat($etat3);
 		$cpe8 -> setDatePassage(new \Datetime());
 		$em -> persist($cpe8);
+		
+		$cpe9 = new CommandePasseEtat();
+		$cpe9 -> setCommande($commande3);
+		$cpe9 -> setEtat($etat1);
+		$cpe9 -> setDatePassage(new \Datetime());
+		$em->persist($cpe9);
+		
+		$cpe10 = new CommandePasseEtat();
+		$cpe10 -> setCommande($commande3);
+		$cpe10 -> setEtat($etat2);
+		$cpe10 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe10);
+		
+		$cpe11 = new CommandePasseEtat();
+		$cpe11 -> setCommande($commande3);
+		$cpe11 -> setEtat($etat3);
+		$cpe11 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe11);
+		
+		$cpe12 = new CommandePasseEtat();
+		$cpe12 -> setCommande($commande3);
+		$cpe12 -> setEtat($etat4);
+		$cpe12 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe12);
+		
+		$cpe13 = new CommandePasseEtat();
+		$cpe13 -> setCommande($commande4);
+		$cpe13 -> setEtat($etat1);
+		$cpe13 -> setDatePassage(new \Datetime());
+		$em->persist($cpe13);
+		
+		$cpe14 = new CommandePasseEtat();
+		$cpe14 -> setCommande($commande4);
+		$cpe14 -> setEtat($etat2);
+		$cpe14 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe14);
 		
 
 		//Creation des TVA

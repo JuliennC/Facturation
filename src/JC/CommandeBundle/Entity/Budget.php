@@ -28,16 +28,16 @@ class Budget
      */
     private $montant;
 
+	/**
+     * @var integer
+     *
+     * @ORM\Column(name="Annee", type="integer")
+     */
+    private $annee;
 
 
 // DEBUT CLES ETRANGERES
 
-
-	/**
-   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Annee", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=false)
-   */
-   private $annee;
 
 
 
@@ -89,7 +89,7 @@ class Budget
 	/**
      * Set annee
      *
-     * @param Annee $annee
+     * @param integer $annee
      * @return Budget
      */
     public function setAnnee($annee)
@@ -102,7 +102,7 @@ class Budget
     /**
      * Get annee
      *
-     * @return Annee 
+     * @return integer 
      */
     public function getAnnee()
     {

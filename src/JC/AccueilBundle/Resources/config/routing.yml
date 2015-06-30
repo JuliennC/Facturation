@@ -1,7 +1,8 @@
 jc_accueil_homepage:
     path:     /{annee}
     defaults: { _controller: JCAccueilBundle:Accueil:index , annee: html}
-
+    requirements:
+        annee:    ([0-9]+)
 
 jc_accueil_recherche:
     path:     /recherche/
