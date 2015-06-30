@@ -524,16 +524,20 @@ class CommandeController extends Controller
 	  	  /*
 	  	*		Fonction qui marque une commande ˆ payŽe
 	  	*/
-	  	public function marqueCommandePayeeAction($id) {
+	  	public function marqueCommandePayeeAction() {
 		  
 		  	$request = $this->container->get('request');
+		  	
+		  	
+	        $idCom = '';
+	        $idCom = $request->get('id');
 
-	  		if($request->isXmlHttpRequest() ) {
+	  		if($request->isXmlHttpRequest() && $idCom != '') {
 		    
 	
 				$em = $this->getDoctrine()->getManager();
 	
-	            $com = $em->getRepository('JCCommandeBundle:Commande')->findOneById($id) ;
+	            $com = $em->getRepository('JCCommandeBundle:Commande')->findOneById($idCom) ;
 				
 				$etatCree = new CommandePasseEtat();
 				$etatCree -> setCommande($com);

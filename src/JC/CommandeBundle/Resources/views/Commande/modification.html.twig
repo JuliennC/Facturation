@@ -29,7 +29,7 @@
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
-				        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande('Envoyee')">Confirmer</button>
+				        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande({{commande.id}},'Envoyee')">Confirmer</button>
 				      </div>
 				    </div>
 				  </div>
@@ -51,7 +51,7 @@
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
-				        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande('Supprimee')">Confirmer</button>
+				        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande({{commande.id}},'Supprimee')">Confirmer</button>
 				      </div>
 				    </div>
 				  </div>

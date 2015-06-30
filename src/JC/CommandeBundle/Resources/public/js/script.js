@@ -51,19 +51,17 @@ function changementEtatCommande(idC, etatC){
 	
 	if(etatC == "Payee"){
 		
+		var data = 'id='+idC;
+		
 		//On appelle la route qui va mettre la commande à payée
 		$.ajax({
-				type: "POST",
+				type: "get",
 				url: Routing.generate('jc_commande_marque_payee'),
-				data: "id="+idC,
+				data: data,
 				success: function(json){	
-	   			
-	           $.each(json, function(index, value){
-			   
-			   		alert(value);
-	
-				})
-	
+	   				
+	   				//On recharge la page
+					location.reload();
 	        }
 	    });    
 	

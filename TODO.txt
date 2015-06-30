@@ -17,17 +17,15 @@ TODO liste :
 	-> FAIT Terminer la création d'une commande
 	-> FAIT Gérer les services avec leur budget par année
 
+	-> FAIT faire une table état (et ainsi éviter que de mauvais paramêtre au changement d’état ne se glisse
+
+
+
 	-> Vérifier dans validator qu’une commande qui passe envoyé à bien n° coriolis etc
 		(voir avec Severine) + Savoir à quel stade de la commande le num coriolis 		doit être entré, etc
-	
-
-
 
 	-> lors de passage par param, faire avec ID et non pas nom (éviter les problemes d’encodage)
 	
-	
-	-> faire une table état (et ainsi éviter que de mauvais paramêtre au changement d’état ne se glisse
-	-> Gérer les états des commandes (avec une entité état);
 
 
 	-> Faire une méthode qui calcule le cout d'une commande pour une collectivite donée
