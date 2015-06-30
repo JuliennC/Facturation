@@ -40,11 +40,12 @@ class FacturationController extends Controller
    		    $tabColl[$coll->getNom()]['Directe'] = 0;
 
 	    }
+
 	    
 		//On récupère toutes les ccc
 		//L'annee passé en paramêtre est l'année à laquelle la DSIT a payé la facture
 		// Généralement n-1
-		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansLannee("Payee", $annee);  
+		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansAnnee("Payee", $annee);  
 		
 		
 		//On parcours les passages d'états,

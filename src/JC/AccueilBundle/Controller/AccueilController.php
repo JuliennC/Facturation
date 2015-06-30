@@ -14,13 +14,20 @@ class AccueilController extends Controller
 {
 	
 	
-    public function indexAction()
+    public function indexAction($annee)
     {
 	    
    	    $em = $this->getDoctrine()->getManager();
 
-        //On recupere l'annee
-		$date = date("Y");
+        //Si aucune année n'est passée en paramêtre, 
+        //On récupère l'année courrante
+        if ($annee === "html"){
+			$date = date("Y");
+
+		//Sinon, on prend l'année passé en paramêtre
+        } else {
+	        $date = $annee;
+        }
 		
 
    		//On recupere la liste des services
@@ -33,21 +40,19 @@ class AccueilController extends Controller
 	   		//On recupere le budget du service pour l'annee correspondante a 'date'
 	   		$budget = $em->getRepository('JCCommandeBundle:Budget')->findBudgetAvecAnneeEtService($em->getRepository('JCCommandeBundle:Annee')->findOneByLibelle($date), $service);
 
-			//On cree un tableau pour y stocker les informations du service
-			$infoServices[$service->getNom()] = array('nom'=>$service->getNom(),'budget'=>$budget[0]->getMontant(),'nbCommandesPassees'=>0 , 'montantCommandesPassees'=>0);
 			
-			
-			
+			//On vérifie qu'un budget a bien été créée
+			// (Exemple, dans le cas de la création d'un nouveau service, le service n'a pas de budget pour l'année d'avant)	   		
+	   		if(sizeof($budget) > 0){
+		   	
+		   		//On cree un tableau pour y stocker les informations du service
+		   		$infoServices[$service->getNom()] = array('nom'=>$service->getNom(),'budget'=>$budget[0]->getMontant(),'nbCommandesPassees'=>0 , 'montantCommandesPassees'=>0);	
+	   		}
+
 		}
 
-
-
-		// On récupète toutes les commandes
-		$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->findAll();
-		$infoCommandess = array();
-		
-		
 		//On calcule le total des commandes crees en dans l'annee courrante		
+		$infoCommandes = array();
 		$infoCommandes['nombreCommandesPassees'] = 0;
 		$infoCommandes['montantCommandesPassees'] = 0;
 		$infoCommandes['nombreCommandesDirectes'] = 0;
@@ -56,42 +61,49 @@ class AccueilController extends Controller
 		$infoCommandes['montantCommandesMutualisees'] = 0;
 
 		
+
+		 
+
+		// On récupète toutes les commandes qui ont été Enregistrée dans l'année 'date'
+		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansAnnee("Enregistree", $date);
 		
-		foreach($listeCommandes as $commande){
+				
+		
+		foreach($listePasseEtat as $etat){
 			
-			//Si la commande a ete passee dans l'annee courrante
-			if ($commande->getCommandePasseEtat("Creee")->getDatePassage() > $date){
+			//On récupère la commande de l'état
+			$commande = $etat->getCommande();
+			
+			//On calcule le nombre total de commandes 
+			$infoCommandes['nombreCommandesPassees'] += 1;
 				
-				//On calcule le nombre total de commandes 
-				$infoCommandes['nombreCommandesPassees'] += 1;
+			//On calcule le montant total des commandes 
+			$infoCommandes['montantCommandesPassees'] += $commande->getTotalTTC();
 				
-				//On calcule le montant total des commandes 
-				$infoCommandes['montantCommandesPassees'] += $commande->getTotalTTC();
-				
-				if($commande->getVentilation() == 'Directe'){
+			if($commande->getVentilation() == 'Directe'){
 					
-					//On calcul le nombre de commandes directes
-					$infoCommandes['nombreCommandesDirectes'] += 1;
+				//On calcul le nombre de commandes directes
+				$infoCommandes['nombreCommandesDirectes'] += 1;
 
-					//On calcul le montant des commandes directes
-					$infoCommandes['montantCommandesDirectes'] += $commande->getTotalTTC();
+				//On calcul le montant des commandes directes
+				$infoCommandes['montantCommandesDirectes'] += $commande->getTotalTTC();
 
 
-				} else if($commande->getVentilation() == 'Mutualisee'){
+			} else if($commande->getVentilation() == 'Mutualisee'){
 					
-					//On calcul le nombre de commandes mutualisees
-					$infoCommandes['nombreCommandesMutualisees'] += 1;
+				//On calcul le nombre de commandes mutualisees
+				$infoCommandes['nombreCommandesMutualisees'] += 1;
 
-					//On calcul le montant des commandes mutualisees
-					$infoCommandes['montantCommandesMutualisees'] += $commande->getTotalTTC();
-
-				}
-				
-				$infoServices[$commande->getUtilisateur()->getService()->getNom()]['nbCommandesPassees'] += 1;
-				$infoServices[$commande->getUtilisateur()->getService()->getNom()]['montantCommandesPassees'] += $commande->getTotalTTC();
+				//On calcul le montant des commandes mutualisees
+				$infoCommandes['montantCommandesMutualisees'] += $commande->getTotalTTC();
 
 			}
+				
+			$infoServices[$commande->getUtilisateur()->getService()->getNom()]['nbCommandesPassees'] += 1;
+			$infoServices[$commande->getUtilisateur()->getService()->getNom()]['montantCommandesPassees'] += $commande->getTotalTTC();
+
 		}
+		
 		
 		
 

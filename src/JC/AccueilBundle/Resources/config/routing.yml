@@ -1,6 +1,6 @@
 jc_accueil_homepage:
-    path:     /
-    defaults: { _controller: JCAccueilBundle:Accueil:index }
+    path:     /{annee}
+    defaults: { _controller: JCAccueilBundle:Accueil:index , annee: html}
 
 
 jc_accueil_recherche:
