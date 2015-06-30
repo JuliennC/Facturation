@@ -77,59 +77,88 @@ class FacturationController extends Controller
     
     
     
-    public function calculAction($nomCollectivite) {
+    public function calculAction($nomCollectivite, $annee) {
 	    
-	    //Pour l'instant, le calcul se fait sur l'annee courrante
-	    $annee = date('Y');
-	    
-   	    $em = $this->getDoctrine()->getManager();
-	    
-	    // On récupète toutes les ccc correspondante à la collectivite, à l'année, et au statu
-		$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->findByStatuEtAnnee("Enregistree", $annees);
+   	  	$em = $this->getDoctrine()->getManager();
 
-		// On récupère toutes la  collectivites
-		$listeCollectivites = $em->getRepository('JCCommandeBundle:Collectivite')->findAll();
+	    //On récupere la collectivite
+	    $collectivite = $em->getRepository('JCCommandeBundle:Collectivite')->findOneByNom($nomCollectivite); 
+	    
+	    //On recupere les commandes concernant la collectivite
+	    // (On ne passe pas par CommandePasseEtat car il y a plus de CommandePasseEtat(Payee) que de CommandeConcerne(Collectivite))
+	    $listeCCC = $em->getRepository('JCCommandeBundle:Commande')->findCommandePourCollectiviteAvecStatutPourAnnee($collectivite, "Payee", "2015");  
 
 		
-		$totalDirect = 0;
-		$totalMutu = 0;
+		//On crée le tableau qui contiendra les données
+		$infosColl = array();
+		$infosColl['nomColl'] = $collectivite->getNom();
+		$infosColl['nbMutualisees'] = 0;
+		$infosColl['nbDirectes'] = 0;
+		$infosColl['montantMutualisees'] = 0;
+		$infosColl['montantDirectes'] = 0;
 		
+		//On stock les commandes
+		$tabCommande = array();
 
-		foreach($listeCommandes as $commande) {
 
-			if( $commande->getVentilation() === 'Mutualisée' ) {
+		//On parcours les états (donc les commandes) en faisant les calculs
+		foreach($listeCCC as $ccc){
+			
+			//On recupere la commande
+			$commande = $ccc->getCommande();
+			
+			//On stock les infos de la commande dans le tableau
+			$tabCommande[$commande->getId()] = array();
+			
+			$tabCommande[$commande->getId()]['id'] = $commande->getId();
+			$tabCommande[$commande->getId()]['ventilation'] = $commande->getVentilation();
+			$tabCommande[$commande->getId()]['activite'] = $commande->getApplication()->getActivite()->getNom();
+			$tabCommande[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
+			$tabCommande[$commande->getId()]['montant'] = $commande->getTotalTTC();
 
-				$totalMutu += $commande->getTotalTTC(); 
-				
-				foreach($listeCollectivites as $coll) {
+				//On vérifie que la commande a bien 
+				//Si la commande est une commande mutualisée,
+				if($commande->getVentilation() === "Mutualisee"){
 					
-					//$coll -> addCommande($commande);
-				}
-				
-				
-				
-				
-			} else if( $commande->getVentilation() === 'Directe' )  {
-
-				$totalDirect += $commande->getTotalTTC(); 
-				
-				//On récupère les collectivites concernées avec la table de transitions
-				$listeTransition = $em->getRepository('JCCommandeBundle:CommandeConcerneCollectivite')->findByCommande($commande->getId());
-				
-				foreach($listeTransition as $tran) {
 					
-					echo $tran->getCollectivite()->addCommande($commande);
-				}
+					//On compte
+					$infosColl['nbMutualisees'] += 1;
+					
+					$tabCommande[$commande->getId()]['repartition'] = $ccc->getRepartition();
+
+					//On regarde la clé de repartition (de la commande, car celle de l'application a pu changer entre temps)
+					//Puis on va chercher l'information de la collectivite liée à la clée
+					//On fait ensuite le ratio (par exemple : nbHabitant_Nancy / nbHabitant_Total)
+					$infosColl['montantMutualisees'] += $commande->getTotalTTC();
+					
+					$tabCommande[$commande->getId()]['montantAPayer'] = "A calculer";
 				
-			} 
+				
+				
+				//Sinon, si c'est une commande directe
+				} else if($commande->getVentilation() === "Directe"){
+				
+					//On compte
+					$infosColl['nbDirectes'] += 1;
+					
+					$tabCommande[$commande->getId()]['repartition'] = $ccc->getRepartition()." %";
+
+					
+					//Pour le calcul, c'est plus simple
+					//On prend la répartition (le pourcentage) et on le multiplie au total de la facture
+					$montant = $commande->getTotalTTC() * ($ccc->getRepartition()/100);
+					$infosColl['montantDirectes'] += $montant;
+				
+					$tabCommande[$commande->getId()]['montantAPayer'] = $montant;
+
+				}			
 			
 			
 		}
+    
+    
+        return $this->render('JCFacturationBundle:Facturation:calcul_facturation.html.twig', array('infosColl'=>$infosColl, 'tabCommandes'=>$tabCommande, 'annee'=>$annee));
 
-
-		//On calcule pour chaque type de commande
-		return $this->render('JCFacturationBundle:Facturation:calcul_facturation.html.twig', array('listeCollectivite'=> $listeCollectivites, 'total_d'=>$totalDirect , 'total_m' => $totalMutu));
-	    
     }
     
     

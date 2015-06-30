@@ -4,74 +4,71 @@
 {% block title %}{{ parent() }} - Facturation{% endblock %}
 
 
-{% block jcaccueil_body %}
+{% block jcfacturation_body %}
 
   <h3>Vous venez de lancer la Facturation </h3>
   
 
 <div class='container top30'>
-
-	<p> Total des commandes directes : {{total_d}}
-	<p> Total des commandes mutualisées : {{total_m}}
 	
-</div>
-
-
-<div>
-
-	{% set i = 0 %}
-		
-	{% for collectivite in listeCollectivite %}
-		
-		{% if i%2 == 0 %}
-		
-			<div class='container col-md-5 top30 bordered'>
-			
-		{% else %}
-			
-			<div class='container col-md-5 col-md-offset-2 top30 bordered'>
-			
-		{% endif %}
-		
-		{% set i = i+1 %}
-	
-			<legend>{{ collectivite.nom }}</legend>
-				          	  							
-				<table class="table table-striped table_center">
-			    	<thread>
-			    		
-			    		<tr>
-			    			<th> Libelle </th>
-			    			<th> Ventilation </th>
-			    			<th> Total TTC </th>
-			    			<th>  </th>
-						</tr>
-
-					</thread>
-			      
-					<tbody>
-						
-						{% for commande in collectivite.getListeCommandes %}
-
-							<tr> 
-								<td> {{ commande.libelleFacturation }} </td>
-								<td> {{ commande.ventilation[:1] }} </td>
-								<td> {{ commande.totalTTC * commande.pourcentage }} </td>
-								<td> <a class='btn btn-info' href="{{ path('jc_commande_detail', { 'id': commande.id }) }}" >Detail</a> </td>
-							</tr>
-			 
-						{% endfor %}
-
-			 
-					</tbody>
-			   </table>
-
-  				
+	<div class="well">
+		<p> {{infosColl['nbMutualisees']}} commandes mutualisée(s), soit un total de {{infosColl['montantMutualisees']}} €
+		<p> {{infosColl['nbDirectes']}} commandes directe(s), soit un total de {{infosColl['montantDirectes']}} €
 	</div>
-
-	
-	{% endfor %}
-
-
 </div>
+
+
+
+	<div class="row">
+        <div class="panel panel-info filterable ">
+            <div class="panel-heading">
+                <h3 class="panel-title">Users</h3>
+                <div class="pull-right">
+                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
+                </div>
+            </div>
+            <table class="table table_center">
+            
+                <thead>
+                	<tr class="filters">
+                	    <th><input type="text" class="form-control col-md-1" placeholder="ID commande" disabled></th>
+                		<th><input type="text" class="form-control col-md-1" placeholder="Ventilation" disabled></th>
+                	    <th><input type="text" class="form-control col-md-2" placeholder="Activite" disabled></th>
+                		<th><input type="text" class="form-control col-md-1" placeholder="Date Creation" disabled></th>
+                		<th><input type="text" class="form-control col-md-2" placeholder="Total Commande" disabled></th>
+                		<th><input type="text" class="form-control col-md-1" placeholder="Repartition" disabled></th>
+                		<th><input type="text" class="form-control col-md-2" placeholder="Montant à payer" disabled></th>
+						<th class='col-md-2'></th>
+			        </tr>
+                </thead>
+
+                <tbody>
+                    
+          
+                    
+                    
+                {% for commande in tabCommandes %}
+			        <tr>
+						<td>{{ commande['id'] }}</td>
+						<td>{{ commande['ventilation'] }}</td>
+						<td>{{ commande['activite'] }}</td>
+						<td>{{ commande['dateCreation']|date('d/m/Y') }}</td>
+						<td>{{ commande['montant'] }}</td>
+						<td>{{ commande['repartition'] }}</td>
+						<td>{{ commande['montantAPayer'] }}</td>
+						<td> <a class='btn btn-info col-md-10 col-md-offset-1' href="{{ path('jc_commande_detail', {'id': commande['id']}) }}" >Voir détail</a> </td>
+
+					</tr>
+					
+				{% endfor %}
+   
+                    
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
 {% endblock %}

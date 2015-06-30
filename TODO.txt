@@ -27,8 +27,8 @@ TODO liste :
 	-> lors de passage par param, faire avec ID et non pas nom (éviter les problemes d’encodage)
 	
 
-
+	-> afficher la date d’envoie et de paiement dans « detail » quand une commande est envoyée ou payée
 	-> Faire une méthode qui calcule le cout d'une commande pour une collectivite donée
 	-> gérer les années (pour commande, informations collectivite, etc)
-	
+	-> tester les passage de paramètre avec de fausses valeurs pour s’assurer qu’on renvoie vers des pages d’erreur partout
 	-> formatter le total d’une commande dans form.html.twig

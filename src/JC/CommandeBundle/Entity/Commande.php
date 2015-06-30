@@ -610,6 +610,10 @@ public function __construct() {
 		return $this->getCommandePasseEtat("Cree");
 	}
 
+	public function getDatePaiement(){
+		return $this->getCommandePasseEtat("Payee");
+	}
+
 
 	/**
      * Get etat

@@ -13,46 +13,32 @@ use Doctrine\ORM\EntityRepository;
 class CommandeRepository extends EntityRepository
 {
 	
-	public function findByStatu($statu){
+
+	public function findCommandePourCollectiviteAvecStatutPourAnnee($collectivite, $statut, $annee){
 		
 		return $this
-		->createQueryBuilder('c')
-		->where('c.etat = :statu')
-		->setParameter('statu', $statu)
-		->getQuery()	
-		->getResult()
-
-		;
-	}
-
-
-	/*public function findByStatuEtAnnee($statu, $annee){
-		
-		return $this
-		->createQueryBuilder('c')
-		->where('c.etat = :statu')
-		->setParameter('statu', $statu)
-		->andWhere('c.annee = :annee')
-		->setParameter('annee', $annee)
-		->getQuery()	
-		->getResult()
-
-		;
-	}*/
-
-
-
-
-	public function findCommandesAvecAnnee($annee){
-		
-		return $this
-		->createQueryBuilder('c')
-		->where('c.dateCreation = :annee')
-		->setParameter('annee', $anne)
-		->getQuery()	
-		->getResult()
-
-		;
+			->getEntityManager()
+		    ->getRepository('JCCommandeBundle:CommandeConcerneCollectivite')
+			
+			->createQueryBuilder('ccc')
+			
+			->leftJoin('ccc.commande','com')
+			->addSelect('com')
+			
+			->leftJoin('com.etats', 'passeEtat')
+			->addSelect('passeEtat')
+			
+			->leftJoin('passeEtat.etat', 'et')
+			->addSelect('et')
+			
+			->where('ccc.collectivite = :collectivite AND et.libelle = :statut AND passeEtat.datePassage > :annee AND passeEtat.datePassage < :annee2')
+			->setParameter('collectivite',$collectivite)
+			->setParameter('statut',$statut)
+			->setParameter('annee',$annee)
+			->setParameter('annee2',strval($annee+1))
+	
+			->getQuery()	
+			->getResult();
 
 	}
 

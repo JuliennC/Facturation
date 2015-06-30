@@ -5,5 +5,7 @@ jc_facturation_homepage:
         annee:    ([0-9]+)
 
 jc_facturation_calcul:
-    path:     /facturation/calcul/{nomCollectivite}
+    path:     /facturation/calcul/{nomCollectivite}/{annee}
     defaults: { _controller: JCFacturationBundle:Facturation:calcul }
+    requirements:
+        annee:    ([0-9]+)
