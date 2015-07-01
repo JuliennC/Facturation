@@ -22,6 +22,7 @@ use JC\CommandeBundle\Entity\Budget;
 use JC\CommandeBundle\Entity\EtatCommande;
 use JC\CommandeBundle\Entity\CommandePasseEtat;
 use JC\CommandeBundle\Entity\InformationCollectivite;
+use JC\CommandeBundle\Entity\MasseSalariale;
 
 use JC\CommandeBundle\Form\CommandeType;
 
@@ -233,7 +234,7 @@ class CommandeController extends Controller
 			//	Si le formulaire est valide, on l'enregistre en base.
 		    if ($form->isValid()) {
 			    
-                            //on recupere la ventialation
+                //on recupere la ventialation
 			    $ventilation = $form->get('ventilation')->getData();
 			    $commande->setVentilation($ventilation);
 			   
@@ -576,7 +577,7 @@ class CommandeController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
 		
-		// Creation d'un utilisateur
+		// Creation des services
 		$service1 = new Service();
 		$service1->setNom("Bureautique");
 		$em->persist($service1);
@@ -585,6 +586,19 @@ class CommandeController extends Controller
 		$service2->setNom("Etude");
 		$em->persist($service2);
 
+		
+		//Creation des masses salarial pour les service
+		$masse1 = new MasseSalariale();
+		$masse1 -> setMontant(200000);
+		$masse1 -> setAnnee(2015);
+		$masse1 -> setService($service1);
+		$em->persist($masse1);
+
+		$masse2 = new MasseSalariale();
+		$masse2 -> setMontant(350000);
+		$masse2 -> setAnnee(2015);
+		$masse2 -> setService($service2);
+		$em->persist($masse2);
 		
 		
 		//CrŽation des budgets
@@ -640,39 +654,42 @@ class CommandeController extends Controller
 		$fournisseur2 -> setFax("08383909090");
 		$em->persist($fournisseur2);
 
-		
+
+
+		// Creation d'une cle de repartition
+		$cle = new CleRepartition();
+		$cle -> setNom("Nombre d'habitant");
+		$em->persist($cle);
+
+		$cle2 = new CleRepartition();
+		$cle2 -> setNom("Nombre de bulletin de paie");
+		$em->persist($cle2);
+
 		// Creation d'une activite
 		$activite = new Activite();
-		$activite -> setNom('Activite_1');
+		$activite -> setNom('RH');
 		$activite -> setUniteOeuvre(12345);
+		$activite -> setCleRepartition($cle);
 		$em->persist($activite);
 
 		$activite2 = new Activite();
-		$activite2 -> setNom('Activite_2');
+		$activite2 -> setNom('FI');
 		$activite2 -> setUniteOeuvre(67890);
+		$activite2 -> setCleRepartition($cle2);
 		$em->persist($activite2);
 		
 				
 				
-		// Creation d'une cle de repartition
-		$cle = new CleRepartition();
-		$cle -> setNom("Nombre d'habitant");
-		
+	
 		
 		// Creation d'une application
 		$application = new Application();
 		$application -> setNom('Application_1');
-		$application -> setUnixOracle(false);
-		$application -> setActivite($activite);
-		$application -> setCleRepartition($cle);
 		$application -> setFournisseur($fournisseur);
 		$em->persist($application);
 
 		$application2 = new Application();
 		$application2 -> setNom('Application_2');
-		$application2 -> setUnixOracle(false);
-		$application2 -> setActivite($activite2);
-		$application2 -> setCleRepartition($cle);
 		$application2 -> setFournisseur($fournisseur);
 		$em->persist($application2);
 		
@@ -703,6 +720,12 @@ class CommandeController extends Controller
 		$info_Coll_1 -> setCollectivite($coll1);	
 		$em->persist($info_Coll_1);
 
+		$info_Coll_1_2 = new InformationCollectivite();
+		$info_Coll_1_2 -> setNombre('30045');		
+		$info_Coll_1_2 -> setAnnee("2015");	
+		$info_Coll_1_2 -> setCleRepartition($cle2);	
+		$info_Coll_1_2 -> setCollectivite($coll1);	
+		$em->persist($info_Coll_1_2);
 
 
 
@@ -717,6 +740,12 @@ class CommandeController extends Controller
 		$info_Coll_2 -> setCollectivite($coll2);	
 		$em->persist($info_Coll_2);
 		
+		$info_Coll_2_2 = new InformationCollectivite();
+		$info_Coll_2_2 -> setNombre('1203');		
+		$info_Coll_2_2 -> setAnnee("2015");	
+		$info_Coll_2_2 -> setCleRepartition($cle2);	
+		$info_Coll_2_2 -> setCollectivite($coll2);	
+		$em->persist($info_Coll_2_2);
 		
 		
 		
@@ -731,7 +760,13 @@ class CommandeController extends Controller
 		$info_Coll_3 -> setCollectivite($coll3);	
 		$em->persist($info_Coll_3);
 
-
+		$info_Coll_3_2 = new InformationCollectivite();
+		$info_Coll_3_2 -> setNombre('1392');		
+		$info_Coll_3_2 -> setAnnee("2015");	
+		$info_Coll_3_2 -> setCleRepartition($cle2);	
+		$info_Coll_3_2 -> setCollectivite($coll3);	
+		$em->persist($info_Coll_3_2);
+		
 
 
 		$coll4 = new Collectivite();
@@ -745,6 +780,12 @@ class CommandeController extends Controller
 		$info_Coll_4 -> setCollectivite($coll4);	
 		$em->persist($info_Coll_4);
 		
+		$info_Coll_4_2 = new InformationCollectivite();
+		$info_Coll_4_2 -> setNombre('123');		
+		$info_Coll_4_2 -> setAnnee("2015");	
+		$info_Coll_4_2 -> setCleRepartition($cle2);	
+		$info_Coll_4_2 -> setCollectivite($coll4);	
+		$em->persist($info_Coll_4_2);
 		
 		
 
@@ -758,6 +799,13 @@ class CommandeController extends Controller
 		$info_Coll_5 -> setCleRepartition($cle);
 		$info_Coll_5 -> setCollectivite($coll5);	
 		$em->persist($info_Coll_5);
+		
+		$info_Coll_5_2 = new InformationCollectivite();
+		$info_Coll_5_2 -> setNombre('983');		
+		$info_Coll_5_2 -> setAnnee("2015");	
+		$info_Coll_5_2 -> setCleRepartition($cle2);	
+		$info_Coll_5_2 -> setCollectivite($coll5);	
+		$em->persist($info_Coll_5_2);
 		
 		
 
@@ -773,6 +821,13 @@ class CommandeController extends Controller
 		$info_Coll_6 -> setCollectivite($coll6);	
 		$em->persist($info_Coll_6);
 	
+		$info_Coll_6_2 = new InformationCollectivite();
+		$info_Coll_6_2 -> setNombre('234');		
+		$info_Coll_6_2 -> setAnnee("2015");	
+		$info_Coll_6_2 -> setCleRepartition($cle2);	
+		$info_Coll_6_2 -> setCollectivite($coll6);	
+		$em->persist($info_Coll_6_2);
+	
 
 
 		$commande1 = new Commande();
@@ -784,6 +839,7 @@ class CommandeController extends Controller
 		$commande1 -> setFournisseur($fournisseur);
 		$commande1 -> setUtilisateur($utilisateur);
 		$commande1 -> setApplication($application);
+		$commande1 -> setActivite($activite);
 		$commande1 -> setLivraison($livraison);
 		$commande1 -> setLibelleFacturation("llll");
         $commande1 -> setNomLivraison($livraison->getNom());
@@ -810,6 +866,7 @@ class CommandeController extends Controller
 		$commande2 -> setFournisseur($fournisseur);
 		$commande2 -> setUtilisateur($utilisateur);
 		$commande2 -> setApplication($application);
+		$commande2 -> setActivite($activite);
 		$commande2 -> setLivraison($livraison);
 		$commande2 -> setLibelleFacturation("llll");
         $commande2 -> setNomLivraison($livraison->getNom());
@@ -836,6 +893,7 @@ class CommandeController extends Controller
 		$commande3 -> setFournisseur($fournisseur2);
 		$commande3 -> setUtilisateur($utilisateur2);
 		$commande3 -> setApplication($application);
+		$commande3 -> setActivite($activite2);
 		$commande3 -> setLivraison($livraison);
 		$commande3 -> setLibelleFacturation("llll");
         $commande3 -> setNomLivraison($livraison->getNom());
@@ -862,6 +920,7 @@ class CommandeController extends Controller
 		$commande4 -> setFournisseur($fournisseur2);
 		$commande4 -> setUtilisateur($utilisateur2);
 		$commande4 -> setApplication($application);
+		$commande4 -> setActivite($activite2);
 		$commande4 -> setLivraison($livraison);
 		$commande4 -> setLibelleFacturation("llll");
         $commande4 -> setNomLivraison($livraison->getNom());

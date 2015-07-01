@@ -42,5 +42,34 @@ class CommandeRepository extends EntityRepository
 
 	}
 
+
+
+
+
+	public function findCommandeAvecActiviteEtCollectivite($activite, $collectivite){
+		
+		return $this
+			->getEntityManager()
+		    ->getRepository('JCCommandeBundle:CommandeConcerneCollectivite')
+			
+			->createQueryBuilder('ccc')
+			
+			->leftJoin('ccc.commande','com')
+			->addSelect('com')
+			
+			
+			
+			->where('ccc.collectivite = :collectivite AND com.activite = :activite')
+			->setParameter('collectivite',$collectivite)
+			->setParameter('activite',$activite)
+
+	
+			->getQuery()	
+			->getResult();
+
+	}
+
+
+
 	
 }

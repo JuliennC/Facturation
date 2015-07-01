@@ -70,4 +70,7 @@ class InformationCollectiviteRepository extends EntityRepository
 	
 	
 	
+	
+	
+	
 }

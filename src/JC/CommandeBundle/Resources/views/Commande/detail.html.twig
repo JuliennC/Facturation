@@ -91,7 +91,7 @@
 			<div class='row'>
 				<div class='col-md-7'>
 					<p><b>Numéro d'application</b> : {{ commande.application.nom }}
-					<p><b>Code activité</b> : {{ commande.application.activite.nom }}
+					<p><b>Code activité</b> : {{ commande.activite.nom }}
 					<p><b>Référence interne</b> : <span id='reference'>{{ commande.reference }} </span>
 				</div>
 				
@@ -145,7 +145,7 @@
 			<legend>Ventilation : {{ commande.ventilation }} <span class='pull-right'>
 			
 				{% if commande.ventilation == "Mutualisee" %}
-					Clé de répartition : {{ commande.application.cleRepartition.nom }} 
+					Clé de répartition : {{ commande.activite.cleRepartition.nom }} 
 				{% endif %}
 				
 				</span></legend>

@@ -111,6 +111,7 @@ class FacturationController extends Controller
 
 		//On stock les infos
 		foreach($listInfosColl as $info){
+
 			$infosColl[$info->getCleRepartition()->getNom()] = $info;
 		}
 		
@@ -130,7 +131,7 @@ class FacturationController extends Controller
 			
 			$tabCommande[$commande->getId()]['id'] = $commande->getId();
 			$tabCommande[$commande->getId()]['ventilation'] = $commande->getVentilation();
-			$tabCommande[$commande->getId()]['activite'] = $commande->getApplication()->getActivite()->getNom();
+			$tabCommande[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
 			$tabCommande[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
 			$tabCommande[$commande->getId()]['montant'] = $commande->getTotalTTC();
 			$tabCommande[$commande->getId()]['ventilation'] = $commande->getVentilation();
@@ -141,30 +142,52 @@ class FacturationController extends Controller
 					
 									
 
-					//Lorsque la clé == "participation"
+					//Lorsque la clé == "Participation"
 					// 
 					//			total = montantCommande * ratio
 					//Avec 
-					//			ratio = montantTotal_Activite_1 / montantTotal_Activite_1_Collectivite_x
+					//			ratio = nbTotalFacture_Activite_1 / nbTotalFacture_Activite_1_Collectivite_x
 					if($ccc->getRepartition() === "Participation") {
 						
+						//On récupere le nb total des facture pour l'activite de l'activite de la commande
+						$commandeActivite = $em->getRepository('JCCommandeBundle:Commande')->findByActivite($commande->getApplication()->getActivite());
+						
+						//On récupere le nombre de commandes liées à l'activite
+						$totalActivite = sizeof($commandeActivite);
+						
+						//On recupere le nombre de commande liée à l'acitivte et à la collectivite
+						$cccActiviteCollectivite = $em->getRepository('JCCommandeBundle:Commande')->findCommandeAvecActiviteEtCollectivite($commande->getApplication()->getActivite(), $collectivite);
+						
+						//On fait le ratio :
+						$ratio = sizeof($cccActiviteCollectivite) / $totalActivite;
+
+
+						//On calcule le montant à payer grâce au ratio
+						$montant = $ratio * $commande->getTotalTTC();
+					
+						//On stocke le ratio
+						$tabCommande[$commande->getId()]['repartition'] = ($ratio*100);
+
+						//On explique le ratio
+						$tabCommande[$commande->getId()]['infoRatioText'] = $info->getNombre()." commandes concerne ".$collectivite->getNom().", sur un total de ".$totalCle;
+						$tabCommande[$commande->getId()]['infoRatioTitre'] = $commande->getApplication()->getActivite();
 						
 						
-						$tabCommande[$commande->getId()]['repartition'] = "a définir";
+						// ----- IL FAUT AJOUTER UN CHAMPS ACTIVITE DANS LA COMMANDE !!! --------
 						
 						
 						
 					//On regarde la clé de repartition (de la commande, car celle de l'application a pu changer entre temps)
 					//Puis on va chercher l'information de la collectivite liée à la clée
-					//On fait ensuite le ratio (par exemple : nbHabitant_Activite_1_Collectivite_x / nbHabitant_Total)
+					//On fait ensuite le ratio (par exemple : nbHabitant_Collectivite_x / nbHabitant_Total)
 					// 
 					//			total = montantCommande * ratio
 					//Avec 
-					//			ratio = nbTotalHabitant / nbTotalHabitant_Collectivite_x
+					//			ratio = nbTotalHabitant_Collectivite_x / nbTotalHabitant
 					} else {
 						
 						//On récupere l'InformationCollectivite
-						$info = $infosColl[$commande->getApplication()->getCleRepartition()->getNom()];
+						$info = $infosColl[$commande->getActivite()->getCleRepartition()->getNom()];
 
 						//On récupere la "somme des clés", ceci afin de faire un ratio pour la collectivite
 						$totalCle = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findSommeDeCleEtAnnee($info->getCleRepartition(), $annee)[1];

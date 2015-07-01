@@ -41,6 +41,12 @@ class Activite
 
 // DEBUT CLES ETRANGERES
 
+	/**
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\CleRepartition", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+   private $cleRepartition;
+   
 
 // FIN DES COLONNES - DEBUT PROPRIETE AUTRE
 
@@ -114,4 +120,32 @@ class Activite
     {
         return $this->uniteOeuvre;
     }
+    
+    
+    
+    /**
+     * Set cleRepartition
+     *
+     * @param CleRepartition
+     * @return Application
+     */
+    public function setCleRepartition(CleRepartition $cleRepartition)
+    {
+        $this->cleRepartition = $cleRepartition;
+
+        return $this;
+    }
+
+    /**
+     * Get cleRepartition
+     *
+     * @return CleRepartition 
+     */
+    public function getCleRepartition()
+    {
+        return $this->cleRepartition;
+    }
+
+
+
 }

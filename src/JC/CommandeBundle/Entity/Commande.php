@@ -89,7 +89,6 @@ class Commande
     private $libelleFacturation;
 
 
-
 	/**
      * @var string
      *
@@ -547,6 +546,15 @@ class Commande
    
   
 
+	
+   /**
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Activite", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+   private $activite;
+
+
+
 
 	/**
    * @ORM\OneToMany(targetEntity="JC\CommandeBundle\Entity\CommandePasseEtat", mappedBy="commande", cascade={"persist"})
@@ -595,10 +603,11 @@ public function __construct() {
 			if($e->getEtat()->getId() >= $etatID){
 				$etatID = $e->getEtat()->getId();
 				$etat = $e;
+				
 			}
 		}
 		
-		return $e->getEtat()->getLibelle();
+		return $etat->getEtat()->getLibelle();
 	}
 
 
@@ -968,7 +977,34 @@ public function __construct() {
     }
 
 
+
+
 	
+
+	/**
+     * Set Activite
+     *
+     * @param Activite
+     * @return Application
+     */
+    public function setActivite(Activite $activite)
+    {
+        $this->activite = $activite;
+
+        return $this;
+    }
+
+    /**
+     * Get activite
+     *
+     * @return Activite 
+     */
+    public function getActivite()
+    {
+        return $this->activite;
+    }
+
+
 	 
 
 }
