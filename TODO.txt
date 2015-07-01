@@ -19,18 +19,15 @@ TODO liste :
 	-> FAIT faire une table état (et ainsi éviter que de mauvais paramêtre au changement d’état ne se glisse
 	-> FAIT en supprimant la table année
 	-> FAIT gérer les années (pour commande, informations collectivite, etc)
-
+	-> FAIT ajouter le cout de la masse salarial
+	-> FAIT une méthode qui calcule le cout d'une commande pour une collectivite donée
+	-> FAIT afficher la date d’envoie et de paiement dans « detail » quand une commande est envoyée ou payée
 
 
 	-> Vérifier dans validator qu’une commande qui passe envoyé à bien n° coriolis etc
 		(voir avec Severine) + Savoir à quel stade de la commande le num coriolis 		doit être entré, etc
 
-	-> si une application peut changer d’activite, il faut garder dans la commande l’activite (à coup sur, car si il y a un changement dans les activités, il faut le faire)
-
-	-> lors de passage par param, faire avec ID et non pas nom (éviter les problemes d’encodage)
-	-> ajouter le cout de la masse salarial
+	
 	-> Pour le bundle admin, faire des form pour chaque chose à modifier (devrait être plus simple que les autre forms, contient surtout des relation et du texte)
-	-> afficher la date d’envoie et de paiement dans « detail » quand une commande est envoyée ou payée
-	-> Faire une méthode qui calcule le cout d'une commande pour une collectivite donée
-	-> tester les passage de paramètre avec de fausses valeurs pour s’assurer qu’on renvoie vers des pages d’erreur partout
+	-> tester les passage de paramètre avec de fausses valeurs pour s’assurer qu’on renvoie vers des pages d’erreur partout et faire avec ID (pour éviter les pb d’encodage)
 	-> formatter le total d’une commande dans form.html.twig

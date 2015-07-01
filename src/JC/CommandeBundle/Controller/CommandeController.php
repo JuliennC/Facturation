@@ -23,6 +23,7 @@ use JC\CommandeBundle\Entity\EtatCommande;
 use JC\CommandeBundle\Entity\CommandePasseEtat;
 use JC\CommandeBundle\Entity\InformationCollectivite;
 use JC\CommandeBundle\Entity\MasseSalariale;
+use JC\CommandeBundle\Entity\TempsPasse;
 
 use JC\CommandeBundle\Form\CommandeType;
 
@@ -300,7 +301,7 @@ class CommandeController extends Controller
 	                    $cCC->setCollectivite($em->getRepository('JCCommandeBundle:Collectivite')->findOneByNom($nomColl));
 	                    
 	                    //La repartition est donc la cle de l'application concernee
-	                    $cCC->setRepartition( $commande->getApplication()->getCleRepartition()->getNom());
+	                    $cCC->setRepartition( $commande->getActivite()->getCleRepartition()->getNom());
 
 						$em->persist($cCC);
 					}
@@ -586,19 +587,7 @@ class CommandeController extends Controller
 		$service2->setNom("Etude");
 		$em->persist($service2);
 
-		
-		//Creation des masses salarial pour les service
-		$masse1 = new MasseSalariale();
-		$masse1 -> setMontant(200000);
-		$masse1 -> setAnnee(2015);
-		$masse1 -> setService($service1);
-		$em->persist($masse1);
-
-		$masse2 = new MasseSalariale();
-		$masse2 -> setMontant(350000);
-		$masse2 -> setAnnee(2015);
-		$masse2 -> setService($service2);
-		$em->persist($masse2);
+	
 		
 		
 		//CrŽation des budgets
@@ -680,7 +669,22 @@ class CommandeController extends Controller
 		
 				
 				
-	
+		
+		//Creation des masses salarial pour les service
+		$masse1 = new MasseSalariale();
+		$masse1 -> setMontant(200000);
+		$masse1 -> setAnnee(2015);
+		$masse1 -> setActivite($activite);
+		$em->persist($masse1);
+
+		$masse2 = new MasseSalariale();
+		$masse2 -> setMontant(350000);
+		$masse2 -> setAnnee(2015);
+		$masse2 -> setActivite($activite2);
+		$em->persist($masse2);
+		
+		
+		
 		
 		// Creation d'une application
 		$application = new Application();
@@ -830,6 +834,98 @@ class CommandeController extends Controller
 	
 
 
+
+		//Creation des temps passŽs
+		$temps1 = new TempsPasse();
+		$temps1 -> setPourcentage(30);
+		$temps1 -> setAnnee(2015);
+		$temps1 -> setActivite($activite);
+		$temps1 -> setCollectivite($coll1);
+		$em->persist($temps1);
+		
+		
+		$temps2 = new TempsPasse();
+		$temps2 -> setPourcentage(15);
+		$temps2 -> setAnnee(2015);
+		$temps2 -> setActivite($activite);
+		$temps2 -> setCollectivite($coll2);
+		$em->persist($temps2);
+		
+		$temps3 = new TempsPasse();
+		$temps3 -> setPourcentage(25);
+		$temps3 -> setAnnee(2015);
+		$temps3 -> setActivite($activite);
+		$temps3 -> setCollectivite($coll3);
+		$em->persist($temps3);
+		
+		$temps4 = new TempsPasse();
+		$temps4 -> setPourcentage(10);
+		$temps4 -> setAnnee(2015);
+		$temps4 -> setActivite($activite);
+		$temps4 -> setCollectivite($coll4);
+		$em->persist($temps4);
+		
+		$temps5 = new TempsPasse();
+		$temps5 -> setPourcentage(10);
+		$temps5 -> setAnnee(2015);
+		$temps5 -> setActivite($activite);
+		$temps5 -> setCollectivite($coll5);
+		$em->persist($temps5);
+		
+		$temps6 = new TempsPasse();
+		$temps6 -> setPourcentage(10);
+		$temps6 -> setAnnee(2015);
+		$temps6 -> setActivite($activite);
+		$temps6 -> setCollectivite($coll6);
+		$em->persist($temps6);
+		
+		
+		$temps1_2 = new TempsPasse();
+		$temps1_2 -> setAnnee(2015);
+		$temps1_2 -> setPourcentage(30);
+		$temps1_2 -> setActivite($activite2);
+		$temps1_2 -> setCollectivite($coll1);
+		$em->persist($temps1_2);
+		
+		$temps2_2 = new TempsPasse();
+		$temps2_2 -> setPourcentage(15);
+		$temps2_2 -> setAnnee(2015);
+		$temps2_2 -> setActivite($activite2);
+		$temps2_2 -> setCollectivite($coll2);
+		$em->persist($temps2_2);
+		
+		$temps3_2 = new TempsPasse();
+		$temps3_2 -> setPourcentage(25);
+		$temps3_2 -> setAnnee(2015);
+		$temps3_2 -> setActivite($activite2);
+		$temps3_2 -> setCollectivite($coll3);
+		$em->persist($temps3);
+		
+		$temps4_2 = new TempsPasse();
+		$temps4_2 -> setPourcentage(10);
+		$temps4_2 -> setActivite($activite2);
+		$temps4_2 -> setAnnee(2015);
+		$temps4_2 -> setCollectivite($coll4);
+		$em->persist($temps4_2);
+		
+		$temps5_2 = new TempsPasse();
+		$temps5_2 -> setPourcentage(10);
+		$temps5_2 -> setAnnee(2015);
+		$temps5_2 -> setActivite($activite2);
+		$temps5_2 -> setCollectivite($coll5);
+		$em->persist($temps5_2);
+		
+		$temps6_2 = new TempsPasse();
+		$temps6_2 -> setPourcentage(10);
+		$temps6_2 -> setAnnee(2015);
+		$temps6_2 -> setActivite($activite2);
+		$temps6_2 -> setCollectivite($coll6);
+		$em->persist($temps6);
+		
+		
+		
+
+
 		$commande1 = new Commande();
 		$commande1 -> setVentilation("Mutualisee");
 		$commande1 -> setReference("ReFint78_1");
@@ -947,19 +1043,19 @@ class CommandeController extends Controller
 		$em->persist($concerne1);	
 		
 		$concerne2 = new CommandeConcerneCollectivite();
-		$concerne2 -> setRepartition("Nombre d'habitant");
+		$concerne2 -> setRepartition($commande1->getActivite()->getCleRepartition()->getNom());
 		$concerne2 -> setCommande($commande1);
 		$concerne2 -> setCollectivite($coll2);
 		$em->persist($concerne2);	
 		
 		$concerne4 = new CommandeConcerneCollectivite();
-		$concerne4 -> setRepartition("Nombre d'habitant");
+		$concerne4 -> setRepartition($commande1->getActivite()->getCleRepartition()->getNom());
 		$concerne4 -> setCommande($commande1);
 		$concerne4 -> setCollectivite($coll4);
 		$em->persist($concerne4);	
 		
 		$concerne5 = new CommandeConcerneCollectivite();
-		$concerne5 -> setRepartition("Nombre d'habitant");
+		$concerne5 -> setRepartition($commande2->getActivite()->getCleRepartition()->getNom());
 		$concerne5 -> setCommande($commande2);
 		$concerne5 -> setCollectivite($coll6);
 		$em->persist($concerne5);		
@@ -979,13 +1075,13 @@ class CommandeController extends Controller
 
 
 		$concerne8 = new CommandeConcerneCollectivite();
-		$concerne8 -> setRepartition("Nombre d'habitant");
+		$concerne8 -> setRepartition($commande3->getActivite()->getCleRepartition()->getNom());
 		$concerne8 -> setCommande($commande3);
 		$concerne8 -> setCollectivite($coll5);
 		$em->persist($concerne8);
 
 		$concerne9 = new CommandeConcerneCollectivite();
-		$concerne9 -> setRepartition("Nombre d'habitant");
+		$concerne9 -> setRepartition($commande3->getActivite()->getCleRepartition()->getNom());
 		$concerne9 -> setCommande($commande3);
 		$concerne9 -> setCollectivite($coll2);
 		$em->persist($concerne9);

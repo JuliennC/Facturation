@@ -142,69 +142,27 @@ class FacturationController extends Controller
 					
 									
 
-					//Lorsque la clé == "Participation"
-					// 
-					//			total = montantCommande * ratio
-					//Avec 
-					//			ratio = nbTotalFacture_Activite_1 / nbTotalFacture_Activite_1_Collectivite_x
-					if($ccc->getRepartition() === "Participation") {
+			
 						
-						//On récupere le nb total des facture pour l'activite de l'activite de la commande
-						$commandeActivite = $em->getRepository('JCCommandeBundle:Commande')->findByActivite($commande->getApplication()->getActivite());
-						
-						//On récupere le nombre de commandes liées à l'activite
-						$totalActivite = sizeof($commandeActivite);
-						
-						//On recupere le nombre de commande liée à l'acitivte et à la collectivite
-						$cccActiviteCollectivite = $em->getRepository('JCCommandeBundle:Commande')->findCommandeAvecActiviteEtCollectivite($commande->getApplication()->getActivite(), $collectivite);
-						
-						//On fait le ratio :
-						$ratio = sizeof($cccActiviteCollectivite) / $totalActivite;
+					//On récupere l'InformationCollectivité
+					$info = $infosColl[$commande->getActivite()->getCleRepartition()->getNom()];
 
+					//On récupere la "somme des clés", ceci afin de faire un ratio pour la collectivite
+					$totalCle = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findSommeDeCleEtAnnee($info->getCleRepartition(), $annee)[1];
 
-						//On calcule le montant à payer grâce au ratio
-						$montant = $ratio * $commande->getTotalTTC();
+					//On fait le ratio
+					$ratio = $info->getNombre() / $totalCle;
+						
+					//On calcule le montant à payer grâce au ratio
+					$montant = $ratio * $commande->getTotalTTC();
 					
-						//On stocke le ratio
-						$tabCommande[$commande->getId()]['repartition'] = ($ratio*100);
+					//On stocke le ratio
+					$tabCommande[$commande->getId()]['repartition'] = ($ratio*100);
 
-						//On explique le ratio
-						$tabCommande[$commande->getId()]['infoRatioText'] = $info->getNombre()." commandes concerne ".$collectivite->getNom().", sur un total de ".$totalCle;
-						$tabCommande[$commande->getId()]['infoRatioTitre'] = $commande->getApplication()->getActivite();
-						
-						
-						// ----- IL FAUT AJOUTER UN CHAMPS ACTIVITE DANS LA COMMANDE !!! --------
-						
-						
-						
-					//On regarde la clé de repartition (de la commande, car celle de l'application a pu changer entre temps)
-					//Puis on va chercher l'information de la collectivite liée à la clée
-					//On fait ensuite le ratio (par exemple : nbHabitant_Collectivite_x / nbHabitant_Total)
-					// 
-					//			total = montantCommande * ratio
-					//Avec 
-					//			ratio = nbTotalHabitant_Collectivite_x / nbTotalHabitant
-					} else {
-						
-						//On récupere l'InformationCollectivite
-						$info = $infosColl[$commande->getActivite()->getCleRepartition()->getNom()];
-
-						//On récupere la "somme des clés", ceci afin de faire un ratio pour la collectivite
-						$totalCle = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findSommeDeCleEtAnnee($info->getCleRepartition(), $annee)[1];
-
-						//On fait le ratio
-						$ratio = $info->getNombre() / $totalCle;
-						
-						//On calcule le montant à payer grâce au ratio
-						$montant = $ratio * $commande->getTotalTTC();
+					//On explique le ratio
+					$tabCommande[$commande->getId()]['infoRatioText'] = $info->getNombre()." sur un total de ".$totalCle;
+					$tabCommande[$commande->getId()]['infoRatioTitre'] = $ccc->getRepartition();
 					
-						//On stocke le ratio
-						$tabCommande[$commande->getId()]['repartition'] = ($ratio*100);
-
-						//On explique le ratio
-						$tabCommande[$commande->getId()]['infoRatioText'] = $info->getNombre()." sur un total de ".$totalCle;
-						$tabCommande[$commande->getId()]['infoRatioTitre'] = $ccc->getRepartition();
-					}
 					
 					
 
@@ -236,7 +194,47 @@ class FacturationController extends Controller
 		}
     
     
-        return $this->render('JCFacturationBundle:Facturation:calcul_facturation.html.twig', array('infosColl'=>$infosColl, 'tabCommandes'=>$tabCommande, 'annee'=>$annee));
+    
+    
+    
+		// --------------- On a donc finit de calculer les montant des commandes ---------------
+		
+		
+		//On stock les montants des masses salariales
+		$tabMassesSalariales = array();
+		
+		//On calcule maintenant la répartition de la masse salarials
+		$listeMassesSalarialesAnnees = $em->getRepository('JCCommandeBundle:MasseSalariale')->findByAnnee($annee);
+    
+		//On additionnera les masses salariales
+		$infosColl['montantMassesSalariales'] = 0;
+    
+		//On parcours chaque masse salariale afin de connaitre la part que la collectivite doit payer
+		foreach($listeMassesSalarialesAnnees as $ms) {
+			
+			//On init l'array de l'activite
+			$tabMassesSalariales[$ms->getActivite()->getNom()] = array();
+			
+			//On récupère le temps passé de l'année pour l'Activite
+			$tempsPasse = $em->getRepository('JCCommandeBundle:TempsPasse')->findOneAvecAnneeEtActivitePourCollectivite($annee, $ms->getActivite(), $collectivite)[0];
+
+			//On calule le montant du
+			$montant = $ms->getMontant() * ($tempsPasse->getPourcentage()/100);
+			
+			
+			//On stoke les informations concernant la masse salariale (due , totale, etc)
+			$tabMassesSalariales[$ms->getActivite()->getNom()]['activite'] =  $ms->getActivite()->getNom();
+			$tabMassesSalariales[$ms->getActivite()->getNom()]['montantTotal'] =  $ms->getMontant();
+			$tabMassesSalariales[$ms->getActivite()->getNom()]['pourcentage'] =  $tempsPasse->getPourcentage();
+			$tabMassesSalariales[$ms->getActivite()->getNom()]['montantDu'] =  $montant;
+			
+			$infosColl['montantMassesSalariales'] += $montant;
+			
+			
+		}
+    
+        return $this->render('JCFacturationBundle:Facturation:calcul_facturation.html.twig', array('infosColl'=>$infosColl, 'tabCommandes'=>$tabCommande, 'annee'=>$annee,
+        																							'tabMassesSalariales'=>$tabMassesSalariales));
 
     }
     

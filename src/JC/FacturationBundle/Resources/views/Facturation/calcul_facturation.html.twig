@@ -6,18 +6,75 @@
 
 {% block jcfacturation_body %}
 
-  <h3>Vous venez de lancer la Facturation </h3>
+  <h3>Vous venez de lancer la Facturation pour {{ infosColl['nomColl'] }}</h3>
   
 
-<div class='container top30'>
+<div class='container top30 '>
 	
-	<div class="well">
-		<p> {{infosColl['nbMutualisees']}} commandes mutualisée(s), soit un total de {{infosColl['montantMutualisees']|number_format(2, ',', ' ') }} €
-		<p> {{infosColl['nbDirectes']}} commandes directe(s), soit un total de {{infosColl['montantDirectes']|number_format(2, ',', ' ') }} €
+	<div class="row">
+		<div class="well col-md-6">
+		
+			<p> {{infosColl['nbMutualisees']}} commandes mutualisée(s), soit un total de {{infosColl['montantMutualisees']|number_format(2, ',', ' ') }} €
+			<p> {{infosColl['nbDirectes']}} commandes directe(s), soit un total de {{infosColl['montantDirectes']|number_format(2, ',', ' ') }} €
+			
+			<p> <strong> Total  des commandes : </strong> {{(infosColl['montantMutualisees'] + infosColl['montantDirectes'])|number_format(2, ',', ' ') }} €
+
+			<hr>
+
+			<p> <strong> Total des masses salariales : </strong> {{ infosColl['montantMassesSalariales']|number_format(2, ',', ' ') }} €
+			
+			<hr>
+			
+			<p> <strong> Total : {{ (infosColl['montantMassesSalariales'] + infosColl['montantMutualisees'] + infosColl['montantDirectes'])|number_format(2, ',', ' ') }} € </strong>
+		</div>	
 	</div>
 </div>
 
 
+
+
+    <!-- table pour les masses salariales -->
+
+<div class="row">
+        <div class="panel panel-info filterable ">
+            <div class="panel-heading">
+                <h3 class="panel-title">Masses salariales</h3>
+            </div>
+            <table class="table table_center">
+            
+                <thead>
+                	<tr class="filters">
+						<th class='col-md-3 center'>Activite</th>
+						<th class='col-md-3 center'>Montant Masse Salariale</th>
+						<th class='col-md-3 center'>Pourcentage</th>
+						<th class='col-md-3 center'>Montant Du</th>
+			        </tr>
+                </thead>
+
+                <tbody>
+                    
+          
+                    
+                    
+                {% for masseSalariale in tabMassesSalariales %}
+			        <tr>
+						<td>{{ masseSalariale['activite'] }}</td>
+						<td>{{ masseSalariale['montantTotal']|number_format(2, ',', ' ')}} €</td>
+						<td>{{ masseSalariale['pourcentage']|number_format(2, ',', ' ') }} %</td>
+						<td>{{ masseSalariale['montantDu']|number_format(2, ',', ' ')}} €</td>
+					</tr>
+					
+				{% endfor %}
+   
+                    
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    
+    <!-- table pour les commande -->
 
 	<div class="row">
         <div class="panel panel-info filterable ">

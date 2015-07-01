@@ -5,12 +5,12 @@ namespace JC\CommandeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MasseSalariale
+ * TempsPasse
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="JC\CommandeBundle\Entity\MasseSalarialeRepository")
+ * @ORM\Entity(repositoryClass="JC\CommandeBundle\Entity\TempsPasseRepository")
  */
-class MasseSalariale
+class TempsPasse
 {
     /**
      * @var integer
@@ -24,9 +24,9 @@ class MasseSalariale
     /**
      * @var integer
      *
-     * @ORM\Column(name="Montant", type="integer")
+     * @ORM\Column(name="Pourcentage", type="integer")
      */
-    private $montant;
+    private $pourcentage;
 
     /**
      * @var integer
@@ -37,9 +37,6 @@ class MasseSalariale
 
 
 
-
-// ---------- Cles étrangeres ----------
-
 	/**
    * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Activite", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
@@ -47,6 +44,12 @@ class MasseSalariale
    private $activite;
 
 
+
+   /**
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Collectivite", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+   private $collectivite;
 
 
 
@@ -61,33 +64,33 @@ class MasseSalariale
     }
 
     /**
-     * Set montant
+     * Set pourcentage
      *
-     * @param integer $montant
-     * @return MasseSalariale
+     * @param integer $pourcentage
+     * @return TempsPasse
      */
-    public function setMontant($montant)
+    public function setPourcentage($pourcentage)
     {
-        $this->montant = $montant;
+        $this->pourcentage = $pourcentage;
 
         return $this;
     }
 
     /**
-     * Get montant
+     * Get pourcentage
      *
      * @return integer 
      */
-    public function getMontant()
+    public function getPourcentage()
     {
-        return $this->montant;
+        return $this->pourcentage;
     }
 
     /**
      * Set annee
      *
      * @param integer $annee
-     * @return MasseSalariale
+     * @return TempsPasse
      */
     public function setAnnee($annee)
     {
@@ -107,11 +110,12 @@ class MasseSalariale
     }
 
 
+
 	/**
-     * Set service
+     * Set activite
      *
-     * @param Service $service
-     * @return MasseSalariale
+     * @param Activite $activite
+     * @return TempsPasse
      */
     public function setActivite($activite)
     {
@@ -121,13 +125,38 @@ class MasseSalariale
     }
 
     /**
-     * Get service
+     * Get activite
      *
-     * @return Service 
+     * @return Activite 
      */
     public function getActivite()
     {
         return $this->activite;
+    }
+
+
+
+	/**
+     * Set collectivite
+     *
+     * @param Collectivite $collectivite
+     * @return TempsPasse
+     */
+    public function setCollectivite($collectivite)
+    {
+        $this->collectivite = $collectivite;
+
+        return $this;
+    }
+
+    /**
+     * Get collectivite
+     *
+     * @return Collectivite 
+     */
+    public function getCollectivite()
+    {
+        return $this->collectivite;
     }
 
 
