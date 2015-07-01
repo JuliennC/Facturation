@@ -25,7 +25,8 @@
 		"doctrine/doctrine-fixtures-bundle": "~2.2",
 	    "components/jquery": "~2.1",
 	    "symfony/serializer":"~2.7.0",
-        "friendsofsymfony/jsrouting-bundle": "^1.5"
+        "friendsofsymfony/jsrouting-bundle": "^1.5",
+        "obtao/html2pdf-bundle": "master-dev"
 
     },
 

@@ -241,4 +241,40 @@ class FacturationController extends Controller
     
     
     
+    		
+
+     public function genererPDFAction()
+    {
+		$content = $this->render('JCFacturationBundle:Facturation:pdf_facture.html.twig');
+
+
+
+		
+	  	
+		$content = $this->renderView('JCFacturationBundle:Facturation:pdf_facture.html.twig');
+	    $pdfData = $this->get('obtao.pdf.generator')->outputPdf($content);
+	
+	    /* You can also pass some options.
+	       The following options are available :
+	            protected $font = 'Arial'
+	            protected $format = 'P'
+	            protected $language = 'en'
+	            protected $size = 'A4'
+	       Here is an example to generate a pdf with a special font and a landscape orientation
+	    */
+	    $pdfData = $this->get('obtao.pdf.generator')->outputPdf($content,array('font'=>'Georgia','format'=>'L'));
+	
+	    $response = new Response($pdfData);
+	    $response->headers->set('Content-Type', 'application/pdf');
+	
+	    return $response;
+	  	
+	  	
+	  	
+	}
+    
+    
+    
+    
+    
 }

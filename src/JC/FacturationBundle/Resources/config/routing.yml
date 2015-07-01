@@ -9,3 +9,12 @@ jc_facturation_calcul:
     defaults: { _controller: JCFacturationBundle:Facturation:calcul }
     requirements:
         annee:    ([0-9]+)
+        
+        
+        
+        
+# A supprimmer plus tard
+
+jc_facturation_pdf:
+    path:     /facturation/pdf
+    defaults: { _controller: JCFacturationBundle:Facturation:genererPDF }

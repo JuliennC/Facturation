@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new JC\FacturationBundle\JCFacturationBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new JC\AdminBundle\JCAdminBundle(),
+            new Obtao\Bundle\Html2PdfBundle\ObtaoHtml2PdfBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
