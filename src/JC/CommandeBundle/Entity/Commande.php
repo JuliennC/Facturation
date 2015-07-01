@@ -607,7 +607,7 @@ public function __construct() {
 	}
 
 	public function getDateCreation(){
-		return $this->getCommandePasseEtat("Cree");
+		return $this->getCommandePasseEtat("Creee");
 	}
 
 	public function getDatePaiement(){

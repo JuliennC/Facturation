@@ -22,12 +22,8 @@ class AccueilController extends Controller
         //Si aucune année n'est passée en paramêtre, 
         //On récupère l'année courrante
         if ($annee === "html"){
-			$date = date("Y");
-
-		//Sinon, on prend l'année passé en paramêtre
-        } else {
-	        $date = $annee;
-        }
+			$annee = date("Y");
+        } 
 		
 
    		//On recupere la liste des services
@@ -38,9 +34,8 @@ class AccueilController extends Controller
    		foreach($listeServices as $service){
 	   		
 	   		//On recupere le budget du service pour l'annee correspondante a 'date'
-	   		$budget = $em->getRepository('JCCommandeBundle:Budget')->findBudgetAvecAnneeEtService($em->getRepository('JCCommandeBundle:Annee')->findOneByLibelle($date), $service);
+	   		$budget = $em->getRepository('JCCommandeBundle:Budget')->findBudgetAvecAnneeEtService($annee, $service);
 
-			
 			//On vérifie qu'un budget a bien été créée
 			// (Exemple, dans le cas de la création d'un nouveau service, le service n'a pas de budget pour l'année d'avant)	   		
 	   		if(sizeof($budget) > 0){
@@ -65,7 +60,7 @@ class AccueilController extends Controller
 		 
 
 		// On récupète toutes les commandes qui ont été Enregistrée dans l'année 'date'
-		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansAnnee("Enregistree", $date);
+		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansAnnee("Enregistree", $annee);
 		
 				
 		
@@ -107,7 +102,7 @@ class AccueilController extends Controller
 		
 		
 
-        return $this->render('JCAccueilBundle:Accueil:index.html.twig', array('infoCommandes'=>$infoCommandes, 'annee'=>$date, 'infoServices'=>$infoServices));
+        return $this->render('JCAccueilBundle:Accueil:index.html.twig', array('infoCommandes'=>$infoCommandes, 'annee'=>$annee, 'infoServices'=>$infoServices));
     }
     
 
