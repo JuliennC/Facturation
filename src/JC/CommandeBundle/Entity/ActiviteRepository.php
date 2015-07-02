@@ -20,5 +20,13 @@ class ActiviteRepository extends EntityRepository
     ;
     
     }
+    
+    
+    public function queryFindAll() {
+    return $this
+      ->createQueryBuilder('a')
+    ;
+    
+    }
 
 }

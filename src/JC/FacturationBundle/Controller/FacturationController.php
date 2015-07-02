@@ -121,9 +121,13 @@ class FacturationController extends Controller
 
 		$tabRes = $this->calculFacturation($nomCollectivite, $annee);
 
+		//On crée la table activite
 		$tabActivites = array();
-		$totalActivitesFactures = 0;
-		$totalActivitesMassesSalariales = 0;
+
+
+		//On va stocker les totaux, pour ne pas le faire en twig
+		$tabRes['infosColl']['totalFactures']['Directe'] = 0;
+		$tabRes['infosColl']['totalFactures']['Mutualisee'] = 0;
 
 		
 		//On crée les tableaux
@@ -131,14 +135,28 @@ class FacturationController extends Controller
 
 			$tabActivites[$activite->getNom()] = array();
 			$tabActivites[$activite->getNom()]['nom'] = $activite->getNom();
-			$tabActivites[$activite->getNom()]['montantFactures'] = 0;
+			$tabActivites[$activite->getNom()]['montantFactures']['Directe'] = 0;
+			$tabActivites[$activite->getNom()]['montantFactures']['Mutualisee'] = 0;
+			$tabActivites[$activite->getNom()]['montantMasseSalariale'] = 0;
 
 			
-			//On ne va chercher le total de la masse salariale qu'une seule fois par activite
-			//On récupere le montant de la masse salariale dans le tableau retourné par calculFacturatoin(..)
-			$tabActivites[$activite->getNom()]['montantMasseSalariale'] = $tabRes['tabMassesSalariales'][$activite->getNom()]['montantAPayer']; 
-		
-			$totalActivitesMassesSalariales += $tabRes['tabMassesSalariales'][$activite->getNom()]['montantAPayer'];
+			//On regarde si la collectivite à bien une partie de la masse salariale à payer 
+			//Dans cette activite
+			if (array_key_exists($activite->getNom(), $tabRes['tabMassesSalariales'])) {
+			
+				//On ne va chercher le total de la masse salariale qu'une seule fois par activite
+				//On récupere le montant de la masse salariale dans le tableau retourné par calculFacturatoin(..)
+				$tabActivites[$activite->getNom()]['montantMasseSalariale'] = $tabRes['tabMassesSalariales'][$activite->getNom()]['montantAPayer']; 	
+			
+				
+			} else {
+				
+				//Si la collectivite ne devait rien payer, on met 0
+				$tabActivites[$activite->getNom()]['montantMasseSalariale'] = 0; 	
+			}
+			
+			
+
 
 		}
 		
@@ -151,15 +169,16 @@ class FacturationController extends Controller
 		foreach($tabRes['tabCommandes'] as $commande) {
 			
 			
-			$tabActivites[$commande['activite']]['montantFactures'] += $commande['montantAPayer'];			
+			$tabActivites[$commande['activite']]['montantFactures'][$commande['ventilation']] += $commande['montantAPayer'];			
 
-			$totalActivitesFactures += $commande['montantAPayer'];
+					
+			$tabRes['infosColl']['totalFactures'][$commande['ventilation']] += $commande['montantAPayer'];
 		}
 		
 		
 		
 	  	
-		$content = $this->renderView('JCFacturationBundle:Facturation:pdf_facture.html.twig', array('infosColl' => $tabRes['infosColl'] , 'annee'=>$annee, 'tabActivites'=>																													$tabActivites, 'totalActivitesFactures'=>$totalActivitesFactures, 																														'totalActivitesMassesSalariales'=>$totalActivitesMassesSalariales) );
+		$content = $this->renderView('JCFacturationBundle:Facturation:pdf_facture.html.twig', array('infosColl' => $tabRes['infosColl'] , 'annee'=>$annee, 'tabActivites'=>																													$tabActivites, /*'totalActivitesFactures'=>$totalActivitesFactures, 																														'totalActivitesMassesSalariales'=>$totalActivitesMassesSalariales*/) );
 	    //$pdfData = $this->get('obtao.pdf.generator')->outputPdf($content);
 	
 	    /* You can also pass some options.
