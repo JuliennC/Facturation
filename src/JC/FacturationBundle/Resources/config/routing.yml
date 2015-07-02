@@ -15,6 +15,8 @@ jc_facturation_calcul:
         
 # A supprimmer plus tard
 
-jc_facturation_pdf:
-    path:     /facturation/pdf
-    defaults: { _controller: JCFacturationBundle:Facturation:genererPDF }
+jc_facturation_pdf_facture:
+    path:     /facturation/pdf/{nomCollectivite}/{annee}
+    defaults: { _controller: JCFacturationBundle:Facturation:genererPDFFacture }
+    requirements:
+        annee:    ([0-9]+)

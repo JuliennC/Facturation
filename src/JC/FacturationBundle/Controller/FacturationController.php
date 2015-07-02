@@ -87,7 +87,127 @@ class FacturationController extends Controller
     
     public function calculAction($nomCollectivite, $annee) {
 	    
-   	  	$em = $this->getDoctrine()->getManager();
+	    
+		$tabRes = $this->calculFacturation($nomCollectivite, $annee);
+    
+        return $this->render('JCFacturationBundle:Facturation:calcul_facturation.html.twig', array('infosColl'=>$tabRes['infosColl'], 'tabCommandes'=>$tabRes['tabCommandes'], 
+        																							'annee'=>$annee, 'tabMassesSalariales'=>$tabRes['tabMassesSalariales']));
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    		
+
+     public function genererPDFFactureAction($nomCollectivite, $annee)
+    {
+		
+		//On récupere les activites
+		$em = $this->getDoctrine()->getManager();
+	  	    
+	    // On récupète toutes les activites
+		$listeActivite = $em->getRepository('JCCommandeBundle:Activite')->findAll();  
+
+		$tabRes = $this->calculFacturation($nomCollectivite, $annee);
+
+		$tabActivites = array();
+		$totalActivitesFactures = 0;
+		$totalActivitesMassesSalariales = 0;
+
+		
+		//On crée les tableaux
+		foreach ($listeActivite as $activite) {
+
+			$tabActivites[$activite->getNom()] = array();
+			$tabActivites[$activite->getNom()]['nom'] = $activite->getNom();
+			$tabActivites[$activite->getNom()]['montantFactures'] = 0;
+
+			
+			//On ne va chercher le total de la masse salariale qu'une seule fois par activite
+			//On récupere le montant de la masse salariale dans le tableau retourné par calculFacturatoin(..)
+			$tabActivites[$activite->getNom()]['montantMasseSalariale'] = $tabRes['tabMassesSalariales'][$activite->getNom()]['montantAPayer']; 
+		
+			$totalActivitesMassesSalariales += $tabRes['tabMassesSalariales'][$activite->getNom()]['montantAPayer'];
+
+		}
+		
+		
+		
+		//On calcule le montant des commandes par ativite
+		
+		//ATTENTION, ici $commande est un tablea, tableau créé dans la fonction calculFacturation 
+		// On ne peut donc pas faire de $commande->getActivite()->getNom() !!!!!
+		foreach($tabRes['tabCommandes'] as $commande) {
+			
+			
+			$tabActivites[$commande['activite']]['montantFactures'] += $commande['montantAPayer'];			
+
+			$totalActivitesFactures += $commande['montantAPayer'];
+		}
+		
+		
+		
+	  	
+		$content = $this->renderView('JCFacturationBundle:Facturation:pdf_facture.html.twig', array('infosColl' => $tabRes['infosColl'] , 'annee'=>$annee, 'tabActivites'=>																													$tabActivites, 'totalActivitesFactures'=>$totalActivitesFactures, 																														'totalActivitesMassesSalariales'=>$totalActivitesMassesSalariales) );
+	    //$pdfData = $this->get('obtao.pdf.generator')->outputPdf($content);
+	
+	    /* You can also pass some options.
+	       The following options are available :
+	            protected $font = 'Arial'
+	            protected $format = 'P'
+	            protected $language = 'en'
+	            protected $size = 'A4'
+	       Here is an example to generate a pdf with a special font and a landscape orientation
+	    */
+	    $pdfData = $this->get('obtao.pdf.generator')->outputPdf($content,array('font'=>'Arial','format'=>'P'));
+	
+	    $response = new Response($pdfData);
+	    $response->headers->set('Content-Type', 'application/pdf');
+	
+	    return $response;
+	  	
+	  	
+	  	
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+	 *	Fonction qui calcule ce que doit une collectivite pour une année donnée
+	 *	
+	 *	Elle est appelé lors du visionnage de la facture en "html" et est aussi appelé lors de la génération du PDF
+	 *
+	 *	Elle retourne :  - 'infosColl' qui contient les informations générales comme le montant des factures mutualisées, le nb de facture directes etc..
+	 * 					 - 'tabCommandes' qui contient toutes les commande de la collectivite avec leurs informations nécéssaires
+	 * 					 - 'tabMassesSalariales' qui contient les informations des masses salariales que la collectivite doit payer
+	 */
+    
+	 public function calculFacturation($nomCollectivite, $annee) {
+		 
+		 
+		$em = $this->getDoctrine()->getManager();
 
 	    //On récupere la collectivite
 	    $collectivite = $em->getRepository('JCCommandeBundle:Collectivite')->findOneByNom($nomCollectivite); 
@@ -127,14 +247,14 @@ class FacturationController extends Controller
 			$commande = $ccc->getCommande();
 			
 			//On stock les infos de la commande dans le tableau
-			$tabCommande[$commande->getId()] = array();
+			$tabCommandes[$commande->getId()] = array();
 			
-			$tabCommande[$commande->getId()]['id'] = $commande->getId();
-			$tabCommande[$commande->getId()]['ventilation'] = $commande->getVentilation();
-			$tabCommande[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
-			$tabCommande[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
-			$tabCommande[$commande->getId()]['montant'] = $commande->getTotalTTC();
-			$tabCommande[$commande->getId()]['ventilation'] = $commande->getVentilation();
+			$tabCommandes[$commande->getId()]['id'] = $commande->getId();
+			$tabCommandes[$commande->getId()]['ventilation'] = $commande->getVentilation();
+			$tabCommandes[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
+			$tabCommandes[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
+			$tabCommandes[$commande->getId()]['montantTotal'] = $commande->getTotalTTC();
+			$tabCommandes[$commande->getId()]['ventilation'] = $commande->getVentilation();
 
 				//On vérifie que la commande a bien 
 				//Si la commande est une commande mutualisée,
@@ -157,21 +277,18 @@ class FacturationController extends Controller
 					$montant = $ratio * $commande->getTotalTTC();
 					
 					//On stocke le ratio
-					$tabCommande[$commande->getId()]['repartition'] = ($ratio*100);
+					$tabCommandes[$commande->getId()]['repartition'] = ($ratio*100);
 
 					//On explique le ratio
-					$tabCommande[$commande->getId()]['infoRatioText'] = $info->getNombre()." sur un total de ".$totalCle;
-					$tabCommande[$commande->getId()]['infoRatioTitre'] = $ccc->getRepartition();
+					$tabCommandes[$commande->getId()]['infoRatioText'] = $info->getNombre()." sur un total de ".$totalCle;
+					$tabCommandes[$commande->getId()]['infoRatioTitre'] = $ccc->getRepartition();
 					
 					
-					
-
-
 					//On met les infos
 					$infosColl['montantMutualisees'] += $montant;
 					$infosColl['nbMutualisees'] += 1;
-					$tabCommande[$commande->getId()]['montantAPayer'] = $montant;
-					//$tabCommande[$commande->getId()]['repartition'] = $ccc->getRepartition();
+					$tabCommandes[$commande->getId()]['montantAPayer'] = $montant;
+					$tabCommandes[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
 				
 				
 				//Sinon, si c'est une commande directe
@@ -186,8 +303,8 @@ class FacturationController extends Controller
 					//On met les infos
 					$infosColl['montantDirectes'] += $montant;
 					$infosColl['nbDirectes'] += 1;
-					$tabCommande[$commande->getId()]['montantAPayer'] = $montant;
-					$tabCommande[$commande->getId()]['repartition'] = $ccc->getRepartition();
+					$tabCommandes[$commande->getId()]['montantAPayer'] = $montant;
+					$tabCommandes[$commande->getId()]['repartition'] = $ccc->getRepartition();
 				}			
 			
 			
@@ -226,55 +343,21 @@ class FacturationController extends Controller
 			$tabMassesSalariales[$ms->getActivite()->getNom()]['activite'] =  $ms->getActivite()->getNom();
 			$tabMassesSalariales[$ms->getActivite()->getNom()]['montantTotal'] =  $ms->getMontant();
 			$tabMassesSalariales[$ms->getActivite()->getNom()]['pourcentage'] =  $tempsPasse->getPourcentage();
-			$tabMassesSalariales[$ms->getActivite()->getNom()]['montantDu'] =  $montant;
+			$tabMassesSalariales[$ms->getActivite()->getNom()]['montantAPayer'] =  $montant;
 			
 			$infosColl['montantMassesSalariales'] += $montant;
 			
 			
 		}
-    
-        return $this->render('JCFacturationBundle:Facturation:calcul_facturation.html.twig', array('infosColl'=>$infosColl, 'tabCommandes'=>$tabCommande, 'annee'=>$annee,
-        																							'tabMassesSalariales'=>$tabMassesSalariales));
-
-    }
-    
-    
-    
-    
-    		
-
-     public function genererPDFAction()
-    {
-		$content = $this->render('JCFacturationBundle:Facturation:pdf_facture.html.twig');
-
-
-
 		
-	  	
-		$content = $this->renderView('JCFacturationBundle:Facturation:pdf_facture.html.twig');
-	    $pdfData = $this->get('obtao.pdf.generator')->outputPdf($content);
-	
-	    /* You can also pass some options.
-	       The following options are available :
-	            protected $font = 'Arial'
-	            protected $format = 'P'
-	            protected $language = 'en'
-	            protected $size = 'A4'
-	       Here is an example to generate a pdf with a special font and a landscape orientation
-	    */
-	    $pdfData = $this->get('obtao.pdf.generator')->outputPdf($content,array('font'=>'Georgia','format'=>'L'));
-	
-	    $response = new Response($pdfData);
-	    $response->headers->set('Content-Type', 'application/pdf');
-	
-	    return $response;
-	  	
-	  	
-	  	
-	}
-    
-    
-    
-    
+		//Tableau qui est retourné
+		$tabRes = array();
+		
+		$tabRes['infosColl'] = $infosColl;
+		$tabRes['tabCommandes'] = $tabCommandes;
+		$tabRes['tabMassesSalariales'] = $tabMassesSalariales;
+		
+		return $tabRes;
+	 }
     
 }

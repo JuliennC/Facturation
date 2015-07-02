@@ -6,13 +6,14 @@
 
 {% block jcfacturation_body %}
 
-  <h3>Vous venez de lancer la Facturation pour {{ infosColl['nomColl'] }}</h3>
+  <h3>Facturation pour {{ infosColl['nomColl'] }} de l'année {{annee}}</h3>
   
 
 <div class='container top30 '>
 	
 	<div class="row">
-		<div class="well col-md-6">
+		
+		<div class="well col-md-6 vcenter">
 		
 			<p> {{infosColl['nbMutualisees']}} commandes mutualisée(s), soit un total de {{infosColl['montantMutualisees']|number_format(2, ',', ' ') }} €
 			<p> {{infosColl['nbDirectes']}} commandes directe(s), soit un total de {{infosColl['montantDirectes']|number_format(2, ',', ' ') }} €
@@ -26,7 +27,11 @@
 			<hr>
 			
 			<p> <strong> Total : {{ (infosColl['montantMassesSalariales'] + infosColl['montantMutualisees'] + infosColl['montantDirectes'])|number_format(2, ',', ' ') }} € </strong>
-		</div>	
+		</div><!--
+			--><a class="btn btn-success col-md-5 col-md-offset-1 vcenter" href=" {{ path('jc_facturation_pdf_facture', {nomCollectivite : infosColl['nomColl'], annee : annee } ) }}" target="_blank">Générer la facture en PDF</a>
+		
+		
+		
 	</div>
 </div>
 
@@ -61,7 +66,7 @@
 						<td>{{ masseSalariale['activite'] }}</td>
 						<td>{{ masseSalariale['montantTotal']|number_format(2, ',', ' ')}} €</td>
 						<td>{{ masseSalariale['pourcentage']|number_format(2, ',', ' ') }} %</td>
-						<td>{{ masseSalariale['montantDu']|number_format(2, ',', ' ')}} €</td>
+						<td>{{ masseSalariale['montantAPayer']|number_format(2, ',', ' ')}} €</td>
 					</tr>
 					
 				{% endfor %}
@@ -110,7 +115,7 @@
 						<td>{{ commande['ventilation'] }}</td>
 						<td>{{ commande['activite'] }}</td>
 						<td>{{ commande['dateCreation']|date('d/m/Y') }}</td>
-						<td>{{ commande['montant']|number_format(2, ',', ' ') }}</td>
+						<td>{{ commande['montantTotal']|number_format(2, ',', ' ') }}</td>
 						
 						<td>
 							{% if(commande['ventilation'] == 'Mutualisee') %}

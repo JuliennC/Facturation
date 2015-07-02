@@ -1,7 +1,126 @@
+<style>
+	
+	#titre_page			{ font-weight:lighter; color:blue; text-align:center }
+	#nom_collectivite   { font-weight:lighter; text-align:center }
+	#date_edition 		{ font-size:9px }
+	
+	.right    			{ text-align: right }
+	.left 				{ text-align: left }
+	.information		{ font-size:9px }
+	.border_left		{ border-left: solid 1px black; }
+	.border_right		{ border-right: solid 1px black; }
+	.border_bottom		{ border-bottom: solid 1px black; }
+	.label_td			{ margin-top:20px; margin-bottom:10px; }
+
+	table				{ margin-top:50px; border-collapse: collapse;}
+	td					{ height:50px; font-size:11px ; }
+	table,  th 			{ border: solid 1px black; }
+	
+	hr					{ margin-top:35px; }
+	
+	
+</style>
+
+
+
+
+
+
 <page backtop="5%" backbottom="5%" backleft="5%" backright="5%">
 
+	<div id="date_edition" class="right"> Date d'édition : {{ "now"|date("m/d/Y") }} </div>
 
-	test coucou
+	<h3 id="titre_page" > Facture DSIT Recapitulaitve pour l'année {{annee}}</h3>
+	
+	<h4 id="nom_collectivite" > {{infosColl['nomColl']}}</h4>
+
+<!--	<div class="information left"><i>Tous les montant sont indiqués en TTC</i></div>  -->
+	
+	
+	<table style='width: 100%;'>
+	
+		<tr>
+			<th style='width: 40%; height:70px; text-align:center;'> Activite </th>
+			<th style='width: 30%; height:70px; text-align:center;'> Coûts Directs </th>
+			<th style='width: 30%; height:70px; text-align:center;'> Coûts Mutualisés </th>
+		</tr>
+		
+		<hr>
+		
+		
+		{# On récupère le dernier élément pour fermer le tableau #}
+		{% set derniereActivite = tabActivites|last %}
+		
+		{# On parcours toutes les activites #}
+		{% for activite in tabActivites %}
+		
+			{% if activite == derniereActivite %}
+	
+				<!-- On affiche le montant des factures -->
+				
+				<tr>
+					<td class='border_left border_right border_bottom'> 
+						<label class="label_td">
+							<label style="margin-left:10px">{{ activite['nom'] }}</label>
+							<p style="margin-left:60px;"> Montant des factures : </p>
+							<p style="margin-left:60px;"> Assistance DSIT : </p>
+						</label>
+					</td>
+					
+					<td class='border_left border_bottom' style='text-align:center;' > 
+						<label class="label_td">
+							<p>{{ activite['montantFactures']|number_format(2, ',', ' ') }} €</p> 
+							<p>{{ activite['montantMasseSalariale']|number_format(2, ',', ' ') }} €</p> 
+						</label>
+					</td>
+					
+					<td class="border_right border_bottom"  style='text-align:center;'> Coûts Mutualisés </td>
+				</tr> 
+				
+			{% else %}
+			
+				<!-- On affiche le montant des factures -->
+				
+				<tr>
+					<td class='border_left border_right'> 
+						<label class="label_td">
+							<label style="margin-left:10px">{{ activite['nom'] }}</label>
+							<p style="margin-left:60px;"> Montant des factures : </p>
+							<p style="margin-left:60px;"> Assistance DSIT : </p>
+						</label>
+					</td>
+					
+					<td class='border_left' style='text-align:center;' > 
+						<label class="label_td">
+							<p>{{ activite['montantFactures']|number_format(2, ',', ' ') }} €</p> 
+							<p>{{ activite['montantMasseSalariale']|number_format(2, ',', ' ') }} €</p> 
+						</label>
+					</td>
+					
+					<td class="border_right"  style='text-align:center;'> Coûts Mutualisés </td>
+				</tr> 
+			
+			{% endif %}
+			
+			
+		{% endfor %}
+		
+		
+		
+		
+	
+	</table>
+	
+	
+	
 	
 	
 </page>
+
+
+
+<page_footer>
+
+	<div id="numero_page" class="right">Page [[page_cu]] sur [[page_nb]]</div>
+
+</page_footer>

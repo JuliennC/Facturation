@@ -266,6 +266,8 @@ class CommandeController extends Controller
 					
 	            	//On parcours donc toutes les villes pour trouver leur input
 	            	foreach($listeToutesLesVilles as $ville){
+		            	
+		            	//On rŽcupre leur input
 		            	$nbD = $form->get('repartition'.$ville->getId())->getData();
 		            	
 		            	//Si l'input n'est pas vide, on ajoute un CommandeConcerneCollectivite
@@ -514,10 +516,7 @@ class CommandeController extends Controller
 	
 	        
 	    
-			/*} else {
-		    	return $this->redirect($this->generateUrl('jc_commande_creation'));
-				}*/
-	  
+			
 	  	}
 	  	  
 	  	  
