@@ -786,12 +786,12 @@ class CommandeController extends Controller
 		
 		// Creation d'une application
 		$application = new Application();
-		$application -> setNom('Application_1');
+		$application -> setNom('Logitud - Municipol');
 		$application -> setFournisseur($fournisseur);
 		$em->persist($application);
 
 		$application2 = new Application();
-		$application2 -> setNom('Application_2');
+		$application2 -> setNom('Ares - Multifacturation');
 		$application2 -> setFournisseur($fournisseur);
 		$em->persist($application2);
 		

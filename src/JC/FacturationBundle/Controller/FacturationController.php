@@ -138,7 +138,8 @@ class FacturationController extends Controller
 			$tabActivites[$activite->getNom()]['montantFactures']['Directe'] = 0;
 			$tabActivites[$activite->getNom()]['montantFactures']['Mutualisee'] = 0;
 			$tabActivites[$activite->getNom()]['montantMasseSalariale'] = 0;
-
+			$tabActivites[$activite->getNom()]['applications'] = array();
+			
 			
 			//On regarde si la collectivite à bien une partie de la masse salariale à payer 
 			//Dans cette activite
@@ -155,9 +156,6 @@ class FacturationController extends Controller
 				$tabActivites[$activite->getNom()]['montantMasseSalariale'] = 0; 	
 			}
 			
-			
-
-
 		}
 		
 		
@@ -168,15 +166,28 @@ class FacturationController extends Controller
 		// On ne peut donc pas faire de $commande->getActivite()->getNom() !!!!!
 		foreach($tabRes['tabCommandes'] as $commande) {
 			
+			//On stock les infos de la commane (comme l'application, le montant etc..)
+			if (! array_key_exists($commande['application'], $tabActivites[$commande['activite']]['applications'])) {
+				
+				$tabActivites[$commande['activite']]['applications'][$commande['application']] = array();
+				$tabActivites[$commande['activite']]['applications'][$commande['application']]['nom'] = $commande['application'];
+				
+				$tabActivites[$commande['activite']]['applications'][$commande['application']]['Directe'] = 0;
+				$tabActivites[$commande['activite']]['applications'][$commande['application']]['Mutualisee'] = 0;
+			}
 			
+			
+			//On incrémente le montant des factures pour l'activite
 			$tabActivites[$commande['activite']]['montantFactures'][$commande['ventilation']] += $commande['montantAPayer'];			
 
-					
+			//On incrémente le montant des factures total
+			// (On le fait ici pour ne pas le faire dans le twig.
 			$tabRes['infosColl']['totalFactures'][$commande['ventilation']] += $commande['montantAPayer'];
+			
+			//On compte aussi le total par application
+			$tabActivites[$commande['activite']]['applications'][$commande['application']][$commande['ventilation']] += $commande['montantAPayer'];
 		}
-		
-		
-		
+	
 	  	
 		$content = $this->renderView('JCFacturationBundle:Facturation:pdf_facture.html.twig', array('infosColl' => $tabRes['infosColl'] , 'annee'=>$annee, 'tabActivites'=>																													$tabActivites, /*'totalActivitesFactures'=>$totalActivitesFactures, 																														'totalActivitesMassesSalariales'=>$totalActivitesMassesSalariales*/) );
 	    //$pdfData = $this->get('obtao.pdf.generator')->outputPdf($content);
@@ -273,16 +284,13 @@ class FacturationController extends Controller
 			$tabCommandes[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
 			$tabCommandes[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
 			$tabCommandes[$commande->getId()]['montantTotal'] = $commande->getTotalTTC();
-			$tabCommandes[$commande->getId()]['ventilation'] = $commande->getVentilation();
+			$tabCommandes[$commande->getId()]['application'] = $commande->getApplication()->getNom();
+
 
 				//On vérifie que la commande a bien 
 				//Si la commande est une commande mutualisée,
 				if($commande->getVentilation() === "Mutualisee"){
 					
-									
-
-			
-						
 					//On récupere l'InformationCollectivité
 					$info = $infosColl[$commande->getActivite()->getCleRepartition()->getNom()];
 

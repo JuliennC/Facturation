@@ -1,10 +1,11 @@
 <style>
-	
-	#titre_page			{ font-weight:lighter; color:blue; text-align:center }
+
+		
+	#titre_page			{ font-weight:lighter;  text-align:center }
 	#nom_collectivite   { font-weight:lighter; text-align:center }
 	#date_edition 		{ font-size:9px }
 	
-	.blue				{ color:blue; font-weight:lighter}
+	.titre				{ font-weight:lighter}
 	.right    			{ text-align: right }
 	.left 				{ text-align: left }
 	.information		{ font-size:9px }
@@ -32,7 +33,16 @@
 	hr					{ margin-top:35px; }
 	
 	
+	<!-- C'est ici pour changer les couleurs -->
+	.couleur_titre  { color:blue; }
+	
+	
+	
 </style>
+
+
+
+<!-- Note : La plus par des commentaire "<!- x ->" sont mis pour pouvoir revenir sur une facturation qui sépare les facture directes et les mutualisées -->
 
 
 
@@ -43,7 +53,7 @@
 
 	<div id="date_edition" class="right"> Date d'édition : {{ "now"|date("m/d/Y") }} </div>
 
-	<h3 id="titre_page" > Facture DSIT Recapitulaitve pour l'année {{annee}}</h3>
+	<h3 id="titre_page" class='couleur_titre' > Facture DSIT Recapitulaitve pour l'année {{annee}}</h3>
 	
 	<h4 id="nom_collectivite" > {{infosColl['nomColl']}}</h4>
 
@@ -53,17 +63,19 @@
 	<table style='width: 100%;'>
 	
 		<tr>
-			<th class='border_bottom' rowspan='2' style='width: 40%;'> Activite </th>
-			<th colspan='2 style='width: 30%;'> Facture </th>
-			<th class='border_bottom' rowspan='2' colspan='2' style='width: 30%';> Masse Salariale </th>
+			<th class='border_bottom' <!--rowspan='2'--> style='width: 40%;'> Activite </th>
+			<th <!--colspan='2'--> class='border_bottom' style='width: 30%;'> Facture </th>
+			<th class='border_bottom' <!--rowspan='2' colspan='2'--> style='width: 30%';> Masse Salariale </th>
 		</tr>
-		
+
+
+
+		<!-- Si on veut séparer les commande directes et les commandes mutualisées		
 		<tr>
 			<td class='border_right border_bottom' style='width: 15%; height:30px; text-align:center;'> Coûts Directs </td>
 			<td class='border_right border_left border_bottom' style='width: 15%; height:30px; text-align:center;'> Coûts Mutualisés </td>
-
 		</tr>
-		
+		-->
 		
 		
 		{# On récupère le dernier élément pour fermer le tableau #}
@@ -72,7 +84,7 @@
 		{# On parcours toutes les activites #}
 		{% for activite in tabActivites %}
 		
-			<!-- Pour le dernier élément, il faut rajouter la bordure bottom
+			<!-- Pour le dernier élément, il faut rajouter la bordure bottom-->
 			{% if activite == derniereActivite %}
 	
 				{% set border_bottom = 'border_bottom' %}
@@ -84,47 +96,158 @@
 			{% endif %}
 				
 
+
 			
 				<!-- On affiche le montant des factures -->
 				
 				
-				<tr>
+					<!-- Si l'activité contient des applications, on les affiche ainsi que leur montant -->
+					{% if (activite['applications'] | length) > 0 %}
+						
+					
+						<!-- On affiche le nom de l'activite sur une ligne -->
+						<tr>
+							<td class='border_left border_right' > 
+								<label style="margin-left:10px">
+									{{ activite['nom'] }}
+								</label>
+							</td>
+							
+							<td class='border_right'> </td>
+							<td class='border_right'> </td>
+							<!--<td class='border_right'> </td>-->
+						</tr>
+						
+						
+						<!-- On parcours les applications pour les afficher-->
+						{% for application in activite['applications'] %}
 
-					<!-- On affiche le nom de l'activite -->
-				
-					<td class='border_left border_right  {{border_bottom}}' > 
-						<label style="margin-left:10px">
-							{{ activite['nom'] }}
-						</label>
-					</td>
+							<tr>
+								<td class='border_left border_right' > 
+									<label style="margin-left:50px">
+										{{ application['nom'] }}
+									</label>
+								</td>
+								
+								
+							<!-- Si on veut séparer les commande directes et les commandes mutualisées		
+								<td class='center border_left border_right' > 
+									<label >
+										{{ application['Directe']|number_format(2, ',', ' ') }} €
+									</label>
+								</td>
+								
+								<td class='center border_left border_right' > 
+									<label>
+										{{ application['Mutualisee']|number_format(2, ',', ' ') }} €
+									</label>
+								</td>
+								
+							-->
+							
+							
+								<td class='center border_left border_right' > 
+									<label>
+										{{ (application['Directe'] + application['Mutualisee'])|number_format(2, ',', ' ') }} €
+									</label>
+								</td>
+															
+
+								<td class='border_right'> </td>
+
+							</tr>
+						{% endfor %}
+					
+						
+					
+						<!-- On affiche le montants des factures mutualisées et directes -->
+						<tr>
+							<td class='right border_left border_right {{border_bottom}}'><strong> Total de l'activite : </strong></td>
+						
+
+						<!-- Si on veut séparer les commande directes et les commandes mutualisées			
+							<td class='center border_right {{border_bottom}}'>
+								<label>
+									<strong>{{ activite['montantFactures']['Directe']|number_format(2, ',', ' ') }} € </strong>
+								</label>
+							</td>
+		
+		
+							<td class='center border_right {{border_bottom}}'>
+								<label>
+									<strong>{{ activite['montantFactures']['Mutualisee']|number_format(2, ',', ' ') }} € </strong>
+								</label>
+							</td>
+						-->
+							<td class='center border_right {{border_bottom}}'>
+								<label>
+									<strong>{{ (activite['montantFactures']['Directe'] + activite['montantFactures']['Mutualisee'])|number_format(2, ',', ' ') }} € </strong>
+								</label>
+							</td>
+
+							<!-- On affiche le montants de la masse salariale -->
+		
+							<td class='center border_right {{border_bottom}}'>
+								<label>
+									<strong>{{ activite['montantMasseSalariale']|number_format(2, ',', ' ') }} € </strong>
+								</label>
+							</td>
+						</tr>
 					
 					
-					<!-- On affiche le montants des factures mutualisées et directes -->
+										
+					
+						
+					{% else %}
+						<tr>	
+							<!-- On affiche le nom de l'activite -->
+					
+							<td class='border_left border_right  {{border_bottom}}' > 
+								<label style="margin-left:10px">
+									{{ activite['nom'] }}
+								</label>
+							</td>
+						
 
-					<td class='center border_right {{border_bottom}}'>
-						<label>
-							{{ activite['montantFactures']['Directe']|number_format(2, ',', ' ') }} €
-						</label>
-					</td>
+							<!-- On affiche le montants des factures mutualisées et directes -->
 
-					<td class='center border_right {{border_bottom}}'>
-						<label>
-							{{ activite['montantFactures']['Mutualisee']|number_format(2, ',', ' ') }} €
-						</label>
-					</td>
+						<!-- Si on veut séparer les commande directes et les commandes mutualisées		
+		
+							<td class='center border_right {{border_bottom}}'>
+								<label>
+									{{ activite['montantFactures']['Directe']|number_format(2, ',', ' ') }} €
+								</label>
+							</td>
+		
+							<td class='center border_right {{border_bottom}}'>
+								<label>
+									{{ activite['montantFactures']['Mutualisee']|number_format(2, ',', ' ') }} €
+								</label>
+							</td>
+						-->							
+		
+							<td class='center border_right {{border_bottom}}'>
+								<label>
+									{{ (activite['montantFactures']['Directe'] + activite['montantFactures']['Mutualisee'])|number_format(2, ',', ' ') }} €
+								</label>
+							</td>
+							
+		
+							<!-- On affiche le montants de la masse salariale -->
+		
+							<td class='center border_right {{border_bottom}}'>
+								<label>
+									{{ activite['montantMasseSalariale']|number_format(2, ',', ' ') }} €
+								</label>
+							</td>
+							
+						</tr>		
+					
+						
+					{% endif %}
+					
 					
 
-					<!-- On affiche le montants de la masse salariale -->
-
-					<td class='center border_right {{border_bottom}}'>
-						<label>
-							{{ activite['montantMasseSalariale']|number_format(2, ',', ' ') }} €
-						</label>
-					</td>
-					
-				</tr>
-				
-			
 					
 			
 			
@@ -137,14 +260,14 @@
 		<!-- On affiche le montant des factures -->
 				
 				
-				<!-- On affiche le nom de l'activite -->
 				<tr>
-					<td rowspan='3' class='center' style='border: solid 1px gray;' > 
+					<td rowspan='2' class='center' style='border: solid 1px gray;' > 
 						<label>
 							TOTAL : 
 						</label>
 					</td>
-					
+				
+				<!-- Si on veut séparer les commande directes et les commandes mutualisées		
 					<td class='center' style='border: solid 1px gray;' > 
 						<label>
 							{{infosColl['totalFactures']['Directe']|number_format(2, ',', ' ')}} €
@@ -156,7 +279,8 @@
 							{{infosColl['totalFactures']['Mutualisee']|number_format(2, ',', ' ')}} €
 						</label>
 					</td>
-					
+			
+				
 					<td class='center' style='border: solid 1px gray;' > 
 						<label>
 							{{infosColl['montantMassesSalariales']|number_format(2, ',', ' ')}} € 
@@ -166,7 +290,9 @@
 				
 				
 				<tr>
-					<td colspan='2' class='center border_right border_bottom border_top' > 
+					
+				-->
+					<td <!--colspan='2'--> class='center border_right border_bottom border_top' > 
 						<label>
 							{{(infosColl['totalFactures']['Mutualisee'] + infosColl['totalFactures']['Directe']) |number_format(2, ',', ' ')}} € 
 						</label>
@@ -182,9 +308,9 @@
 				
 				<tr>
 					
-					<td colspan='3' class='center border_right border_bottom border_top' > 
+					<td colspan='2' class='center border_right border_bottom border_top' > 
 						<label>
-							{{(infosColl['totalFactures']['Mutualisee'] + infosColl['totalFactures']['Directe'] + infosColl['montantMassesSalariales']|number_format(2, ',', ' ')) |number_format(2, ',', ' ')}} € 
+							{{(infosColl['totalFactures']['Mutualisee'] + infosColl['totalFactures']['Directe'] + infosColl['montantMassesSalariales'])|number_format(2, ',', ' ') }} € 
 						</label>
 					</td>
 					
