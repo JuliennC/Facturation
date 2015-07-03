@@ -5,7 +5,7 @@
 	#nom_collectivite   { font-weight:lighter; text-align:center }
 	#date_edition 		{ font-size:9px }
 	
-	.titre				{ font-weight:lighter}
+	.titre				{ font-weight:lighter;}
 	.right    			{ text-align: right }
 	.left 				{ text-align: left }
 	.information		{ font-size:9px }
@@ -26,17 +26,16 @@
 	th					{ border-left: solid 1px gray; 
 							border-right: solid 1px gray; 
 							border-top: solid 1px gray; 
-							color:blue; 
 							font-weight:lighter';
 							height:60px;
 							text-align:center;}
 	hr					{ margin-top:35px; }
 	
 	
-	<!-- C'est ici pour changer les couleurs -->
-	.couleur_titre  { color:blue; }
-	
-	
+	/* C'est ici pour changer les couleurs */
+	.couleur_nom_collonne	{ color:blue; }
+	.couleur_titre			{ color:blue; }
+
 	
 </style>
 
@@ -53,7 +52,7 @@
 
 	<div id="date_edition" class="right"> Date d'édition : {{ "now"|date("m/d/Y") }} </div>
 
-	<h3 id="titre_page" class='couleur_titre' > Facture DSIT Recapitulaitve pour l'année {{annee}}</h3>
+	<h3 id="titre_page" class="couleur_titre" > Facture DSIT Recapitulaitve pour l'année {{annee}}</h3>
 	
 	<h4 id="nom_collectivite" > {{infosColl['nomColl']}}</h4>
 
@@ -63,9 +62,9 @@
 	<table style='width: 100%;'>
 	
 		<tr>
-			<th class='border_bottom' <!--rowspan='2'--> style='width: 40%;'> Activite </th>
-			<th <!--colspan='2'--> class='border_bottom' style='width: 30%;'> Facture </th>
-			<th class='border_bottom' <!--rowspan='2' colspan='2'--> style='width: 30%';> Masse Salariale </th>
+			<th class='border_bottom couleur_Nom_Collonne' <!--rowspan='2'--> style='width: 40%;'> Activite </th>
+			<th <!--colspan='2'--> class='border_bottom couleur_Nom_Collonne' style='width: 30%;'> Facture </th>
+			<th class='border_bottom couleur_Nom_Collonne' <!--rowspan='2' colspan='2'--> style='width: 30%';> Masse Salariale </th>
 		</tr>
 
 
