@@ -24,6 +24,7 @@ use JC\CommandeBundle\Entity\CommandePasseEtat;
 use JC\CommandeBundle\Entity\InformationCollectivite;
 use JC\CommandeBundle\Entity\MasseSalariale;
 use JC\CommandeBundle\Entity\TempsPasse;
+use JC\CommandeBundle\Entity\Imputation;
 
 use JC\CommandeBundle\Form\CommandeType;
 
@@ -591,13 +592,13 @@ class CommandeController extends Controller
 		
 		//Cration des budgets
 		$budget1 = new Budget();
-		$budget1->setMontant(350000);
+		$budget1->setMontant(1 200 000);
 		$budget1->setAnnee("2015");
 		$budget1->setService($service1);
 		$em->persist($budget1);
 
 		$budget2 = new Budget();
-		$budget2->setMontant(425000);
+		$budget2->setMontant(1 340 000);
 		$budget2->setAnnee("2015");
 		$budget2->setService($service2);
 		$em->persist($budget2);
@@ -1021,13 +1022,29 @@ class CommandeController extends Controller
 		$em->persist($temps6);
 		
 		
-		
+		//On cre les imputations
+		$imputation1 = new Imputation();
+		$imputation1 -> setLibelle("Maintenance des Logiciels");
+		$imputation1 -> setSousFonction("020.3");
+		$imputation1 -> setArticle("6156");
+		$imputation1 -> setSection("Investissement");
+		$em->persist($imputation1);
+
+
+		$imputation1 = new Imputation();
+		$imputation1 -> setLibelle("Formations");
+		$imputation1 -> setSousFonction("020.3");
+		$imputation1 -> setArticle("6184");
+		$imputation1 -> setSection("Fonctionnement");
+		$em->persist($imputation1);
+
 
 
 		$commande1 = new Commande();
 		$commande1 -> setVentilation("Mutualisee");
 		$commande1 -> setReference("ReFint78_1");
 		$commande1 -> setBonCoriolis("bonC 65");
+		$commande1 -> setImputation($imputation1);
 		$commande1 -> setengagement("engag 90");
 		$commande1 -> setImputation("imput 87");
 		$commande1 -> setFournisseur($fournisseur);
@@ -1055,11 +1072,12 @@ class CommandeController extends Controller
 		$commande2 -> setVentilation("Directe");
 		$commande2 -> setReference("ReFint78_2");
 		$commande2 -> setBonCoriolis("bonC 65");
+		$commande2 -> setImputation($imputation1);
 		$commande2 -> setengagement("engag 90");
 		$commande2 -> setImputation("imput 87");
 		$commande2 -> setFournisseur($fournisseur);
 		$commande2 -> setUtilisateur($utilisateur);
-		$commande2 -> setApplication($application);
+		$commande2 -> setApplication($application2);
 		$commande2 -> setActivite($activite);
 		$commande2 -> setLivraison($livraison);
 		$commande2 -> setLibelleFacturation("llll");
@@ -1082,6 +1100,7 @@ class CommandeController extends Controller
 		$commande3 -> setVentilation("Mutualisee");
 		$commande3 -> setReference("ReFint78_3");
 		$commande3 -> setBonCoriolis("bonC 65");
+		$commande3 -> setImputation($imputation2);		
 		$commande3 -> setengagement("engag 90");
 		$commande3 -> setImputation("imput 87");
 		$commande3 -> setFournisseur($fournisseur2);
@@ -1109,6 +1128,7 @@ class CommandeController extends Controller
 		$commande4 -> setVentilation("Directe");
 		$commande4 -> setReference("ReFint78-4");
 		$commande4 -> setBonCoriolis("bonC 65");
+		$commande4 -> setImputation($imputation2);		
 		$commande4 -> setengagement("engag 90");
 		$commande4 -> setImputation("imput 87");
 		$commande4 -> setFournisseur($fournisseur2);
@@ -1131,6 +1151,64 @@ class CommandeController extends Controller
         $commande4 -> setCodePostalFournisseur($fournisseur2->getCodePostal());
 		$em->persist($commande4);
 
+		
+		
+		$commande5 = new Commande();
+		$commande5 -> setVentilation("Directe");
+		$commande5 -> setReference("ReFint78-4");
+		$commande5 -> setBonCoriolis("bonC 65");
+		$commande5 -> setImputation($imputation2);		
+		$commande5 -> setengagement("engag 90");
+		$commande5 -> setImputation("imput 87");
+		$commande5 -> setFournisseur($fournisseur2);
+		$commande5 -> setUtilisateur($utilisateur2);
+		$commande5 -> setApplication($application);
+		$commande5 -> setActivite($activite2);
+		$commande5 -> setLivraison($livraison);
+		$commande5 -> setLibelleFacturation("llll");
+        $commande5 -> setNomLivraison($livraison->getNom());
+        $commande5 -> setAdresseLivraison($livraison->getAdresse());
+        $commande5 -> setComplementAdresseLivraison($livraison->getComplementAdresse());
+        $commande5 -> setTelephoneLivraison($livraison->getTelephone());
+        $commande5 -> setVilleLivraison($livraison->getVille());
+        $commande5 -> setCodePostalLivraison($livraison->getCodePostal());
+        $commande5 -> setNomFournisseur($fournisseur2->getNom());
+        $commande5 -> setAdresseFournisseur($fournisseur2->getAdresse());
+        $commande5 -> setComplementAdresseFournisseur($fournisseur2->getComplementAdresse());
+        $commande5 -> setTelephoneFournisseur($fournisseur2->getTelephone());
+        $commande5 -> setVilleFournisseur($fournisseur2->getVille());
+        $commande5 -> setCodePostalFournisseur($fournisseur2->getCodePostal());
+		$em->persist($commande5);
+
+
+		
+		$commande6 = new Commande();
+		$commande6 -> setVentilation("Directe");
+		$commande6 -> setReference("ReFint78-4");
+		$commande6 -> setBonCoriolis("bonC 65");
+		$commande6 -> setImputation($imputation1);		
+		$commande6 -> setengagement("engag 90");
+		$commande6 -> setImputation("imput 87");
+		$commande6 -> setFournisseur($fournisseur2);
+		$commande6 -> setUtilisateur($utilisateur2);
+		$commande6 -> setApplication($application);
+		$commande6 -> setActivite($activite2);
+		$commande6 -> setLivraison($livraison);
+		$commande6 -> setLibelleFacturation("llll");
+        $commande6 -> setNomLivraison($livraison->getNom());
+        $commande6 -> setAdresseLivraison($livraison->getAdresse());
+        $commande6 -> setComplementAdresseLivraison($livraison->getComplementAdresse());
+        $commande6 -> setTelephoneLivraison($livraison->getTelephone());
+        $commande6 -> setVilleLivraison($livraison->getVille());
+        $commande6 -> setCodePostalLivraison($livraison->getCodePostal());
+        $commande6 -> setNomFournisseur($fournisseur2->getNom());
+        $commande6 -> setAdresseFournisseur($fournisseur2->getAdresse());
+        $commande6 -> setComplementAdresseFournisseur($fournisseur2->getComplementAdresse());
+        $commande6 -> setTelephoneFournisseur($fournisseur2->getTelephone());
+        $commande6 -> setVilleFournisseur($fournisseur2->getVille());
+        $commande6 -> setCodePostalFournisseur($fournisseur2->getCodePostal());
+		$em->persist($commande6);
+		
 		
 		
 		//On ne se sert de la table de transition QUe pour les commandes directes
@@ -1203,6 +1281,53 @@ class CommandeController extends Controller
 		$concerne12 -> setCommande($commande4);
 		$concerne12 -> setCollectivite($coll1);
 		$em->persist($concerne12);
+		
+		
+		$concerne13 = new CommandeConcerneCollectivite();
+		$concerne13 -> setRepartition("15");
+		$concerne13 -> setCommande($commande5);
+		$concerne13 -> setCollectivite($coll3);
+		$em->persist($concerne13);		
+
+
+		$concerne14 = new CommandeConcerneCollectivite();
+		$concerne14 -> setRepartition('35');
+		$concerne14 -> setCommande($commande5);
+		$concerne14 -> setCollectivite($coll5);
+		$em->persist($concerne14);		
+
+		$concerne15 = new CommandeConcerneCollectivite();
+		$concerne15 -> setRepartition('50');
+		$concerne15 -> setCommande($commande5);
+		$concerne15 -> setCollectivite($coll4);
+		$em->persist($concerne15);
+		
+		$concerne16 = new CommandeConcerneCollectivite();
+		$concerne16 -> setRepartition($commande6->getActivite()->getCleRepartition()->getNom());
+		$concerne16 -> setCommande($commande6);
+		$concerne16 -> setCollectivite($coll5);
+		$em->persist($concerne16);
+
+		$concerne17 = new CommandeConcerneCollectivite();
+		$concerne17 -> setRepartition($commande6->getActivite()->getCleRepartition()->getNom());
+		$concerne17 -> setCommande($commande6);
+		$concerne17 -> setCollectivite($coll2);
+		$em->persist($concerne17);
+		
+		$concerne18 = new CommandeConcerneCollectivite();
+		$concerne18 -> setRepartition($commande6->getActivite()->getCleRepartition()->getNom());
+		$concerne18 -> setCommande($commande6);
+		$concerne18 -> setCollectivite($coll3);
+		$em->persist($concerne18);
+		
+		$concerne19 = new CommandeConcerneCollectivite();
+		$concerne19 -> setRepartition($commande6->getActivite()->getCleRepartition()->getNom());
+		$concerne19 -> setCommande($commande6);
+		$concerne19 -> setCollectivite($coll4);
+		$em->persist($concerne19);
+
+		
+		
 		
 		// Creation des etats
 		$etat1 = new EtatCommande();
@@ -1313,6 +1438,51 @@ class CommandeController extends Controller
 		$cpe14 -> setDatePassage(new \Datetime());
 		$em -> persist($cpe14);
 		
+		$cpe15 = new CommandePasseEtat();
+		$cpe15 -> setCommande($commande4);
+		$cpe15 -> setEtat($etat3);
+		$cpe15 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe15);
+		
+		$cpe16 = new CommandePasseEtat();
+		$cpe16 -> setCommande($commande4);
+		$cpe16 -> setEtat($etat4);
+		$cpe16 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe16);
+		
+		$cpe16 = new CommandePasseEtat();
+		$cpe16 -> setCommande($commande4);
+		$cpe16 -> setEtat($etat4);
+		$cpe16 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe16);
+		
+		$cpe17 = new CommandePasseEtat();
+		$cpe17 -> setCommande($commande5);
+		$cpe17 -> setEtat($etat1);
+		$cpe17 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe17);
+		
+		$cpe18 = new CommandePasseEtat();
+		$cpe18 -> setCommande($commande5);
+		$cpe18 -> setEtat($etat2);
+		$cpe18 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe18);
+
+		$cpe19 = new CommandePasseEtat();
+		$cpe19 -> setCommande($commande6);
+		$cpe19 -> setEtat($etat1);
+		$cpe19 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe19);
+
+		$cpe20 = new CommandePasseEtat();
+		$cpe20 -> setCommande($commande6);
+		$cpe20 -> setEtat($etat2);
+		$cpe20 -> setDatePassage(new \Datetime());
+		$em -> persist($cpe20);
+		
+		
+		
+		
 
 		//Creation des TVA
 		$tva1 = new TVA();
@@ -1395,6 +1565,36 @@ class CommandeController extends Controller
 		$ligneCommande5 -> setCommande($commande4);
 		$ligneCommande5 -> setTVA($tva2);
 		$em->persist($ligneCommande5);			
+
+		$commande4->setTotalTTC(10502);
+		$em->persist($commande4);
+
+
+		$ligneCommande6 = new LigneCommande();
+		$ligneCommande6 -> setLibelle("Ligne 1 de la commande numero 4 pour le service bureautique");
+		$ligneCommande6 -> setReference("RF321BUR");
+		$ligneCommande6 -> setQuantite(10);
+		$ligneCommande6 -> setPrixUnitaire(1732,2);
+		$ligneCommande6 -> setTotalTTC(10502);
+		$ligneCommande6 -> setCommentaire("Aucun commentaire");
+		$ligneCommande6 -> setCommande($commande5);
+		$ligneCommande6 -> setTVA($tva3);
+		$em->persist($ligneCommande6);			
+
+		$commande4->setTotalTTC(10502);
+		$em->persist($commande4);
+
+
+		$ligneCommande7 = new LigneCommande();
+		$ligneCommande7 -> setLibelle("Ligne 1 de la commande numero 4 pour le service bureautique");
+		$ligneCommande7 -> setReference("RF321BUR");
+		$ligneCommande7 -> setQuantite(8);
+		$ligneCommande7 -> setPrixUnitaire(1314,2);
+		$ligneCommande7 -> setTotalTTC(10502);
+		$ligneCommande7 -> setCommentaire("Aucun commentaire");
+		$ligneCommande7 -> setCommande($commande6);
+		$ligneCommande7 -> setTVA($tva1);
+		$em->persist($ligneCommande7);			
 
 		$commande4->setTotalTTC(10502);
 		$em->persist($commande4);

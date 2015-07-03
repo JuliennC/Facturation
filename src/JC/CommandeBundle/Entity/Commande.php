@@ -75,14 +75,6 @@ class Commande
 	/**
      * @var string
      *
-     * @ORM\Column(name="Imputation", type="string", length=255, nullable=true)
-     */
-    private $imputation;
-
-
-	/**
-     * @var string
-     *
      * @ORM\Column(name="Libelle_Facturation", type="string", length=255, nullable=false)
 	 * @Assert\NotBlank()
      */
@@ -562,6 +554,15 @@ class Commande
    private $etats;
    
    
+   
+   
+   /**
+   * @ORM\OneToMany(targetEntity="JC\CommandeBundle\Entity\Imputation", mappedBy="commande", cascade={"persist"})
+   */
+   private $imputation;
+   
+   
+   
 // FIN DES COLONNES - DEBUT PROPRIETE AUTRE
 
 	
@@ -904,28 +905,7 @@ public function __construct() {
 
 
 
-	/**
-     * Set imputation
-     *
-     * @param string $imputation
-     * @return Commande
-     */
-    public function setImputation($imputation)
-    {
-        $this->imputation = $imputation;
-
-        return $this;
-    }
-
-    /**
-     * Get imputation
-     *
-     * @return Commande 
-     */
-    public function getImputation()
-    {
-        return $this->imputation;
-    }
+	
 
 
 	 /**
@@ -982,10 +962,10 @@ public function __construct() {
 	
 
 	/**
-     * Set Activite
+     * Set activite
      *
      * @param Activite
-     * @return Application
+     * @return Commande
      */
     public function setActivite(Activite $activite)
     {
@@ -1004,6 +984,30 @@ public function __construct() {
         return $this->activite;
     }
 
+
+
+	/**
+     * Set imputation
+     *
+     * @param imputation
+     * @return Commande
+     */
+    public function setImputation(Imputation $imputation)
+    {
+        $this->imputation = $imputation;
+
+        return $this;
+    }
+
+    /**
+     * Get imputation
+     *
+     * @return Imputation 
+     */
+    public function getImputation()
+    {
+        return $this->imputation;
+    }
 
 	 
 

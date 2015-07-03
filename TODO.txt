@@ -24,10 +24,27 @@ TODO liste :
 	-> FAIT afficher la date d’envoie et de paiement dans « detail » quand une commande est envoyée ou payée
 
 
+	-> faire la table imputation.
+	-> Faire le calcul de la facturations en fonction des factures en investissement ou en fonctionnement
+
 	-> Vérifier dans validator qu’une commande qui passe envoyé à bien n° coriolis etc
 		(voir avec Severine) + Savoir à quel stade de la commande le num coriolis 		doit être entré, etc
 
 	
 	-> Pour le bundle admin, faire des form pour chaque chose à modifier (devrait être plus simple que les autre forms, contient surtout des relation et du texte)
+
+
+
+
+
+
+TESTS : 
+
 	-> tester les passage de paramètre avec de fausses valeurs pour s’assurer qu’on renvoie vers des pages d’erreur partout et faire avec ID (pour éviter les pb d’encodage)
+
+
+
+
+DETAILS :
+
 	-> formatter le total d’une commande dans form.html.twig
