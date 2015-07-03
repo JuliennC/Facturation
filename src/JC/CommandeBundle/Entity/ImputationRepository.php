@@ -12,4 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class ImputationRepository extends EntityRepository
 {
-}
+	
+	public function queryFindAll() {
+    return $this
+      ->createQueryBuilder('i')
+    ;
+    
+    }}

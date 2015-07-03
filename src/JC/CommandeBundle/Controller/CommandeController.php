@@ -592,13 +592,13 @@ class CommandeController extends Controller
 		
 		//Cr�ation des budgets
 		$budget1 = new Budget();
-		$budget1->setMontant(1 200 000);
+		$budget1->setMontant(1200000);
 		$budget1->setAnnee("2015");
 		$budget1->setService($service1);
 		$em->persist($budget1);
 
 		$budget2 = new Budget();
-		$budget2->setMontant(1 340 000);
+		$budget2->setMontant(1340000);
 		$budget2->setAnnee("2015");
 		$budget2->setService($service2);
 		$em->persist($budget2);
@@ -1031,22 +1031,20 @@ class CommandeController extends Controller
 		$em->persist($imputation1);
 
 
-		$imputation1 = new Imputation();
-		$imputation1 -> setLibelle("Formations");
-		$imputation1 -> setSousFonction("020.3");
-		$imputation1 -> setArticle("6184");
-		$imputation1 -> setSection("Fonctionnement");
-		$em->persist($imputation1);
+		$imputation2 = new Imputation();
+		$imputation2 -> setLibelle("Formations");
+		$imputation2 -> setSousFonction("020.3");
+		$imputation2 -> setArticle("6184");
+		$imputation2 -> setSection("Fonctionnement");
+		$em->persist($imputation2);
 
 
 
 		$commande1 = new Commande();
 		$commande1 -> setVentilation("Mutualisee");
 		$commande1 -> setReference("ReFint78_1");
-		$commande1 -> setBonCoriolis("bonC 65");
 		$commande1 -> setImputation($imputation1);
 		$commande1 -> setengagement("engag 90");
-		$commande1 -> setImputation("imput 87");
 		$commande1 -> setFournisseur($fournisseur);
 		$commande1 -> setUtilisateur($utilisateur);
 		$commande1 -> setApplication($application);
@@ -1071,10 +1069,8 @@ class CommandeController extends Controller
 		$commande2 = new Commande();
 		$commande2 -> setVentilation("Directe");
 		$commande2 -> setReference("ReFint78_2");
-		$commande2 -> setBonCoriolis("bonC 65");
 		$commande2 -> setImputation($imputation1);
 		$commande2 -> setengagement("engag 90");
-		$commande2 -> setImputation("imput 87");
 		$commande2 -> setFournisseur($fournisseur);
 		$commande2 -> setUtilisateur($utilisateur);
 		$commande2 -> setApplication($application2);
@@ -1099,10 +1095,8 @@ class CommandeController extends Controller
 		$commande3 = new Commande();
 		$commande3 -> setVentilation("Mutualisee");
 		$commande3 -> setReference("ReFint78_3");
-		$commande3 -> setBonCoriolis("bonC 65");
 		$commande3 -> setImputation($imputation2);		
 		$commande3 -> setengagement("engag 90");
-		$commande3 -> setImputation("imput 87");
 		$commande3 -> setFournisseur($fournisseur2);
 		$commande3 -> setUtilisateur($utilisateur2);
 		$commande3 -> setApplication($application);
@@ -1127,10 +1121,8 @@ class CommandeController extends Controller
 		$commande4 = new Commande();
 		$commande4 -> setVentilation("Directe");
 		$commande4 -> setReference("ReFint78-4");
-		$commande4 -> setBonCoriolis("bonC 65");
 		$commande4 -> setImputation($imputation2);		
 		$commande4 -> setengagement("engag 90");
-		$commande4 -> setImputation("imput 87");
 		$commande4 -> setFournisseur($fournisseur2);
 		$commande4 -> setUtilisateur($utilisateur2);
 		$commande4 -> setApplication($application);
@@ -1155,11 +1147,9 @@ class CommandeController extends Controller
 		
 		$commande5 = new Commande();
 		$commande5 -> setVentilation("Directe");
-		$commande5 -> setReference("ReFint78-4");
-		$commande5 -> setBonCoriolis("bonC 65");
+		$commande5 -> setReference("ReFint78-5");
 		$commande5 -> setImputation($imputation2);		
 		$commande5 -> setengagement("engag 90");
-		$commande5 -> setImputation("imput 87");
 		$commande5 -> setFournisseur($fournisseur2);
 		$commande5 -> setUtilisateur($utilisateur2);
 		$commande5 -> setApplication($application);
@@ -1184,11 +1174,9 @@ class CommandeController extends Controller
 		
 		$commande6 = new Commande();
 		$commande6 -> setVentilation("Directe");
-		$commande6 -> setReference("ReFint78-4");
-		$commande6 -> setBonCoriolis("bonC 65");
+		$commande6 -> setReference("ReFint78-6");
 		$commande6 -> setImputation($imputation1);		
 		$commande6 -> setengagement("engag 90");
-		$commande6 -> setImputation("imput 87");
 		$commande6 -> setFournisseur($fournisseur2);
 		$commande6 -> setUtilisateur($utilisateur2);
 		$commande6 -> setApplication($application);
@@ -1503,7 +1491,7 @@ class CommandeController extends Controller
 		$ligneCommande -> setReference("RF321BUR");
 		$ligneCommande -> setQuantite(10);
 		$ligneCommande -> setPrixUnitaire(13050,2);
-		$ligneCommande -> setTotalTTC(130502);
+		$ligneCommande -> setTotalTTC(137679,61);
 		$ligneCommande -> setCommentaire("Aucun commentaire");
 		$ligneCommande -> setCommande($commande1);
 		$ligneCommande -> setTVA($tva1);
@@ -1515,13 +1503,13 @@ class CommandeController extends Controller
 		$ligneCommande2 -> setReference("RF987BUR");
 		$ligneCommande2 -> setQuantite(5);
 		$ligneCommande2 -> setPrixUnitaire(3550,2);
-		$ligneCommande2 -> setTotalTTC(10503);
+		$ligneCommande2 -> setTotalTTC(20573,409);
 		$ligneCommande2 -> setCommentaire("Aucun commentaire 1");
 		$ligneCommande2 -> setCommande($commande1);
 		$ligneCommande2 -> setTVA($tva2);
 		$em->persist($ligneCommande2);
 		
-		$commande1->setTotalTTC(130502+10503);
+		$commande1->setTotalTTC(137679,61+20573,409);
 		$em->persist($commande1);
 		
 		
@@ -1530,13 +1518,13 @@ class CommandeController extends Controller
 		$ligneCommande3 -> setReference("RF321BUR");
 		$ligneCommande3 -> setQuantite(1);
 		$ligneCommande3 -> setPrixUnitaire(24050,2);
-		$ligneCommande3 -> setTotalTTC(24050,2);
+		$ligneCommande3 -> setTotalTTC(29100,742);
 		$ligneCommande3 -> setCommentaire("Aucun commentaire");
 		$ligneCommande3 -> setCommande($commande2);
 		$ligneCommande3 -> setTVA($tva3);
 		$em->persist($ligneCommande3);			
 
-		$commande2->setTotalTTC(24050,2);
+		$commande2->setTotalTTC(29100,742);
 		$em->persist($commande2);
 
 
@@ -1545,13 +1533,13 @@ class CommandeController extends Controller
 		$ligneCommande4 -> setReference("RF321BUR");
 		$ligneCommande4 -> setQuantite(12);
 		$ligneCommande4 -> setPrixUnitaire(24050,2);
-		$ligneCommande4 -> setTotalTTC(288600);
+		$ligneCommande4 -> setTotalTTC(304475,532);
 		$ligneCommande4 -> setCommentaire("Aucun commentaire");
 		$ligneCommande4 -> setCommande($commande3);
 		$ligneCommande4 -> setTVA($tva1);
 		$em->persist($ligneCommande4);			
 
-		$commande3->setTotalTTC(288600);
+		$commande3->setTotalTTC(304475,532);
 		$em->persist($commande3);
 
 
@@ -1560,14 +1548,15 @@ class CommandeController extends Controller
 		$ligneCommande5 -> setReference("RF321BUR");
 		$ligneCommande5 -> setQuantite(10);
 		$ligneCommande5 -> setPrixUnitaire(1050,2);
-		$ligneCommande5 -> setTotalTTC(10502);
+		$ligneCommande5 -> setTotalTTC(12171,818);
 		$ligneCommande5 -> setCommentaire("Aucun commentaire");
 		$ligneCommande5 -> setCommande($commande4);
 		$ligneCommande5 -> setTVA($tva2);
 		$em->persist($ligneCommande5);			
 
-		$commande4->setTotalTTC(10502);
+		$commande4->setTotalTTC(12171,818);
 		$em->persist($commande4);
+
 
 
 		$ligneCommande6 = new LigneCommande();
@@ -1575,14 +1564,14 @@ class CommandeController extends Controller
 		$ligneCommande6 -> setReference("RF321BUR");
 		$ligneCommande6 -> setQuantite(10);
 		$ligneCommande6 -> setPrixUnitaire(1732,2);
-		$ligneCommande6 -> setTotalTTC(10502);
+		$ligneCommande6 -> setTotalTTC(20959,62);
 		$ligneCommande6 -> setCommentaire("Aucun commentaire");
 		$ligneCommande6 -> setCommande($commande5);
 		$ligneCommande6 -> setTVA($tva3);
 		$em->persist($ligneCommande6);			
 
-		$commande4->setTotalTTC(10502);
-		$em->persist($commande4);
+		$commande5->setTotalTTC(20959,62);
+		$em->persist($commande5);
 
 
 		$ligneCommande7 = new LigneCommande();
@@ -1590,14 +1579,14 @@ class CommandeController extends Controller
 		$ligneCommande7 -> setReference("RF321BUR");
 		$ligneCommande7 -> setQuantite(8);
 		$ligneCommande7 -> setPrixUnitaire(1314,2);
-		$ligneCommande7 -> setTotalTTC(10502);
+		$ligneCommande7 -> setTotalTTC(11091,848);
 		$ligneCommande7 -> setCommentaire("Aucun commentaire");
 		$ligneCommande7 -> setCommande($commande6);
 		$ligneCommande7 -> setTVA($tva1);
 		$em->persist($ligneCommande7);			
 
-		$commande4->setTotalTTC(10502);
-		$em->persist($commande4);
+		$commande6->setTotalTTC(11091,848);
+		$em->persist($commande6);
 
 				
 		// Étape 2 : On « flush » tout ce qui a ete persiste avant

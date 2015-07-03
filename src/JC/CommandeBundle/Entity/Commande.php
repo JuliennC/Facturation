@@ -55,12 +55,6 @@ class Commande
 
 
 
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="Bon_Coriolis", type="string", length=255, nullable=true)
-     */
-    private $bonCoriolis;
 
 
 	/**
@@ -557,7 +551,8 @@ class Commande
    
    
    /**
-   * @ORM\OneToMany(targetEntity="JC\CommandeBundle\Entity\Imputation", mappedBy="commande", cascade={"persist"})
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Imputation", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
    */
    private $imputation;
    
@@ -856,30 +851,7 @@ public function __construct() {
     }
 
 
-	/**
-     * Set bonCoriolis
-     *
-     * @param string $bonCoriolis
-     * @return Commande
-     */
-    public function setBonCoriolis($bonCoriolis)
-    {
-        $this->bonCoriolis = $bonCoriolis;
-
-        return $this;
-    }
-
-    /**
-     * Get bonCoriolis
-     *
-     * @return Commande 
-     */
-    public function getBonCoriolis()
-    {
-        return $this->bonCoriolis;
-    }
-
-
+	
 	/**
      * Set engagement
      *

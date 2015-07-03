@@ -16,6 +16,7 @@ use JC\CommandeBundle\Entity\ApplicationRepository;
 use JC\CommandeBundle\Entity\ProjetRepository;
 use JC\CommandeBundle\Entity\LivraisonRepository;
 use JC\CommandeBundle\Entity\ActiviteRepository;
+use JC\CommandeBundle\Entity\ImputationRepository;
 
 class CommandeType extends AbstractType
 {
@@ -67,9 +68,16 @@ class CommandeType extends AbstractType
                                                 'error_bubbling' => true
                                                 ))
 
-            ->add('bonCoriolis', 'text', array('required' => false , 'error_bubbling' => true))
+
             ->add('engagement', 'text', array('required' => false , 'error_bubbling' => true))
-            ->add('imputation', 'text', array('required' => false, 'error_bubbling' => true))
+            ->add('imputation',  'entity', array(
+				'class'    => 'JCCommandeBundle:Imputation',
+				'property' => 'libelle',
+				'query_builder' => function(ImputationRepository $repo) {
+									return $repo->queryFindAll();} ,
+				'error_bubbling' => true))
+				
+				
 
             ->add('utilisateur', 'entity', array(
 				'class'    => 'JCCommandeBundle:Utilisateur',
