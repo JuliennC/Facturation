@@ -23,11 +23,11 @@ TODO liste :
 	-> FAIT une méthode qui calcule le cout d'une commande pour une collectivite donée
 	-> FAIT afficher la date d’envoie et de paiement dans « detail » quand une commande est envoyée ou payée
 	-> FAIT la table imputation.
+	-> FAIT le calcul de la facturations en fonction des factures en investissement ou en fonctionnement
 
-
-	-> Faire le calcul de la facturations en fonction des factures en investissement ou en fonctionnement
 
 	-> Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca.
+
 
 	-> Vérifier dans validator qu’une commande qui passe envoyé à bien n° coriolis etc
 		(voir avec Severine) + Savoir à quel stade de la commande le num coriolis 		doit être entré, etc
@@ -36,7 +36,7 @@ TODO liste :
 	-> Pour le bundle admin, faire des form pour chaque chose à modifier (devrait être plus simple que les autre forms, contient surtout des relation et du texte)
 
 
-
+	-> Faire le form recherche en haut
 
 
 
@@ -44,9 +44,11 @@ TESTS :
 
 	-> tester les passage de paramètre avec de fausses valeurs pour s’assurer qu’on renvoie vers des pages d’erreur partout et faire avec ID (pour éviter les pb d’encodage)
 
+	-> Faire différents tests avec des commandes sur plusieurs années
 
 
 
 DETAILS :
 
 	-> formatter le total d’une commande dans form.html.twig
+	-> revoir la fonction de trie dans les tableau (js)

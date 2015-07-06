@@ -1490,8 +1490,8 @@ class CommandeController extends Controller
 		$ligneCommande -> setLibelle("Ligne 1 de la commande numero 1 pour le service bureautique");
 		$ligneCommande -> setReference("RF321BUR");
 		$ligneCommande -> setQuantite(10);
-		$ligneCommande -> setPrixUnitaire(13050,2);
-		$ligneCommande -> setTotalTTC(137679,61);
+		$ligneCommande -> setPrixUnitaire(13050.2);
+		$ligneCommande -> setTotalTTC(137679.61);
 		$ligneCommande -> setCommentaire("Aucun commentaire");
 		$ligneCommande -> setCommande($commande1);
 		$ligneCommande -> setTVA($tva1);
@@ -1502,14 +1502,14 @@ class CommandeController extends Controller
 		$ligneCommande2 -> setLibelle("Ligne 2 de la commande numero 1 pour le service bureautique");
 		$ligneCommande2 -> setReference("RF987BUR");
 		$ligneCommande2 -> setQuantite(5);
-		$ligneCommande2 -> setPrixUnitaire(3550,2);
-		$ligneCommande2 -> setTotalTTC(20573,409);
+		$ligneCommande2 -> setPrixUnitaire(3550.2);
+		$ligneCommande2 -> setTotalTTC(20573.409);
 		$ligneCommande2 -> setCommentaire("Aucun commentaire 1");
 		$ligneCommande2 -> setCommande($commande1);
 		$ligneCommande2 -> setTVA($tva2);
 		$em->persist($ligneCommande2);
 		
-		$commande1->setTotalTTC(137679,61+20573,409);
+		$commande1->setTotalTTC(137679.61+20573.409);
 		$em->persist($commande1);
 		
 		
@@ -1517,14 +1517,14 @@ class CommandeController extends Controller
 		$ligneCommande3 -> setLibelle("Ligne 1 de la commande numero 2 pour le service bureautique");
 		$ligneCommande3 -> setReference("RF321BUR");
 		$ligneCommande3 -> setQuantite(1);
-		$ligneCommande3 -> setPrixUnitaire(24050,2);
-		$ligneCommande3 -> setTotalTTC(29100,742);
+		$ligneCommande3 -> setPrixUnitaire(24050.2);
+		$ligneCommande3 -> setTotalTTC(29100.742);
 		$ligneCommande3 -> setCommentaire("Aucun commentaire");
 		$ligneCommande3 -> setCommande($commande2);
 		$ligneCommande3 -> setTVA($tva3);
 		$em->persist($ligneCommande3);			
 
-		$commande2->setTotalTTC(29100,742);
+		$commande2->setTotalTTC(29100.742);
 		$em->persist($commande2);
 
 
@@ -1532,14 +1532,14 @@ class CommandeController extends Controller
 		$ligneCommande4 -> setLibelle("Ligne 1 de la commande numero 3 pour le service bureautique");
 		$ligneCommande4 -> setReference("RF321BUR");
 		$ligneCommande4 -> setQuantite(12);
-		$ligneCommande4 -> setPrixUnitaire(24050,2);
-		$ligneCommande4 -> setTotalTTC(304475,532);
+		$ligneCommande4 -> setPrixUnitaire(24050.2);
+		$ligneCommande4 -> setTotalTTC(304475.532);
 		$ligneCommande4 -> setCommentaire("Aucun commentaire");
 		$ligneCommande4 -> setCommande($commande3);
 		$ligneCommande4 -> setTVA($tva1);
 		$em->persist($ligneCommande4);			
 
-		$commande3->setTotalTTC(304475,532);
+		$commande3->setTotalTTC(304475.532);
 		$em->persist($commande3);
 
 
@@ -1547,14 +1547,14 @@ class CommandeController extends Controller
 		$ligneCommande5 -> setLibelle("Ligne 1 de la commande numero 4 pour le service bureautique");
 		$ligneCommande5 -> setReference("RF321BUR");
 		$ligneCommande5 -> setQuantite(10);
-		$ligneCommande5 -> setPrixUnitaire(1050,2);
-		$ligneCommande5 -> setTotalTTC(12171,818);
+		$ligneCommande5 -> setPrixUnitaire(1050.2);
+		$ligneCommande5 -> setTotalTTC(12171.818);
 		$ligneCommande5 -> setCommentaire("Aucun commentaire");
 		$ligneCommande5 -> setCommande($commande4);
 		$ligneCommande5 -> setTVA($tva2);
 		$em->persist($ligneCommande5);			
 
-		$commande4->setTotalTTC(12171,818);
+		$commande4->setTotalTTC(12171.818);
 		$em->persist($commande4);
 
 
@@ -1563,14 +1563,14 @@ class CommandeController extends Controller
 		$ligneCommande6 -> setLibelle("Ligne 1 de la commande numero 4 pour le service bureautique");
 		$ligneCommande6 -> setReference("RF321BUR");
 		$ligneCommande6 -> setQuantite(10);
-		$ligneCommande6 -> setPrixUnitaire(1732,2);
-		$ligneCommande6 -> setTotalTTC(20959,62);
+		$ligneCommande6 -> setPrixUnitaire(1732.2);
+		$ligneCommande6 -> setTotalTTC(20959.62);
 		$ligneCommande6 -> setCommentaire("Aucun commentaire");
 		$ligneCommande6 -> setCommande($commande5);
 		$ligneCommande6 -> setTVA($tva3);
 		$em->persist($ligneCommande6);			
 
-		$commande5->setTotalTTC(20959,62);
+		$commande5->setTotalTTC(20959.62);
 		$em->persist($commande5);
 
 
@@ -1578,14 +1578,14 @@ class CommandeController extends Controller
 		$ligneCommande7 -> setLibelle("Ligne 1 de la commande numero 4 pour le service bureautique");
 		$ligneCommande7 -> setReference("RF321BUR");
 		$ligneCommande7 -> setQuantite(8);
-		$ligneCommande7 -> setPrixUnitaire(1314,2);
-		$ligneCommande7 -> setTotalTTC(11091,848);
+		$ligneCommande7 -> setPrixUnitaire(1314.2);
+		$ligneCommande7 -> setTotalTTC(11091.848);
 		$ligneCommande7 -> setCommentaire("Aucun commentaire");
 		$ligneCommande7 -> setCommande($commande6);
 		$ligneCommande7 -> setTVA($tva1);
 		$em->persist($ligneCommande7);			
 
-		$commande6->setTotalTTC(11091,848);
+		$commande6->setTotalTTC(11091.848);
 		$em->persist($commande6);
 
 				
