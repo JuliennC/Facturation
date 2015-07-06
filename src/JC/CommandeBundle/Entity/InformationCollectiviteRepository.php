@@ -50,26 +50,58 @@ class InformationCollectiviteRepository extends EntityRepository
 	}
 	
 	
-	
-	public function findSommeDeCleEtAnnee($cle, $annee){
+	//On pourrai récupérer l'année dans commande..
+	public function findSommeDeCleEtAnneePourCommande($cle, $annee, $commande){
 		
-		return $qb = $this
-	    	->createQueryBuilder('ic')
-	    	->select('SUM(ic.nombre)')
+		
+		return $this
+			->getEntityManager()
+		    ->getRepository('JCCommandeBundle:CommandeConcerneCollectivite')
+			
+			->createQueryBuilder('ccc')
+	        ->select('SUM(ic.nombre)')
+	        ->leftJoin('JCCommandeBundle:InformationCollectivite', 'ic', 'WITH', 'ic.collectivite = ccc.collectivite')
+	       
+	        ->where('ccc.commande = :commande AND ic.cleRepartition =:cle')
+	        ->setParameter('commande', $commande)
+	        ->setParameter('cle', $commande->getActivite()->getCleRepartition())
+
+   			->getQuery()
+	    	->getSingleResult();
+		
+		
+			}
+	
+	
+	/*
+		
+		return $this
+			->getEntityManager()
+		    ->getRepository('JCCommandeBundle:CommandeConcerneCollectivite')
+		     
+		     ->select('SUM(ic.nombre)')
 	    	
-			->andWhere('ic.cleRepartition = :cle')
+			->leftJoin('ccc.commande','com')
+			->addSelect('com')
+			
+			->leftJoin('ccc.collectivite','coll')
+			->addSelect('coll')
+			
+			->leftJoin()
+				    	
+			->where('com = :commande AND c.cleRepartition = :cle AND ic.annee = :annee')
+
+           	->setParameter('commande', $commande)
            	->setParameter('cle', $cle)
            	
-           	->andWhere('ic.annee = :annee')
+           	->andWhere('')
            	->setParameter('annee', $annee)
 			
-			->getQuery()
 	    	->getSingleResult()
 	    	;
-	}
-	
-	
-	
+
+		
+		*/
 	
 	
 	

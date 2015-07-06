@@ -998,7 +998,7 @@ class CommandeController extends Controller
 		$temps3_2 -> setAnnee(2015);
 		$temps3_2 -> setActivite($activite2);
 		$temps3_2 -> setCollectivite($coll3);
-		$em->persist($temps3);
+		$em->persist($temps3_2);
 		
 		$temps4_2 = new TempsPasse();
 		$temps4_2 -> setPourcentage(10);
@@ -1019,7 +1019,7 @@ class CommandeController extends Controller
 		$temps6_2 -> setAnnee(2015);
 		$temps6_2 -> setActivite($activite2);
 		$temps6_2 -> setCollectivite($coll6);
-		$em->persist($temps6);
+		$em->persist($temps6_2);
 		
 		
 		//On crŽe les imputations
@@ -1201,7 +1201,7 @@ class CommandeController extends Controller
 		
 		//On ne se sert de la table de transition QUe pour les commandes directes
 		$concerne1 = new CommandeConcerneCollectivite();
-		$concerne1 -> setRepartition("Nombre d'habitant");
+		$concerne1 -> setRepartition($commande1->getActivite()->getCleRepartition()->getNom());
 		$concerne1 -> setCommande($commande1);
 		$concerne1 -> setCollectivite($coll1);
 		$em->persist($concerne1);	
@@ -1219,8 +1219,8 @@ class CommandeController extends Controller
 		$em->persist($concerne4);	
 		
 		$concerne5 = new CommandeConcerneCollectivite();
-		$concerne5 -> setRepartition($commande2->getActivite()->getCleRepartition()->getNom());
-		$concerne5 -> setCommande($commande2);
+		$concerne5 -> setRepartition($commande1->getActivite()->getCleRepartition()->getNom());
+		$concerne5 -> setCommande($commande1);
 		$concerne5 -> setCollectivite($coll6);
 		$em->persist($concerne5);		
 

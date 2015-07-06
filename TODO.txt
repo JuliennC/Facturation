@@ -22,10 +22,12 @@ TODO liste :
 	-> FAIT ajouter le cout de la masse salarial
 	-> FAIT une méthode qui calcule le cout d'une commande pour une collectivite donée
 	-> FAIT afficher la date d’envoie et de paiement dans « detail » quand une commande est envoyée ou payée
+	-> FAIT la table imputation.
 
 
-	-> faire la table imputation.
 	-> Faire le calcul de la facturations en fonction des factures en investissement ou en fonctionnement
+
+	-> Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca.
 
 	-> Vérifier dans validator qu’une commande qui passe envoyé à bien n° coriolis etc
 		(voir avec Severine) + Savoir à quel stade de la commande le num coriolis 		doit être entré, etc

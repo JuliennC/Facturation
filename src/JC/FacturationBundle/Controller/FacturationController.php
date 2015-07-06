@@ -126,8 +126,8 @@ class FacturationController extends Controller
 
 
 		//On va stocker les totaux, pour ne pas le faire en twig
-		$tabRes['infosColl']['totalFactures']['Directe'] = 0;
-		$tabRes['infosColl']['totalFactures']['Mutualisee'] = 0;
+		$tabRes['infosColl']['totalFactures']['Investissement'] = 0;
+		$tabRes['infosColl']['totalFactures']['Fonctionnement'] = 0;
 
 		
 		//On crée les tableaux
@@ -135,8 +135,8 @@ class FacturationController extends Controller
 
 			$tabActivites[$activite->getNom()] = array();
 			$tabActivites[$activite->getNom()]['nom'] = $activite->getNom();
-			$tabActivites[$activite->getNom()]['montantFactures']['Directe'] = 0;
-			$tabActivites[$activite->getNom()]['montantFactures']['Mutualisee'] = 0;
+			$tabActivites[$activite->getNom()]['montantFactures']['Investissement'] = 0;
+			$tabActivites[$activite->getNom()]['montantFactures']['Fonctionnement'] = 0;
 			$tabActivites[$activite->getNom()]['montantMasseSalariale'] = 0;
 			$tabActivites[$activite->getNom()]['applications'] = array();
 			
@@ -172,20 +172,20 @@ class FacturationController extends Controller
 				$tabActivites[$commande['activite']]['applications'][$commande['application']] = array();
 				$tabActivites[$commande['activite']]['applications'][$commande['application']]['nom'] = $commande['application'];
 				
-				$tabActivites[$commande['activite']]['applications'][$commande['application']]['Directe'] = 0;
-				$tabActivites[$commande['activite']]['applications'][$commande['application']]['Mutualisee'] = 0;
+				$tabActivites[$commande['activite']]['applications'][$commande['application']]['Investissement'] = 0;
+				$tabActivites[$commande['activite']]['applications'][$commande['application']]['Fonctionnement'] = 0;
 			}
 			
 			
 			//On incrémente le montant des factures pour l'activite
-			$tabActivites[$commande['activite']]['montantFactures'][$commande['ventilation']] += $commande['montantAPayer'];			
+			$tabActivites[$commande['activite']]['montantFactures'][$commande['imputation']] += $commande['montantAPayer'];			
 
 			//On incrémente le montant des factures total
 			// (On le fait ici pour ne pas le faire dans le twig.
-			$tabRes['infosColl']['totalFactures'][$commande['ventilation']] += $commande['montantAPayer'];
+			$tabRes['infosColl']['totalFactures'][$commande['imputation']] += $commande['montantAPayer'];
 			
 			//On compte aussi le total par application
-			$tabActivites[$commande['activite']]['applications'][$commande['application']][$commande['ventilation']] += $commande['montantAPayer'];
+			$tabActivites[$commande['activite']]['applications'][$commande['application']][$commande['imputation']] += $commande['montantAPayer'];
 		}
 	
 	  	
@@ -242,7 +242,7 @@ class FacturationController extends Controller
 	    //On récupere la collectivite
 	    $collectivite = $em->getRepository('JCCommandeBundle:Collectivite')->findOneByNom($nomCollectivite); 
 	    
-	    //On recupere les commandes concernant la collectivite
+	    //On recupere les commandes concernant la collectivite, qui sont passées à l'etat payée en 20xx ($annee)
 	    // (On ne passe pas par CommandePasseEtat car il y a plus de CommandePasseEtat(Payee) que de CommandeConcerne(Collectivite))
 	    $listeCCC = $em->getRepository('JCCommandeBundle:Commande')->findCommandePourCollectiviteAvecStatutPourAnnee($collectivite, "Payee", $annee);  
 		
@@ -267,10 +267,10 @@ class FacturationController extends Controller
 		
 		
 		//On stock les commandes
-		$tabCommande = array();
+		$tabCommandes = array();
 
 
-		//On parcours les états (donc les commandes) en faisant les calculs
+		//On parcours les commande concerne collectivite pour faire les calculs
 		foreach($listeCCC as $ccc){
 			
 			//On recupere la commande
@@ -281,6 +281,7 @@ class FacturationController extends Controller
 			
 			$tabCommandes[$commande->getId()]['id'] = $commande->getId();
 			$tabCommandes[$commande->getId()]['ventilation'] = $commande->getVentilation();
+			$tabCommandes[$commande->getId()]['imputation'] = $commande->getImputation()->getSection();
 			$tabCommandes[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
 			$tabCommandes[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
 			$tabCommandes[$commande->getId()]['montantTotal'] = $commande->getTotalTTC();
@@ -295,7 +296,9 @@ class FacturationController extends Controller
 					$info = $infosColl[$commande->getActivite()->getCleRepartition()->getNom()];
 
 					//On récupere la "somme des clés", ceci afin de faire un ratio pour la collectivite
-					$totalCle = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findSommeDeCleEtAnnee($info->getCleRepartition(), $annee)[1];
+					$totalCle = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findSommeDeCleEtAnneePourCommande($info->getCleRepartition(), $annee, $commande)[1];
+
+
 
 					//On fait le ratio
 					$ratio = $info->getNombre() / $totalCle;
