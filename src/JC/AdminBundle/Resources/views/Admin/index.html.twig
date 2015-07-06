@@ -4,20 +4,15 @@
 {% block title %}{{ parent() }} - Admin{% endblock %}
 
 
-{% block jcadmin_body %}
-
-  <h3>Bienvenue dans l'espace Admin </h3>
-  
+{% block jcadmin_body %}  
   
   
  <div class="container">
-	<div class="col-sm-2">
+	<div class="col-md-2">
     
 	    <nav class="nav-sidebar">
 			<ul class="nav tabs">
 			
-	          <li><input id="input_annee" data-toggle="tab"/></li>
-
 	          <li class="active"><a href="#tab1" data-toggle="tab">Collectivités</a></li>
 	          <li class=""><a href="#tab2" data-toggle="tab">Informations collectivité</a></li>
 	          <li class=""><a href="#tab3" data-toggle="tab">Utilisateur</a></li>                               
@@ -32,11 +27,10 @@
 
 	<!-- tab content -->
 	<div class="tab-content">
-		<div class="tab-pane active text-style" id="tab1">
-		  <h2>Collectivités</h2>
+		<div class="tab-pane active" id="tab1">
+		  <h2>Année : {{annee}}</h2>
 		
-		    {{ render(controller("JCAdminBundle:Admin:modificationCollectivite")) }}
-
+		    	{{ render(controller("JCAdminBundle:Admin:modificationCollectivite" , { 'annee': annee })) }}
 		       
 		</div>
 		

@@ -593,13 +593,13 @@ class CommandeController extends Controller
 		//Cration des budgets
 		$budget1 = new Budget();
 		$budget1->setMontant(1200000);
-		$budget1->setAnnee("2015");
+		$budget1->setAnnee("2014");
 		$budget1->setService($service1);
 		$em->persist($budget1);
 
 		$budget2 = new Budget();
 		$budget2->setMontant(1340000);
-		$budget2->setAnnee("2015");
+		$budget2->setAnnee("2014");
 		$budget2->setService($service2);
 		$em->persist($budget2);
 
@@ -772,13 +772,13 @@ class CommandeController extends Controller
 		//Creation des masses salarial pour les service
 		$masse1 = new MasseSalariale();
 		$masse1 -> setMontant(200000);
-		$masse1 -> setAnnee(2015);
+		$masse1 -> setAnnee(2014);
 		$masse1 -> setActivite($activite);
 		$em->persist($masse1);
 
 		$masse2 = new MasseSalariale();
 		$masse2 -> setMontant(350000);
-		$masse2 -> setAnnee(2015);
+		$masse2 -> setAnnee(2014);
 		$masse2 -> setActivite($activite2);
 		$em->persist($masse2);
 		
@@ -818,14 +818,14 @@ class CommandeController extends Controller
 		
 		$info_Coll_1 = new InformationCollectivite();
 		$info_Coll_1 -> setNombre('105000');		
-		$info_Coll_1 -> setAnnee("2015");	
+		$info_Coll_1 -> setAnnee("2014");	
 		$info_Coll_1 -> setCleRepartition($cle);	
 		$info_Coll_1 -> setCollectivite($coll1);	
 		$em->persist($info_Coll_1);
 
 		$info_Coll_1_2 = new InformationCollectivite();
 		$info_Coll_1_2 -> setNombre('30045');		
-		$info_Coll_1_2 -> setAnnee("2015");	
+		$info_Coll_1_2 -> setAnnee("2014");	
 		$info_Coll_1_2 -> setCleRepartition($cle2);	
 		$info_Coll_1_2 -> setCollectivite($coll1);	
 		$em->persist($info_Coll_1_2);
@@ -838,14 +838,14 @@ class CommandeController extends Controller
 		
 		$info_Coll_2 = new InformationCollectivite();
 		$info_Coll_2 -> setNombre('9870');		
-		$info_Coll_2 -> setAnnee("2015");		
+		$info_Coll_2 -> setAnnee("2014");		
 		$info_Coll_2 -> setCleRepartition($cle);	
 		$info_Coll_2 -> setCollectivite($coll2);	
 		$em->persist($info_Coll_2);
 		
 		$info_Coll_2_2 = new InformationCollectivite();
 		$info_Coll_2_2 -> setNombre('1203');		
-		$info_Coll_2_2 -> setAnnee("2015");	
+		$info_Coll_2_2 -> setAnnee("2014");	
 		$info_Coll_2_2 -> setCleRepartition($cle2);	
 		$info_Coll_2_2 -> setCollectivite($coll2);	
 		$em->persist($info_Coll_2_2);
@@ -858,14 +858,14 @@ class CommandeController extends Controller
 
 		$info_Coll_3 = new InformationCollectivite();
 		$info_Coll_3 -> setNombre('22000');		
-		$info_Coll_3 -> setAnnee("2015");
+		$info_Coll_3 -> setAnnee("2014");
 		$info_Coll_3 -> setCleRepartition($cle);	
 		$info_Coll_3 -> setCollectivite($coll3);	
 		$em->persist($info_Coll_3);
 
 		$info_Coll_3_2 = new InformationCollectivite();
 		$info_Coll_3_2 -> setNombre('1392');		
-		$info_Coll_3_2 -> setAnnee("2015");	
+		$info_Coll_3_2 -> setAnnee("2014");	
 		$info_Coll_3_2 -> setCleRepartition($cle2);	
 		$info_Coll_3_2 -> setCollectivite($coll3);	
 		$em->persist($info_Coll_3_2);
@@ -878,14 +878,14 @@ class CommandeController extends Controller
 		
 		$info_Coll_4 = new InformationCollectivite();
 		$info_Coll_4 -> setNombre('5640');		
-		$info_Coll_4 -> setAnnee("2015");
+		$info_Coll_4 -> setAnnee("2014");
 		$info_Coll_4 -> setCleRepartition($cle);	
 		$info_Coll_4 -> setCollectivite($coll4);	
 		$em->persist($info_Coll_4);
 		
 		$info_Coll_4_2 = new InformationCollectivite();
 		$info_Coll_4_2 -> setNombre('123');		
-		$info_Coll_4_2 -> setAnnee("2015");	
+		$info_Coll_4_2 -> setAnnee("2014");	
 		$info_Coll_4_2 -> setCleRepartition($cle2);	
 		$info_Coll_4_2 -> setCollectivite($coll4);	
 		$em->persist($info_Coll_4_2);
@@ -898,14 +898,14 @@ class CommandeController extends Controller
 		
 		$info_Coll_5 = new InformationCollectivite();
 		$info_Coll_5 -> setNombre('13028');		
-		$info_Coll_5 -> setAnnee("2015");	
+		$info_Coll_5 -> setAnnee("2014");	
 		$info_Coll_5 -> setCleRepartition($cle);
 		$info_Coll_5 -> setCollectivite($coll5);	
 		$em->persist($info_Coll_5);
 		
 		$info_Coll_5_2 = new InformationCollectivite();
 		$info_Coll_5_2 -> setNombre('983');		
-		$info_Coll_5_2 -> setAnnee("2015");	
+		$info_Coll_5_2 -> setAnnee("2014");	
 		$info_Coll_5_2 -> setCleRepartition($cle2);	
 		$info_Coll_5_2 -> setCollectivite($coll5);	
 		$em->persist($info_Coll_5_2);
@@ -919,14 +919,14 @@ class CommandeController extends Controller
 		
 		$info_Coll_6 = new InformationCollectivite();
 		$info_Coll_6 -> setNombre('7892');		
-		$info_Coll_6 -> setAnnee("2015");	
+		$info_Coll_6 -> setAnnee("2014");	
 		$info_Coll_6 -> setCleRepartition($cle);	
 		$info_Coll_6 -> setCollectivite($coll6);	
 		$em->persist($info_Coll_6);
 	
 		$info_Coll_6_2 = new InformationCollectivite();
 		$info_Coll_6_2 -> setNombre('234');		
-		$info_Coll_6_2 -> setAnnee("2015");	
+		$info_Coll_6_2 -> setAnnee("2014");	
 		$info_Coll_6_2 -> setCleRepartition($cle2);	
 		$info_Coll_6_2 -> setCollectivite($coll6);	
 		$em->persist($info_Coll_6_2);
@@ -937,7 +937,7 @@ class CommandeController extends Controller
 		//Creation des temps passs
 		$temps1 = new TempsPasse();
 		$temps1 -> setPourcentage(30);
-		$temps1 -> setAnnee(2015);
+		$temps1 -> setAnnee(2014);
 		$temps1 -> setActivite($activite);
 		$temps1 -> setCollectivite($coll1);
 		$em->persist($temps1);
@@ -945,42 +945,42 @@ class CommandeController extends Controller
 		
 		$temps2 = new TempsPasse();
 		$temps2 -> setPourcentage(15);
-		$temps2 -> setAnnee(2015);
+		$temps2 -> setAnnee(2014);
 		$temps2 -> setActivite($activite);
 		$temps2 -> setCollectivite($coll2);
 		$em->persist($temps2);
 		
 		$temps3 = new TempsPasse();
 		$temps3 -> setPourcentage(25);
-		$temps3 -> setAnnee(2015);
+		$temps3 -> setAnnee(2014);
 		$temps3 -> setActivite($activite);
 		$temps3 -> setCollectivite($coll3);
 		$em->persist($temps3);
 		
 		$temps4 = new TempsPasse();
 		$temps4 -> setPourcentage(10);
-		$temps4 -> setAnnee(2015);
+		$temps4 -> setAnnee(2014);
 		$temps4 -> setActivite($activite);
 		$temps4 -> setCollectivite($coll4);
 		$em->persist($temps4);
 		
 		$temps5 = new TempsPasse();
 		$temps5 -> setPourcentage(10);
-		$temps5 -> setAnnee(2015);
+		$temps5 -> setAnnee(2014);
 		$temps5 -> setActivite($activite);
 		$temps5 -> setCollectivite($coll5);
 		$em->persist($temps5);
 		
 		$temps6 = new TempsPasse();
 		$temps6 -> setPourcentage(10);
-		$temps6 -> setAnnee(2015);
+		$temps6 -> setAnnee(2014);
 		$temps6 -> setActivite($activite);
 		$temps6 -> setCollectivite($coll6);
 		$em->persist($temps6);
 		
 		
 		$temps1_2 = new TempsPasse();
-		$temps1_2 -> setAnnee(2015);
+		$temps1_2 -> setAnnee(2014);
 		$temps1_2 -> setPourcentage(30);
 		$temps1_2 -> setActivite($activite2);
 		$temps1_2 -> setCollectivite($coll1);
@@ -988,14 +988,14 @@ class CommandeController extends Controller
 		
 		$temps2_2 = new TempsPasse();
 		$temps2_2 -> setPourcentage(15);
-		$temps2_2 -> setAnnee(2015);
+		$temps2_2 -> setAnnee(2014);
 		$temps2_2 -> setActivite($activite2);
 		$temps2_2 -> setCollectivite($coll2);
 		$em->persist($temps2_2);
 		
 		$temps3_2 = new TempsPasse();
 		$temps3_2 -> setPourcentage(25);
-		$temps3_2 -> setAnnee(2015);
+		$temps3_2 -> setAnnee(2014);
 		$temps3_2 -> setActivite($activite2);
 		$temps3_2 -> setCollectivite($coll3);
 		$em->persist($temps3_2);
@@ -1003,20 +1003,20 @@ class CommandeController extends Controller
 		$temps4_2 = new TempsPasse();
 		$temps4_2 -> setPourcentage(10);
 		$temps4_2 -> setActivite($activite2);
-		$temps4_2 -> setAnnee(2015);
+		$temps4_2 -> setAnnee(2014);
 		$temps4_2 -> setCollectivite($coll4);
 		$em->persist($temps4_2);
 		
 		$temps5_2 = new TempsPasse();
 		$temps5_2 -> setPourcentage(10);
-		$temps5_2 -> setAnnee(2015);
+		$temps5_2 -> setAnnee(2014);
 		$temps5_2 -> setActivite($activite2);
 		$temps5_2 -> setCollectivite($coll5);
 		$em->persist($temps5_2);
 		
 		$temps6_2 = new TempsPasse();
 		$temps6_2 -> setPourcentage(10);
-		$temps6_2 -> setAnnee(2015);
+		$temps6_2 -> setAnnee(2014);
 		$temps6_2 -> setActivite($activite2);
 		$temps6_2 -> setCollectivite($coll6);
 		$em->persist($temps6_2);
@@ -1339,133 +1339,128 @@ class CommandeController extends Controller
 		$cpe = new CommandePasseEtat();
 		$cpe -> setCommande($commande1);
 		$cpe -> setEtat($etat1);
-		$cpe -> setDatePassage(new \Datetime());
+		$cpe -> setDatePassage(new \Datetime("2014-07-08"));
 		$em->persist($cpe);
 		
 		$cpe2 = new CommandePasseEtat();
 		$cpe2 -> setCommande($commande1);
 		$cpe2 -> setEtat($etat2);
-		$cpe2 -> setDatePassage(new \Datetime());
+		$cpe2 -> setDatePassage(new \Datetime("2014-07-09"));
 		$em -> persist($cpe2);
 		
 		$cpe3 = new CommandePasseEtat();
 		$cpe3 -> setCommande($commande1);
 		$cpe3 -> setEtat($etat3);
-		$cpe3 -> setDatePassage(new \Datetime());
+		$cpe3 -> setDatePassage(new \Datetime("2014-07-10"));
 		$em -> persist($cpe3);
 		
 		$cpe4 = new CommandePasseEtat();
 		$cpe4 -> setCommande($commande1);
 		$cpe4 -> setEtat($etat4);
-		$cpe4 -> setDatePassage(new \Datetime());
+		$cpe4 -> setDatePassage(new \Datetime("2014-07-11"));
 		$em -> persist($cpe4);
 		
 		$cpe5 = new CommandePasseEtat();
 		$cpe5 -> setCommande($commande2);
 		$cpe5 -> setEtat($etat1);
-		$cpe5 -> setDatePassage(new \Datetime());
+		$cpe5 -> setDatePassage(new \Datetime("2014-07-08"));
 		$em->persist($cpe5);
 		
 		$cpe6 = new CommandePasseEtat();
 		$cpe6 -> setCommande($commande2);
 		$cpe6 -> setEtat($etat2);
-		$cpe6 -> setDatePassage(new \Datetime());
+		$cpe6 -> setDatePassage(new \Datetime("2014-07-09"));
 		$em -> persist($cpe6);
 		
 		$cpe7 = new CommandePasseEtat();
 		$cpe7 -> setCommande($commande2);
 		$cpe7 -> setEtat($etat3);
-		$cpe7 -> setDatePassage(new \Datetime());
+		$cpe7 -> setDatePassage(new \Datetime("2014-07-10"));
 		$em -> persist($cpe7);
 		
 		$cpe7_bis = new CommandePasseEtat();
 		$cpe7_bis -> setCommande($commande2);
 		$cpe7_bis -> setEtat($etat4);
-		$cpe7_bis -> setDatePassage(new \Datetime());
+		$cpe7_bis -> setDatePassage(new \Datetime("2014-07-11"));
 		$em -> persist($cpe7_bis);
-		
-		$cpe8 = new CommandePasseEtat();
-		$cpe8 -> setCommande($commande2);
-		$cpe8 -> setEtat($etat3);
-		$cpe8 -> setDatePassage(new \Datetime());
-		$em -> persist($cpe8);
+
 		
 		$cpe9 = new CommandePasseEtat();
 		$cpe9 -> setCommande($commande3);
 		$cpe9 -> setEtat($etat1);
-		$cpe9 -> setDatePassage(new \Datetime());
+		$cpe9 -> setDatePassage(new \Datetime("2014-07-08"));
 		$em->persist($cpe9);
 		
 		$cpe10 = new CommandePasseEtat();
 		$cpe10 -> setCommande($commande3);
 		$cpe10 -> setEtat($etat2);
-		$cpe10 -> setDatePassage(new \Datetime());
+		$cpe10 -> setDatePassage(new \Datetime("2014-07-09"));
 		$em -> persist($cpe10);
 		
 		$cpe11 = new CommandePasseEtat();
 		$cpe11 -> setCommande($commande3);
 		$cpe11 -> setEtat($etat3);
-		$cpe11 -> setDatePassage(new \Datetime());
+		$cpe11 -> setDatePassage(new \Datetime("2014-07-10"));
 		$em -> persist($cpe11);
 		
 		$cpe12 = new CommandePasseEtat();
 		$cpe12 -> setCommande($commande3);
 		$cpe12 -> setEtat($etat4);
-		$cpe12 -> setDatePassage(new \Datetime());
+		$cpe12 -> setDatePassage(new \Datetime("2014-07-11"));
 		$em -> persist($cpe12);
 		
 		$cpe13 = new CommandePasseEtat();
 		$cpe13 -> setCommande($commande4);
 		$cpe13 -> setEtat($etat1);
-		$cpe13 -> setDatePassage(new \Datetime());
+		$cpe13 -> setDatePassage(new \Datetime("2014-07-08"));
 		$em->persist($cpe13);
 		
 		$cpe14 = new CommandePasseEtat();
 		$cpe14 -> setCommande($commande4);
 		$cpe14 -> setEtat($etat2);
-		$cpe14 -> setDatePassage(new \Datetime());
+		$cpe14 -> setDatePassage(new \Datetime("2014-07-09"));
 		$em -> persist($cpe14);
 		
 		$cpe15 = new CommandePasseEtat();
 		$cpe15 -> setCommande($commande4);
 		$cpe15 -> setEtat($etat3);
-		$cpe15 -> setDatePassage(new \Datetime());
+		$cpe15 -> setDatePassage(new \Datetime("2014-07-10"));
 		$em -> persist($cpe15);
 		
 		$cpe16 = new CommandePasseEtat();
 		$cpe16 -> setCommande($commande4);
 		$cpe16 -> setEtat($etat4);
-		$cpe16 -> setDatePassage(new \Datetime());
+		$cpe16 -> setDatePassage(new \Datetime("2014-07-11"));
 		$em -> persist($cpe16);
 		
 		$cpe16 = new CommandePasseEtat();
 		$cpe16 -> setCommande($commande4);
 		$cpe16 -> setEtat($etat4);
-		$cpe16 -> setDatePassage(new \Datetime());
+		$cpe16 -> setDatePassage(new \Datetime("2014-07-08"));
 		$em -> persist($cpe16);
 		
 		$cpe17 = new CommandePasseEtat();
 		$cpe17 -> setCommande($commande5);
 		$cpe17 -> setEtat($etat1);
-		$cpe17 -> setDatePassage(new \Datetime());
+		$cpe17 -> setDatePassage(new \Datetime("2014-07-08"));
 		$em -> persist($cpe17);
 		
 		$cpe18 = new CommandePasseEtat();
 		$cpe18 -> setCommande($commande5);
 		$cpe18 -> setEtat($etat2);
-		$cpe18 -> setDatePassage(new \Datetime());
+		$cpe18 -> setDatePassage(new \Datetime("2014-07-08"));
 		$em -> persist($cpe18);
 
 		$cpe19 = new CommandePasseEtat();
 		$cpe19 -> setCommande($commande6);
 		$cpe19 -> setEtat($etat1);
-		$cpe19 -> setDatePassage(new \Datetime());
+		$cpe19 -> setDatePassage(new \Datetime("2014-07-08"));
 		$em -> persist($cpe19);
 
 		$cpe20 = new CommandePasseEtat();
 		$cpe20 -> setCommande($commande6);
 		$cpe20 -> setEtat($etat2);
-		$cpe20 -> setDatePassage(new \Datetime());
+		$cpe20 -> setDatePassage(new \Datetime("2014-07-08"));
 		$em -> persist($cpe20);
 		
 		

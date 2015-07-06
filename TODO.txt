@@ -25,7 +25,8 @@ TODO liste :
 	-> FAIT la table imputation.
 	-> FAIT le calcul de la facturations en fonction des factures en investissement ou en fonctionnement
 
-
+	-> faire comme des flèches a cote des années pour changer d’année au lieu de modifier dans l’url
+	-> rajouter l’id de la commande dans la table de la liste des commandes
 	-> Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca.
 
 
