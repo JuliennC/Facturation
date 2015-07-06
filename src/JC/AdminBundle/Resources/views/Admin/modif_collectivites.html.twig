@@ -1,11 +1,22 @@
+{{ form_start(form) }}
 
-
+{{ form_errors(form) }}
 	
+
+
+
+<h2>Année : {{annee}}</h2>
+
+
 <div class='table-responsive'>
 
-	<div class="panel panel-primary">
+	<div class="panel panel-primary filterable">
     <div class="panel-heading">
         <h3 class="panel-title">{{annee}}</h3>
+
+        <div class="pull-right">
+            {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-success save btn-xs glyphicon glyphicon-floppy-disk' } }) }}                    
+        </div>
     </div>
 
 
@@ -15,9 +26,11 @@
 		
 			<tr>
 			
+				<th></th>
+			
 				<th> Collectivite </th>
 				{# On parcours les clés #}
-				{% for cle in tabCle[annee] %}
+				{% for cle in tabCle %}
 					
 					{# On crée une colonne pour chaque clé #}
 					<th> {{cle}} </th>
@@ -27,26 +40,36 @@
 			</tr>
 			
 			
-			
+			{% set i = 0 %}
 			{# On parcours les clés #}
-			{% for coll in tabAnnee[annee] %}
+			{% for coll in tabInfos %}
 	
 			  	<tr>
-	
+			  	
+			  		<td> 
+	                    <a class="btn "><span class="glyphicon glyphicon-remove-circle"></span></a>
+
+			  		</td>
+			  		
 					{# On crée une ligne par collectivite #}
 					<td> <p class='editable' contentEditable=true> {{coll['nom']}} </p> </td>
 	
 					{# On parcours les clés #}
-					{% for cle in tabCle[annee] %}
+					{% for cle in tabCle %}
 						
 						{# On affiche la valeur de la clé #}
-						<td> <p class='editable' contentEditable=true> {{ coll[cle] }} </p> </td>
+						{# <td> <p class='editable' contentEditable=true> {{ coll[cle] }} </p> </td> #}
+						<td>{{form_widget(form.children.listeInformations[i])}}</td>
+
 		
-					{% endfor %}
-	
+						{% set i = i+1 %}
+
 					{% endfor %}
 	
 				</tr>
+
+			{% endfor %}
+	
 			  
 		  
 		</table>
@@ -54,4 +77,5 @@
 	
 </div>	
 	
-	
+
+      {{ form_end(form) }}

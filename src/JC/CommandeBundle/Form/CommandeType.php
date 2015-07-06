@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormError;
 use JC\CommandeBundle\Entity\UtilisateurRepository;
 use JC\CommandeBundle\Entity\FournisseurRepository;
 use JC\CommandeBundle\Entity\ApplicationRepository;
-use JC\CommandeBundle\Entity\ProjetRepository;
 use JC\CommandeBundle\Entity\LivraisonRepository;
 use JC\CommandeBundle\Entity\ActiviteRepository;
 use JC\CommandeBundle\Entity\ImputationRepository;
@@ -114,8 +113,7 @@ class CommandeType extends AbstractType
 											'expanded' => true,
 											'error_bubbling' => true))
 			
-            ->add('enregistrer',      'submit')
-			
+						
 			->add('listeLignesCommande', 'collection', array(
 				'label' => false,
 		        'type'         => new LigneCommandeType(),
@@ -149,7 +147,10 @@ class CommandeType extends AbstractType
                 $builder -> add($nom, 'hidden', array('mapped'=>false,
                 									  'error_bubbling' => true,
                 								      'attr' => array('attr_nom_ville' => $coll->getNom())));
-            }                                                   
+            }           
+    		
+    		$builder->add('enregistrer', 'submit');
+                                        
                                                                         
             $builder ->getForm();
         

@@ -3,6 +3,7 @@
 namespace JC\CommandeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * InformationCollectivite
@@ -25,6 +26,8 @@ class InformationCollectivite
      * @var string
      *
      * @ORM\Column(name="Nombre", type="string", length=255)
+	 * @Assert\NotBlank(message="Vérifier que toutes les cases soientt remplies.")
+     * @Assert\Length(min=1,  minMessage="Vérifier que toutes les cases soientt remplies.")
      */
     private $nombre;
 
