@@ -25,7 +25,8 @@ class InformationCollectiviteType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JC\CommandeBundle\Entity\InformationCollectivite'
+            'data_class' => 'JC\CommandeBundle\Entity\InformationCollectivite',
+            
         ));
     }
 

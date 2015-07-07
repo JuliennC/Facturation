@@ -37,7 +37,8 @@ TODO liste :
 	-> Pour le bundle admin, faire des form pour chaque chose à modifier (devrait être plus simple que les autre forms, contient surtout des relation et du texte)
 
 
-	-> Faire le form recherche en haut
+	-> Sur la page admin, une fois un form validé, lorsqu’on F5, le form est re-envoyé. En mettant une redirection après le form->isValid() une erreur 302 car on redirige à partir du contrôleur d’un block et non pas de la page, voir comment faire
+
 
 
 
@@ -53,3 +54,4 @@ DETAILS :
 
 	-> formatter le total d’une commande dans form.html.twig
 	-> revoir la fonction de trie dans les tableau (js)
+	-> Faire le form recherche en haut

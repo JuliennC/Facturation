@@ -29,9 +29,9 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="tab1">
 		  
-		
-		    	{{ render(controller("JCAdminBundle:Admin:modificationCollectivite" , { 'annee': annee })) }}
-		       
+
+		    	{{ render(controller("JCAdminBundle:Admin:modificationCollectivite" , { 'request' :request, 'annee': annee })) }}
+
 		</div>
 		
 		<div class="tab-pane text-style" id="tab2">
