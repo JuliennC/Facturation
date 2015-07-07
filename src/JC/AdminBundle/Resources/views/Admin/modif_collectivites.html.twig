@@ -1,81 +1,81 @@
-{{ form_start(form) }}
+{% form_theme form 'JCAdminBundle:Form:fields.html.twig' %}
 
-{{ form_errors(form) }}
-	
+<div id='form_collectivite'>
 
+	{{ form_start(form) }}
+  
 
-
-<h2>Année : {{annee}}</h2>
-
-
-<div class='table-responsive'>
-
-	<div class="panel panel-primary filterable">
-    <div class="panel-heading">
-        <h3 class="panel-title">{{annee}}</h3>
-
-        <div class="pull-right">
-            {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-success save btn-xs glyphicon glyphicon-floppy-disk' } }) }}                    
-        </div>
-    </div>
-
-
+		<h2>Année : {{annee}}</h2>
+				{{ form_errors(form) }}
 		
-		<table class="table table-hover">
-	  
+		<div class='table-responsive'>
+
+			<div class="panel panel-primary filterable">
+			    <div class="panel-heading">
+			        <h3 class="panel-title">{{annee}}</h3>
+			
+			        <div class="pull-right">
+			            {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-success save btn-xs glyphicon glyphicon-floppy-disk' } }) }}                    
+			        </div>
+			    </div>
 		
-			<tr>
-			
-				<th></th>
-			
-				<th> Collectivite </th>
-				{# On parcours les clés #}
-				{% for cle in tabCle %}
-					
-					{# On crée une colonne pour chaque clé #}
-					<th> {{cle}} </th>
-	
-				{% endfor %}
-	
-			</tr>
-			
-			
-			{% set i = 0 %}
-			{# On parcours les clés #}
-			{% for coll in tabInfos %}
-	
-			  	<tr>
-			  	
-			  		<td> 
-	                    <a class="btn "><span class="glyphicon glyphicon-remove-circle"></span></a>
-
-			  		</td>
-			  		
-					{# On crée une ligne par collectivite #}
-					<td> <p class='editable' contentEditable=true> {{coll['nom']}} </p> </td>
-	
-					{# On parcours les clés #}
-					{% for cle in tabCle %}
-						
-						{# On affiche la valeur de la clé #}
-						{# <td> <p class='editable' contentEditable=true> {{ coll[cle] }} </p> </td> #}
-						<td>{{form_widget(form.children.listeInformations[i])}}</td>
-
 		
-						{% set i = i+1 %}
-
-					{% endfor %}
-	
-				</tr>
-
-			{% endfor %}
-	
+				
+				<table class="table table-hover">
 			  
-		  
-		</table>
-	</div>
+				
+					<tr>
+					
+						<th></th>
+					
+						<th> Collectivite </th>
+						{# On parcours les clés #}
+						{% for cle in tabCle %}
+							
+							{# On crée une colonne pour chaque clé #}
+							<th> {{cle}} </th>
+			
+						{% endfor %}
+			
+					</tr>
+					
+					
+					{% set i = 0 %}
+					{# On parcours les clés #}
+					{% for coll in tabInfos %}
+			
+					  	<tr>
+					  	
+					  		<td> 
+			                    <a class="btn "><span class="glyphicon glyphicon-remove-circle"></span></a>
+		
+					  		</td>
+					  		
+							{# On crée une ligne par collectivite #}
+							<td> <p class='editable' contentEditable=true> {{coll['nom']}} </p> </td>
+			
+							{# On parcours les clés #}
+							{% for cle in tabCle %}
+								
+								{# On affiche la valeur de la clé #}
+								{# <td> <p class='editable' contentEditable=true> {{ coll[cle] }} </p> </td> #}
+								<td>{{form_widget(form.children.listeInformations[i])}}</td>
+		
+				
+								{% set i = i+1 %}
+		
+							{% endfor %}
+			
+						</tr>
+		
+					{% endfor %}
+			
+					  
+				  
+				</table>
+			</div>
+			
+		</div>	
 	
-</div>	
-	
-
-      {{ form_end(form) }}
+		{{ form_end(form) }}
+</div>

@@ -40,6 +40,11 @@ TODO liste :
 	-> Sur la page admin, une fois un form validé, lorsqu’on F5, le form est re-envoyé. En mettant une redirection après le form->isValid() une erreur 302 car on redirige à partir du contrôleur d’un block et non pas de la page, voir comment faire
 
 
+A LA FIN : 
+
+	-> revoir les commentaires
+	-> revoir les noms des variables
+	-> revoir les type des attributs
 
 
 TESTS : 

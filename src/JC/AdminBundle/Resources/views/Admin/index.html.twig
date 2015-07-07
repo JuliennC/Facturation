@@ -1,33 +1,47 @@
 {% extends "JCAdminBundle::layout.html.twig" %}
 
 
+
+
 {% block title %}{{ parent() }} - Admin{% endblock %}
 
 
 {% block jcadmin_body %}  
   
-  
- <div class="container">
-	<div class="col-md-2">
+
+
+<div class="container nopadding">
+    <!-- uncomment code for absolute positioning tweek see top comment in css -->
+    <!-- <div class="absolute-wrapper"> </div> -->
+    <!-- Menu -->
+    <div class="side-menu">
     
-	    <nav class="nav-sidebar">
-			<ul class="nav tabs">
-			
-	          <li class="active"><a href="#tab1" data-toggle="tab">Collectivités</a></li>
-	          <li class=""><a href="#tab2" data-toggle="tab">Informations collectivité</a></li>
-	          <li class=""><a href="#tab3" data-toggle="tab">Utilisateur</a></li>                               
-	          <li class=""><a href="#tab4" data-toggle="tab">Service</a></li>                               
-	
-			</ul>
-		</nav>
-	
-	</div>
+    <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        
+
+    <!-- Main Menu -->
+    <div class="side-menu-container">
+        <ul class="nav navbar-nav">
+
+            <li class="active"><a href="#tab1" data-toggle="tab">Collectivités</a></li>
+	        <li class=""><a href="#tab2" data-toggle="tab">Informations collectivité</a></li>
+	        <li class=""><a href="#tab3" data-toggle="tab">Utilisateur</a></li>                               
+            <li class=""><a href="#tab4" data-toggle="tab">Service</a></li>
+
+            
+
+        </ul>
+    </div><!-- /.navbar-collapse -->
+	</nav>
+
+</div>
 
 
 
-	<!-- tab content -->
+<!-- tab content -->
 	<div class="tab-content">
-		<div class="tab-pane active" id="tab1">
+		<div class="tab-pane active col-md-9 col-md-offset-4" id="tab1">
 		  
 
 		    	{{ render(controller("JCAdminBundle:Admin:modificationCollectivite" , { 'request' :request, 'annee': annee })) }}
@@ -53,8 +67,6 @@
 		</div>
 	
 	</div>
-    
-    
-</div>
+
 
 {% endblock %}

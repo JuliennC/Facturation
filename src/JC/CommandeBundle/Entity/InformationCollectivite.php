@@ -28,6 +28,7 @@ class InformationCollectivite
      * @ORM\Column(name="Nombre", type="string", length=255)
 	 * @Assert\NotBlank(message="Vérifier que toutes les cases soientt remplies.")
      * @Assert\Length(min=1,  minMessage="Vérifier que toutes les cases soientt remplies.")
+     * @Assert\Regex("/^[0-9]+$/", message="Vérifier que toutes vos informations soient des nombres.")  
      */
     private $nombre;
 
