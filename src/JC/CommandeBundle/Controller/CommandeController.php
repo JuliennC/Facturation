@@ -813,7 +813,9 @@ class CommandeController extends Controller
 		
 		// Creation d'une collectivite et de ses informations
 		$coll1 = new Collectivite();
-		$coll1 -> setNom('Grand-Nancy');		
+		$coll1 -> setNom('Grand-Nancy');
+		$coll1 -> setDateDebutMutualisation(new \Datetime("2013-07-08"));
+		$coll1 -> setDateFinMutualisation(new \Datetime("2025-12-31"));
 		$em->persist($coll1);		
 		
 		$info_Coll_1 = new InformationCollectivite();
@@ -834,6 +836,8 @@ class CommandeController extends Controller
 
 		$coll2 = new Collectivite();
 		$coll2 -> setNom('Saint-Max');
+		$coll2 -> setDateDebutMutualisation(new \Datetime("2013-07-08"));
+		$coll2 -> setDateFinMutualisation(new \Datetime("2025-12-31"));
 		$em->persist($coll2);		
 		
 		$info_Coll_2 = new InformationCollectivite();
@@ -854,6 +858,8 @@ class CommandeController extends Controller
 		
 		$coll3 = new Collectivite();
 		$coll3 -> setNom('Vandoeuvre');
+		$coll3 -> setDateDebutMutualisation(new \Datetime("2013-07-08"));
+		$coll3 -> setDateFinMutualisation(new \Datetime("2025-12-31"));
 		$em->persist($coll3);
 
 		$info_Coll_3 = new InformationCollectivite();
@@ -874,6 +880,8 @@ class CommandeController extends Controller
 
 		$coll4 = new Collectivite();
 		$coll4 -> setNom('Malzeville');
+		$coll4 -> setDateDebutMutualisation(new \Datetime("2013-07-08"));
+		$coll4 -> setDateFinMutualisation(new \Datetime("2025-12-31"));
 		$em->persist($coll4);		
 		
 		$info_Coll_4 = new InformationCollectivite();
@@ -894,6 +902,8 @@ class CommandeController extends Controller
 
 		$coll5 = new Collectivite();
 		$coll5 -> setNom('Tomblaine');
+		$coll5 -> setDateDebutMutualisation(new \Datetime("2013-07-08"));
+		$coll5 -> setDateFinMutualisation(new \Datetime("2025-12-31"));
 		$em->persist($coll5);		
 		
 		$info_Coll_5 = new InformationCollectivite();
@@ -915,6 +925,8 @@ class CommandeController extends Controller
 
 		$coll6 = new Collectivite();
 		$coll6 -> setNom('essey-les-Nancy');
+		$coll6 -> setDateDebutMutualisation(new \Datetime("2013-07-08"));
+		$coll6 -> setDateFinMutualisation(new \Datetime("2025-12-31"));
 		$em->persist($coll6);	
 		
 		$info_Coll_6 = new InformationCollectivite();

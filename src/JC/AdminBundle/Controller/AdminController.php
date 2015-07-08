@@ -12,13 +12,18 @@ use JC\CommandeBundle\Entity\InformationCollectivite;
 use JC\CommandeBundle\Form\InformationsCollectiviteListeType;
 use JC\CommandeBundle\Form\InformationCollectiviteType;
 
+use JC\CommandeBundle\Entity\Collectivite;
+use JC\CommandeBundle\Entity\ListeCollectivites;
+use JC\CommandeBundle\Form\ListeCollectivitesType;
+use JC\CommandeBundle\Form\CollectiviteType;
+
 
 class AdminController extends Controller
 {
     public function indexAction(Request $request, $annee)
     {
 	     //Si aucune année n'est entrée, on modifie l'année précédente
-		 if($annnee = "html"){
+		 if($annee === "html"){
 			 $annee = date('Y');
 			 $annee -= 1; 
 		}
@@ -34,8 +39,62 @@ class AdminController extends Controller
 	 * le paramêtre année est pour savoir qu'elle année afficher
 	 */
 
-	 public function modificationCollectiviteAction(Request $request, $annee) {
+
+
+
+
+	 /*
+	 *	Pour modifier les collectivites 
+	 *  et leurs date de début et de fin de mutualisation
+	 */
+	 public function modificationCollectivitesAction(Request $request) {
+
+	 	$em = $this->getDoctrine()->getManager();
+
+	 	//On récupère la liste de toutes les collectivites
+	 	$l = $em->getRepository('JCCommandeBundle:Collectivite')->findAll(); 
+
+	 	//Liste qui sera transformée en formulaire
+	 	$listeCollectivites = new ListeCollectivites();
+	 	$listeCollectivites ->setListeCollectivites($l);
+	 	
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
+        $form = $this->get('form.factory')->create(new ListeCollectivitesType(), $listeCollectivites);
+		$form->handleRequest($request);
+
+	 	//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+			//On sauvegarde les villes dans la base
+        	foreach($listeCollectivites as $coll) {
+	        	
+				$em->persist($coll);
+			}
+        	
+        	
+        	$em->flush();
+        
+    	} 
+
+	 	
+	 	return $this->render('JCAdminBundle:Admin:modif_collectivites.html.twig', array('form'=>$form->createView(), 'listeCollectivites'=>$listeCollectivites));
+
+
+	 }
+
+
+	 /*
+	 *	Pour modifier les informations des collectivites dont l'année de début de mutualisation
+	 *  est antérieur à l'année passée en paramêtre 
+	 */
+	 public function modificationInformationsCollectivitesAction(Request $request, $annee) {
 		 		 
+		 //On ne peut modifier les informations des collectivites au plus tot que dans l'année courrante
+		 if($annee > date('Y')){
+			 $annee = date('Y');
+		 }	 	
+		 	
+		 	
 		$em = $this->getDoctrine()->getManager();
 		 
 		//On sauvegardera toutes les collectivites et leur infos pour l'année donnée
@@ -47,10 +106,38 @@ class AdminController extends Controller
 		$listeInformations = new InformationsCollectiviteListe();
 		
 
-
 		//On récupere toutes les infos sur toutes les collectivites correspondantes à l'année donnée
 		$toutesInfos = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findByAnnee($annee); 
 		
+		//Si la liste ne contient aucune informations, c'est que c'est la première fois que l'on
+		//ouvre la page admin de l'année courrante
+		//On récupère donc toutes les infos de l'année précédente, et on les duplique en changeant l'année
+		if(sizeof($toutesInfos) === 0) {
+			
+
+			//On récupere toutes les infos sur toutes les collectivites correspondantes à l'année donnée
+			$toutesInfos = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findByAnnee($annee -1); 
+			
+			foreach ($toutesInfos as $info) {
+				
+				$nouvelleInfo = new InformationCollectivite();
+				$nouvelleInfo -> setCollectivite($info->getCollectivite());
+				$nouvelleInfo -> setNombre($info->getNombre());
+				$nouvelleInfo -> setCleRepartition($info->getCleRepartition());
+				$nouvelleInfo -> setAnnee($annee);
+				
+				$em->persist($nouvelleInfo);
+
+			}
+			
+			$em->flush();
+		
+		
+			//On récupere toutes les infos sur toutes les collectivites correspondantes à l'année donnée
+			$toutesInfos = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findByAnnee($annee); 		
+		}
+		
+
 		
 		//liste qui contient les informations de manière temporaire
 		$li = array();
@@ -124,7 +211,7 @@ class AdminController extends Controller
     	} 
 	
 	
-        return $this->render('JCAdminBundle:Admin:modif_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee, 'tabInfos' => $tabInfo, 'tabCle'=>$tabCle));
+        return $this->render('JCAdminBundle:Admin:modif_informations_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee, 'tabInfos' => $tabInfo, 'tabCle'=>$tabCle));
 	 }
 
 }

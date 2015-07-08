@@ -142,14 +142,6 @@ function metEnPlaceVentilation(ventil){
 *	jQuery
 */
 $(document).ready(function() {
-  
-  
-  //Fonction qui affiche un datepicker
-  $(".datepicker").datepicker({
-    dateFormat: 'dd/mm/yy', 
-    firstDay:1
-	}).attr("readonly","readonly");
-   
    
    
     $("#ajouter_ligne_commande").on('click', function(){

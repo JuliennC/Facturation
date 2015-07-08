@@ -3,7 +3,7 @@
 namespace JC\CommandeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Collectivite
  *
@@ -30,6 +30,22 @@ class Collectivite
 
 
 
+	/**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Date_Debut_Mutualisation", type="datetime", nullable=true)
+	 * @Assert\DateTime()
+     */
+    private $dateDebutMutualisation;
+
+
+	/**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Date_Fin_Mutualisation", type="datetime", nullable=true)
+	 * @Assert\DateTime()
+     */
+    private $dateFinMutualisation;
 
 
 // DEBUT CLES ETRANGERES
@@ -40,41 +56,16 @@ class Collectivite
 
 // FIN DES COLONNES - DEBUT PROPRIETE AUTRE
 
-	//La liste commande contient des commandes ET DES CommandesConcernesCollectivites
-	private $listeCommande;
+
 
 
 // FONCTIONS 
 
-public function __construct() {
 
-	    // La date de création est la date d'aujourd'hui
-		$this->listeCommande = array();
-
-	}
 	
 	
 
-// ---------- Gestion des commandes ----------
-	
-public function addCommande($commande) {
-	
-	if($this->listeCommande == null) {
-		$this->listeCommande = array();
-	}
-	
-	array_push($this->listeCommande, $commande);
-}
 
-
-
-
-
-public function getListeCommandes(){
-
-
-	return $this->listeCommande;
-}
 
 
 
@@ -125,9 +116,6 @@ public function getTotalCommandesMutualisees(){
 
 
 
-
-
-
     /**
      * Get id
      *
@@ -160,4 +148,60 @@ public function getTotalCommandesMutualisees(){
     {
         return $this->nom;
     }
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * Set dateDebutMutualisation
+     *
+     * @param string $dateDebutMutualisation
+     * @return Collectivite
+     */
+    public function setdateDebutMutualisation($dateDebutMutualisation)
+    {
+        $this->dateDebutMutualisation = $dateDebutMutualisation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebutMutualisation
+     *
+     * @return string 
+     */
+    public function getdateDebutMutualisation()
+    {
+        return $this->dateDebutMutualisation;
+    }
+    
+    
+    
+    /**
+     * Set dateFinMutualisation
+     *
+     * @param string $dateFinMutualisation
+     * @return Collectivite
+     */
+    public function setdateFinMutualisation($dateFinMutualisation)
+    {
+        $this->dateFinMutualisation = $dateFinMutualisation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFinMutualisation
+     *
+     * @return string 
+     */
+    public function getdateFinMutualisation()
+    {
+        return $this->dateFinMutualisation;
+    }
+    
+    
 }

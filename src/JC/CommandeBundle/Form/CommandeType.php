@@ -60,7 +60,7 @@ class CommandeType extends AbstractType
 
                                                 
             //->add('dateCreation', 'date')
-            ->add('dateLivraison', 'date', array(	'widget' => 'single_text',
+            ->add('dateLivraison', 'date', array('widget' => 'single_text',
                                                 'input' => 'datetime',
                                                 'format' => 'dd/MM/yyyy',
                                                 'attr' => array('class' => 'date'),
