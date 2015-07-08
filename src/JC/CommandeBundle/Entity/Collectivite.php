@@ -34,7 +34,7 @@ class Collectivite
 	/**
      * @var \DateTime
      *
-     * @ORM\Column(name="Date_Debut_Mutualisation", type="datetime", nullable=true)
+     * @ORM\Column(name="Date_Debut_Mutualisation", type="date", nullable=true)
 	 * @Assert\DateTime(message="test")
      */
     private $dateDebutMutualisation;
@@ -43,7 +43,7 @@ class Collectivite
 	/**
      * @var \DateTime
      *
-     * @ORM\Column(name="Date_Fin_Mutualisation", type="datetime", nullable=true)
+     * @ORM\Column(name="Date_Fin_Mutualisation", type="date", nullable=true)
 	 * @Assert\DateTime()
      */
     private $dateFinMutualisation;

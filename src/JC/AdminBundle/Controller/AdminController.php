@@ -115,14 +115,22 @@ class AdminController extends Controller
 		//On crée la liste d'informations, c'est elle qui sera transformée en formulaire après
 		$listeInformations = new InformationsCollectiviteListe();
 		
-
-		//On récupere toutes les infos sur toutes les collectivites correspondantes à l'année donnée
-		$toutesInfos = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findByAnnee($annee); 
 		
+		//On récupère la liste des collectivités "mutualisées" au cours de l'année $année
+		//C'est à dire : - date début mutualisation <= $annee
+		// 				- ET date fin mutualisation >= $annee
+		// Note : On fait une jointure dans la requête,
+		//Donc pas besoin de refaire une requete pour les InformationCollectivite
+		$listeCollectivites = $em->getRepository('JCCommandeBundle:Collectivite')->findCollectivitesMutualiseesDansAnnee($annee);
+		
+		
+		echo("l : ".sizeof($listeCollectivites));
+
+				
 		//Si la liste ne contient aucune informations, c'est que c'est la première fois que l'on
 		//ouvre la page admin de l'année courrante
 		//On récupère donc toutes les infos de l'année précédente, et on les duplique en changeant l'année
-		if(sizeof($toutesInfos) === 0) {
+		/*if(sizeof($toutesInfos) === 0) {
 			
 
 			//On récupere toutes les infos sur toutes les collectivites correspondantes à l'année donnée
@@ -220,8 +228,10 @@ class AdminController extends Controller
         
     	} 
 	
-	
-        return $this->render('JCAdminBundle:Admin:modif_informations_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee, 'tabInfos' => $tabInfo, 'tabCle'=>$tabCle));
+		
+        return $this->render('JCAdminBundle:Admin:modif_informations_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee, 'tabInfos' => $tabInfo, 'tabCle'=>$tabCle));*/
+        
+        return  new Response("Affichage de");
 	 }
 
 
