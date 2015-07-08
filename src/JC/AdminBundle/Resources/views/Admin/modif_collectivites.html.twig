@@ -1,13 +1,18 @@
 {% form_theme form 'JCAdminBundle:Form:fields.html.twig' %}
 
-<div id='form_collectivite'>
+
+<div class='row'>
+	{{ form_errors(form) }}
+</div>
+
+
+<div class='row' id='form_collectivite'>
 
 	{{ form_start(form) }}
-  
+ 
 
 		<h2>Année : {{annee}}</h2>
-				{{ form_errors(form) }}
-		
+				
 		<div class='table-responsive'>
 
 			<div class="panel panel-primary filterable">
@@ -21,7 +26,7 @@
 		
 		
 				
-				<table class="table table-hover">
+				<table class="table table-hover table_center">
 			  
 				
 					<tr>
@@ -52,7 +57,7 @@
 					  		</td>
 					  		
 							{# On crée une ligne par collectivite #}
-							<td> <p class='editable' contentEditable=true> {{coll['nom']}} </p> </td>
+							<td> <label class='nobold editable' contentEditable=true> {{coll['nom']}} </label> </td>
 			
 							{# On parcours les clés #}
 							{% for cle in tabCle %}
