@@ -25,6 +25,7 @@ class Collectivite
      * @var string
      *
      * @ORM\Column(name="Nom", type="string", length=255)
+     * @Assert\Length(min=2,  minMessage="Veuillez vérifier le nom des collectivites.")
      */
     private $nom;
 
@@ -34,7 +35,7 @@ class Collectivite
      * @var \DateTime
      *
      * @ORM\Column(name="Date_Debut_Mutualisation", type="datetime", nullable=true)
-	 * @Assert\DateTime()
+	 * @Assert\DateTime(message="test")
      */
     private $dateDebutMutualisation;
 

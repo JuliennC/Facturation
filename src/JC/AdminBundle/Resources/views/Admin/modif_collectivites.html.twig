@@ -1,3 +1,4 @@
+{% form_theme form 'JCAdminBundle:Form:fields.html.twig' %}
 
 
 <div class='row'>
@@ -14,8 +15,10 @@
 
 			<div class="panel panel-primary filterable">
 			    <div class="panel-heading">
-			        <h3 class="panel-title">Collectivités</h3>
-			
+				        				       
+				      	<h3 class="panel-title">Collectivités</h3>
+
+				
 			        <div class="pull-right">
 			            {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-success save btn-xs glyphicon glyphicon-floppy-disk' } }) }}                    
 			        </div>
@@ -25,33 +28,44 @@
 				
 				<table class="table table-hover table_center">
 			  
-				
-					<tr>
+				    <thead>
+
+						<tr>
+											
+							<th> Collectivite </th>
+							<th> Date de début de mutusalisation </th>
+							<th> Date de fin de mutusalisation </th>
 										
-						<th> Collectivite </th>
-						<th> Date de début de mutusalisation </th>
-						<th> Date de fin de mutusalisation </th>
-									
-			
-					</tr>
-					
-					
-					{% set i = 0 %}
-					{# On parcours les collectivite #}
-					{% for coll in form.listeCollectivites %}
-			
-					  	<tr>
-					  	
-							<td> {{form_widget(coll.nom)}} </td>
-							<td> {{form_widget(coll.dateDebutMutualisation, {'attr' : {'class':'datepicker'}} )}} </td>
-							<td> {{form_widget(coll.dateFinMutualisation, {'attr' : {'class':'datepicker'}} )}} </td>
-			
-									
+				
 						</tr>
-		
-					{% endfor %}
+					
+				    </thead>
+
+					
+					<tbody id='body_collectivite' data-prototype="{{ form_widget(form.listeCollectivites.vars.prototype)|e }}">
+					
+						{# On parcours les collectivite #}
+						{% for coll in form.listeCollectivites %}
+				
+						  	<tr>
+						  	
+								<td> {{form_widget(coll.nom)}} </td>
+								<td> {{form_widget(coll.dateDebutMutualisation, {'attr' : {'class':'datepicker'}} )}} </td>
+								<td> {{form_widget(coll.dateFinMutualisation, {'attr' : {'class':'datepicker'}} )}} </td>
+				
+										
+							</tr>
 			
-					  
+							
+						{% endfor %}
+				
+						<tr id='last_tr_collectivites'>
+			      
+			      			<td colspan='3'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_collectivite' > Ajouter une collectivite </a> </td>
+			      	
+				  		</tr>  
+				  
+				  </tbody>
 				  
 				</table>
 			</div>

@@ -20,7 +20,7 @@ use JC\CommandeBundle\Form\CollectiviteType;
 
 class AdminController extends Controller
 {
-    public function indexAction(Request $request, $annee)
+    public function indexAction(Request $request, $annee )
     {
 	     //Si aucune année n'est entrée, on modifie l'année précédente
 		 if($annee === "html"){
@@ -47,7 +47,9 @@ class AdminController extends Controller
 	 *	Pour modifier les collectivites 
 	 *  et leurs date de début et de fin de mutualisation
 	 */
-	 public function modificationCollectivitesAction(Request $request) {
+	 public function modificationCollectivitesAction(Request $request, $annee) {
+
+
 
 	 	$em = $this->getDoctrine()->getManager();
 
@@ -57,6 +59,7 @@ class AdminController extends Controller
 	 	//Liste qui sera transformée en formulaire
 	 	$listeCollectivites = new ListeCollectivites();
 	 	$listeCollectivites ->setListeCollectivites($l);
+	 		 	
 	 	
 	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
         $form = $this->get('form.factory')->create(new ListeCollectivitesType(), $listeCollectivites);
@@ -66,21 +69,28 @@ class AdminController extends Controller
 		if ($form->isValid()) {
 
 			//On sauvegarde les villes dans la base
-        	foreach($listeCollectivites as $coll) {
-	        	
-				$em->persist($coll);
+        	foreach($form->get('listeCollectivites')->getData() as $coll) {
+
+				//On ne sauvegarde pas celle qui ont un nom null
+				if ($coll->getNom() != null) {
+					$em->persist($coll);
+				}
 			}
         	
         	
         	$em->flush();
-        
+        	
+
     	} 
 
 	 	
-	 	return $this->render('JCAdminBundle:Admin:modif_collectivites.html.twig', array('form'=>$form->createView(), 'listeCollectivites'=>$listeCollectivites));
+	 	return $this->render('JCAdminBundle:Admin:modif_collectivites.html.twig', array('form'=>$form->createView()));
 
 
 	 }
+
+
+
 
 
 	 /*
@@ -213,5 +223,17 @@ class AdminController extends Controller
 	
         return $this->render('JCAdminBundle:Admin:modif_informations_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee, 'tabInfos' => $tabInfo, 'tabCle'=>$tabCle));
 	 }
+
+
+
+
+
+
+
+
+	/*
+	*	Fonction qui redirige vers la page d'accueil, sert lors de la soumission d'un form valid 
+	*/
+
 
 }

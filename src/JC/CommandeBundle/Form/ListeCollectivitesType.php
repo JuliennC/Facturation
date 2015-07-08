@@ -2,9 +2,13 @@
 
 namespace JC\CommandeBundle\Form;
 
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormError;
 
 class ListeCollectivitesType extends AbstractType
 {
@@ -29,6 +33,50 @@ class ListeCollectivitesType extends AbstractType
             ->add('enregistrer', 'submit');
         ;
                     $builder ->getForm();
+
+
+
+
+	//On ajoute une validation pour les collectivites
+        $villeValidator = function(FormEvent $event){
+	        
+            $form = $event->getForm();
+
+	        //On récupère la liste des collectiivtes du formulaire
+	        $listeCollectivites = $form->get('listeCollectivites')->getData();
+	        
+	        //Liste qui contiendra les éléments à supprimer
+	        $listeASupprimer = array();
+
+	        //On parcours chaque collectivite pour savoir si une collectivite a un nom mais pas de date de début et de fin de mutualisation 
+			foreach($listeCollectivites as $coll) {
+				
+				//Si la collectivite a un nom
+				if ( $coll->getNom() != null ) {
+					dump($coll->getNom());
+					//Si la collectivite n'a pas de date de début de mutualisation
+					if ( $coll->getDateDebutMutualisation() === null ){
+						
+						$form['listeCollectivites']->addError(new FormError("Veuillez mettre une date de début de mutualisation pour ".$coll->getNom()));
+					}
+					
+					
+					//Si la collectivite n'a pas de date de fin de mutualisation
+					if ( $coll->getDateDebutMutualisation() === null ) {
+						
+						$form['listeCollectivites']->addError(new FormError("Veuillez mettre une date de fin de mutualisation pour ".$coll->getNom()));
+					}
+				
+				} 
+				
+			}    	
+	
+    	    
+	    };
+        
+        // adding the validator to the FormBuilderInterface
+        $builder->addEventListener(FormEvents::POST_BIND, $villeValidator);
+        
 
     
     }
