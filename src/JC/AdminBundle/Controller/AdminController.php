@@ -17,6 +17,12 @@ use JC\CommandeBundle\Entity\ListeCollectivites;
 use JC\CommandeBundle\Form\ListeCollectivitesType;
 use JC\CommandeBundle\Form\CollectiviteType;
 
+use JC\CommandeBundle\Entity\CleRepartition;
+use JC\CommandeBundle\Entity\ListeClesRepartition;
+use JC\CommandeBundle\Form\ListeClesRepartitionType;
+use JC\CommandeBundle\Form\CleRepartitionType;
+
+
 
 class AdminController extends Controller
 {
@@ -28,7 +34,84 @@ class AdminController extends Controller
 			 $annee -= 1; 
 		}
 		
-        return $this->render('JCAdminBundle:Admin:index.html.twig', array('request'=>$request, 'annee' => $annee));
+
+
+
+		$formulaireEnvoye = $request->request->all();
+		dump($formulaireEnvoye);
+		
+		/*
+		*	On doit vérifier les formulaire ici afain de pouvoir effectuer les redirections si besoin
+		*	Chose que l'on ne peut pas faire depuis un "block controller"
+		* 	Le seul moyen était de passer par une redirection en JS, ce qui était .... moche
+		*/
+		
+		//Si le form pour la liste des collectivite a été envoyé
+		if(isset($formulaireEnvoye['jc_commandebundle_listecollectivites'])) {
+			
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationCollectivitesAction($request, $annee);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			} 
+		
+		
+		
+		//Si le formulaire envoyé est le formulaire de la liste des informations des collectivites
+		} else if(isset($formulaireEnvoye['jc_commandebundle_informationscollectiviteliste'])) {
+
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationInformationsCollectivitesAction($request, $annee);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			} 
+
+		
+		
+		//Si le formulaire envoyé est le formulaire de la liste des clés de répartition
+		} else if(isset($formulaireEnvoye['jc_commandebundle_listeclesrepartition'])) {
+				
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationClesRepartitionAction($request, $annee);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			}
+			
+		} 
+		
+		
+		return $this->render('JCAdminBundle:Admin:index.html.twig', array('request'=>$request, 'annee' => $annee));
+		
+
+		
+				
     }
     
     
@@ -43,14 +126,21 @@ class AdminController extends Controller
 
 
 
+
+	 
+	
+
+
+
+
 	 /*
 	 *	Pour modifier les collectivites 
 	 *  et leurs date de début et de fin de mutualisation
 	 */
 	 public function modificationCollectivitesAction(Request $request, $annee) {
 
-
-
+	 $b = 0;
+	 
 	 	$em = $this->getDoctrine()->getManager();
 
 	 	//On récupère la liste de toutes les collectivites
@@ -80,11 +170,14 @@ class AdminController extends Controller
         	
         	$em->flush();
         	
+        	return new Response('true');
 
-    	} 
+    	} else {
+	    	
+	 		return $this->render('JCAdminBundle:Admin:modif_collectivites.html.twig', array('form'=>$form->createView(), 'bool_form'=>$b));
+    	}
 
 	 	
-	 	return $this->render('JCAdminBundle:Admin:modif_collectivites.html.twig', array('form'=>$form->createView()));
 
 
 	 }
@@ -276,23 +369,69 @@ class AdminController extends Controller
         	
         	$em->flush();
         
-    	} 
-	
-		
-        return $this->render('JCAdminBundle:Admin:modif_informations_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee, 'listeInformations'=>$listeInformations, 'listeCles'=>$listeCles, 'listeCollectivites'=>$listeCollectivites));
-        
+			return new Response('true');
+
+    	} else {
+
+			return $this->render('JCAdminBundle:Admin:modif_informations_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee,																	 'listeInformations'=>$listeInformations, 'listeCles'=>$listeCles, 'listeCollectivites'=>$listeCollectivites));
+		}        	
+
+	}
+
+
+
+
+
+
+
+ /*
+	 *	Pour modifier les clés de répartition 
+	 *  
+	 */
+	 public function modificationClesRepartitionAction(Request $request) {
+
+	 	$em = $this->getDoctrine()->getManager();
+
+	 	//On récupère la liste de toutes les collectivites
+	 	$listeCles = $em->getRepository('JCCommandeBundle:CleRepartition')->findAll(); 
+	 	
+	 	//Liste qui sera transformée en formulaire
+	 	$listeClesRepartition = new ListeClesRepartition();
+	 	$listeClesRepartition ->setListeClesRepartition($listeCles);
+	 		 	
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
+        $form = $this->get('form.factory')->create(new ListeClesRepartitionType(), $listeClesRepartition);
+
+	 	
+		$form->handleRequest($request);
+
+	 	//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+			//On sauvegarde les villes dans la base
+        	foreach($form->get('listeClesRepartition')->getData() as $cle) {
+
+				//On ne sauvegarde pas celle qui ont un nom null
+				if ($cle->getNom() != null) {
+					$em->persist($cle);
+				}
+			}
+        	
+        	
+        	$em->flush();
+        	
+
+			return new Response('true');
+
+    	} else {
+	 		
+	 		return $this->render('JCAdminBundle:Admin:modif_cles_repartition.html.twig', array('form'=>$form->createView()));
+		}
 	 }
 
 
 
 
-
-
-
-
-	/*
-	*	Fonction qui redirige vers la page d'accueil, sert lors de la soumission d'un form valid 
-	*/
 
 
 }

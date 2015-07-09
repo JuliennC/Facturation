@@ -1,7 +1,6 @@
 {% form_theme form 'JCAdminBundle:Form:fields.html.twig' %}
 
 
-
 <div class='row'>
 	{{ form_errors(form) }}
 </div>
@@ -17,7 +16,7 @@
 			<div class="panel panel-primary filterable">
 			    <div class="panel-heading">
 				        				       
-				      	<h3 class="panel-title">Collectivités</h3>
+				      	<h3 class="panel-title">Clés de répartitions</h3>
 
 				
 			        <div class="pull-right">
@@ -33,9 +32,8 @@
 
 						<tr>
 											
-							<th> Collectivite </th>
-							<th> Date de début de mutusalisation </th>
-							<th> Date de fin de mutusalisation </th>
+							<th> Clé </th>
+
 										
 				
 						</tr>
@@ -43,26 +41,23 @@
 				    </thead>
 
 					
-					<tbody id='body_collectivite' data-prototype="{{ form_widget(form.listeCollectivites.vars.prototype)|e }}">
+					<tbody id='body_cle_repartition' data-prototype="{{ form_widget(form.listeClesRepartition.vars.prototype)|e }}">
 					
-						{# On parcours les collectivite #}
-						{% for coll in form.listeCollectivites %}
+						{# On parcours les cle de repartition #}
+						{% for cle in form.listeClesRepartition %}
 				
 						  	<tr>
 						  	
-								<td> {{form_widget(coll.nom)}} </td>
-								<td> {{form_widget(coll.dateDebutMutualisation, {'attr' : {'class':'datepicker'}} )}} </td>
-								<td> {{form_widget(coll.dateFinMutualisation, {'attr' : {'class':'datepicker'}} )}} </td>
-				
+								<td> {{form_widget(cle.nom, {'attr': {'class':'col-md-8 col-md-offset-2'}} )}} </td>				
 										
 							</tr>
 			
 							
 						{% endfor %}
 				
-						<tr id='last_tr_collectivites'>
+						<tr id='last_tr_cle_repartition'>
 			      
-			      			<td colspan='3'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_collectivite' > Ajouter une collectivite </a> </td>
+			      			<td colspan='3'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_cle_repartition' > Ajouter une Clé </a> </td>
 			      	
 				  		</tr>  
 				  
@@ -75,5 +70,3 @@
 	
 		{{ form_end(form) }}
 </div>
-
-

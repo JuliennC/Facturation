@@ -1,8 +1,8 @@
 jc_admin_homepage:
     path:     /admin/{annee}
     defaults: { _controller: JCAdminBundle:Admin:index , annee:html}
+    options:
+        expose: true
 
 
-jc_admin_redirect_homepage:
-    path:     /admin/{annee}
-    defaults: { _controller: JCAdminBundle:Admin:redirectHomePage , annee:html}
+

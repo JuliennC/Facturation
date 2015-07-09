@@ -53,7 +53,6 @@ class ListeCollectivitesType extends AbstractType
 				
 				//Si la collectivite a un nom
 				if ( $coll->getNom() != null ) {
-					dump($coll->getNom());
 					//Si la collectivite n'a pas de date de début de mutualisation
 					if ( $coll->getDateDebutMutualisation() === null ){
 						
@@ -62,7 +61,7 @@ class ListeCollectivitesType extends AbstractType
 					
 					
 					//Si la collectivite n'a pas de date de fin de mutualisation
-					if ( $coll->getDateDebutMutualisation() === null ) {
+					if ( $coll->getDateFinMutualisation() === null ) {
 						
 						$form['listeCollectivites']->addError(new FormError("Veuillez mettre une date de fin de mutualisation pour ".$coll->getNom()));
 					}
@@ -78,8 +77,7 @@ class ListeCollectivitesType extends AbstractType
         $builder->addEventListener(FormEvents::POST_BIND, $villeValidator);
         
 
-    
-    }
+        }
 
 
 
