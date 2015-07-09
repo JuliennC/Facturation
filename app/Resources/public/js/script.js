@@ -1,13 +1,19 @@
 $(document).ready(function() 
  {
 	 
-  //Fonction qui affiche un datepicker
-  $(".datepicker").datepicker({
+  //Fonction qui affiche un datepicker (avec la propriété readonly
+  $(".datepicker_readonly").datepicker({
     dateFormat: 'dd/mm/yy', 
     firstDay:1,
 	}).attr("readonly","readonly");
    
    
+   
+	//Fonction qui affiche un datepicker
+  $(".datepicker").datepicker({
+    dateFormat: 'dd/mm/yy', 
+    firstDay:1,
+	})
    
    
 	 $('.popoverData').popover();

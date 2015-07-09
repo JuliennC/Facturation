@@ -73,36 +73,31 @@ class InformationCollectiviteRepository extends EntityRepository
 			}
 	
 	
+	
+	
+	
 	/*
+	*	Recherche toutes les informations des collectivites mutualisée à une année donnée
+	*/
+	public function findInformationsPourAnnee($annee) {
+		
 		
 		return $this
-			->getEntityManager()
-		    ->getRepository('JCCommandeBundle:CommandeConcerneCollectivite')
-		     
-		     ->select('SUM(ic.nombre)')
-	    	
-			->leftJoin('ccc.commande','com')
-			->addSelect('com')
 			
-			->leftJoin('ccc.collectivite','coll')
-			->addSelect('coll')
-			
-			->leftJoin()
-				    	
-			->where('com = :commande AND c.cleRepartition = :cle AND ic.annee = :annee')
+			->createQueryBuilder('ic')
+			->leftJoin('JCCommandeBundle:Collectivite', 'c', 'WITH', 'c = ic.collectivite')
 
-           	->setParameter('commande', $commande)
-           	->setParameter('cle', $cle)
-           	
-           	->andWhere('')
-           	->setParameter('annee', $annee)
-			
-	    	->getSingleResult()
-	    	;
-
+			->where('year(c.dateDebutMutualisation) <= :annee AND year(c.dateFinMutualisation) >= :annee AND ic.annee = :annee')
+		  	->setParameter('annee', $annee)
+		  	
+		  	//On trie par collectivite et par clé 
+		  	->add('orderBy', 'c.id ASC', 'ic.cleRepartition ASC')
+   			
+   			->getQuery()
+			->getResult();
 		
-		*/
-	
+	}
+		
 	
 	
 }

@@ -31,7 +31,7 @@ class CommandeRepository extends EntityRepository
 			->leftJoin('passeEtat.etat', 'et')
 			->addSelect('et')
 			
-			->where('ccc.collectivite = :collectivite AND et.libelle = :statut AND year(passeEtat.datePassage) > :annee AND year(passeEtat.datePassage) < :annee2')
+			->where('ccc.collectivite = :collectivite AND et.libelle = :statut AND passeEtat.datePassage > :annee AND passeEtat.datePassage < :annee2')
 			->setParameter('collectivite',$collectivite)
 			->setParameter('statut',$statut)
 			->setParameter('annee',$annee)

@@ -36,27 +36,22 @@ class CollectiviteRepository extends EntityRepository
 	}
 	
 	
-	
-	
-	public function findCollectivitesMutualiseesDansAnnee($annee){
+	public function findCollectivitesPourAnnee($annee){
 		
-	
-			
-			
-			
 		return $this
-			->getEntityManager()
-		    ->getRepository('JCCommandeBundle:Collectivite')
-			
-			->createQueryBuilder('c')
-	        ->leftJoin('JCCommandeBundle:InformationCollectivite', 'ic', 'WITH', 'ic.collectivite = c')
-	       
-	        ->where('year(c.dateDebutMutualisation) <= :annee AND year(c.dateFinMutualisation) >= :annee')
-	        ->setParameter('annee', $annee)
+		->createQueryBuilder('c')
 
-   			->getQuery()
-			->getResult();
-		
+		->where('year(c.dateDebutMutualisation) <= :annee AND year(c.dateFinMutualisation) >= :annee')
+	  	->setParameter('annee', $annee)
+		  	
+	  	//On trie par collectivite et par clé 
+	  	->add('orderBy', 'c.id ASC')
+   			
+  		->getQuery()
+		->getResult();
+
+		;
 	}
-
-}
+	
+	
+	}

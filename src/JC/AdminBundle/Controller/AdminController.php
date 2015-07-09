@@ -99,116 +99,166 @@ class AdminController extends Controller
 	 */
 	 public function modificationInformationsCollectivitesAction(Request $request, $annee) {
 		 		 
-		 //On ne peut modifier les informations des collectivites au plus tot que dans l'année courrante
-		 if($annee > date('Y')){
-			 $annee = date('Y');
-		 }	 	
-		 	
-		 	
-		$em = $this->getDoctrine()->getManager();
-		 
-		//On sauvegardera toutes les collectivites et leur infos pour l'année donnée
-		$tabInfo = array();
-		$tabCle = array();
+		 $listeInformations = array();
 
-		 		
-		//On crée la liste d'informations, c'est elle qui sera transformée en formulaire après
-		$listeInformations = new InformationsCollectiviteListe();
-		
-		
-		//On récupère la liste des collectivités "mutualisées" au cours de l'année $année
+		 $em = $this->getDoctrine()->getManager();
+
+		 
+		//On récupère les collectivite pour l'année 
+		$listeCollectivites = $em->getRepository('JCCommandeBundle:Collectivite')->findCollectivitesPourAnnee($annee); 
+				
+		//On récupère toutes les clés
+		$listeCles = $em->getRepository('JCCommandeBundle:CleRepartition')->findAll(); 
+
+		//On récupère la liste des informations collectivités, pour les collectivites "mutualisées" au cours de l'année $année
 		//C'est à dire : - date début mutualisation <= $annee
 		// 				- ET date fin mutualisation >= $annee
-		// Note : On fait une jointure dans la requête,
-		//Donc pas besoin de refaire une requete pour les InformationCollectivite
-		$listeCollectivites = $em->getRepository('JCCommandeBundle:Collectivite')->findCollectivitesMutualiseesDansAnnee($annee);
-		
-		
-		echo("l : ".sizeof($listeCollectivites));
+		// Note : On fait deux orderBy dans la requête, ce qui évite de réaliser des traitements pour trier les données
+		$listeInformations = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findInformationsPourAnnee($annee);
+		 
 
-				
-		//Si la liste ne contient aucune informations, c'est que c'est la première fois que l'on
-		//ouvre la page admin de l'année courrante
-		//On récupère donc toutes les infos de l'année précédente, et on les duplique en changeant l'année
-		/*if(sizeof($toutesInfos) === 0) {
-			
 
-			//On récupere toutes les infos sur toutes les collectivites correspondantes à l'année donnée
-			$toutesInfos = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findByAnnee($annee -1); 
-			
-			foreach ($toutesInfos as $info) {
-				
-				$nouvelleInfo = new InformationCollectivite();
-				$nouvelleInfo -> setCollectivite($info->getCollectivite());
-				$nouvelleInfo -> setNombre($info->getNombre());
-				$nouvelleInfo -> setCleRepartition($info->getCleRepartition());
-				$nouvelleInfo -> setAnnee($annee);
-				
-				$em->persist($nouvelleInfo);
 
-			}
-			
-			$em->flush();
-		
-		
-			//On récupere toutes les infos sur toutes les collectivites correspondantes à l'année donnée
-			$toutesInfos = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findByAnnee($annee); 		
-		}
-		
+		//Si on veut modifier les informations de l'année courrante.
+		if ($annee === date('Y')) {
+			 
+			//Si c'est la première fois que l'on entre dans la partie admin de l'année
+			if (sizeof($listeInformations) === 0) {
 
-		
-		//liste qui contient les informations de manière temporaire
-		$li = array();
-		
-		//On les dispatche informations par collectivite
-		foreach ($toutesInfos as $info) {
 			
-			
-			//Si c'est la premiere fois que l'on rencontre cette collectivite
-			//On crée son tableau
-			if (! array_key_exists($info->getCollectivite()->getNom(), $tabInfo)) {
-				
-				$tabInfo[$info->getCollectivite()->getNom()] = array();
-				$li[$info->getCollectivite()->getNom()] = array();
+				//On parcours chaque collectivite pour mettre leur clées
+				foreach($listeCollectivites as $coll) {
 
-			}
-			
-			//On stock l'information
-			$tabInfo[$info->getCollectivite()->getNom()]['nom'] = $info->getCollectivite()->getNom();
-			$tabInfo[$info->getCollectivite()->getNom()][$info->getCleRepartition()->getNom()] = $info->getNombre();
-			
-			//On stocke temporairement l'info
-			$li[$info->getCollectivite()->getNom()][$info->getCleRepartition()->getNom()] = $info;
+					//On récupère les information de l'année dernière pour pré-remplir les champs
+					$listeInformationsPrecendentes = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findInformationsPourAnnee($annee-1);
+	
+					//On crée une information pour chaque clé
+					foreach($listeCles as $cle) {
+					
+						$nouvelleInformation = new InformationCollectivite();
+						$nouvelleInformation -> setCollectivite($coll);
+						$nouvelleInformation -> setCleRepartition($cle);
+						$nouvelleInformation -> setAnnee($annee);
 						
-			//On sauvegarde la clé si ce n'est pas déjà fait
-			if(! in_array($info->getCleRepartition()->getNom(), $tabCle)) {
-				array_push($tabCle, $info->getCleRepartition()->getNom());
-			}
-		}
+						$nombre = 0;
+						
+						//On regarde si la clé été déjà utilisée l'année précédente
+						foreach($listeInformationsPrecendentes as $ip){
+							
+							//Si elle était utilisée, on peut prendre le nombre
+							if($ip->getCleRepartition() === $cle) {
+								$nombre = $ip->getNombre();
+								break;
+							}
+						}
+						
+						$nouvelleInformation -> setNombre($nombre);
+						
+						//On sauvegarde l'information
+						$em->persist($nouvelleInformation);
+					
+					}
 
-
-		//Pour ajouter nos informations à la liste, il faut le faire dans l'ordre du tableau
-		// (sinon les informations ne seront pas forcément aux bons endroits ligne-colonne)
-		//On parcours donc les clés
-		foreach($tabInfo as $coll){
-			
-			//On parcours les villes
-			foreach($tabCle as $cle){
-
-				//On récupère l'information que l'on avait stocké temporairement
-				$info = $li[$coll['nom']][$cle];
+				}
 				
-				//On ajoute l'info à la liste d'infos
-				$listeInformations->addInformation($info);
+				$em->flush();
 
+
+			//Si des informations ont déjà été entrées pour l'année courrante
+			} else {
+				
+				//Il faut s'assurrer qu'il n'y a pas eu de nouvelles clées créer entre temps
+				
+				//Pour cela on stocke les clés qui ont des informations entrées pour l'année courrante
+				$listeClesUtilisees = array();
+
+				foreach($listeInformations as $information){
+					array_push($listeClesUtilisees, $information->getCleRepartition());					
+				}
+				
+				//On fait la différence des deux listes
+				dump($listeCles[0]);
+				dump($listeClesUtilisees[0]);
+
+				
+				//On parcours l'ensemble des clés		
+				foreach($listeCles as $cle){
+					
+					//On regarde si elles ont déjà leurs informations
+					if(! in_array($cle, $listeClesUtilisees)){
+						
+						//Si la clé n'as pas d'information, on crée l'information pour chaque collectivite
+						
+						foreach($listeCollectivites as $coll){
+						
+							$nouvelleInformation = new InformationCollectivite();
+							$nouvelleInformation -> setCollectivite($coll);
+							$nouvelleInformation -> setCleRepartition($cle);
+							$nouvelleInformation -> setAnnee($annee);						
+							$nouvelleInformation -> setNombre(0);
+								
+							//On sauvegarde l'information
+							$em->persist($nouvelleInformation);	
+						}
+
+					}
+				}
+				
+				
+				
+				$em->flush();
+				
 			}
-		}
+				
+				
+			//On récupère toutes les informations
+			$listeInformations = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findInformationsPourAnnee($annee);
+			
+	
 
 
-				 
+
+		//Si on veut mofifier les informations des années précédentes, il n'y a qu'a rechercher les informations.
+		 }
+						
+				
 		
+		
+			$listeCles = array();	
+				
+			//On récupère les clés de répartition.
+			foreach($listeInformations as $information) {
+				
+				//Si la clé n'existe pas, on la crée
+				if(! in_array($information->getCleRepartition()->getNom(), $listeCles)){
+					
+					array_push($listeCles, $information->getCleRepartition()->getNom());
+				}
+			}
+			
+			
+					 
+			$listeCollectivites = array();	
+				
+			//On récupère les collectivites
+			foreach($listeInformations as $information) {
+				
+				//Si la clé n'existe pas, on la crée
+				if(! in_array($information->getCollectivite()->getNom(), $listeCollectivites)){
+					
+					array_push($listeCollectivites, $information->getCollectivite()->getNom());
+				}
+			}
+
+		
+		
+		//On crée maintenant la InformationsCollectiviteListe
+		$informationsCollectiviteListe = new InformationsCollectiviteListe();
+		$informationsCollectiviteListe -> setListeInformations($listeInformations);
+
+
 		//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
-        $form = $this->get('form.factory')->create(new InformationsCollectiviteListeType(), $listeInformations);
+        $form = $this->get('form.factory')->create(new InformationsCollectiviteListeType(), $informationsCollectiviteListe);
 		$form->handleRequest($request);
 
 			
@@ -229,9 +279,8 @@ class AdminController extends Controller
     	} 
 	
 		
-        return $this->render('JCAdminBundle:Admin:modif_informations_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee, 'tabInfos' => $tabInfo, 'tabCle'=>$tabCle));*/
+        return $this->render('JCAdminBundle:Admin:modif_informations_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee, 'listeInformations'=>$listeInformations, 'listeCles'=>$listeCles, 'listeCollectivites'=>$listeCollectivites));
         
-        return  new Response("Affichage de");
 	 }
 
 

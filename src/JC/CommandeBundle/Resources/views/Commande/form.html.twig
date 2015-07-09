@@ -41,7 +41,7 @@
 
                                                                 <thead>
                                                                     <tr class="filters">
-                                                                        <th ><input type="text" class="form-control"></th>
+                                                                        <th ><input type="text" class="form-control" placeholder="Rechercher.."></th>
                                                                     </tr>
                                                                 </thead>
 
@@ -122,7 +122,7 @@
 
                                                                 <thead>
                                                                     <tr class="filters">
-                                                                        <th ><input type="text" class="form-control"></th>
+                                                                        <th ><input type="text" class="form-control" placeholder="Rechercher.."></th>
                                                                     </tr>
                                                                 </thead>
 
@@ -208,7 +208,7 @@
 						<p><b>Date creation</b> : {{ date()|date('d/m/Y') }}
 						
 
-						<p><b>Date de livraison</b> : {{ form_widget(form.dateLivraison, {'attr' : {'class':'datepicker'}}) }}					
+						<p><b>Date de livraison</b> : {{ form_widget(form.dateLivraison, {'attr' : {'class':'datepicker_readonly'}}) }}					
 					</div>
 				</div>
 				
