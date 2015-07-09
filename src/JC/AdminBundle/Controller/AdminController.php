@@ -22,6 +22,11 @@ use JC\CommandeBundle\Entity\ListeClesRepartition;
 use JC\CommandeBundle\Form\ListeClesRepartitionType;
 use JC\CommandeBundle\Form\CleRepartitionType;
 
+use JC\CommandeBundle\Entity\Utilisateur;
+use JC\CommandeBundle\Entity\ListeUtilisateurs;
+use JC\CommandeBundle\Form\ListeUtilisateursType;
+use JC\CommandeBundle\Form\UtilisateurType;
+
 
 
 class AdminController extends Controller
@@ -105,8 +110,36 @@ class AdminController extends Controller
 			}
 			
 		} 
-		
-		
+		        	
+
+		$em = $this->getDoctrine()->getManager();
+
+	 	//On récupère la liste de toutes les collectivites
+	 	$listeU = $em->getRepository('JCCommandeBundle:Utilisateur')->getUtilisateurOrdreAlpha(); 
+	 	
+	 	//Liste qui sera transformée en formulaire
+	 	$listeUtilisateurs = new ListeUtilisateurs();
+	 	$listeUtilisateurs -> setListeUtilisateurs($listeU);
+	 		 	
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
+        $form = $this->get('form.factory')->create(new ListeUtilisateursType(), $listeUtilisateurs);
+
+	 	
+		$form->handleRequest($request);
+
+	 	//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+			//On sauvegarde les villes dans la base
+        	foreach($form->get('listeUtilisateurs')->getData() as $user) {
+
+				//On ne sauvegarde pas celle qui ont un nom null
+				if ($user->getNom() != null) {
+					$em->persist($user);
+				}
+			}
+        	
+}
 		return $this->render('JCAdminBundle:Admin:index.html.twig', array('request'=>$request, 'annee' => $annee));
 		
 
@@ -384,7 +417,7 @@ class AdminController extends Controller
 
 
 
- /*
+	/*
 	 *	Pour modifier les clés de répartition 
 	 *  
 	 */
@@ -429,6 +462,55 @@ class AdminController extends Controller
 		}
 	 }
 
+
+
+
+
+
+	 /*
+	 *	Pour modifier les utilisateurs
+	 *  
+	 */
+	 public function modificationUtilisateursAction(Request $request) {
+
+	 	$em = $this->getDoctrine()->getManager();
+
+	 	//On récupère la liste de toutes les collectivites
+	 	$listeU = $em->getRepository('JCCommandeBundle:Utilisateur')->getUtilisateurOrdreAlpha(); 
+	 	
+	 	//Liste qui sera transformée en formulaire
+	 	$listeUtilisateurs = new ListeUtilisateurs();
+	 	$listeUtilisateurs -> setListeUtilisateurs($listeU);
+	 		 	
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
+        $form = $this->get('form.factory')->create(new ListeUtilisateursType(), $listeUtilisateurs);
+
+	 	
+		$form->handleRequest($request);
+
+	 	//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+			//On sauvegarde les villes dans la base
+        	foreach($form->get('listeUtilisateurs')->getData() as $user) {
+
+				//On ne sauvegarde pas celle qui ont un nom null
+				if ($user->getNom() != null) {
+					$em->persist($user);
+				}
+			}
+        	
+        	
+        	$em->flush();
+        	
+
+			return new Response('true');
+
+    	} else {
+	 		
+	 		return $this->render('JCAdminBundle:Admin:modif_utilisateurs.html.twig', array('form'=>$form->createView()));
+		}
+	 }
 
 
 
