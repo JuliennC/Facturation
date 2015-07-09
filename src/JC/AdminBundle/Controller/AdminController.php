@@ -199,7 +199,7 @@ class AdminController extends Controller
 		 
 		//On récupère les collectivite pour l'année 
 		$listeCollectivites = $em->getRepository('JCCommandeBundle:Collectivite')->findCollectivitesPourAnnee($annee); 
-				
+				dump($listeCollectivites);
 		//On récupère toutes les clés
 		$listeCles = $em->getRepository('JCCommandeBundle:CleRepartition')->findAll(); 
 

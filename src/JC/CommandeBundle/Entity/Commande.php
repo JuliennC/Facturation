@@ -87,10 +87,20 @@ class Commande
 
 
 	/**
-   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Utilisateur", cascade={"persist"})
+     * @var string
+     *
+     * @ORM\Column(name="Utilisateur", type="string", length=255, nullable=false)
+     */
+   private $utilisateur;
+
+
+
+   /**
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Service", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
    */
-   private $utilisateur;
+   private $service;
+
 
 
    /**
@@ -99,6 +109,9 @@ class Commande
    */
    private $application;
    
+   
+   
+
    
    
    
@@ -776,28 +789,7 @@ public function __construct() {
     }
 
 
-	/**
-     * Set utilisateur
-     *
-     * @param string $utilisateur
-     * @return Commande
-     */
-    public function setUtilisateur(Utilisateur $utilisateur)
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
-
-    /**
-     * Get utilisateur
-     *
-     * @return Utilisateur 
-     */
-    public function getUtilisateur()
-    {
-        return $this->utilisateur;
-    }
+	
 
 
 	/**
@@ -981,6 +973,58 @@ public function __construct() {
         return $this->imputation;
     }
 
+	 
+	 
+	 
+	 
+	 /**
+     * Set utilisteur
+     *
+     * @param string $utilisateur
+     * @return Commande
+     */
+    public function setUtilisateur($utilisateur)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return String 
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+	 
+	 
+	 
+	 /**
+     * Set service
+     *
+     * @param Service $service
+     * @return Commande
+     */
+    public function setService($service)
+    {
+        $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * Get service
+     *
+     * @return Service 
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+	 
 	 
 
 }

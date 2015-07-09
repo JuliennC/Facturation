@@ -239,7 +239,13 @@ class CommandeController extends Controller
                 //on recupere la ventialation
 			    $ventilation = $form->get('ventilation')->getData();
 			    $commande->setVentilation($ventilation);
-			   
+			    
+			    //On enregistre le nom de l'utilisateur 
+			    $utilisateur = $form->get('utilisateur')->getData();
+			    $commande->setUtilisateur($utilisateur->getNom().' '.$utilisateur->getPrenom());
+
+			    //On enregistre le service correspondant
+			    $commande->setService($utilisateur->getService());
 			   
 			    //	On enregistre l'etat de la commande
 			    $etat = $form->get('etat')->getData();
@@ -1058,7 +1064,8 @@ class CommandeController extends Controller
 		$commande1 -> setImputation($imputation1);
 		$commande1 -> setengagement("engag 90");
 		$commande1 -> setFournisseur($fournisseur);
-		$commande1 -> setUtilisateur($utilisateur);
+		$commande1 -> setUtilisateur($utilisateur->getNom().' '.$utilisateur->getPrenom());
+		$commande1 -> setService($utilisateur->getService());
 		$commande1 -> setApplication($application);
 		$commande1 -> setActivite($activite);
 		$commande1 -> setLivraison($livraison);
@@ -1084,7 +1091,8 @@ class CommandeController extends Controller
 		$commande2 -> setImputation($imputation1);
 		$commande2 -> setengagement("engag 90");
 		$commande2 -> setFournisseur($fournisseur);
-		$commande2 -> setUtilisateur($utilisateur);
+		$commande2 -> setUtilisateur($utilisateur->getNom().' '.$utilisateur->getPrenom());
+		$commande2 -> setService($utilisateur->getService());
 		$commande2 -> setApplication($application2);
 		$commande2 -> setActivite($activite);
 		$commande2 -> setLivraison($livraison);
@@ -1110,7 +1118,8 @@ class CommandeController extends Controller
 		$commande3 -> setImputation($imputation2);		
 		$commande3 -> setengagement("engag 90");
 		$commande3 -> setFournisseur($fournisseur2);
-		$commande3 -> setUtilisateur($utilisateur2);
+		$commande3 -> setUtilisateur($utilisateur2->getNom().' '.$utilisateur2->getPrenom());
+		$commande3 -> setService($utilisateur2->getService());
 		$commande3 -> setApplication($application);
 		$commande3 -> setActivite($activite2);
 		$commande3 -> setLivraison($livraison);
@@ -1136,8 +1145,9 @@ class CommandeController extends Controller
 		$commande4 -> setImputation($imputation2);		
 		$commande4 -> setengagement("engag 90");
 		$commande4 -> setFournisseur($fournisseur2);
-		$commande4 -> setUtilisateur($utilisateur2);
-		$commande4 -> setApplication($application);
+		$commande4 -> setUtilisateur($utilisateur2->getNom().' '.$utilisateur2->getPrenom());
+		$commande4 -> setService($utilisateur2->getService());
+		$commande4 -> setApplication($application2);
 		$commande4 -> setActivite($activite2);
 		$commande4 -> setLivraison($livraison);
 		$commande4 -> setLibelleFacturation("llll");
@@ -1163,7 +1173,8 @@ class CommandeController extends Controller
 		$commande5 -> setImputation($imputation2);		
 		$commande5 -> setengagement("engag 90");
 		$commande5 -> setFournisseur($fournisseur2);
-		$commande5 -> setUtilisateur($utilisateur2);
+		$commande5 -> setUtilisateur($utilisateur2->getNom().' '.$utilisateur2->getPrenom());
+		$commande5 -> setService($utilisateur2->getService());
 		$commande5 -> setApplication($application);
 		$commande5 -> setActivite($activite2);
 		$commande5 -> setLivraison($livraison);
@@ -1190,7 +1201,8 @@ class CommandeController extends Controller
 		$commande6 -> setImputation($imputation1);		
 		$commande6 -> setengagement("engag 90");
 		$commande6 -> setFournisseur($fournisseur2);
-		$commande6 -> setUtilisateur($utilisateur2);
+		$commande6 -> setUtilisateur($utilisateur2->getNom().' '.$utilisateur2->getPrenom());
+		$commande6 -> setService($utilisateur2->getService());
 		$commande6 -> setApplication($application);
 		$commande6 -> setActivite($activite2);
 		$commande6 -> setLivraison($livraison);

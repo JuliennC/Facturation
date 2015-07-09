@@ -36,6 +36,8 @@ class Utilisateur
     private $prenom;
 
 
+	
+
 // ---------- Cles étrangeres ----------
 
 	/**
@@ -47,6 +49,9 @@ class Utilisateur
    
    
    
+ 
+   
+   
 
 // ---------- Fonctions ----------
 
@@ -56,6 +61,11 @@ class Utilisateur
 	}
 	
 
+
+
+
+
+	
 
 // ---------- Getter / Setter ----------
 
@@ -140,4 +150,9 @@ class Utilisateur
     {
         return $this->service;
     }
+    
+    
+    
+ 
+    
 }

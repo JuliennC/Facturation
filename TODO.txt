@@ -24,12 +24,14 @@ TODO liste :
 	-> FAIT afficher la date d’envoie et de paiement dans « detail » quand une commande est envoyée ou payée
 	-> FAIT la table imputation.
 	-> FAIT le calcul de la facturations en fonction des factures en investissement ou en fonctionnement
+	-> FAIT Après l’installation de l’extensions doctrine, voir si les commande passe état fonctionne toujours comme il se doit (on a rajouté le year())
+	-> FAIT Sur la page admin, une fois un form validé, lorsqu’on F5, le form est re-envoyé. En mettant une redirection après le form->isValid() une erreur 302 car on redirige à partir du contrôleur d’un block et non pas de la page, voir comment faire
 
 
-	-> Après l’installation de l’extensions doctrine, voir si les commande passe état fonctionne toujours comme il se doit (on a rajouté le year())
+	-> lors de la facturation, lancer une erreur lorsqu’une clé de rep n’est pas entrée pour une collectivité, voir pour faire une redirection
 
 	-> faire comme des flèches a cote des années pour changer d’année au lieu de modifier dans l’url
-	-> rajouter l’id de la commande dans la table de la liste des commandes
+
 	-> Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca.
 
 
@@ -40,7 +42,7 @@ TODO liste :
 	-> Pour le bundle admin, faire des form pour chaque chose à modifier (devrait être plus simple que les autre forms, contient surtout des relation et du texte)
 
 
-	-> Sur la page admin, une fois un form validé, lorsqu’on F5, le form est re-envoyé. En mettant une redirection après le form->isValid() une erreur 302 car on redirige à partir du contrôleur d’un block et non pas de la page, voir comment faire
+	
 
 
 A LA FIN : 

@@ -66,7 +66,10 @@ class ListeCollectivitesType extends AbstractType
 						$form['listeCollectivites']->addError(new FormError("Veuillez mettre une date de fin de mutualisation pour ".$coll->getNom()));
 					}
 				
-				} 
+				//Si le nom est null, et que toutes les dates aussi, pas de probleme, sinon erreur
+				} else if (!( ($coll->getNom() === null) &&  ($coll->getDateDebutMutualisation() === null) && ($coll->getDateFinMutualisation() === null))){
+						$form['listeCollectivites']->addError(new FormError("Veuillez entrer un nom à toutes les collectivites "));
+				}
 				
 			}    	
 	

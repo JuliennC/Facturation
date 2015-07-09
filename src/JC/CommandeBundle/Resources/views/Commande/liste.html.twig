@@ -44,8 +44,8 @@
 			        <tr>
 						<td>{{ commande.dateCreation|date('d/m/Y') }}</td>
 						<td>{{ commande.etat }}</td>
-						<td>{{ commande.utilisateur.service.nom }}</td>
-						<td>{{ commande.utilisateur.Nom }} {{ commande.utilisateur.prenom }}</td>
+						<td>{{ commande.service.nom }}</td>
+						<td>{{ commande.utilisateur</td>
 						<td>{{ commande.fournisseur.nom }}</td>
 						<td>{{ commande.totalTTC|number_format(2, ',', ' ')}}</td>
 						<td> 
