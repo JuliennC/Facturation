@@ -26,8 +26,7 @@ class ListeCollectivitesType extends AbstractType
 		        'type'         => new CollectiviteType(),
 		        'allow_add'    => true,
 		        'error_bubbling' => true,
-		        'by_reference' => false,
-		        'error_bubbling' => true)   )
+		        'by_reference' => false)   )
 
             ->add('enregistrer', 'submit');
         ;

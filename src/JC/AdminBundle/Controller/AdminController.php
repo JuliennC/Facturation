@@ -28,6 +28,11 @@ use JC\CommandeBundle\Form\ListeUtilisateursType;
 use JC\CommandeBundle\Form\UtilisateurType;
 
 
+use JC\CommandeBundle\Entity\Service;
+use JC\CommandeBundle\Entity\ListeServices;
+use JC\CommandeBundle\Form\ServiceType;
+use JC\CommandeBundle\Form\ListeServicesType;
+
 
 class AdminController extends Controller
 {
