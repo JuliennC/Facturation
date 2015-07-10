@@ -4,8 +4,9 @@
 
 $(document).ready(function() {
   
-
-
+	/*
+	*	Fonction qui pour ajouter une collectivite
+	*/
   $("#ajouter_collectivite").on('click', function(){
       	
       	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
@@ -55,9 +56,9 @@ $(document).ready(function() {
 	});    
 	
 	
-	
-	
-	
+	/*
+	*	Fonction pour ajoute une clé de répartition
+	*/
 	$("#ajouter_cle_repartition").on('click', function(){
       	
       	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
@@ -86,21 +87,26 @@ $(document).ready(function() {
 					+"</tr>"
 										
 						 	
-								      	// remplace les "__name__" utilis√©s dans l'id 
-								        // par un nombre unique 
-								        newLigne = newLigne.replace(/__name__/g, index);
+					// remplace les "__name__" utilis√©s dans l'id 
+					// par un nombre unique 
+					newLigne = newLigne.replace(/__name__/g, index);
 								        
-								        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
-								        $('#last_tr_cle_repartition').before(newLigne);
+			        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
+			        $('#last_tr_cle_repartition').before(newLigne);
 								        
 								     
-								        return false;
+			        return false;
 
 									
 						        
-						    });    
+	    });    
 	
 	
+	
+	
+	/*
+	*	Fonction pour ajouter un utilisateur
+	*/
 	
 	$("#ajouter_utilisateur").on('click', function(){
       	
@@ -136,7 +142,7 @@ $(document).ready(function() {
     
    
     var newLigne = 	"<tr>"
-						  	
+						+"<td></td>"
 						+"<td>" 
 							+"<input type='text' id='jc_commandebundle_listeutilisateurs_listeUtilisateurs___name___nom' name='jc_commandebundle_listeutilisateurs[listeUtilisateurs][__name__][nom]' required='required' maxlength='255'>" 
 						+"</td>"
@@ -155,20 +161,37 @@ $(document).ready(function() {
 					+"</tr>";
 										
 						 	
-								      	// remplace les "__name__" utilis√©s dans l'id 
-								        // par un nombre unique 
-								        newLigne = newLigne.replace(/__name__/g, index);
+		// remplace les "__name__" utilis√©s dans l'id 
+        // par un nombre unique 
+        newLigne = newLigne.replace(/__name__/g, index);
 								        
-								        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
-								        $('#last_tr_utilisateur').before(newLigne);
+        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
+        $('#last_tr_utilisateur').before(newLigne);
 								        
 								     
-								        return false;
-
-									
+        return false;				
 						        
-						    });    
+		});    
 						 	
 
+
+		
+		
+		
+	/*
+	*	Fonction pour ajouter un utilisateur
+	*/
+	
+	$(".supprimer_utilisateur").on('click', function(){
+      	
+      	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
+	  	// - le texte "__name__label__" qu'il contient par le label du champ
+	  	// - le texte "__name__" qu'il contient par le num√©ro du champ
+	  	
+	  	$(this).parent().parent().remove();
+                
+  
+
+		});
 
 });    

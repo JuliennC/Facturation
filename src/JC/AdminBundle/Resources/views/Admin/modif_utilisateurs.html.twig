@@ -30,10 +30,11 @@
 				<table class="table table-hover table_center">
 			  
 				    <thead>
-						<tr>			
-							<th> Nom </th>
-							<th> Prénom </th>
-							<th> Service </th>
+						<tr>	
+							<th class="col-md-1"> </th>		
+							<th class="col-md-4"> Nom </th>
+							<th class="col-md-4"> Prénom </th>
+							<th class="col-md-3"> Service </th>
 						</tr>								
 				    </thead>
 
@@ -45,6 +46,7 @@
 				
 						  	<tr>
 						  	
+						  		<td> <a class='supprimer_utilisateur'><span class="glyphicon glyphicon-remove-circle"></span></a> </td>
 								<td> {{form_widget(user.nom)}} </td>
 								<td> {{form_widget(user.prenom)}} </td>
 								<td> {{form_widget(user.service, {'attr': {'id': 'select_service_utilisateur' } })}} </td>
@@ -57,7 +59,7 @@
 				
 						<tr id='last_tr_utilisateur'>
 			      
-			      			<td colspan='3'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_utilisateur' > Ajouter un utilisateur </a> </td>
+			      			<td colspan='4'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_utilisateur' > Ajouter un utilisateur </a> </td>
 			      	
 				  		</tr>  
 				  

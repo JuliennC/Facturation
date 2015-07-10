@@ -493,7 +493,20 @@ class AdminController extends Controller
 				if ($user->getNom() != null) {
 					$em->persist($user);
 				}
-			}        	
+				
+			}     
+			
+			
+			//On cherche des utilisateur à supprimer
+			foreach($listeU as $user){
+				
+				//Si l'utilisateur n'est plus dans le formulaire, c'est qu'il faut le supprimer
+				if(! in_array($user, $form->get('listeUtilisateurs')->getData())) {
+					
+					//On supprime l'utilisateur
+					$em->remove($user);
+				}
+			}   	
         	
         	$em->flush();
         	

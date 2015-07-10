@@ -5,7 +5,14 @@ label.nobold {
 }
 
 
+.glyphicon-remove-circle {
+	font-size: 1.5em;
+	color:red;
+}
 
+.glyphicon-remove-circle:active{
+  color:#AC2600;
+}
 
 
 

@@ -28,6 +28,12 @@ TODO liste :
 	-> FAIT Sur la page admin, une fois un form validé, lorsqu’on F5, le form est re-envoyé. En mettant une redirection après le form->isValid() une erreur 302 car on redirige à partir du contrôleur d’un block et non pas de la page, voir comment faire
 
 
+	-> Pour la partie admin, mettre les erreur en flash message pour qu’elles soient accessibles dès l’index
+
+	-> Regarder pour améliorer l’enregistrement des collectivités dans une commande
+	-> Faire un bouton supprimer pour les lignes commande
+	-> Pour les deux points ci-dessus, s’inspirer de la fonction qui enregistre et supprime des utilisateurs dans admin
+
 	-> Dans imputation, faire un attribut ‘estFacturé’ (booléen) qui indique si les commandes de cette imputation doivent être facturé (oui -> facture, non -> facture coriolis)
 
 	-> lors de la facturation, lancer une erreur lorsqu’une clé de rep n’est pas entrée pour une collectivité, voir pour faire une redirection

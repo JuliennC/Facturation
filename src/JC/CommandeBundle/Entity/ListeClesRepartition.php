@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * ListeClesRepartition
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class ListeClesRepartition

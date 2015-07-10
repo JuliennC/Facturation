@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * InformationsCollectiviteListe
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class InformationsCollectiviteListe

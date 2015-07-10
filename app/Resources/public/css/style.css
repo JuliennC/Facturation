@@ -44,6 +44,11 @@ body {
 	text-align: center;
 }
 
+.table_center tbody>tr>td>a {
+    vertical-align: middle;
+	text-align: center;
+}
+
 .table_center tbody>tr>th {
     vertical-align: middle;
     text-align: center;
