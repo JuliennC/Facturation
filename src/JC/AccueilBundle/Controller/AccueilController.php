@@ -94,8 +94,8 @@ class AccueilController extends Controller
 
 			}
 				
-			$infoServices[$commande->getUtilisateur()->getService()->getNom()]['nbCommandesPassees'] += 1;
-			$infoServices[$commande->getUtilisateur()->getService()->getNom()]['montantCommandesPassees'] += $commande->getTotalTTC();
+			$infoServices[$commande->getService()->getNom()]['nbCommandesPassees'] += 1;
+			$infoServices[$commande->getService()->getNom()]['montantCommandesPassees'] += $commande->getTotalTTC();
 
 		}
 		

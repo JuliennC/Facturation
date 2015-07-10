@@ -6,23 +6,27 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use JC\CommandeBundle\Entity\ServiceRepository;
+
+
 class UtilisateurType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+   public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('nom')
             ->add('prenom')
             ->add('service','entity', array(
 					'class'    => 'JCCommandeBundle:Service',
-					'property' => 'display',
+					'property' => 'nom',
 					'query_builder' => function(ServiceRepository $repo) {
 										return $repo->getServiceOrdreAlpha();},
-					'error_bubbling' => true))        
+					'error_bubbling' => true, 
+					))    
 				;
     }
     

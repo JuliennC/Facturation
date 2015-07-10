@@ -109,37 +109,32 @@ class AdminController extends Controller
 			
 			}
 			
+			
+		//Si le formulaire envoyé est le formulaire de la liste des utilisateurs
+		} else if(isset($formulaireEnvoye['jc_commandebundle_listeutilisateurs'])) {
+				
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationUtilisateursAction($request);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			}
+			
 		} 
+ 
 		        	
 
-		$em = $this->getDoctrine()->getManager();
-
-	 	//On récupère la liste de toutes les collectivites
-	 	$listeU = $em->getRepository('JCCommandeBundle:Utilisateur')->getUtilisateurOrdreAlpha(); 
-	 	
-	 	//Liste qui sera transformée en formulaire
-	 	$listeUtilisateurs = new ListeUtilisateurs();
-	 	$listeUtilisateurs -> setListeUtilisateurs($listeU);
-	 		 	
-	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
-        $form = $this->get('form.factory')->create(new ListeUtilisateursType(), $listeUtilisateurs);
-
-	 	
-		$form->handleRequest($request);
-
-	 	//Si le formulaire est valide, on sauvegarde dans la base
-		if ($form->isValid()) {
-
-			//On sauvegarde les villes dans la base
-        	foreach($form->get('listeUtilisateurs')->getData() as $user) {
-
-				//On ne sauvegarde pas celle qui ont un nom null
-				if ($user->getNom() != null) {
-					$em->persist($user);
-				}
-			}
+		
         	
-}
+
 		return $this->render('JCAdminBundle:Admin:index.html.twig', array('request'=>$request, 'annee' => $annee));
 		
 
@@ -476,7 +471,7 @@ class AdminController extends Controller
 	 	$em = $this->getDoctrine()->getManager();
 
 	 	//On récupère la liste de toutes les collectivites
-	 	$listeU = $em->getRepository('JCCommandeBundle:Utilisateur')->getUtilisateurOrdreAlpha(); 
+	 	$listeU = $em->getRepository('JCCommandeBundle:Utilisateur')->getUtilisateurOrdreAlpha()->getQuery()->getResult();
 	 	
 	 	//Liste qui sera transformée en formulaire
 	 	$listeUtilisateurs = new ListeUtilisateurs();
@@ -498,8 +493,7 @@ class AdminController extends Controller
 				if ($user->getNom() != null) {
 					$em->persist($user);
 				}
-			}
-        	
+			}        	
         	
         	$em->flush();
         	
@@ -510,6 +504,7 @@ class AdminController extends Controller
 	 		
 	 		return $this->render('JCAdminBundle:Admin:modif_utilisateurs.html.twig', array('form'=>$form->createView()));
 		}
+		
 	 }
 
 

@@ -26,8 +26,8 @@
 				
 				<table class="table table-hover table_center">
 			  
-				
-					<tr>
+					<thead>
+						<tr>
 										
 						<th> Collectivite </th>
 						{# On parcours les clés #}
@@ -38,9 +38,10 @@
 			
 						{% endfor %}
 			
-					</tr>
+						</tr>
+					</thead>
 					
-					
+					<tbody>
 					{% set i = 0 %}
 					{# On parcours les Collectivite #}
 					{% for collectivite in listeCollectivites %}
@@ -67,7 +68,8 @@
 		
 					{% endfor %}
 			
-					  
+				</tbody>
+ 
 				  
 				</table>
 			</div>

@@ -100,6 +100,74 @@ $(document).ready(function() {
 						        
 						    });    
 	
+	
+	
+	$("#ajouter_utilisateur").on('click', function(){
+      	
+      	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
+	  	// - le texte "__name__label__" qu'il contient par le label du champ
+	  	// - le texte "__name__" qu'il contient par le num√©ro du champ
+	  	
+	  	var tableL = $("#body_utilisateur");
+                
+        //On fait -1 car il y a la ligne du bouton "ajouter"
+	  	var index = (tableL.find('tr').length)-1;
+	  	
+	  	
+	 
+	  	//On doit récupérer les options du select du service
+	  	// Pour cela, on récupère les options du premier utilisateur(en partant du principe qu'il y a au moins 1 utilisateur ....)
+	  	var strOptions = "";
+	  	//On récupère la ligne du premier utilisateur
+	  	var tr = tableL.find("tr:first");
+	 
+	  	//On va chercher son select, et on parcours les options
+	  	tr.find("select:first option").each(function() {
+									
+			//On créé un string que l'on ajoutera au moment voulu
+			strOptions += "<option value='"+$(this).val()+"'>";
+			strOptions += $(this).text();
+			strOptions += "</option>";
+
+		});
+								
+        
+           
+    
+   
+    var newLigne = 	"<tr>"
+						  	
+						+"<td>" 
+							+"<input type='text' id='jc_commandebundle_listeutilisateurs_listeUtilisateurs___name___nom' name='jc_commandebundle_listeutilisateurs[listeUtilisateurs][__name__][nom]' required='required' maxlength='255'>" 
+						+"</td>"
+								
+						+"<td>" 
+							+"<input type='text' id='jc_commandebundle_listeutilisateurs_listeUtilisateurs___name___prenom' name='jc_commandebundle_listeutilisateurs[listeUtilisateurs][__name__][prenom]' required='required' maxlength=255'>" 
+						+"</td>"
+
+						+"<td>" 
+							+"<select id='jc_commandebundle_listeutilisateurs_listeUtilisateurs___name___service' name='jc_commandebundle_listeutilisateurs[listeUtilisateurs][__name__][service]'>"
+		
+								+strOptions
+								
+							+"</select>" 
+						+"</td>"
+					+"</tr>";
+										
+						 	
+								      	// remplace les "__name__" utilis√©s dans l'id 
+								        // par un nombre unique 
+								        newLigne = newLigne.replace(/__name__/g, index);
+								        
+								        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
+								        $('#last_tr_utilisateur').before(newLigne);
+								        
+								     
+								        return false;
+
+									
+						        
+						    });    
 						 	
 
 

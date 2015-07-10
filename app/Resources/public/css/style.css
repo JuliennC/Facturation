@@ -56,6 +56,11 @@ body {
 }
 
 
+.table_center thead>tr>th {
+    vertical-align: middle;
+	text-align: center;
+}
+
 
 
 .clickable{

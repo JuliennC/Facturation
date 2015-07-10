@@ -22,12 +22,12 @@ class ListeUtilisateursType extends AbstractType
 		        'allow_add'    => true,
 		        'allow_delete' => true,
 		        'error_bubbling' => true,
-		        'by_reference' => false,
-		        'error_bubbling' => true)   )
+		        'by_reference' => false))
 
             ->add('enregistrer', 'submit');
         ;
-                    $builder ->getForm();
+         
+        $builder ->getForm();
 
 
 	}
