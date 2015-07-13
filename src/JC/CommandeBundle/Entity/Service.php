@@ -28,6 +28,13 @@ class Service
      */
     private $nom;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="Est_Ancien_Service", type="boolean")
+     */
+    private $estAncienService;
+
 
     /**
      * Get id
@@ -60,5 +67,28 @@ class Service
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * Set estAncienService
+     *
+     * @param boolean $estAncienService
+     * @return Service
+     */
+    public function setEstAncienService($estAncienService)
+    {
+        $this->estAncienService = $estAncienService;
+
+        return $this;
+    }
+
+    /**
+     * Get estAncienService
+     *
+     * @return boolean 
+     */
+    public function getEstAncienService()
+    {
+        return $this->estAncienService;
     }
 }

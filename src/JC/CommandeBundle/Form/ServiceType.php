@@ -15,7 +15,9 @@ class ServiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('nom', 'text', array('error_bubbling' => true)) ;
+            ->add('nom')
+            ->add('estAncienService','checkbox', array('required'=>false, 'error_bubbling' => true, ))
+        ;
     }
     
     /**

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
  * ListeServices
  *
@@ -24,7 +25,7 @@ class ListeServices
 
 
 
-
+	
 	 /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      * @Assert\Valid()   
@@ -42,6 +43,8 @@ class ListeServices
 
 
 
+
+
     /**
      * Get id
      *
@@ -51,7 +54,6 @@ class ListeServices
     {
         return $this->id;
     }
-    
     
     
     
@@ -68,7 +70,7 @@ class ListeServices
     }
 
     /**
-     * @param Service $info
+     * @param Service $s
      * @return $this
      */
     public function removeService($s)
@@ -96,6 +98,7 @@ class ListeServices
 
         return $this;
     }
+
     
     
 }

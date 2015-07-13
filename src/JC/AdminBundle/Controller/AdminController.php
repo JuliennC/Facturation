@@ -133,7 +133,27 @@ class AdminController extends Controller
 			
 			}
 			
+			
+		//Si le formulaire envoyé est le formulaire de la liste des services
+		} else if(isset($formulaireEnvoye['jc_commandebundle_listeservices'])) {
+				
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationServicesAction($request);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			}
+			
 		} 
+
  
 		        	
 
@@ -184,7 +204,7 @@ class AdminController extends Controller
 	 	$listeCollectivites ->setListeCollectivites($l);
 	 		 	
 	 	
-	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque collectivite)
         $form = $this->get('form.factory')->create(new ListeCollectivitesType(), $listeCollectivites);
 		$form->handleRequest($request);
 
@@ -432,7 +452,7 @@ class AdminController extends Controller
 	 	$listeClesRepartition = new ListeClesRepartition();
 	 	$listeClesRepartition ->setListeClesRepartition($listeCles);
 	 		 	
-	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
         $form = $this->get('form.factory')->create(new ListeClesRepartitionType(), $listeClesRepartition);
 
 	 	
@@ -482,7 +502,7 @@ class AdminController extends Controller
 	 	$listeUtilisateurs = new ListeUtilisateurs();
 	 	$listeUtilisateurs -> setListeUtilisateurs($listeU);
 	 		 	
-	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque utilisateur)
         $form = $this->get('form.factory')->create(new ListeUtilisateursType(), $listeUtilisateurs);
 
 	 	
@@ -526,6 +546,70 @@ class AdminController extends Controller
 	 }
 
 
+
+
+
+	 /*
+	 *	Pour modifier les utilisateurs
+	 *  
+	 */
+	 public function modificationServicesAction(Request $request) {
+dump('kg');
+
+	 	$em = $this->getDoctrine()->getManager();
+
+	 	//On récupère la liste de tous les services
+	 	$listeS = $em->getRepository('JCCommandeBundle:Service')->getServiceOrdreAlpha()->getQuery()->getResult();
+	 	
+	 	
+	 	//Liste qui sera transformée en formulaire
+	 	$listeServices = new ListeServices();
+	 	$listeServices->setListeServices($listeS);
+	 	
+
+	 	
+	 		 	
+	 	//On crée les formulaires 
+        $form = $this->get('form.factory')->create(new ListeServicesType(), $listeServices);
+
+	 	
+		$form->handleRequest($request);
+
+	 	//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+			
+
+			//On sauvegarde les service dans la base
+        	foreach($form->get('listeServices')->getData() as $service) {
+					dump('id : '.$service->getId());
+
+				//On ne sauvegarde pas ceux qui ont un nom null
+				if ($service->getNom() != null ) {
+					$em->persist($service);
+				
+				} 
+					
+					
+				
+				
+				
+			}     
+			
+			
+			
+			
+		   	$em->flush();
+        	
+
+			return new Response('true');
+
+    	} else {
+	 		
+	 		return $this->render('JCAdminBundle:Admin:modif_services.html.twig', array('form'=>$form->createView()));
+		}
+		
+	 }
 
 
 

@@ -59,7 +59,8 @@ A LA FIN :
 	-> revoir les commentaires
 	-> revoir les noms des variables
 	-> revoir les type des attributs
-
+	
+	-> lorsqu’on enregistre un service sans nom, il s’enregistre
 
 TESTS : 
 

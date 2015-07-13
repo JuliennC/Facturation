@@ -1,0 +1,113 @@
+{% form_theme form 'JCAdminBundle:Form:fields.html.twig' %}
+
+
+
+<div class='row'>
+	{{ form_errors(form) }}
+</div>
+
+
+<div class='row' id='form_services'>
+
+	{{ form_start(form) }}
+ 
+				
+		<div class='table-responsive'>
+
+			<div class="panel panel-primary filterable">
+			    <div class="panel-heading">
+				        				       
+				      	<h3 class="panel-title">Services</h3>
+
+				
+			        <div class="pull-right">
+			            {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-success save btn-xs glyphicon glyphicon-floppy-disk' } }) }}                    
+			        </div>
+			    </div>
+		
+		
+				
+				<table class="table table-hover table_center">
+			  
+				    <thead>
+
+						<tr>				
+							<th> Service </th>
+							<th> Ancien service </th>
+						</tr>			
+									
+				    </thead>
+
+					
+					<tbody id='body_service' data-prototype="{{ form_widget(form.listeServices.vars.prototype)|e }}">
+					
+						{# On parcours les services 'non anciens' #}
+						{% for service in form.listeServices %}
+				
+							{% if service.vars.value.estAncienService == false %}
+							  
+							  	<tr>
+							  	
+									<td> {{form_widget(service.nom)}} </td>
+									<td> {{form_widget(service.estAncienService)}} </td>
+											
+								</tr>
+								
+								
+							{% endif %}
+							
+						{% endfor %}
+						
+					
+						<tr id='last_tr_service'>
+			      			<td colspan='3'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_service' > Ajouter une service </a> </td>
+				  		</tr>  
+				
+					
+						{% set i = 0 %}
+						
+						{# On parcours les services 'non anciens' #}
+						{% for service in form.listeServices %}
+				
+							{% if service.vars.value.estAncienService == true %}
+							  
+							  	{% if i == 0 %}
+							  
+							  		<tr>
+							  			<td colspan='3' style='background-color:lightgray'></td>
+							  		</tr>
+							  		
+							  		{% set i = 1 %}
+							  	{% endif %}
+							  	
+							  	<tr>
+							  	
+									<td> {{form_widget(service.nom)}} </td>
+									<td> {{form_widget(service.estAncienService)}} </td>
+											
+								</tr>
+								
+								
+							{% endif %}
+							
+						{% endfor %}
+
+						
+					
+					
+					</tbody>
+				  
+				</table>
+			</div>
+			
+		</div>	
+			
+
+		{{ form_end(form) }}
+</div>
+
+
+
+
+
+

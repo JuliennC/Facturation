@@ -587,10 +587,12 @@ class CommandeController extends Controller
 		// Creation des services
 		$service1 = new Service();
 		$service1->setNom("Bureautique");
+		$service1->setEstAncienService(false);
 		$em->persist($service1);
 
 		$service2 = new Service();
 		$service2->setNom("Etude");
+		$service1->setEstAncienService(false);
 		$em->persist($service2);
 
 	

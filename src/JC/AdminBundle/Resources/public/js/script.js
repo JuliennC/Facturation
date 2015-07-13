@@ -194,4 +194,59 @@ $(document).ready(function() {
 
 		});
 
+
+
+
+
+	/*
+	*	Fonction pour ajouter un utilisateur
+	*/
+	
+	$("#ajouter_service").on('click', function(){
+      	
+      	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
+	  	// - le texte "__name__label__" qu'il contient par le label du champ
+	  	// - le texte "__name__" qu'il contient par le num√©ro du champ
+	  	
+	  	var tableL = $("#body_service");
+                
+        //On fait -1 car il y a la ligne du bouton "ajouter"
+	  	var index = (tableL.find('tr').length)-1;
+	  	
+	  	
+	 	  	
+           
+    
+   
+    var newLigne = 	"<tr>"
+						  	
+						+"<td>" 
+							+"<input type='text' id='jc_commandebundle_listeservices_listeServices___name___nom' name='jc_commandebundle_listeservices[listeServices][__name__][nom]' 											required='required'>" 
+						+"</td>"
+						
+						+"<td>" 
+							+"<input type='checkbox' id='jc_commandebundle_listeservices_listeServices___name___estAncienService'																					name='jc_commandebundle_listeservices[listeServices][__name__][estAncienService]' >" 
+						+"</td>"
+										
+					+"</tr>";
+										
+						 	
+		// remplace les "__name__" utilis√©s dans l'id 
+        // par un nombre unique 
+        newLigne = newLigne.replace(/__name__/g, index);
+								        
+        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
+        $('#last_tr_service').before(newLigne);
+								        
+								     
+        return false;				
+						        
+		});    
+						 	
+
+
+		
+		
+		
+	
 });    

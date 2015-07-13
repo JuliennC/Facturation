@@ -8,8 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ListeServicesType extends AbstractType
 {
-
-
 	
 	/**
      * @param FormBuilderInterface $builder
@@ -23,18 +21,17 @@ class ListeServicesType extends AbstractType
 		        'type'         => new ServiceType(),
 		        'allow_add'    => true,
 		        'error_bubbling' => true,
-		        'by_reference' => false)   )
+		        'by_reference' => false))
 
             ->add('enregistrer', 'submit');
         ;
-                    $builder ->getForm();
+         
+        $builder ->getForm();
 
-
-
-	}
-
-
-
+}
+	
+	
+	
 
     /**
      * @param OptionsResolverInterface $resolver

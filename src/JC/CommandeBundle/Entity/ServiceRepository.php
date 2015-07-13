@@ -20,4 +20,5 @@ class ServiceRepository extends EntityRepository
 
     ;
   }
+
 }
