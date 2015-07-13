@@ -36,6 +36,7 @@ class CollectiviteRepository extends EntityRepository
 	}
 	
 	
+	
 	public function findCollectivitesPourAnnee($annee){
 		
 		return $this
@@ -52,6 +53,27 @@ class CollectiviteRepository extends EntityRepository
 
 		;
 	}
+	
+	
+	
+	
+	public function findCollectivitesPourDateOrdreAlpha($date){
+		
+		return $this
+		->createQueryBuilder('c')
+
+		->where('c.dateDebutMutualisation <= :date AND c.dateFinMutualisation >= :date')
+	  	->setParameter('date', $date)
+		  	
+	  	//On trie par collectivite et par clé 
+	  	->add('orderBy', 'c.nom ASC')
+   			
+  		->getQuery()
+		->getResult();
+
+		;
+	}
+	
 	
 	
 	}

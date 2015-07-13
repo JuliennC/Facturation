@@ -27,24 +27,29 @@ use JC\CommandeBundle\Entity\ListeUtilisateurs;
 use JC\CommandeBundle\Form\ListeUtilisateursType;
 use JC\CommandeBundle\Form\UtilisateurType;
 
-
 use JC\CommandeBundle\Entity\Service;
 use JC\CommandeBundle\Entity\ListeServices;
 use JC\CommandeBundle\Form\ServiceType;
 use JC\CommandeBundle\Form\ListeServicesType;
+
+use JC\CommandeBundle\Entity\Budget;
+use JC\CommandeBundle\Entity\ListeBudgets;
+use JC\CommandeBundle\Form\BudgetType;
+use JC\CommandeBundle\Form\ListeBudgetsType;
+
+
 
 
 class AdminController extends Controller
 {
     public function indexAction(Request $request, $annee )
     {
-	     //Si aucune année n'est entrée, on modifie l'année précédente
-		 if($annee === "html"){
-			 $annee = date('Y');
-			 $annee -= 1; 
-		}
-		
+	     		
 
+		//Si aucune année n'est entrée
+		if($annee === "html"){
+			 $annee = date('Y');
+		}
 
 
 		$formulaireEnvoye = $request->request->all();
@@ -152,7 +157,27 @@ class AdminController extends Controller
 			
 			}
 			
+			
+		//Si le formulaire envoyé est le formulaire des budgets
+		} else if(isset($formulaireEnvoye['jc_commandebundle_listebudgets'])) {
+				
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationBudgetsAction($request, $annee);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			}
+			
 		} 
+
 
  
 		        	
@@ -245,14 +270,16 @@ class AdminController extends Controller
 	 */
 	 public function modificationInformationsCollectivitesAction(Request $request, $annee) {
 		 		 
-		 $listeInformations = array();
+		 
+		 
+		 $listeInformationsATransformee = array();
 
 		 $em = $this->getDoctrine()->getManager();
 
 		 
 		//On récupère les collectivite pour l'année 
 		$listeCollectivites = $em->getRepository('JCCommandeBundle:Collectivite')->findCollectivitesPourAnnee($annee); 
-				dump($listeCollectivites);
+
 		//On récupère toutes les clés
 		$listeCles = $em->getRepository('JCCommandeBundle:CleRepartition')->findAll(); 
 
@@ -261,150 +288,85 @@ class AdminController extends Controller
 		// 				- ET date fin mutualisation >= $annee
 		// Note : On fait deux orderBy dans la requête, ce qui évite de réaliser des traitements pour trier les données
 		$listeInformations = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findInformationsPourAnnee($annee);
-		 
 
 
+		//On ajoute toutes les informations récupérées dans la liste qui sera transformée en formulaire
+		$listeInfosPourForm = new InformationsCollectiviteListe();
 
-		//Si on veut modifier les informations de l'année courrante.
-		if ($annee === date('Y')) {
-			 
-			//Si c'est la première fois que l'on entre dans la partie admin de l'année
-			if (sizeof($listeInformations) === 0) {
+
 
 			
-				//On parcours chaque collectivite pour mettre leur clées
-				foreach($listeCollectivites as $coll) {
-
-					//On récupère les information de l'année dernière pour pré-remplir les champs
-					$listeInformationsPrecendentes = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findInformationsPourAnnee($annee-1);
-	
-					//On crée une information pour chaque clé
-					foreach($listeCles as $cle) {
+		//On parcours chaque collectivite pour mettre leur clées manquantes
+		foreach($listeCollectivites as $coll) {
 					
-						$nouvelleInformation = new InformationCollectivite();
-						$nouvelleInformation -> setCollectivite($coll);
-						$nouvelleInformation -> setCleRepartition($cle);
-						$nouvelleInformation -> setAnnee($annee);
+					
+			/*	On a récupéré les informations déjà entrées
+			*	On va comparer les clé de ces informations au clés qui doivent être remplies
+			*	Pour savoir si des clés sont manquantes
+			*/
+				
+			//Pour cela on stocke les clés qui ont des informations entrées pour l'année donnée
+			$listeClesUtilisees = array();
+	
+			foreach($listeInformations as $information){
+				
+				if($information->getCollectivite() === $coll){
+					array_push($listeClesUtilisees, $information->getCleRepartition());
+
+					//Et on ajoute l'info dans la liste qui sera transformée en formulaire
+					$listeInfosPourForm->addInformation($information);		
+				}
+			}
+	
+					
+					
+			//On récupère les informations de l'année dernière pour pré-remplir les champs des clés manquantes
+			$listeInformationsPrecendentes = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findToutesInfosPourCollectiviteEtAnnee($coll,$annee-1);
+
+
 						
-						$nombre = 0;
+			//On parcours les clés qui doivent être remplies
+			foreach($listeCles as $cle) {
 						
-						//On regarde si la clé été déjà utilisée l'année précédente
-						foreach($listeInformationsPrecendentes as $ip){
+				/*	On regarde si la clé a déjà son information
+				*	Si elle n'est pas présente dans le tableau des clés utilisées, il faut alors la rajouter
+				*	On crée alors une nouvelle information
+				*/	
+				if(! in_array($cle, $listeClesUtilisees)){ 
 							
-							//Si elle était utilisée, on peut prendre le nombre
-							if($ip->getCleRepartition() === $cle) {
-								$nombre = $ip->getNombre();
-								break;
-							}
+					$nouvelleInformation = new InformationCollectivite();
+					$nouvelleInformation -> setCollectivite($coll);
+					$nouvelleInformation -> setCleRepartition($cle);
+					$nouvelleInformation -> setAnnee($annee);
+							
+					$nombre = 0;
+
+
+					//On regarde si la clé été déjà utilisée l'année précédente
+					foreach($listeInformationsPrecendentes as $ip){
+							
+						//Si elle était utilisée, on peut prendre le nombre comme 'base'
+						if($ip->getCleRepartition() === $cle) {
+							$nombre = $ip->getNombre();
+							break;
 						}
-						
-						$nouvelleInformation -> setNombre($nombre);
-						
-						//On sauvegarde l'information
-						$em->persist($nouvelleInformation);
-					
 					}
-
-				}
-				
-				$em->flush();
-
-
-			//Si des informations ont déjà été entrées pour l'année courrante
-			} else {
-				
-				//Il faut s'assurrer qu'il n'y a pas eu de nouvelles clées créer entre temps
-				
-				//Pour cela on stocke les clés qui ont des informations entrées pour l'année courrante
-				$listeClesUtilisees = array();
-
-				foreach($listeInformations as $information){
-					array_push($listeClesUtilisees, $information->getCleRepartition());					
-				}
-				
-				//On fait la différence des deux listes
-				dump($listeCles[0]);
-				dump($listeClesUtilisees[0]);
-
-				
-				//On parcours l'ensemble des clés		
-				foreach($listeCles as $cle){
+						
 					
-					//On regarde si elles ont déjà leurs informations
-					if(! in_array($cle, $listeClesUtilisees)){
-						
-						//Si la clé n'as pas d'information, on crée l'information pour chaque collectivite
-						
-						foreach($listeCollectivites as $coll){
-						
-							$nouvelleInformation = new InformationCollectivite();
-							$nouvelleInformation -> setCollectivite($coll);
-							$nouvelleInformation -> setCleRepartition($cle);
-							$nouvelleInformation -> setAnnee($annee);						
-							$nouvelleInformation -> setNombre(0);
-								
-							//On sauvegarde l'information
-							$em->persist($nouvelleInformation);	
-						}
+					$nouvelleInformation -> setNombre($nombre);
 
-					}
+					//On met l'information dans la liste
+					$listeInfosPourForm->addInformation($nouvelleInformation);		
 				}
-				
-				
-				
-				$em->flush();
 				
 			}
-				
-				
-			//On récupère toutes les informations
-			$listeInformations = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findInformationsPourAnnee($annee);
-			
-	
 
-
-
-		//Si on veut mofifier les informations des années précédentes, il n'y a qu'a rechercher les informations.
-		 }
-						
+		}
 				
-		
-		
-			$listeCles = array();	
 				
-			//On récupère les clés de répartition.
-			foreach($listeInformations as $information) {
-				
-				//Si la clé n'existe pas, on la crée
-				if(! in_array($information->getCleRepartition()->getNom(), $listeCles)){
-					
-					array_push($listeCles, $information->getCleRepartition()->getNom());
-				}
-			}
-			
-			
-					 
-			$listeCollectivites = array();	
-				
-			//On récupère les collectivites
-			foreach($listeInformations as $information) {
-				
-				//Si la clé n'existe pas, on la crée
-				if(! in_array($information->getCollectivite()->getNom(), $listeCollectivites)){
-					
-					array_push($listeCollectivites, $information->getCollectivite()->getNom());
-				}
-			}
-
-		
-		
-		//On crée maintenant la InformationsCollectiviteListe
-		$informationsCollectiviteListe = new InformationsCollectiviteListe();
-		$informationsCollectiviteListe -> setListeInformations($listeInformations);
-
 
 		//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
-        $form = $this->get('form.factory')->create(new InformationsCollectiviteListeType(), $informationsCollectiviteListe);
+        $form = $this->get('form.factory')->create(new InformationsCollectiviteListeType(), $listeInfosPourForm);
 		$form->handleRequest($request);
 
 			
@@ -426,7 +388,7 @@ class AdminController extends Controller
 
     	} else {
 
-			return $this->render('JCAdminBundle:Admin:modif_informations_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee,																	 'listeInformations'=>$listeInformations, 'listeCles'=>$listeCles, 'listeCollectivites'=>$listeCollectivites));
+			return $this->render('JCAdminBundle:Admin:modif_informations_collectivites.html.twig', array('form'=>$form->createView(),'annee'=>$annee, 'listeCles'=>$listeCles, 'listeCollectivites'=>$listeCollectivites));
 		}        	
 
 	}
@@ -571,9 +533,8 @@ dump('kg');
 	 		 	
 	 	//On crée les formulaires 
         $form = $this->get('form.factory')->create(new ListeServicesType(), $listeServices);
-
-	 	
 		$form->handleRequest($request);
+
 
 	 	//Si le formulaire est valide, on sauvegarde dans la base
 		if ($form->isValid()) {
@@ -610,6 +571,89 @@ dump('kg');
 		}
 		
 	 }
+
+
+
+
+
+
+
+	 /*
+	 *	Pour modifier les informations des collectivites dont l'année de début de mutualisation
+	 *  est antérieur à l'année passée en paramêtre 
+	 */
+	 public function modificationBudgetsAction(Request $request, $annee) {
+		 		 
+
+		$em = $this->getDoctrine()->getManager();
+
+		 
+		//On récupère les services
+		$listeServices = $em->getRepository('JCCommandeBundle:Service')->getServiceOrdreAlpha()->getQuery()->getResult(); 
+
+
+		//Liste qui sera transformée en form
+		$listeBudgets = new ListeBudgets();
+
+				
+			//On parcours chaque service pour creer leur budget
+			foreach($listeServices as $service) {					
+
+				//On regarde si un budget avait déjà été définie
+				$budget = $em->getRepository('JCCommandeBundle:Budget')->findBudgetAvecAnneeEtService($annee, $service);
+					
+
+				//Si un budget existe, on le récupère
+				if (sizeof($budget) > 0){
+					$listeBudgets->addBudget($budget[0]);
+					
+				//Sinon, on en crée un
+				} else {
+
+					$nouveauBudget = new Budget();
+					$nouveauBudget -> setService($service);
+					$nouveauBudget -> setAnnee($annee);
+					$nouveauBudget -> setMontant(0);
+												
+					$listeBudgets->addBudget($nouveauBudget);
+				}
+
+			}
+		
+			
+	    $form = $this->get('form.factory')->create(new ListeBudgetsType(), $listeBudgets);
+		$form->handleRequest($request);
+			
+		//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+        	//On récupère la liste des informations du formulaire
+        	$listeBudgets = $form->get('listeBudgets')->getData();
+        		        	dump('l b'.$listeBudgets);
+        	foreach($listeBudgets as $b) {
+			
+				if($b->getMontant() != 0){
+					$em->persist($b);
+					}
+        	}
+        	
+        	$em->flush();
+        
+			return new Response('true');
+
+
+    	} else {
+			
+			//return new Response("kjb");
+			return $this->render('JCAdminBundle:Admin:modif_budgets.html.twig', array('form'=>$form->createView(),'annee'=>$annee));
+		      	
+		}
+	}
+
+
+
+
+
 
 
 

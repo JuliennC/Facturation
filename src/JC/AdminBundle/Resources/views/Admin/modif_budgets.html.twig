@@ -1,22 +1,25 @@
 {% form_theme form 'JCAdminBundle:Form:fields.html.twig' %}
 
 
-<div class='row' id='form_collectivite'>
-
-	{{ form_start(form) }}
- 
-
 
 <div class='row'>
 	{{ form_errors(form) }}
 </div>
+
+
+<div class='row' id='form_services'>
+
+	{{ form_start(form) }}
+ 
 				
 		<div class='table-responsive'>
 
 			<div class="panel panel-primary filterable">
 			    <div class="panel-heading">
-			        <h3 class="panel-title">{{annee}}</h3>
-			
+				        				       
+				      	<h3 class="panel-title">Budgets {{annee}}</h3>
+
+				
 			        <div class="pull-right">
 			            {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-success save btn-xs glyphicon glyphicon-floppy-disk' } }) }}                    
 			        </div>
@@ -26,61 +29,43 @@
 				
 				<table class="table table-hover table_center">
 			  
-					<thead>
-						<tr>
-										
-						<th> Collectivite </th>
-						{# On parcours les clés #}
-						{% for cle in listeCles %}
-							
-							{# On crée une colonne pour chaque clé #}
-							<th> {{cle.nom}} </th>
-			
-						{% endfor %}
-			
-						</tr>
-					</thead>
-					
-					<tbody>
-					{% set i = 0 %}
-					{# On parcours les Collectivite #}
-					{% for collectivite in listeCollectivites %}
-			
-					  	<tr>
-					  	
-					  		
-							{# On crée une ligne par collectivite #}
-							<td>{{collectivite.nom}}  </td>
-			
-							{# On parcours les clés #}
-							{% for cle in listeCles %}
-								
-								{# On affiche la valeur de la clé #}
+				    <thead>
 
-								<td>{{form_widget(form.children.listeInformations[i])}}</td>
-		
-				
-								{% set i = i+1 %}
-		
-							{% endfor %}
-			
-						</tr>
-		
-					{% endfor %}
-			
-				</tbody>
- 
+						<tr>				
+							<th> Service </th>
+							<th> Budget </th>
+						</tr>			
+									
+				    </thead>
+
+					
+					<tbody id='body_service'>
+					
+						{# On parcours les services 'non anciens' #}
+						{% for budget in form.listeBudgets %}
+											  
+							  	<tr>
+							  	
+									<td> {{budget.vars.value.service.nom}} </td>
+									<td> {{form_widget(budget.montant)}} </td>
+											
+								</tr>
+								
+								
+							
+						{% endfor %}
+											
+					
+					</tbody>
 				  
 				</table>
 			</div>
 			
 		</div>	
-	
+			
 		{{ form_end(form) }}
+
 </div>
-
-
-
 
 
 <nav>
@@ -89,4 +74,11 @@
 		<li class="next"><a href="{{  path('jc_admin_homepage', {'annee': (annee+1) }) }}">{{annee+1}} <span aria-hidden="true">&rarr;</span></a></li>
     </ul>
 </nav>
+
+
+
+
+
+
+
 

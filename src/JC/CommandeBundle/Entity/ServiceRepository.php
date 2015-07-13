@@ -21,4 +21,16 @@ class ServiceRepository extends EntityRepository
     ;
   }
 
+
+  
+  public function getServiceNonAncienOrdreAlpha() {
+    return $this
+      ->createQueryBuilder('s')
+      ->orderBy('s.nom', 'ASC')
+	  ->where('s.estAncienService = false')
+    ;
+  }
+
+
+
 }

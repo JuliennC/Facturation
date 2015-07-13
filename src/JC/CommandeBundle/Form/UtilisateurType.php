@@ -24,7 +24,7 @@ class UtilisateurType extends AbstractType
 					'class'    => 'JCCommandeBundle:Service',
 					'property' => 'nom',
 					'query_builder' => function(ServiceRepository $repo) {
-										return $repo->getServiceOrdreAlpha();},
+										return $repo->getServiceNonAncienOrdreAlpha();},
 					'error_bubbling' => true, 
 					))    
 				;

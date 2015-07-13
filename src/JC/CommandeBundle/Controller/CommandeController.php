@@ -230,7 +230,7 @@ class CommandeController extends Controller
             $cCCDejaBDD = $em->getRepository('JCCommandeBundle:CommandeConcerneCollectivite')->findCommandeConcerneCollectiviteAvecCommande($commande->getId());
 			
 			//On recupere donc toutes les villes
-			$listeToutesLesVilles = $em->getRepository('JCCommandeBundle:Collectivite')->findAll();
+			$listeToutesLesVilles = $em->getRepository('JCCommandeBundle:Collectivite')->findCollectivitesPourDateOrdreAlpha($commande->getDateCreation());
 			
 			
 			//	Si le formulaire est valide, on l'enregistre en base.

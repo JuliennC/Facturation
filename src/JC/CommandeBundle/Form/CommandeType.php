@@ -31,7 +31,7 @@ class CommandeType extends AbstractType
     {
         $this->em = $em;
         
-		$this->tabColl = $this->em->getRepository('JCCommandeBundle:Collectivite')->findAllOrdreAlpha();
+		$this->tabColl = $this->em->getRepository('JCCommandeBundle:Collectivite')->findCollectivitesPourDateOrdreAlpha(date("Y-m-d"));
 
     }
     
