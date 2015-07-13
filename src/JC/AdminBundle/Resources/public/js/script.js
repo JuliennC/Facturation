@@ -214,10 +214,7 @@ $(document).ready(function() {
 	  	var index = (tableL.find('tr').length)-1;
 	  	
 	  	
-	 	  	
-           
-    
-   
+	  	
     var newLigne = 	"<tr>"
 						  	
 						+"<td>" 
@@ -245,6 +242,69 @@ $(document).ready(function() {
 						 	
 
 
+
+		/*
+	*	Fonction pour ajouter un utilisateur
+	*/
+	
+	$("#ajouter_application").on('click', function(){
+      	
+      	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
+	  	// - le texte "__name__label__" qu'il contient par le label du champ
+	  	// - le texte "__name__" qu'il contient par le num√©ro du champ
+	  	
+	  	var tableL = $("#body_application");
+                
+        //On fait -1 car il y a la ligne du bouton "ajouter"
+	  	var index = (tableL.find('tr').length)-1;
+	  	
+	  	
+	 	       
+    //On doit récupérer les options du select du service
+	// Pour cela, on récupère les options du premier utilisateur(en partant du principe qu'il y a au moins 1 utilisateur ....)
+	var strOptions = "";
+ 	//On récupère la ligne du premier utilisateur
+ 	var tr = tableL.find("tr:last");
+
+  	//On va chercher son select, et on parcours les options
+  	tr.find("select:first option").each(function() {
+									
+		//On créé un string que l'on ajoutera au moment voulu
+		strOptions += "<option value='"+$(this).val()+"'>";
+		strOptions += $(this).text();
+		strOptions += "</option>";
+
+	});  	
+           
+    
+   
+    var newLigne = "<tr>"
+						  	
+						+"<td>" 
+							+"<input type='text' id='jc_commandebundle_listeapplications_listeApplications___name___nom' 																							name='jc_commandebundle_listeapplications[listeApplications][__name__][nom]' class='col-md-8 col-md-offset-2'>" 
+						+"</td>"
+						
+						+"<td>"
+							+"<select id='jc_commandebundle_listeapplications_listeApplications___name___fournisseur' 																								name='jc_commandebundle_listeapplications[listeApplications][__name__][fournisseur]' class='col-md-8 col-md-offset-2'>"
+							+strOptions
+						+"</select>" 
+					+"</td>"						
+				+"</tr>";
+										
+						 	
+						 	
+						 	
+		// remplace les "__name__" utilis√©s dans l'id 
+        // par un nombre unique 
+        newLigne = newLigne.replace(/__name__/g, index);
+								        
+        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
+        $('#last_tr_application').after(newLigne);
+								        
+								     
+        return false;				
+						        
+		});    
 		
 		
 		

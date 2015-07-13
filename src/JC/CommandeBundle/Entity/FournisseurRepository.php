@@ -18,8 +18,7 @@ class FournisseurRepository extends EntityRepository
               ->createQueryBuilder('f')
               ->orderBy('f.nom', 'ASC')
               ->orderBy('f.adresse', 'ASC')
-              ->getQuery()	
-              ->getResult()
+
         ;
     
     }

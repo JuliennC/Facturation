@@ -38,6 +38,11 @@ use JC\CommandeBundle\Form\BudgetType;
 use JC\CommandeBundle\Form\ListeBudgetsType;
 
 
+use JC\CommandeBundle\Entity\Application;
+use JC\CommandeBundle\Entity\ListeApplications;
+use JC\CommandeBundle\Form\ApplicationType;
+use JC\CommandeBundle\Form\ListeApplicationsType;
+
 
 
 class AdminController extends Controller
@@ -176,7 +181,27 @@ class AdminController extends Controller
 			
 			}
 			
+			
+		//Si le formulaire envoyé est le formulaire des applications
+		} else if(isset($formulaireEnvoye['jc_commandebundle_listeapplications'])) {
+				
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationApplicationsAction($request, $annee);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			}
+			
 		} 
+
 
 
  
@@ -652,6 +677,54 @@ dump('kg');
 
 
 
+
+
+
+
+
+	/*
+	 *	Pour modifier les applications 
+	 */
+	 public function modificationApplicationsAction(Request $request) {
+
+	 	$em = $this->getDoctrine()->getManager();
+
+	 	//On récupère la liste de toutes les collectivites
+	 	$listeApp = $em->getRepository('JCCommandeBundle:Application')->getApplicationOrdreAlpha()->getQuery()->getResult(); 
+	 	
+	 	//Liste qui sera transformée en formulaire
+	 	$listeApplications = new ListeApplications();
+	 	$listeApplications ->setListeApplications($listeApp);
+	 		 	
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
+        $form = $this->get('form.factory')->create(new ListeApplicationsType(), $listeApplications);
+
+	 	
+		$form->handleRequest($request);
+
+	 	//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+			//On sauvegarde les villes dans la base
+        	foreach($form->get('listeApplications')->getData() as $app) {
+
+				//On ne sauvegarde pas celle qui ont un nom null
+				if ($app->getNom() != null) {
+					$em->persist($app);
+				}
+			}
+        	
+        	
+        	$em->flush();
+        	
+
+			return new Response('true');
+
+    	} else {
+	 		
+	 		return $this->render('JCAdminBundle:Admin:modif_applications.html.twig', array('form'=>$form->createView()));
+		}
+	 }
 
 
 

@@ -1,0 +1,73 @@
+{% form_theme form 'JCAdminBundle:Form:fields.html.twig' %}
+
+
+<div class='row'>
+	{{ form_errors(form) }}
+</div>
+
+
+<div class='row' id='form_application'>
+
+	{{ form_start(form) }}
+ 
+				
+		<div class='table-responsive'>
+
+			<div class="panel panel-primary filterable">
+			    <div class="panel-heading">
+				        				       
+				      	<h3 class="panel-title">Applications</h3>
+
+				
+			        <div class="pull-right">
+			            {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-success save btn-xs glyphicon glyphicon-floppy-disk' } }) }}                    
+			        </div>
+			    </div>
+		
+		
+				
+				<table class="table table-hover table_center">
+			  
+				    <thead>
+				    	<tr class="filters">										
+                        	<th ><input type="text" class="form-control" placeholder="Recherche .."></th>
+							
+						</tr>								
+				    </thead>
+
+					
+					<tbody id='body_application' >
+					
+					
+						<tr id='last_tr_application'>
+			      
+			      			<td colspan='3'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_application' > Ajouter une Application </a> </td>
+			      	
+				  		</tr>  
+				  		
+				  		
+						{# On parcours les applications #}
+						{% for app in form.listeApplications %}
+				
+						  	<tr>
+						  	
+								<td> {{form_widget(app.nom, {'attr': {'class':'col-md-8 col-md-offset-2'}} )}} </td>				
+								<td> {{form_widget(app.fournisseur, {'attr': {'class':'col-md-8 col-md-offset-2'}} )}} </td>				
+
+										
+							</tr>
+			
+							
+						{% endfor %}
+				
+						
+				  
+				  </tbody>
+				  
+				</table>
+			</div>
+			
+		</div>	
+	
+		{{ form_end(form) }}
+</div>

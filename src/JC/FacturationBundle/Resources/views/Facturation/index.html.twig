@@ -6,17 +6,22 @@
 
 {% block jcfacturation_body %}
 
-  	<h3>Facturation pour l'annee {{annee}} </h3>
   
   	
+	<h3 class='center'>Facturation pour l'annee {{annee}} </h3>
+
+
+<nav>
+	<ul class="pager">
 	
+    	<li class="previous"><a href="{{  path('jc_facturation_homepage', {'annee': (annee-1) }) }}"><span aria-hidden="true">&larr;</span> {{annee-1}}</a></li>
+		<li class="next"><a href="{{  path('jc_facturation_homepage', {'annee': (annee+1) }) }}">{{annee+1}} <span aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+</nav>
+
 
 
    
-   
-
-	
-	
 	
 	
 <div>
