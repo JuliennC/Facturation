@@ -18,4 +18,16 @@ class ImputationRepository extends EntityRepository
       ->createQueryBuilder('i')
     ;
     
-    }}
+    }
+    
+    
+    
+	public function getImputationOrdreAlpha() {
+    return $this
+      ->createQueryBuilder('i')
+      ->orderBy('i.libelle', 'ASC')
+      ->orderBy('i.sousFonction', 'ASC')
+
+    ;
+  }
+}

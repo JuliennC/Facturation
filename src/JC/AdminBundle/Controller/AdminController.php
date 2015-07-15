@@ -47,6 +47,10 @@ use JC\CommandeBundle\Entity\ListeActivites;
 use JC\CommandeBundle\Form\ActiviteType;
 use JC\CommandeBundle\Form\ListeActivitesType;
 
+use JC\CommandeBundle\Entity\Imputation;
+use JC\CommandeBundle\Entity\ListeImputations;
+use JC\CommandeBundle\Form\ImputationType;
+use JC\CommandeBundle\Form\ListeImputationsType;
 
 
 
@@ -214,6 +218,25 @@ class AdminController extends Controller
 			*	Sinon la fonction renvoie le template
 			*/
 			$form_est_valid = $this->modificationActivitesAction($request, $annee);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			}
+			
+			
+		//Si le formulaire envoyé est le formulaire des imputations
+		} else if(isset($formulaireEnvoye['jc_commandebundle_listeimputations'])) {
+				
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationImputationsAction($request, $annee);
 			
 			
 			//Donc si le form est valide, on redirige
@@ -800,6 +823,59 @@ class AdminController extends Controller
 	 		return $this->render('JCAdminBundle:Admin:modif_activites.html.twig', array('form'=>$form->createView()));
 		}
 	 }
+
+
+
+
+
+	 
+
+
+	/*
+	 *	Pour modifier les imputations 
+	 */
+	 public function modificationImputationsAction(Request $request) {
+
+	 	$em = $this->getDoctrine()->getManager();
+
+	 	//On récupère la liste de toutes les activites
+	 	$listeImp = $em->getRepository('JCCommandeBundle:Imputation')->getImputationOrdreAlpha()->getQuery()->getResult(); 
+	 	
+	 	//Liste qui sera transformée en formulaire
+	 	$listeImputations = new ListeImputations();
+	 	$listeImputations ->setListeImputations($listeImp);
+	 		 	
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
+        $form = $this->get('form.factory')->create(new ListeImputationsType(), $listeImputations);
+
+	 	
+		$form->handleRequest($request);
+
+	 	//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+			//On sauvegarde les activites dans la base
+        	foreach($form->get('listeImputations')->getData() as $imp) {
+
+				//On ne sauvegarde pas celle qui ont un nom null
+				if ($imp->getLibelle() != null) {
+					$em->persist($imp);
+				}
+			}
+        	
+        	
+        	$em->flush();
+        	
+
+			return new Response('true');
+
+    	} else {
+
+	 		return $this->render('JCAdminBundle:Admin:modif_imputations.html.twig', array('form'=>$form->createView()));
+		}
+	 }
+
+
 
 
 

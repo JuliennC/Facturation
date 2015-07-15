@@ -2,8 +2,8 @@
 -- version 4.4.9
 -- http://www.phpmyadmin.net
 --
--- Client :  localhost
--- Généré le :  Mer 15 Juillet 2015 à 11:27
+-- Client :  localhost:8889
+-- Généré le :  Mer 15 Juillet 2015 à 16:43
 -- Version du serveur :  5.5.42
 -- Version de PHP :  5.6.10
 
@@ -20,19 +20,13 @@ SET time_zone = "+00:00";
 -- Structure de la table `Activite`
 --
 
-DROP TABLE IF EXISTS `Activite`;
-CREATE TABLE IF NOT EXISTS `Activite` (
+CREATE TABLE `Activite` (
   `id` int(11) NOT NULL,
   `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cleRepartition_id` int(11) NOT NULL,
   `Est_Ancienne_Activite` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `Activite`
---
-
-TRUNCATE TABLE `Activite`;
 --
 -- Contenu de la table `Activite`
 --
@@ -63,19 +57,13 @@ INSERT INTO `Activite` (`id`, `Nom`, `cleRepartition_id`, `Est_Ancienne_Activite
 -- Structure de la table `Application`
 --
 
-DROP TABLE IF EXISTS `Application`;
-CREATE TABLE IF NOT EXISTS `Application` (
+CREATE TABLE `Application` (
   `id` int(11) NOT NULL,
   `fournisseur_id` int(11) NOT NULL,
   `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Libelle` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `Application`
---
-
-TRUNCATE TABLE `Application`;
 --
 -- Contenu de la table `Application`
 --
@@ -244,7 +232,7 @@ INSERT INTO `Application` (`id`, `fournisseur_id`, `Nom`, `Libelle`) VALUES
 (170, 1, 'WEB Livre sur la Place', ''),
 (171, 1, 'WEB Mercure - Portail AGILEO', 'Intradoc'),
 (172, 1, 'WEB BDEL - Laxou', ''),
-(173, 1, 'AGGLONUM Maintenance', 'Agglomération Numérique'),
+(173, 2, 'AGGLONUM Maintenance', 'Agglomération Numérique'),
 (174, 1, 'AGGLONUM MOE & développement', 'Agglomération Numérique'),
 (175, 1, 'GEST Lotus développements spécifiques', ''),
 (176, 1, 'POP COMEST CIM EST', ''),
@@ -259,36 +247,24 @@ INSERT INTO `Application` (`id`, `fournisseur_id`, `Nom`, `Libelle`) VALUES
 -- Structure de la table `Budget`
 --
 
-DROP TABLE IF EXISTS `Budget`;
-CREATE TABLE IF NOT EXISTS `Budget` (
+CREATE TABLE `Budget` (
   `id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   `Montant` int(11) NOT NULL,
   `Annee` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `Budget`
---
-
-TRUNCATE TABLE `Budget`;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `CleRepartition`
 --
 
-DROP TABLE IF EXISTS `CleRepartition`;
-CREATE TABLE IF NOT EXISTS `CleRepartition` (
+CREATE TABLE `CleRepartition` (
   `id` int(11) NOT NULL,
   `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `CleRepartition`
---
-
-TRUNCATE TABLE `CleRepartition`;
 --
 -- Contenu de la table `CleRepartition`
 --
@@ -310,19 +286,13 @@ INSERT INTO `CleRepartition` (`id`, `Nom`) VALUES
 -- Structure de la table `Collectivite`
 --
 
-DROP TABLE IF EXISTS `Collectivite`;
-CREATE TABLE IF NOT EXISTS `Collectivite` (
+CREATE TABLE `Collectivite` (
   `id` int(11) NOT NULL,
   `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Date_Debut_Mutualisation` date DEFAULT NULL,
   `Date_Fin_Mutualisation` date DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `Collectivite`
---
-
-TRUNCATE TABLE `Collectivite`;
 --
 -- Contenu de la table `Collectivite`
 --
@@ -331,8 +301,8 @@ INSERT INTO `Collectivite` (`id`, `Nom`, `Date_Debut_Mutualisation`, `Date_Fin_M
 (1, 'Opéra National de Lorraine', '2010-01-01', '2050-01-01'),
 (2, 'Mairie de Nancy', '2010-01-01', '2050-01-01'),
 (3, 'Mairie de Vandoeuvre', '2010-01-01', '2050-01-01'),
-(4, 'Mairie d''Art-sur-meurthe', '2010-01-01', '2050-01-01'),
-(5, 'Mairie d''Essey-lès-Nancy', '2010-01-01', '2050-01-01'),
+(4, 'Mairie dArt-sur-meurthe', '2010-01-01', '2050-01-01'),
+(5, 'Mairie d Essey-lès-Nancy', '2010-01-01', '2050-01-01'),
 (6, 'Mairie de Jarville', '2010-01-01', '2050-01-01'),
 (7, 'Mairie de Laxou', '2010-01-01', '2050-01-01'),
 (8, 'Mairie de Malzéville', '2010-01-01', '2050-01-01'),
@@ -351,8 +321,8 @@ INSERT INTO `Collectivite` (`id`, `Nom`, `Date_Debut_Mutualisation`, `Date_Fin_M
 (21, 'SIVU', '2010-01-01', '2050-01-01'),
 (22, 'Sillon Lorrain', '2010-01-01', '2050-01-01'),
 (23, 'Mairie de Fléville', '2010-01-01', '2050-01-01'),
-(24, 'Mairie d''Houdemont', '2010-01-01', '2050-01-01'),
-(25, 'Mairie d''Heillecourt', '2010-01-01', '2050-01-01');
+(24, 'Mairie d Houdemont', '2010-01-01', '2050-01-01'),
+(25, 'Mairie d Heillecourt', '2010-01-01', '2050-01-01');
 
 -- --------------------------------------------------------
 
@@ -360,8 +330,7 @@ INSERT INTO `Collectivite` (`id`, `Nom`, `Date_Debut_Mutualisation`, `Date_Fin_M
 -- Structure de la table `Commande`
 --
 
-DROP TABLE IF EXISTS `Commande`;
-CREATE TABLE IF NOT EXISTS `Commande` (
+CREATE TABLE `Commande` (
   `id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   `application_id` int(11) NOT NULL,
@@ -390,66 +359,43 @@ CREATE TABLE IF NOT EXISTS `Commande` (
   `TelephoneLivraison` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `Commande`
---
-
-TRUNCATE TABLE `Commande`;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `CommandeConcerneCollectivite`
 --
 
-DROP TABLE IF EXISTS `CommandeConcerneCollectivite`;
-CREATE TABLE IF NOT EXISTS `CommandeConcerneCollectivite` (
+CREATE TABLE `CommandeConcerneCollectivite` (
   `id` int(11) NOT NULL,
   `commande_id` int(11) NOT NULL,
   `collectivite_id` int(11) NOT NULL,
   `Repartion` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `CommandeConcerneCollectivite`
---
-
-TRUNCATE TABLE `CommandeConcerneCollectivite`;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `CommandePasseEtat`
 --
 
-DROP TABLE IF EXISTS `CommandePasseEtat`;
-CREATE TABLE IF NOT EXISTS `CommandePasseEtat` (
+CREATE TABLE `CommandePasseEtat` (
   `id` int(11) NOT NULL,
   `commande_id` int(11) NOT NULL,
   `etat_id` int(11) NOT NULL,
   `datePassage` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `CommandePasseEtat`
---
-
-TRUNCATE TABLE `CommandePasseEtat`;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `EtatCommande`
 --
 
-DROP TABLE IF EXISTS `EtatCommande`;
-CREATE TABLE IF NOT EXISTS `EtatCommande` (
+CREATE TABLE `EtatCommande` (
   `id` int(11) NOT NULL,
   `Libelle` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `EtatCommande`
---
-
-TRUNCATE TABLE `EtatCommande`;
 --
 -- Contenu de la table `EtatCommande`
 --
@@ -466,8 +412,7 @@ INSERT INTO `EtatCommande` (`id`, `Libelle`) VALUES
 -- Structure de la table `Fournisseur`
 --
 
-DROP TABLE IF EXISTS `Fournisseur`;
-CREATE TABLE IF NOT EXISTS `Fournisseur` (
+CREATE TABLE `Fournisseur` (
   `id` int(11) NOT NULL,
   `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Adresse` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -476,19 +421,15 @@ CREATE TABLE IF NOT EXISTS `Fournisseur` (
   `Ville` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Telephone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Fax` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `Fournisseur`
---
-
-TRUNCATE TABLE `Fournisseur`;
 --
 -- Contenu de la table `Fournisseur`
 --
 
 INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`) VALUES
-(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', '0383080808');
+(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', '0383080808'),
+(2, 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', '0383020202');
 
 -- --------------------------------------------------------
 
@@ -496,20 +437,14 @@ INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_P
 -- Structure de la table `Imputation`
 --
 
-DROP TABLE IF EXISTS `Imputation`;
-CREATE TABLE IF NOT EXISTS `Imputation` (
+CREATE TABLE `Imputation` (
   `id` int(11) NOT NULL,
   `Libelle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Sous_fonction` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Article` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Section` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `Imputation`
---
-
-TRUNCATE TABLE `Imputation`;
 --
 -- Contenu de la table `Imputation`
 --
@@ -586,8 +521,7 @@ INSERT INTO `Imputation` (`id`, `Libelle`, `Sous_fonction`, `Article`, `Section`
 -- Structure de la table `InformationCollectivite`
 --
 
-DROP TABLE IF EXISTS `InformationCollectivite`;
-CREATE TABLE IF NOT EXISTS `InformationCollectivite` (
+CREATE TABLE `InformationCollectivite` (
   `id` int(11) NOT NULL,
   `collectivite_id` int(11) NOT NULL,
   `Nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -595,35 +529,23 @@ CREATE TABLE IF NOT EXISTS `InformationCollectivite` (
   `cleRepartition_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `InformationCollectivite`
---
-
-TRUNCATE TABLE `InformationCollectivite`;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `InformationsCollectiviteListe`
 --
 
-DROP TABLE IF EXISTS `InformationsCollectiviteListe`;
-CREATE TABLE IF NOT EXISTS `InformationsCollectiviteListe` (
+CREATE TABLE `InformationsCollectiviteListe` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `InformationsCollectiviteListe`
---
-
-TRUNCATE TABLE `InformationsCollectiviteListe`;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `LigneCommande`
 --
 
-DROP TABLE IF EXISTS `LigneCommande`;
-CREATE TABLE IF NOT EXISTS `LigneCommande` (
+CREATE TABLE `LigneCommande` (
   `id` int(11) NOT NULL,
   `commande_id` int(11) NOT NULL,
   `tva_id` int(11) NOT NULL,
@@ -635,19 +557,13 @@ CREATE TABLE IF NOT EXISTS `LigneCommande` (
   `Commentaire` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `LigneCommande`
---
-
-TRUNCATE TABLE `LigneCommande`;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `Livraison`
 --
 
-DROP TABLE IF EXISTS `Livraison`;
-CREATE TABLE IF NOT EXISTS `Livraison` (
+CREATE TABLE `Livraison` (
   `id` int(11) NOT NULL,
   `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Adresse` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -655,50 +571,40 @@ CREATE TABLE IF NOT EXISTS `Livraison` (
   `Code_Postal` int(11) NOT NULL,
   `Ville` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Telephone` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Vider la table avant d'insérer `Livraison`
+-- Contenu de la table `Livraison`
 --
 
-TRUNCATE TABLE `Livraison`;
+INSERT INTO `Livraison` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`) VALUES
+(1, 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212');
+
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `MasseSalariale`
 --
 
-DROP TABLE IF EXISTS `MasseSalariale`;
-CREATE TABLE IF NOT EXISTS `MasseSalariale` (
+CREATE TABLE `MasseSalariale` (
   `id` int(11) NOT NULL,
   `activite_id` int(11) NOT NULL,
   `Montant` int(11) NOT NULL,
   `Annee` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `MasseSalariale`
---
-
-TRUNCATE TABLE `MasseSalariale`;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `Service`
 --
 
-DROP TABLE IF EXISTS `Service`;
-CREATE TABLE IF NOT EXISTS `Service` (
+CREATE TABLE `Service` (
   `id` int(11) NOT NULL,
   `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Est_Ancien_Service` tinyint(1) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `Service`
---
-
-TRUNCATE TABLE `Service`;
 --
 -- Contenu de la table `Service`
 --
@@ -714,8 +620,7 @@ INSERT INTO `Service` (`id`, `Nom`, `Est_Ancien_Service`) VALUES
 -- Structure de la table `TempsPasse`
 --
 
-DROP TABLE IF EXISTS `TempsPasse`;
-CREATE TABLE IF NOT EXISTS `TempsPasse` (
+CREATE TABLE `TempsPasse` (
   `id` int(11) NOT NULL,
   `activite_id` int(11) NOT NULL,
   `collectivite_id` int(11) NOT NULL,
@@ -723,28 +628,17 @@ CREATE TABLE IF NOT EXISTS `TempsPasse` (
   `Annee` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `TempsPasse`
---
-
-TRUNCATE TABLE `TempsPasse`;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `TVA`
 --
 
-DROP TABLE IF EXISTS `TVA`;
-CREATE TABLE IF NOT EXISTS `TVA` (
+CREATE TABLE `TVA` (
   `id` int(11) NOT NULL,
   `pourcentage` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `TVA`
---
-
-TRUNCATE TABLE `TVA`;
 --
 -- Contenu de la table `TVA`
 --
@@ -762,19 +656,13 @@ INSERT INTO `TVA` (`id`, `pourcentage`) VALUES
 -- Structure de la table `Utilisateur`
 --
 
-DROP TABLE IF EXISTS `Utilisateur`;
-CREATE TABLE IF NOT EXISTS `Utilisateur` (
+CREATE TABLE `Utilisateur` (
   `id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Prenom` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Vider la table avant d'insérer `Utilisateur`
---
-
-TRUNCATE TABLE `Utilisateur`;
 --
 -- Contenu de la table `Utilisateur`
 --
@@ -980,7 +868,7 @@ ALTER TABLE `Utilisateur`
 -- AUTO_INCREMENT pour la table `Activite`
 --
 ALTER TABLE `Activite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT pour la table `Application`
 --
@@ -995,7 +883,7 @@ ALTER TABLE `Budget`
 -- AUTO_INCREMENT pour la table `CleRepartition`
 --
 ALTER TABLE `CleRepartition`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT pour la table `Collectivite`
 --
@@ -1025,12 +913,12 @@ ALTER TABLE `EtatCommande`
 -- AUTO_INCREMENT pour la table `Fournisseur`
 --
 ALTER TABLE `Fournisseur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `Imputation`
 --
 ALTER TABLE `Imputation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=65;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=67;
 --
 -- AUTO_INCREMENT pour la table `InformationCollectivite`
 --
@@ -1050,7 +938,7 @@ ALTER TABLE `LigneCommande`
 -- AUTO_INCREMENT pour la table `Livraison`
 --
 ALTER TABLE `Livraison`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT pour la table `MasseSalariale`
 --
@@ -1070,7 +958,7 @@ ALTER TABLE `TempsPasse`
 -- AUTO_INCREMENT pour la table `TVA`
 --
 ALTER TABLE `TVA`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT pour la table `Utilisateur`
 --

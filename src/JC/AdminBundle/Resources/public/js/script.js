@@ -144,15 +144,15 @@ $(document).ready(function() {
     var newLigne = 	"<tr>"
 						+"<td></td>"
 						+"<td>" 
-							+"<input type='text' id='jc_commandebundle_listeutilisateurs_listeUtilisateurs___name___nom' name='jc_commandebundle_listeutilisateurs[listeUtilisateurs][__name__][nom]' required='required' maxlength='255'>" 
+							+"<input type='text' id='jc_commandebundle_listeutilisateurs_listeUtilisateurs___name___nom' name='jc_commandebundle_listeutilisateurs[listeUtilisateurs][__name__][nom]' required='required' maxlength='255' class='col-md-10 col-md-offset-1'>" 
 						+"</td>"
 								
 						+"<td>" 
-							+"<input type='text' id='jc_commandebundle_listeutilisateurs_listeUtilisateurs___name___prenom' name='jc_commandebundle_listeutilisateurs[listeUtilisateurs][__name__][prenom]' required='required' maxlength=255'>" 
+							+"<input type='text' id='jc_commandebundle_listeutilisateurs_listeUtilisateurs___name___prenom' name='jc_commandebundle_listeutilisateurs[listeUtilisateurs][__name__][prenom]' required='required' maxlength=255' class='col-md-10 col-md-offset-1'>" 
 						+"</td>"
 
 						+"<td>" 
-							+"<select id='jc_commandebundle_listeutilisateurs_listeUtilisateurs___name___service' name='jc_commandebundle_listeutilisateurs[listeUtilisateurs][__name__][service]'>"
+							+"<select id='jc_commandebundle_listeutilisateurs_listeUtilisateurs___name___service' name='jc_commandebundle_listeutilisateurs[listeUtilisateurs][__name__][service]' class='col-md-10 col-md-offset-1'>"
 		
 								+strOptions
 								
@@ -283,11 +283,11 @@ $(document).ready(function() {
     var newLigne = "<tr>"
 						  	
 						+"<td>" 
-							+"<input type='text' id='jc_commandebundle_listeapplications_listeApplications___name___nom' 																							name='jc_commandebundle_listeapplications[listeApplications][__name__][nom]' class='col-md-8 col-md-offset-2'>" 
+							+"<input type='text' id='jc_commandebundle_listeapplications_listeApplications___name___nom' 																							name='jc_commandebundle_listeapplications[listeApplications][__name__][nom]' class='col-md-10 col-md-offset-1'>" 
 						+"</td>"
 						
 						+"<td>"
-							+"<select id='jc_commandebundle_listeapplications_listeApplications___name___fournisseur' 																								name='jc_commandebundle_listeapplications[listeApplications][__name__][fournisseur]' class='col-md-8 col-md-offset-2'>"
+							+"<select id='jc_commandebundle_listeapplications_listeApplications___name___fournisseur' 																								name='jc_commandebundle_listeapplications[listeApplications][__name__][fournisseur]' class='col-md-10 col-md-offset-1'>"
 							+strOptions
 						+"</select>" 
 					+"</td>"						
@@ -352,11 +352,11 @@ $(document).ready(function() {
     var newLigne = "<tr>"
 						  	
 						+"<td>" 
-							+"<input type='text' id='jc_commandebundle_listeactivites_listeActivites___name___nom' 																name='jc_commandebundle_listeactivites[listeActivites][__name__][nom]' required='required' 														class='col-md-8 col-md-offset-2'>" 
+							+"<input type='text' id='jc_commandebundle_listeactivites_listeActivites___name___nom' 																name='jc_commandebundle_listeactivites[listeActivites][__name__][nom]' required='required' 														class='col-md-10 col-md-offset-1'>" 
 						+"</td>"
 								
 						+"<td>" 
-							+"<select id='jc_commandebundle_listeactivites_listeActivites___name___cleRepartition' 																name='jc_commandebundle_listeactivites[listeActivites][__name__][cleRepartition]' 																	class='col-md-8 col-md-offset-2'>"
+							+"<select id='jc_commandebundle_listeactivites_listeActivites___name___cleRepartition' 																name='jc_commandebundle_listeactivites[listeActivites][__name__][cleRepartition]' 																	class='col-md-10 col-md-offset-1'>"
 						
 								+strOptions
 							+"</select>" 
@@ -384,6 +384,62 @@ $(document).ready(function() {
 						        
 		});    	
 		
+		
+	
+	
+	
+	/*
+	*	Fonction pour ajouter une Imputation
+	*/
+	
+	$("#ajouter_imputation").on('click', function(){
+      	
+      	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
+	  	// - le texte "__name__label__" qu'il contient par le label du champ
+	  	// - le texte "__name__" qu'il contient par le num√©ro du champ
+	  	
+	  	var tableL = $("#body_imputation");
+                
+        //On fait -1 car il y a la ligne du bouton "ajouter"
+	  	var index = (tableL.find('tr').length)-1;
+	  	
+	  	
+    
+   
+    var newLigne = "<tr>"
+							  	
+						+"<td class='col-md-5'>" 
+							+"<input type='text' id='jc_commandebundle_listeimputations_listeImputations___name___libelle' name='jc_commandebundle_listeimputations[listeImputations][__name__][libelle]' required='required' class='col-md-11'>"
+						+"</td>"
+						 		
+						+"<td class='col-md-1'>"
+							+"<input type='text' id='jc_commandebundle_listeimputations_listeImputations___name___sousFonction' name='jc_commandebundle_listeimputations[listeImputations][__name__][sousFonction]' required='required' class='col-md-10 col-md-offset-1'> "
+						+"</td>"
+								
+						+"<td class='col-md-3'>"
+							+"<input type='text' id='jc_commandebundle_listeimputations_listeImputations___name___article' name='jc_commandebundle_listeimputations[listeImputations][__name__][article]' required='required' class='col-md-10 col-md-offset-1'>"
+						+"</td>"
+								
+						+"<td class='col-md-3'>"
+							+"<input type='text' id='jc_commandebundle_listeimputations_listeImputations___name___section' name='jc_commandebundle_listeimputations[listeImputations][__name__][section]' required='required' class='col-md-12'>" 
+						+"</td>"
+											
+					+"</tr>";
+										
+						 	
+						 	
+						 	
+		// remplace les "__name__" utilis√©s dans l'id 
+        // par un nombre unique 
+        newLigne = newLigne.replace(/__name__/g, index);
+								        
+        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
+        $('#last_tr_imputation').after(newLigne);
+								        
+								     
+        return false;				
+						        
+		});    	
 		
 	
 });    

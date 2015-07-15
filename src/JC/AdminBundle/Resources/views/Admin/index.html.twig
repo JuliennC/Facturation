@@ -21,6 +21,8 @@
             <li><a href="#tab6" data-toggle="tab">Budgets des service</a></li>
             <li><a href="#tab7" data-toggle="tab">Activites</a></li>
             <li><a href="#tab8" data-toggle="tab">Applications</a></li>
+            <li><a href="#tab9" data-toggle="tab">Imputations</a></li>
+
           </ul>
         </div>
       </div>
@@ -85,7 +87,13 @@
 		</div>
 		
 		
+		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-2 main" id="tab9">
+		  
+		    	{{ render(controller("JCAdminBundle:Admin:modificationImputations" , { 'request' :request })) }}
+
 		</div>
+			
+	</div>
 
 </div>
 {% endblock %}

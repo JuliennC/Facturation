@@ -28,6 +28,9 @@ TODO liste :
 	-> FAIT Sur la page admin, une fois un form validé, lorsqu’on F5, le form est re-envoyé. En mettant une redirection après le form->isValid() une erreur 302 car on redirige à partir du contrôleur d’un block et non pas de la page, voir comment faire
 	-> FAIT comme des flèches a cote des années pour changer d’année au lieu de modifier dans l’url
 
+
+	-> faire une table section pour imputation, qu’il ne puisse y avoir que fonctionnement ou investissement. Cela dépend si la section est utilisée ou si c’est juste de l’affichage facture
+
 	-> Pour la partie admin, mettre les erreur en flash message pour qu’elles soient accessibles dès l’index
 
 	-> faire une fonction recherche pour la table applications dans admin
