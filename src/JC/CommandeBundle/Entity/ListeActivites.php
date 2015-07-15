@@ -6,13 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
- * ListeApplications
+ * ListeActivites
  *
+ * @ORM\Table()
  * @ORM\Entity
  */
-class ListeApplications
+class ListeActivites
 {
     /**
      * @var integer
@@ -26,21 +26,19 @@ class ListeApplications
 
 
 
-
 	/**
      * @var \Doctrine\Common\Collections\ArrayCollection
      * @Assert\Valid()   
      */
-    private $listeApplications;
+    private $listeActivites;
 
     
     
     
      public function __construct()
     {
-        $this->listeApplications = new ArrayCollection();
+        $this->listeActivites = new ArrayCollection();
     }
-
 
 
 
@@ -58,26 +56,25 @@ class ListeApplications
     
     
     
-    
-    
+       
     /**
-     * @param Application $a
+     * @param Activite $a
      * @return $this
      */
-    public function addApplication($a)
+    public function addActivites($a)
     {
-        $this->listeApplications[] = $s;
+        $this->listeActivites[] = $s;
 
         return $this;
     }
 
     /**
-     * @param Application $a
+     * @param Activite $a
      * @return $this
      */
-    public function removeApplication($a)
+    public function removeActivite($a)
     {
-        $this->listeApplications->remove($a);
+        $this->listeActivites->remove($a);
 
         return $this;
     }
@@ -85,21 +82,24 @@ class ListeApplications
     /**
      * @return ArrayCollection
      */
-    public function getListeApplications()
+    public function getListeActivites()
     {
-        return $this->listeApplications;
+        return $this->listeActivites;
     }
 
     /**
      * @param ArrayCollection $a
      * @return $this
      */
-    public function setListeApplications($a)
+    public function setListeActivites($a)
     {
-        $this->listeApplications = $a;
+        $this->listeActivites = $a;
 
         return $this;
     }
 
+    
+
+    
     
 }

@@ -6,35 +6,45 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use JC\CommandeBundle\Entity\FournisseurRepository;
 
-
-class ApplicationType extends AbstractType
+class ListeActivitesType extends AbstractType
 {
-    /**
+
+
+		/**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
-			
-			->add('fournisseur', 'entity', array(
-				'class'    => 'JCCommandeBundle:Fournisseur',
-				'property' => 'nom',
-				'query_builder' => function(FournisseurRepository $repo) {
-									return $repo->findFournisseursOrdreAlpha();} ,
-				'error_bubbling' => true));
-    }
-    
+            ->add('listeActivites', 'collection', array(
+            	'label' => false,
+		        'type'         => new ActiviteType(),
+		        'allow_add'    => true,
+		        'error_bubbling' => true,
+		        'by_reference' => false))
+
+            ->add('enregistrer', 'submit');
+        ;
+         
+        $builder ->getForm();
+
+}
+	
+
+	
+
+
+
+
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JC\CommandeBundle\Entity\Application'
+            'data_class' => 'JC\CommandeBundle\Entity\ListeActivites'
         ));
     }
 
@@ -43,6 +53,6 @@ class ApplicationType extends AbstractType
      */
     public function getName()
     {
-        return 'jc_commandebundle_application';
+        return 'jc_commandebundle_listeactivites';
     }
 }

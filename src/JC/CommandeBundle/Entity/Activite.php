@@ -28,15 +28,6 @@ class Activite
      */
     private $nom;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="Unite_Oeuvre", type="integer")
-     */
-    private $uniteOeuvre;
-
-
-
 
 
 // DEBUT CLES ETRANGERES
@@ -98,29 +89,7 @@ class Activite
         return $this->nom;
     }
 
-    /**
-     * Set uniteOeuvre
-     *
-     * @param integer $uniteOeuvre
-     * @return Activite
-     */
-    public function setUniteOeuvre($uniteOeuvre)
-    {
-        $this->uniteOeuvre = $uniteOeuvre;
-
-        return $this;
-    }
-
-    /**
-     * Get uniteOeuvre
-     *
-     * @return integer 
-     */
-    public function getUniteOeuvre()
-    {
-        return $this->uniteOeuvre;
-    }
-    
+   
     
     
     /**

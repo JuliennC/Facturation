@@ -37,11 +37,16 @@ use JC\CommandeBundle\Entity\ListeBudgets;
 use JC\CommandeBundle\Form\BudgetType;
 use JC\CommandeBundle\Form\ListeBudgetsType;
 
-
 use JC\CommandeBundle\Entity\Application;
 use JC\CommandeBundle\Entity\ListeApplications;
 use JC\CommandeBundle\Form\ApplicationType;
 use JC\CommandeBundle\Form\ListeApplicationsType;
+
+use JC\CommandeBundle\Entity\Activite;
+use JC\CommandeBundle\Entity\ListeActivites;
+use JC\CommandeBundle\Form\ActiviteType;
+use JC\CommandeBundle\Form\ListeActivitesType;
+
 
 
 
@@ -200,7 +205,27 @@ class AdminController extends Controller
 			
 			}
 			
-		} 
+		
+		
+		//Si le formulaire envoyé est le formulaire des activites
+		} else if(isset($formulaireEnvoye['jc_commandebundle_listeactivites'])) {
+				
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationActivitesAction($request, $annee);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			}
+		}
+		
 
 
 
@@ -727,6 +752,51 @@ dump('kg');
 	 }
 
 
+
+
+	/*
+	 *	Pour modifier les activite 
+	 */
+	 public function modificationActivitesAction(Request $request) {
+
+	 	$em = $this->getDoctrine()->getManager();
+
+	 	//On récupère la liste de toutes les activites
+	 	$listeAct = $em->getRepository('JCCommandeBundle:Activite')->getActiviteOrdreAlpha()->getQuery()->getResult(); 
+	 	
+	 	//Liste qui sera transformée en formulaire
+	 	$listeActivites = new ListeActivites();
+	 	$listeActivites ->setListeActivites($listeAct);
+	 		 	
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
+        $form = $this->get('form.factory')->create(new ListeActivitesType(), $listeActivites);
+
+	 	
+		$form->handleRequest($request);
+
+	 	//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+			//On sauvegarde les activites dans la base
+        	foreach($form->get('listeActivites')->getData() as $act) {
+
+				//On ne sauvegarde pas celle qui ont un nom null
+				if ($act->getNom() != null) {
+					$em->persist($act);
+				}
+			}
+        	
+        	
+        	$em->flush();
+        	
+
+			return new Response('true');
+
+    	} else {
+	 		
+	 		return $this->render('JCAdminBundle:Admin:modif_activites.html.twig', array('form'=>$form->createView()));
+		}
+	 }
 
 
 

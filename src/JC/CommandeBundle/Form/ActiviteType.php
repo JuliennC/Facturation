@@ -6,10 +6,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use JC\CommandeBundle\Entity\FournisseurRepository;
+use JC\CommandeBundle\Entity\CleRepartitionRepository;
 
 
-class ApplicationType extends AbstractType
+class ActiviteType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,13 +19,14 @@ class ApplicationType extends AbstractType
     {
         $builder
             ->add('nom', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
-			
-			->add('fournisseur', 'entity', array(
-				'class'    => 'JCCommandeBundle:Fournisseur',
+            
+            ->add('cleRepartition', 'entity', array(
+				'class'    => 'JCCommandeBundle:CleRepartition',
 				'property' => 'nom',
-				'query_builder' => function(FournisseurRepository $repo) {
-									return $repo->findFournisseursOrdreAlpha();} ,
+				'query_builder' => function(CleRepartitionRepository $repo) {
+									return $repo->getCleOrdreAlpha();} ,
 				'error_bubbling' => true));
+        ;
     }
     
     /**
@@ -34,7 +35,7 @@ class ApplicationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JC\CommandeBundle\Entity\Application'
+            'data_class' => 'JC\CommandeBundle\Entity\Activite'
         ));
     }
 
@@ -43,6 +44,6 @@ class ApplicationType extends AbstractType
      */
     public function getName()
     {
-        return 'jc_commandebundle_application';
+        return 'jc_commandebundle_activite';
     }
 }

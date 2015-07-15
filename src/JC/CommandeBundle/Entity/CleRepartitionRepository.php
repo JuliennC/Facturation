@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class CleRepartitionRepository extends EntityRepository
 {
+	
+	public function getCleOrdreAlpha() {
+    return $this
+      ->createQueryBuilder('cr')
+      ->orderBy('cr.nom', 'ASC')
+    ;
+    
+    }
+    
 }

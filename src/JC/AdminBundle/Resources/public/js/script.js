@@ -243,8 +243,10 @@ $(document).ready(function() {
 
 
 
-		/*
-	*	Fonction pour ajouter un utilisateur
+	
+	
+	/*
+	*	Fonction pour ajouter une application
 	*/
 	
 	$("#ajouter_application").on('click', function(){
@@ -305,7 +307,77 @@ $(document).ready(function() {
         return false;				
 						        
 		});    
-		
+	
+	
+	
+	
+	
+	
+	
+	/*
+	*	Fonction pour ajouter une activite
+	*/
+	
+	$("#ajouter_activite").on('click', function(){
+      	
+      	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
+	  	// - le texte "__name__label__" qu'il contient par le label du champ
+	  	// - le texte "__name__" qu'il contient par le num√©ro du champ
+	  	
+	  	var tableL = $("#body_activite");
+                
+        //On fait -1 car il y a la ligne du bouton "ajouter"
+	  	var index = (tableL.find('tr').length)-1;
+	  	
+	  	
+	 	       
+    //On doit récupérer les options du select
+	// Pour cela, on récupère les options de la première activite (en partant du principe qu'il y a au moins 1 activite ....)
+	var strOptions = "";
+ 	//On récupère la ligne de la première activite
+ 	var tr = tableL.find("tr:last");
+
+  	//On va chercher son select, et on parcours les options
+  	tr.find("select:first option").each(function() {
+									
+		//On créé un string que l'on ajoutera au moment voulu
+		strOptions += "<option value='"+$(this).val()+"'>";
+		strOptions += $(this).text();
+		strOptions += "</option>";
+
+	});  	
+           
+    
+   
+    var newLigne = "<tr>"
+						  	
+						+"<td>" 
+							+"<input type='text' id='jc_commandebundle_listeactivites_listeActivites___name___nom' 																name='jc_commandebundle_listeactivites[listeActivites][__name__][nom]' required='required' 														class='col-md-8 col-md-offset-2'>" 
+						+"</td>"
+								
+						+"<td>" 
+							+"<select id='jc_commandebundle_listeactivites_listeActivites___name___cleRepartition' 																name='jc_commandebundle_listeactivites[listeActivites][__name__][cleRepartition]' 																	class='col-md-8 col-md-offset-2'>"
+						
+								+strOptions
+							+"</select>" 
+						+"</td>"
+			
+					+"</tr>"
+										
+						 	
+						 	
+						 	
+		// remplace les "__name__" utilis√©s dans l'id 
+        // par un nombre unique 
+        newLigne = newLigne.replace(/__name__/g, index);
+								        
+        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
+        $('#last_tr_activite').after(newLigne);
+								        
+								     
+        return false;				
+						        
+		});    	
 		
 		
 	
