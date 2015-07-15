@@ -117,7 +117,6 @@
                                                                     <a type="hiden" id="bouton_close_modal_Fournisseur" class="close" data-dismiss="modal" aria-label="Close"></a>
                                                                 </div>
                                                             </div>
-
                                                             <table class="table table_center">
 
                                                                 <thead>
@@ -127,9 +126,10 @@
                                                                 </thead>
 
                                                                 <tbody>
-
+																	
                                                                     {% for fournisseur in listeFournisseurs %}
                                                                         <tr>
+                                                                        
                                                                             <td onclick="setInfos('Fournisseur','{{fournisseur.nom}}', '{{fournisseur.adresse}}', '{{fournisseur.complementAdresse}}', '{{fournisseur.ville}}',
                                                                                     '{{fournisseur.codePostal}}','{{fournisseur.telephone}}')">{{ fournisseur.nom }}</td>
                                                                         </tr>
@@ -246,7 +246,7 @@
 
 
 	<div class='row'>
-		<div class='container col-md-offset-1 col-md-10 top30'>
+		<div class='container  col-md-12 top30'>
 			<div class='well'>
 				<legend>Ventilation</legend>
 	
@@ -319,9 +319,9 @@
 						<td> {{ form_widget(ligne.commentaire, {'attr': {'class':'col-md-11 col-md-offset-1'}}) }} </td>
 						<td> {{ form_widget(ligne.reference, {'attr': {'class':'col-md-11 col-md-offset-1'}}) }} </td>
 						<td> {{ form_widget(ligne.quantite, {'attr': {'class':'col-md-11 col-md-offset-1', 'onkeyup':'calcul_TTC('~i~');'}}) }} </td>
-						<td> {{ form_widget(ligne.prixUnitaire, {'attr': {'class':'col-md-8 col-md-offset-2 ', 'onkeyup':'calcul_TTC('~i~');'}}) }} €</td>
+						<td> {{ form_widget(ligne.prixUnitaire, {'attr': {'class':'col-md-8 col-md-offset-2 ', 'onkeyup':'calcul_TTC('~i~');'}}) }} ‚Ç¨</td>
 						<td> {{ form_widget(ligne.tva, {'attr': {'class':'col-md-11 col-md-offset-1', 'onchange':'calcul_TTC('~i~');'}}) }}</td>
-                        <td> <label class='col-md-11 col-md-offset-1' id='total_TTC_{{i}}' value='0.00 �'></label> </td>
+                        <td> <label class='col-md-11 col-md-offset-1' id='total_TTC_{{i}}' value='0.00 €'></label> </td>
                         	{{ form_widget(ligne.totalTTC) }}
 						
                             <script> calcul_TTC({{i}}); </script>

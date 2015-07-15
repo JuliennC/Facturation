@@ -1,6 +1,6 @@
 
 /*
-*	Fonction qui coche les checbox de la ville passée en paramettre
+*	Fonction qui coche les checbox de la ville pass√©e en paramettre
 */
  function metVille(ventilation, nomColl, idColl, repartition){
 
@@ -15,9 +15,9 @@
         
 	} else if(ventilation == "Directe"){
 		
-		//Si la commande �tait au parravant mutualis�e
+		//Si la commande était au parravant mutualisée
 		//Et qu'on la change en directe, si une erreur dans le form, alors repartition sera
-		//La cl� de repartition de l'applicatoin (ce que l'on stock lorqu'une commande est mutualis�es)
+		//La clé de repartition de l'applicatoin (ce que l'on stock lorqu'une commande est mutualisées)
 		if($.isNumeric(repartition)){
 			document.getElementById('input_repartition_'+nomColl).setAttribute('value',repartition);
 			document.getElementById('jc_commandebundle_commande_repartition'+idColl).setAttribute('value',repartition);
@@ -36,7 +36,6 @@
 *	d'un precedent formulaire (avec fautes)
 */
 function remetValeur(nomColl, idColl){
-	console.log(' l : '+nomColl);
 	document.getElementById('input_repartition_'+nomColl).setAttribute('value',$('#jc_commandebundle_commande_repartition'+idColl).val());
 	
 }
@@ -45,8 +44,8 @@ function remetValeur(nomColl, idColl){
 
 
 	/* 
-	*	Fonction appelé lorsque l'utilisateur veut changer l'etat d'une commmande, 
-	*	Elle envoie la requete et indique la réponse
+	*	Fonction appel√© lorsque l'utilisateur veut changer l'etat d'une commmande, 
+	*	Elle envoie la requete et indique la r√©ponse
 	*/
 function changementEtatCommande(idC, etatC){
 	
@@ -54,7 +53,7 @@ function changementEtatCommande(idC, etatC){
 		
 		var data = 'id='+idC;
 		
-		//On appelle la route qui va mettre la commande � pay�e
+		//On appelle la route qui va mettre la commande à payée
 		$.ajax({
 				type: "get",
 				url: Routing.generate('jc_commande_marque_payee'),
@@ -119,7 +118,7 @@ function calcul_TTC(id){
     var total = (quantite * prix_unitaire * (1 + (p/100))).toFixed(2);
 
     var label_total = document.getElementById('total_TTC_'+id);
-    label_total.innerHTML = total+" €";
+    label_total.innerHTML = total+" ‚Ç¨";
     
     document.getElementById('jc_commandebundle_commande_listeLignesCommande_'+id+'_totalTTC').value = total;
 }  
@@ -147,9 +146,9 @@ $(document).ready(function() {
    
     $("#ajouter_ligne_commande").on('click', function(){
       	
-      	// Dans le contenu de l'attribut « data-prototype », on remplace :
+      	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
 	  	// - le texte "__name__label__" qu'il contient par le label du champ
-	  	// - le texte "__name__" qu'il contient par le numéro du champ
+	  	// - le texte "__name__" qu'il contient par le num√©ro du champ
 	  	
 	  	var tableL = $("#tbody_corps");
                 //On fait -1 car il y a la ligne du bouton "ajouter"
@@ -180,7 +179,7 @@ $(document).ready(function() {
 						"</td>"+
 						
 						"<td>"+
-							"<input type='text' onkeyup='calcul_TTC(__name__);'  id='jc_commandebundle_commande_listeLignesCommande___name___prixUnitaire' name='jc_commandebundle_commande[listeLignesCommande][__name__][prixUnitaire]' 												required='required' class='col-md-10 col-md-offset-1'> €"+
+							"<input type='text' onkeyup='calcul_TTC(__name__);'  id='jc_commandebundle_commande_listeLignesCommande___name___prixUnitaire' name='jc_commandebundle_commande[listeLignesCommande][__name__][prixUnitaire]' 												required='required' class='col-md-10 col-md-offset-1'> ‚Ç¨"+
 						"</td>"+
 							
 						"<td>"+
@@ -188,8 +187,8 @@ $(document).ready(function() {
 						 	
 						 	//On va chercher les taux de TVA dans la base
 						 	
-						 	//	On dit à ajax d'être synchrone
-						 	//	Inconvéniant --> Si la requête est lente, la nouvelle ligne mettra du temps à s'afficher
+						 	//	On dit √† ajax d'√™tre synchrone
+						 	//	Inconv√©niant --> Si la requ√™te est lente, la nouvelle ligne mettra du temps √† s'afficher
 						 	//	Avantage --> On est sur qu'il y aura les bon % de TVA dans les choix
 						 	$.ajaxSetup({async: false});
 						 	
@@ -199,9 +198,9 @@ $(document).ready(function() {
 						        success: function(json){						
 						   			
 						   			if( json.length === 0) {
-							   			alert("Une erreur s'est produite, veuillez réessayer");
+							   			alert("Une erreur s'est produite, veuillez r√©essayer");
 										
-										//On remet la valeur par défaut
+										//On remet la valeur par d√©faut
 										$.ajaxSetup({async: true});
 								        
 								        return false;
@@ -220,7 +219,7 @@ $(document).ready(function() {
 													"</td>"+
 													
 													"<td>"+
-														"<label class='col-md-11 col-md-offset-1' id='total_TTC___name__' value='0.00 �'></label>"+
+														"<label class='col-md-11 col-md-offset-1' id='total_TTC___name__' value='0.00 Ä'></label>"+
 													"</td>"+ 
                                                                                                 
                                                                                                             "<input type='hidden' id='jc_commandebundle_commande_listeLignesCommande___name___totalTTC' name='jc_commandebundle_commande[listeLignesCommande][__name__][totalTTC]' value='0.00' />"
@@ -229,15 +228,15 @@ $(document).ready(function() {
 							      	
 							     
 							      	
-								      	// remplace les "__name__" utilisés dans l'id 
+								      	// remplace les "__name__" utilis√©s dans l'id 
 								        // par un nombre unique 
 								        newLigne = newLigne.replace(/__name__/g, index);
 								        
-								        // créer une nouvelle liste d'éléments et l'ajoute à notre liste
+								        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
 								        var newLi = jQuery('<tr></tr>').html(newLigne);
 								        newLi.appendTo(tableL);
 								        
-								        //	On remet la valeur par défaut
+								        //	On remet la valeur par d√©faut
 										$.ajaxSetup({async: true});
 										
 								        return false;
@@ -259,8 +258,8 @@ $(document).ready(function() {
 
 
 	/* 
-	*	Fonction utilisé dans la création et la modification d'une commande, 
-	*	Elle gère l'affichage des villes suivant le choix "mutualisée" ou "directe"
+	*	Fonction utilis√© dans la cr√©ation et la modification d'une commande, 
+	*	Elle g√®re l'affichage des villes suivant le choix "mutualis√©e" ou "directe"
 	*/
 	$('#select-ventilation a').click(function(){
 
@@ -330,7 +329,7 @@ $(document).ready(function() {
 		//On recupere la ville concernee
 		var villeConcernee = $(this).attr('for');
 		
-		//On met � jour le champs cache concerne
+		//On met à jour le champs cache concerne
 		var hidden = $('input[attr_nom_ville='+villeConcernee+']');
 
         //On sauvegarde la repartition

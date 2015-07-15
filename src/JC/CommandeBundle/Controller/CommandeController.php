@@ -223,9 +223,9 @@ class CommandeController extends Controller
             $listeLivraisons = $em->getRepository('JCCommandeBundle:Livraison')->findLivraisonsOrdreAlpha();
                         
             //  On recupere la liste des fournisseurs deja enregistres
-            $listeFournisseurs = $em->getRepository('JCCommandeBundle:Fournisseur')->findFournisseursOrdreAlpha();
+            $listeFournisseurs = $em->getRepository('JCCommandeBundle:Fournisseur')->findFournisseursOrdreAlpha()->getQuery()->getResult();
                         
-			
+
 			//On recupere toutes les villes deja choisie DANS LA BASe De DONNee
             $cCCDejaBDD = $em->getRepository('JCCommandeBundle:CommandeConcerneCollectivite')->findCommandeConcerneCollectiviteAvecCommande($commande->getId());
 			
