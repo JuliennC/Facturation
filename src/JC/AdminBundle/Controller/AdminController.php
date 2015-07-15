@@ -62,7 +62,6 @@ class AdminController extends Controller
 
 
 		$formulaireEnvoye = $request->request->all();
-		dump($formulaireEnvoye);
 		
 		/*
 		*	On doit vérifier les formulaire ici afain de pouvoir effectuer les redirections si besoin
@@ -514,7 +513,7 @@ class AdminController extends Controller
 	 	$listeUtilisateurs -> setListeUtilisateurs($listeU);
 	 		 	
 	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque utilisateur)
-        $form = $this->get('form.factory')->create(new ListeUtilisateursType(), $listeUtilisateurs);
+        $form = $this->get('form.factory')->create(new ListeUtilisateursType($em), $listeUtilisateurs);
 
 	 	
 		$form->handleRequest($request);
@@ -565,7 +564,6 @@ class AdminController extends Controller
 	 *  
 	 */
 	 public function modificationServicesAction(Request $request) {
-dump('kg');
 
 	 	$em = $this->getDoctrine()->getManager();
 
@@ -592,7 +590,6 @@ dump('kg');
 
 			//On sauvegarde les service dans la base
         	foreach($form->get('listeServices')->getData() as $service) {
-					dump('id : '.$service->getId());
 
 				//On ne sauvegarde pas ceux qui ont un nom null
 				if ($service->getNom() != null ) {
@@ -678,7 +675,7 @@ dump('kg');
 
         	//On récupère la liste des informations du formulaire
         	$listeBudgets = $form->get('listeBudgets')->getData();
-        		        	dump('l b'.$listeBudgets);
+
         	foreach($listeBudgets as $b) {
 			
 				if($b->getMontant() != 0){
@@ -721,13 +718,14 @@ dump('kg');
 	 	$listeApplications ->setListeApplications($listeApp);
 	 		 	
 	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
-        $form = $this->get('form.factory')->create(new ListeApplicationsType(), $listeApplications);
+        $form = $this->get('form.factory')->create(new ListeApplicationsType($em), $listeApplications);
 
 	 	
 		$form->handleRequest($request);
 
 	 	//Si le formulaire est valide, on sauvegarde dans la base
 		if ($form->isValid()) {
+
 
 			//On sauvegarde les villes dans la base
         	foreach($form->get('listeApplications')->getData() as $app) {
@@ -745,7 +743,8 @@ dump('kg');
 			return new Response('true');
 
     	} else {
-	 		
+	 		//var_dump( 'mem 7 : '.(memory_get_usage()/1024/1024));
+
 	 		return $this->render('JCAdminBundle:Admin:modif_applications.html.twig', array('form'=>$form->createView()));
 		}
 	 }
@@ -773,7 +772,7 @@ dump('kg');
 	 	$listeActivites ->setListeActivites($listeAct);
 	 		 	
 	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
-        $form = $this->get('form.factory')->create(new ListeActivitesType(), $listeActivites);
+        $form = $this->get('form.factory')->create(new ListeActivitesType($em), $listeActivites);
 
 	 	
 		$form->handleRequest($request);
@@ -797,7 +796,7 @@ dump('kg');
 			return new Response('true');
 
     	} else {
-	 		
+
 	 		return $this->render('JCAdminBundle:Admin:modif_activites.html.twig', array('form'=>$form->createView()));
 		}
 	 }

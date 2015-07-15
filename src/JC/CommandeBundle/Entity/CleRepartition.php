@@ -29,6 +29,11 @@ class CleRepartition
     private $nom;
 
 
+
+	public function __toString() {
+		return $this->nom;
+	}
+
     /**
      * Get id
      *

@@ -11,6 +11,21 @@ use JC\CommandeBundle\Entity\ServiceRepository;
 
 class UtilisateurType extends AbstractType
 {
+	
+	
+		
+	protected $listeServices;
+	
+
+    function __construct($listeServices)
+    {
+        $this->listeFournisseurs = $listeServices;
+    }
+	
+	
+	
+	
+	
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -20,13 +35,24 @@ class UtilisateurType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
-            ->add('service','entity', array(
+            
+            
+            ->add('service', 'entity', array(
+				    'class'    => 'JCCommandeBundle:Service',
+				    'choices'   => $this->listeFournisseurs,
+				    'multiple'  => false ,
+				    'expanded' => false,
+					'error_bubbling' => false,
+					));
+
+            
+            /*->add('service','entity', array(
 					'class'    => 'JCCommandeBundle:Service',
 					'property' => 'nom',
 					'query_builder' => function(ServiceRepository $repo) {
 										return $repo->getServiceNonAncienOrdreAlpha();},
 					'error_bubbling' => true, 
-					))    
+					))    */
 				;
     }
     

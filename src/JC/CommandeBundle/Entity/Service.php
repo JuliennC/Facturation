@@ -36,6 +36,12 @@ class Service
     private $estAncienService;
 
 
+
+	public function __toString(){
+		return $this->nom;
+	}
+
+
     /**
      * Get id
      *

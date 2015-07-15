@@ -1,6 +1,7 @@
 <?php
 
 namespace JC\CommandeBundle\Form;
+use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,6 +12,15 @@ use Symfony\Component\Form\FormError;
 
 class ListeUtilisateursType extends AbstractType
 {
+	
+	protected $em;
+	
+
+    function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
 
 	/**
      * @param FormBuilderInterface $builder
@@ -18,10 +28,16 @@ class ListeUtilisateursType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+	    
+	    
+	    //On récupère tous les services pour ne pas avoir à faire autant de requete qu'li y a d'utilisateur
+		$listeServices = $this->em->getRepository('JCCommandeBundle:Service')->getServiceNonAncienOrdreAlpha()->getQuery()->getResult();
+	    
+	    
         $builder
             ->add('listeUtilisateurs', 'collection', array(
             	'label' => false,
-		        'type'         => new UtilisateurType(),
+		        'type'         => new UtilisateurType($listeServices),
 		        'allow_add'    => true,
 		        'allow_delete' => true,
 		        'error_bubbling' => true,

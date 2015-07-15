@@ -13,6 +13,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Fournisseur
 {
+	
+	
+	
+	public function __toString(){
+		return $this->nom;
+	}
     /**
      * @var integer
      *

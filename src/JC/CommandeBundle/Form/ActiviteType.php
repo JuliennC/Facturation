@@ -11,6 +11,18 @@ use JC\CommandeBundle\Entity\CleRepartitionRepository;
 
 class ActiviteType extends AbstractType
 {
+	
+	protected $listeCles;
+	
+
+    function __construct($listeCles)
+    {
+        $this->listeCles = $listeCles;
+    }
+	
+
+	
+	
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -22,12 +34,23 @@ class ActiviteType extends AbstractType
             
             ->add('estAncienneActivite','checkbox', array('required'=>false, 'error_bubbling' => true, ))
          
+            
             ->add('cleRepartition', 'entity', array(
+				    'class'    => 'JCCommandeBundle:CleRepartition',
+				    'choices'   => $this->listeCles,
+				    'multiple'  => false ,
+				    'expanded' => false,
+					'error_bubbling' => false,
+					));
+
+            
+            
+            /*->add('cleRepartition', 'entity', array(
 				'class'    => 'JCCommandeBundle:CleRepartition',
 				'property' => 'nom',
 				'query_builder' => function(CleRepartitionRepository $repo) {
 									return $repo->getCleOrdreAlpha();} ,
-				'error_bubbling' => true));
+				'error_bubbling' => true));*/
         ;
     }
     

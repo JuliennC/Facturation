@@ -11,22 +11,45 @@ use JC\CommandeBundle\Entity\FournisseurRepository;
 
 class ApplicationType extends AbstractType
 {
+	
+	protected $listeFournisseurs;
+	
+
+    function __construct($listeFournisseurs)
+    {
+        $this->listeFournisseurs = $listeFournisseurs;
+    }
+	
+	
+	
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+	    
+	    
+	           
         $builder
             ->add('nom', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
 			
 			->add('fournisseur', 'entity', array(
+				    'class'    => 'JCCommandeBundle:Fournisseur',
+				    'choices'   => $this->listeFournisseurs,
+				    'multiple'  => false ,
+				    'expanded' => false,
+					'error_bubbling' => false,
+					));
+					
+					
+			/*->add('fournisseur', 'entity', array(
 				'class'    => 'JCCommandeBundle:Fournisseur',
 				'property' => 'nom',
 				'query_builder' => function(FournisseurRepository $repo) {
 									return $repo->findFournisseursOrdreAlpha();} ,
-				'error_bubbling' => true));
-    }
+				'error_bubbling' => true));		*/		
+	    }
     
     /**
      * @param OptionsResolverInterface $resolver
