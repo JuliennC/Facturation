@@ -30,6 +30,16 @@ class Activite
 
 
 
+	 /**
+     * @var boolean
+     *
+     * @ORM\Column(name="Est_Ancienne_Activite", type="boolean")
+     */
+    private $estAncienneActivite;
+
+
+
+
 // DEBUT CLES ETRANGERES
 
 	/**
@@ -44,6 +54,11 @@ class Activite
 
 
 // FONCTIONS 
+
+    public function __construct()
+    {
+        $this->estAncienneActivite = false;
+    }
 
 
 
@@ -115,6 +130,31 @@ class Activite
         return $this->cleRepartition;
     }
 
+
+
+	
+    /**
+     * Set estAncienneActivite
+     *
+     * @param boolean $estAncienneActivite
+     * @return Activite
+     */
+    public function setEstAncienneActivite($estAncienneActivite)
+    {
+        $this->estAncienneActivite = $estAncienneActivite;
+
+        return $this;
+    }
+
+    /**
+     * Get estAncienneActivite
+     *
+     * @return boolean 
+     */
+    public function getEstAncienneActivite()
+    {
+        return $this->estAncienneActivite;
+    }
 
 
 }

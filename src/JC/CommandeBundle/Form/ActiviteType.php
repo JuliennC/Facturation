@@ -20,6 +20,8 @@ class ActiviteType extends AbstractType
         $builder
             ->add('nom', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             
+            ->add('estAncienneActivite','checkbox', array('required'=>false, 'error_bubbling' => true, ))
+         
             ->add('cleRepartition', 'entity', array(
 				'class'    => 'JCCommandeBundle:CleRepartition',
 				'property' => 'nom',

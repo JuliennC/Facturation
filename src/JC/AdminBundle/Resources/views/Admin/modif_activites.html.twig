@@ -31,6 +31,8 @@
 				    <thead>
 				    	<tr class="filters">										
                         	<th >Activite</th>
+                        	<th >Clé de répartition</th>
+                        	<th >Ancienne Activite</th>
 							
 						</tr>								
 				    </thead>
@@ -47,19 +49,54 @@
 				  		
 				  		
 						{# On parcours les applications #}
-						{% for app in form.listeActivites %}
+						{% for activite in form.listeActivites %}
 				
-						  	<tr>
-						  	
-								<td> {{form_widget(app.nom, {'attr': {'class':'col-md-8 col-md-offset-2'}} )}} </td>				
-								<td> {{form_widget(app.cleRepartition, {'attr': {'class':'col-md-8 col-md-offset-2'}} )}} </td>				
-
+							{% if activite.vars.value.estAncienneActivite == false %}
+						
+							  	<tr>
+							  	
+									<td> {{form_widget(activite.nom, {'attr': {'class':'col-md-8 col-md-offset-2'}} )}} </td>				
+									<td> {{form_widget(activite.cleRepartition, {'attr': {'class':'col-md-8 col-md-offset-2'}} )}} </td>				
+									<td> {{form_widget(activite.estAncienneActivite )}} </td>				
+											
+								</tr>
 										
-							</tr>
-			
+							{% endif %}
 							
 						{% endfor %}
 				
+						
+						
+						
+						{% set i = 0 %}
+						
+						{# On parcours les activite  #}
+						{% for activite in form.listeActivites %}
+				
+							{% if activite.vars.value.estAncienneActivite == true %}
+							  
+							  	{% if i == 0 %}
+							  
+							  		<tr>
+							  			<td colspan='3' style='background-color:lightgray'></td>
+							  		</tr>
+							  		
+							  		{% set i = 1 %}
+							  	{% endif %}
+							  	
+							  	<tr>
+							  	
+									<td> {{form_widget(activite.nom, {'attr': {'class':'col-md-8 col-md-offset-2'}} )}} </td>				
+									<td> {{form_widget(activite.cleRepartition, {'attr': {'class':'col-md-8 col-md-offset-2'}} )}} </td>				
+									<td> {{form_widget(activite.estAncienneActivite )}} </td>				
+											
+								</tr>
+								
+								
+							{% endif %}
+							
+						{% endfor %}
+
 						
 				  
 				  </tbody>

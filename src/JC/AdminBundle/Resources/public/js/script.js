@@ -362,6 +362,11 @@ $(document).ready(function() {
 							+"</select>" 
 						+"</td>"
 			
+			
+						+"<td>" 
+							+"<input type='checkbox' id='jc_commandebundle_listeactivites_listeActivites___name___estAncienneActivite' 											name='jc_commandebundle_listeactivites[listeActivites][__name__][estAncienneActivite]'>"
+							+"</td>"
+			
 					+"</tr>"
 										
 						 	

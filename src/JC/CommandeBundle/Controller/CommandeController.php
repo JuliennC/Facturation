@@ -668,7 +668,6 @@ class CommandeController extends Controller
 		// Creation d'une activite		
 		$activite3 = new Activite();
 		$activite3 -> setNom('Gerer les postes adm');
-		$activite3 -> setUniteOeuvre(12345);
 		$activite3 -> setCleRepartition($cle);
 		$em->persist($activite3);		
 			

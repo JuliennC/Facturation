@@ -90,7 +90,7 @@ class CommandeType extends AbstractType
 				'class'    => 'JCCommandeBundle:Activite',
 				'property' => 'nom',
 				'query_builder' => function(ActiviteRepository $repo) {
-									return $repo->queryFindAll()/*getActiviteOrdreAlpha()*/;} ,
+									return $repo->getActiviteNonAncienneOrdreAlpha();} ,
 				'error_bubbling' => true))
 			
 			->add('application', 'entity', array(

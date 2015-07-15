@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * ListeActivites
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class ListeActivites

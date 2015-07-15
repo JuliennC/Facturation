@@ -21,12 +21,20 @@ class ActiviteRepository extends EntityRepository
     
     }
     
-    
-    public function queryFindAll() {
+  	
+  
+  public function getActiviteNonAncienneOrdreAlpha() {
     return $this
       ->createQueryBuilder('a')
+      
+
+      
+      ->orderBy('a.nom', 'ASC')
+	  ->where('a.estAncienneActivite = false')
     ;
-    
-    }
+  }
+
+
+
 
 }
