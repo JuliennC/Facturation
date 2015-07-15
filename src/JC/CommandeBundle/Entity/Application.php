@@ -29,6 +29,14 @@ class Application
     private $nom;
 
 
+	 /**
+     * @var string
+     *
+     * @ORM\Column(name="Libelle", type="string", length=255, nullable=true)
+     */
+    private $libelle;
+
+
 
 
 // DEBUT CLES ETRANGERES
@@ -101,6 +109,32 @@ class Application
         return $this->nom;
     }
 
+
+
+
+
+	 /**
+     * Set libelle
+     *
+     * @param string $nom
+     * @return Application
+     */
+    public function setLibelle($libelle)
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    /**
+     * Get libelle
+     *
+     * @return string 
+     */
+    public function getLibelle()
+    {
+        return $this->libelle;
+    }
  
 	
 
@@ -130,6 +164,7 @@ class Application
     {
         return $this->fournisseur;
     }
+
 
 
 

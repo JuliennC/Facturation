@@ -571,7 +571,117 @@ class CommandeController extends Controller
 	  	  
 	  	  
 	  	  
-	  
+	  public function bAction(){
+		  // Creation d'une activite		
+		$activite3 = new Activite();
+		$activite3 -> setNom('Gerer les postes adm');
+		$activite3 -> setCleRepartition($cle);
+		$em->persist($activite3);		
+			
+		$activite4 = new Activite();
+		$activite4 -> setNom('Gerer les smartphones / tablettes');
+		$activite4 -> setUniteOeuvre(67890);
+		$activite4 -> setCleRepartition($cle2);
+		$em->persist($activite4);
+		
+		$activite5 = new Activite();
+		$activite5 -> setNom('Gerer les postes Žcoles');
+		$activite5 -> setUniteOeuvre(12345);
+		$activite5 -> setCleRepartition($cle);
+		$em->persist($activite5);
+				
+		$activite6 = new Activite();
+		$activite6 -> setNom('Gerer les postes internet publiques');
+		$activite6 -> setUniteOeuvre(67890);
+		$activite6 -> setCleRepartition($cle2);
+		$em->persist($activite6);
+	
+		$activite7 = new Activite();
+		$activite7 -> setNom('Gerer les telecoms');
+		$activite7 -> setUniteOeuvre(12345);
+		$activite7 -> setCleRepartition($cle);
+		$em->persist($activite7);
+		
+		$activite8 = new Activite();
+		$activite8 -> setNom("Gerer l'infrastructure");
+		$activite8 -> setUniteOeuvre(67890);
+		$activite8 -> setCleRepartition($cle2);
+		$em->persist($activite8);		
+		
+		$activite9 = new Activite();
+		$activite9 -> setNom("Intervenir sur demande - Bureautique");
+		$activite9 -> setUniteOeuvre(67890);
+		$activite9 -> setCleRepartition($cle);
+		$em->persist($activite9);		
+		
+		$activite10 = new Activite();
+		$activite10 -> setNom("Intervenir sur demande - Infrastructure");
+		$activite10 -> setUniteOeuvre(67890);
+		$activite10 -> setCleRepartition($cle2);
+		$em->persist($activite10);
+		
+		$activite11 = new Activite();
+		$activite11 -> setNom("Intervenir sur demande - Etude");
+		$activite11 -> setUniteOeuvre(67890);
+		$activite11 -> setCleRepartition($cle);
+		$em->persist($activite11);
+
+		$activite2 = new Activite();
+		$activite2 -> setNom('Gerer FI');
+		$activite2 -> setUniteOeuvre(67890);
+		$activite2 -> setCleRepartition($cle2);
+		$em->persist($activite2);
+
+		$activite12 = new Activite();
+		$activite12 -> setNom('Gerer POP');
+		$activite12 -> setUniteOeuvre(67890);
+		$activite12 -> setCleRepartition($cle);
+		$em->persist($activite12);
+		
+		$activite = new Activite();
+		$activite -> setNom('Gerer RH');
+		$activite -> setUniteOeuvre(12345);
+		$activite -> setCleRepartition($cle);
+		$em->persist($activite);
+
+		$activite13 = new Activite();
+		$activite13 -> setNom('Gerer GEST');
+		$activite13 -> setUniteOeuvre(67890);
+		$activite13 -> setCleRepartition($cle2);
+		$em->persist($activite13);
+		
+		$activite14 = new Activite();
+		$activite14 -> setNom('Gerer TECH');
+		$activite14 -> setUniteOeuvre(67890);
+		$activite14 -> setCleRepartition($cle);
+		$em->persist($activite14);
+			
+		$activite15 = new Activite();
+		$activite15 -> setNom('Gerer WEB');
+		$activite15 -> setUniteOeuvre(67890);
+		$activite15 -> setCleRepartition($cle2);
+		$em->persist($activite15);
+			
+		$activite16 = new Activite();
+		$activite16 -> setNom('Gerer SIG');
+		$activite16 -> setUniteOeuvre(67890);
+		$activite16 -> setCleRepartition($cle);
+		$em->persist($activite16);	
+		
+		$activite17 = new Activite();
+		$activite17 -> setNom('Gerer SOC');
+		$activite17 -> setUniteOeuvre(67890);
+		$activite17 -> setCleRepartition($cle2);
+		$em->persist($activite17);	
+				
+		$activite18 = new Activite();
+		$activite18 -> setNom('Gerer CULT');
+		$activite18 -> setUniteOeuvre(67890);
+		$activite18 -> setCleRepartition($cle);
+		$em->persist($activite18);	
+		
+		$em->flush();
+	  }
 	  
 	 
 	// Fonction qui sera supprimee -- sert uniquement Ã  inserer dans la base de donnee

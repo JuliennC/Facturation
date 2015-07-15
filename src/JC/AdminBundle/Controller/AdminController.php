@@ -54,7 +54,6 @@ class AdminController extends Controller
 {
     public function indexAction(Request $request, $annee )
     {
-	     		
 
 		//Si aucune année n'est entrée
 		if($annee === "html"){
@@ -750,6 +749,11 @@ dump('kg');
 	 		return $this->render('JCAdminBundle:Admin:modif_applications.html.twig', array('form'=>$form->createView()));
 		}
 	 }
+	 
+	 
+	 
+	 
+	 
 
 
 

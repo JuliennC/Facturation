@@ -36,6 +36,7 @@
 *	d'un precedent formulaire (avec fautes)
 */
 function remetValeur(nomColl, idColl){
+	console.log(' l : '+nomColl);
 	document.getElementById('input_repartition_'+nomColl).setAttribute('value',$('#jc_commandebundle_commande_repartition'+idColl).val());
 	
 }

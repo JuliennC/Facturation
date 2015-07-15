@@ -358,7 +358,7 @@
         
         
 		
-		<script>
+		<script charset="UTF-8">
  
 			$( document ).ready(function() {
 				
@@ -367,7 +367,7 @@
 					metVille('{{commande.ventilation}}','{{ccc.collectivite.nom}}','{{ccc.collectivite.id}}','{{ccc.repartition}}');
 				{% endfor %}
 				
-				{# On remet les value saisie si une erreur etait dans le form #}
+				{# On remet les valeurs saisie si une erreur etait dans le form #}
 				{% for ville in tabVilles %}
 					remetValeur('{{ville.nom}}','{{ville.id}}');
 				{% endfor %}

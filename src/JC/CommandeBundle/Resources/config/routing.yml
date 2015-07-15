@@ -51,6 +51,10 @@ jc_commande_application_pour_activite:
 jc_commande_bdd:
     path:      /insert_donnees
     defaults:  { _controller: JCCommandeBundle:Commande:bdd }
- 
+
+
+jc_commande_b:
+    path:      /b
+    defaults:  { _controller: JCCommandeBundle:Commande:b } 
  
  
