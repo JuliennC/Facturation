@@ -130,7 +130,17 @@
 							{% endif %}
 						</td>
 						
-						<td>{{ commande['montantAPayer']|number_format(2, ',', ' ') }} €</td>
+						{# Si le total à payer est de 0, alors il y a sans doute un oubli dans la table infos collectivite / on le fait remarquer #}
+						{% if commande['montantAPayer'] == 0 %}
+						
+							<td style='color:red'>{{ commande['montantAPayer']|number_format(2, ',', ' ') }} €</td>
+							
+						{% else %}
+
+							<td>{{ commande['montantAPayer']|number_format(2, ',', ' ') }} €</td>
+
+						{% endif %}
+						
 						<td> <a class='btn btn-info col-md-10 col-md-offset-1' href="{{ path('jc_commande_detail', {'id': commande['id']}) }}" >Voir détail</a> </td>
 
 					</tr>

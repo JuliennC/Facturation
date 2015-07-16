@@ -347,6 +347,13 @@ class FacturationController extends Controller
 
 
 					//On fait le ratio
+					//Si le total des clès fait 0, alors on change en 1 ( ce qui ne change rien, car le seul cas serait 0/0 --> donc 0/1 )
+						dump($totalCle);
+
+					if ($totalCle === 0 || $totalCle === "0") {
+						$totalCle = 1;
+					}
+					
 					$ratio = $info->getNombre() / $totalCle;
 						
 					//On calcule le montant à payer grâce au ratio
@@ -389,6 +396,15 @@ class FacturationController extends Controller
 					$tabCommandes[$commande->getId()]['repartition'] = $ccc->getRepartition();
 				}			
 			
+			
+			
+			//Si le montant == 0, c'est qu'il y a sans doute eu un oubli dans la table des infos
+			//On met donc un flahs message Warning pour avertir, et être sur que cela est volontaire
+			if ($montant === 0 || $montant === "0"){
+				
+				$session = new Session();
+				$session->getFlashBag()->add('Warning', 'Attention : Assurez-vous que la répartition des informations concernant la commande n°'.$commande->getId().' ont bien été enregistrées .');
+			}
 			
 		}
     
