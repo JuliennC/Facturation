@@ -118,7 +118,7 @@ function calcul_TTC(id){
     var total = (quantite * prix_unitaire * (1 + (p/100))).toFixed(2);
 
     var label_total = document.getElementById('total_TTC_'+id);
-    label_total.innerHTML = total+" ‚Ç¨";
+    label_total.innerHTML = total+"€";
     
     document.getElementById('jc_commandebundle_commande_listeLignesCommande_'+id+'_totalTTC').value = total;
 }  
@@ -126,7 +126,19 @@ function calcul_TTC(id){
 
 
 
+	
 
+/*
+*	Fonction pour supprimer une ligne d'une commande
+*/
+function supprimerLigneCommande(numero){
+
+		//Pour récupérer la ligne, on passe par un champs du form, puis on récupère son td puis son tr
+		var ligne = document.getElementById('jc_commandebundle_commande_listeLignesCommande_'+numero+'_libelle').parentNode.parentNode;
+
+	  	ligne.remove();
+                
+};
 
 
 
@@ -142,8 +154,24 @@ function metEnPlaceVentilation(ventil){
 *	jQuery
 */
 $(document).ready(function() {
+	
+	
+	
+	/*
+	*	Fonction pour supprimer une ligne d'une commande
+	*/
+	
+	$(".supprimer_ligne_commande").on('click', function(){
+      	
+     
+	  	$(this).parent().parent().remove();
+               
+	});
+	
    
-   
+   /*
+	*	Fonction pour ajouter une ligne à une commande
+	*/
     $("#ajouter_ligne_commande").on('click', function(){
       	
       	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
@@ -161,29 +189,35 @@ $(document).ready(function() {
            
     
     
-    var newLigne = 
-						"<td>"+
-							"<textarea id='jc_commandebundle_commande_listeLignesCommande___name___libelle' name='jc_commandebundle_commande[listeLignesCommande][__name__][libelle]' required='required' 											class='col-md-11 col-md-offset-1'> </textarea>"+ 
+    var newLigne =	 	"<td>"+
+	    					"<a onclick='supprimerLigneCommande(__name__);'>"+
+	    						"<span class='glyphicon glyphicon-remove-circle'>"+
+								"</span>"+
+	    					"</a>"+
 						"</td>"+
 						
 						"<td>"+
-							"<textarea id='jc_commandebundle_commande_listeLignesCommande___name___commentaire' name='jc_commandebundle_commande[listeLignesCommande][__name__][commentaire]' 														class='col-md-11 col-md-offset-1'> </textarea>"+
+							"<textarea id='jc_commandebundle_commande_listeLignesCommande___name___libelle' name='jc_commandebundle_commande[listeLignesCommande][__name__][libelle]' required='required' class='col-md-12'> </textarea>"+ 
 						"</td>"+
 						
 						"<td>"+
-							"<input type='text' id='jc_commandebundle_commande_listeLignesCommande___name___reference' name='jc_commandebundle_commande[listeLignesCommande][__name__][reference]' 										required='required'	class='col-md-11 col-md-offset-1'>"+
+							"<textarea id='jc_commandebundle_commande_listeLignesCommande___name___commentaire' name='jc_commandebundle_commande[listeLignesCommande][__name__][commentaire]' class='col-md-12'> </textarea>"+
+						"</td>"+
+						
+						"<td>"+
+							"<input type='text' id='jc_commandebundle_commande_listeLignesCommande___name___reference' name='jc_commandebundle_commande[listeLignesCommande][__name__][reference]' required='required'	class='col-md-12'>"+
 						"</td>"+
 						
 						"<td>"+ 
-							"<input type='text' onkeyup='calcul_TTC(__name__);' id='jc_commandebundle_commande_listeLignesCommande___name___quantite' name='jc_commandebundle_commande[listeLignesCommande][__name__][quantite]' 										required='required' class='col-md-11 col-md-offset-1'>"+ 
+							"<input type='text' onkeyup='calcul_TTC(__name__);' id='jc_commandebundle_commande_listeLignesCommande___name___quantite' name='jc_commandebundle_commande[listeLignesCommande][__name__][quantite]' required='required' class='col-md-12'>"+ 
 						"</td>"+
 						
 						"<td>"+
-							"<input type='text' onkeyup='calcul_TTC(__name__);'  id='jc_commandebundle_commande_listeLignesCommande___name___prixUnitaire' name='jc_commandebundle_commande[listeLignesCommande][__name__][prixUnitaire]' 												required='required' class='col-md-10 col-md-offset-1'> ‚Ç¨"+
+							"<input type='text' onkeyup='calcul_TTC(__name__);'  id='jc_commandebundle_commande_listeLignesCommande___name___prixUnitaire' name='jc_commandebundle_commande[listeLignesCommande][__name__][prixUnitaire]' required='required' class='col-md-11'> €"+
 						"</td>"+
 							
 						"<td>"+
-						 	"<select onchange='calcul_TTC(__name__);' id='jc_commandebundle_commande_listeLignesCommande___name___tva' name='jc_commandebundle_commande[listeLignesCommande][__name__][tva]' 															class='col-md-12 col-md-offset-0'>";
+						 	"<select onchange='calcul_TTC(__name__);' id='jc_commandebundle_commande_listeLignesCommande___name___tva' name='jc_commandebundle_commande[listeLignesCommande][__name__][tva]' class='col-md-12'>";
 						 	
 						 	//On va chercher les taux de TVA dans la base
 						 	
@@ -219,7 +253,7 @@ $(document).ready(function() {
 													"</td>"+
 													
 													"<td>"+
-														"<label class='col-md-11 col-md-offset-1' id='total_TTC___name__' value='0.00 Ä'></label>"+
+														"<span class='col-md-11 col-md-offset-1' id='total_TTC___name__' value='0.00 Ä'></span>"+
 													"</td>"+ 
                                                                                                 
                                                                                                             "<input type='hidden' id='jc_commandebundle_commande_listeLignesCommande___name___totalTTC' name='jc_commandebundle_commande[listeLignesCommande][__name__][totalTTC]' value='0.00' />"

@@ -160,7 +160,7 @@ class CommandeController extends Controller
  			$commande -> addEtat($etatCree);
 
                         
-            return $this->miseenPlaceForm($request, $commande);
+            return $this->miseEnPlaceForm($request, $commande);
 	  }
 	  
 	  
@@ -191,7 +191,7 @@ class CommandeController extends Controller
 				return $this->redirect($this->generateUrl('jc_commande_detail', array('id' => $commande->getId())));
 			}
 			
-			return $this->miseenPlaceForm($request, $commande);
+			return $this->miseEnPlaceForm($request, $commande);
 	    	  
 		
 	}
@@ -207,7 +207,7 @@ class CommandeController extends Controller
         *      et a la modification d'une commande
         *      C'est elle qui met en place le form et qui gere les submit  
 		*/
-                public function miseenPlaceForm(Request $request, $commande)
+                public function miseEnPlaceForm(Request $request, $commande)
 		{
 	  	
 			$em = $this->getDoctrine()->getManager();
@@ -231,6 +231,10 @@ class CommandeController extends Controller
 			
 			//On recupere donc toutes les villes
 			$listeToutesLesVilles = $em->getRepository('JCCommandeBundle:Collectivite')->findCollectivitesPourDateOrdreAlpha($commande->getDateCreation());
+			
+			
+			//On rŽcupre les ligne de la commandes entrŽes avant la modification du formulaire pour voir les lignes supprimŽes
+			$listeLigneComAvant = $em->getRepository('JCCommandeBundle:LigneCommande')->findByCommande($commande);
 			
 			
 			//	Si le formulaire est valide, on l'enregistre en base.
@@ -310,18 +314,28 @@ class CommandeController extends Controller
 	                    $cCC->setCollectivite($em->getRepository('JCCommandeBundle:Collectivite')->findOneByNom($nomColl));
 	                    
 	                    //La repartition est donc la cle de l'application concernee
-	                    $cCC->setRepartition( $commande->getActivite()->getCleRepartition()->getNom());
+	                    $cCC->setRepartition($commande->getActivite()->getCleRepartition()->getNom());
 
 						$em->persist($cCC);
 					}
 	            }
                  
                
-				
-				
-				//On enregistre les ligne de commandes entrees
+               	//On enregistre les lignes de commandes entrees
 			    $nouveauTabLigneCommande = $form->get('listeLignesCommande')->getData();
 			    
+				
+				//On regarde si des lignes ont ŽtŽ supprimŽes
+				foreach($listeLigneComAvant as $ligne){
+					
+					if (! in_array($ligne, $nouveauTabLigneCommande)){
+						$em->remove($ligne);
+					}
+				}
+				
+				
+				
+			
 			    $montantCommande = 0;
 			    
 			    foreach($nouveauTabLigneCommande as $n){
@@ -339,6 +353,8 @@ class CommandeController extends Controller
 				$em->persist($commande);
         		$em->flush();
                                 
+                                 
+                                 
                                  
                 $etats = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findEtatPourCommande($commande, $etat);            	
 
@@ -372,7 +388,7 @@ class CommandeController extends Controller
 	  
 	  
 	  
-	  	// ---------- AUTReS FONCTIONS ----------
+	  	// ---------- AUTRES FONCTIONS ----------
 	
         
                 /*

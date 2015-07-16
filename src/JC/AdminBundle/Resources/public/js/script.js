@@ -179,19 +179,14 @@ $(document).ready(function() {
 		
 		
 	/*
-	*	Fonction pour ajouter un utilisateur
+	*	Fonction pour supprimer un utilisateur
 	*/
 	
 	$(".supprimer_utilisateur").on('click', function(){
       	
-      	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
-	  	// - le texte "__name__label__" qu'il contient par le label du champ
-	  	// - le texte "__name__" qu'il contient par le num√©ro du champ
-	  	
+     
 	  	$(this).parent().parent().remove();
-                
-  
-
+               
 		});
 
 

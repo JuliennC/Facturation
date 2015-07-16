@@ -1,21 +1,3 @@
-
-.col_1{
-position:absolute;
-line-height:22px;
-width:70px
-}
-
-
-.col_3{
-padding-left:300px
-}
-
-.header_1{
-position:absolute;
-line-height:41px;
-width:70px;
-}
-
 /* Pour les label que l'on ne veut pas en bold */
 label.nobold {
     font-weight: normal !important;
