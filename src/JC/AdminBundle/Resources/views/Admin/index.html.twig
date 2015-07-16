@@ -24,6 +24,7 @@
             <li><a href="#tab8" data-toggle="tab">Applications</a></li>
             <li><a href="#tab9" data-toggle="tab">Imputations</a></li>
 
+
           </ul>
         </div>
       </div>
@@ -39,19 +40,23 @@
 		</div>
 	
 		
-		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab2">
-		  
-		    	{{ render(controller("JCAdminBundle:Admin:modificationInformationsCollectivites" , { 'request' :request, 'annee': annee })) }}
-
+		<div class="tab-pane col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 main" id="tab2">
+				
+		    
+		    {{ render(controller("JCAdminBundle:Admin:modificationInformationsCollectivites" , { 'request' :request, 'annee': annee })) }}
+						
+				
 		</div>
-		
-		
+
+
+
 		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab3">
 		  
-		    	{{ render(controller("JCAdminBundle:Admin:modificationClesRepartition" , { 'request' :request})) }}
+		    	{{ render(controller("JCAdminBundle:Admin:modificationClesRepartition" , { 'request' :request, 'annee': annee })) }}
 
 		</div>
-
+		
+		
 
 		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab4">
 		  

@@ -349,14 +349,16 @@ class AdminController extends Controller
 		
 
 
+		 $em = $this->getDoctrine()->getManager();
 
- 
+		//On doit donner la liste des clés
+	 	$listeCles = $em->getRepository('JCCommandeBundle:CleRepartition')->findAll(); 
 		        	
 
 		
         	
 		//Si aucune requête, alors on affiche simplement les formulaires
-		return $this->render('JCAdminBundle:Admin:index.html.twig', array('request'=>$request, 'annee' => $annee));
+		return $this->render('JCAdminBundle:Admin:index.html.twig', array('request'=>$request, 'annee' => $annee, 'listeCles'=>$listeCles));
 		
 
 		
@@ -441,7 +443,6 @@ class AdminController extends Controller
 	 */
 	 public function modificationInformationsCollectivitesAction(Request $request, $annee) {
 		 		 
-		 
 		 
 		 $listeInformationsATransformee = array();
 

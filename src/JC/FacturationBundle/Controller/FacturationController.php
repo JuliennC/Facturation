@@ -5,6 +5,9 @@ namespace JC\FacturationBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+
 use JC\CommandeBundle\Entity\Commande;
 use JC\CommandeBundle\Entity\CleRepartition;
 use JC\CommandeBundle\Entity\Collectivite;
@@ -89,6 +92,16 @@ class FacturationController extends Controller
 	    
 	    
 		$tabRes = $this->calculFacturation($nomCollectivite, $annee);
+		
+
+		
+		/*	Si ce qui a été retourné par la fonction calcul est une redirection (donc pas un tableau)
+		*	Par exemple s'il y a eu une erreur dans la facturation
+		*	Alors, on retourne la redirection
+		*/
+		if(! is_array($tabRes)) {
+			return $tabRes;
+		}
     
         return $this->render('JCFacturationBundle:Facturation:calcul_facturation.html.twig', array('infosColl'=>$tabRes['infosColl'], 'tabCommandes'=>$tabRes['tabCommandes'], 
         																							'annee'=>$annee, 'tabMassesSalariales'=>$tabRes['tabMassesSalariales']));
@@ -120,6 +133,18 @@ class FacturationController extends Controller
 		$listeActivite = $em->getRepository('JCCommandeBundle:Activite')->findAll();  
 
 		$tabRes = $this->calculFacturation($nomCollectivite, $annee);
+
+
+		
+		/*	Si ce qui a été retourné par la fonction calcul est une redirection
+		*	Par exemple s'il y a eu une erreur dans la facturation
+		*	Alors, on retourne la redirection
+		*/
+		if( is_a($tabRes,'RedirectResponse')) {
+			return $tabRes;
+		}
+
+
 
 		//On crée la table activite
 		$tabActivites = array();
@@ -254,6 +279,8 @@ class FacturationController extends Controller
 		$infosColl['nbDirectes'] = 0;
 		$infosColl['montantMutualisees'] = 0;
 		$infosColl['montantDirectes'] = 0;
+		$infosColl['montantInvestissement'] = 0;
+		$infosColl['montantFonctionnement'] = 0;
 		
 		
 		//On récupere les infos de la collectivite (clés de repartition)
@@ -281,16 +308,35 @@ class FacturationController extends Controller
 			
 			$tabCommandes[$commande->getId()]['id'] = $commande->getId();
 			$tabCommandes[$commande->getId()]['ventilation'] = $commande->getVentilation();
-			$tabCommandes[$commande->getId()]['imputation'] = $commande->getImputation()->getSection();
+			$tabCommandes[$commande->getId()]['imputation'] = $commande->getImputation()->getSection()->getLibelle();
 			$tabCommandes[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
 			$tabCommandes[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
 			$tabCommandes[$commande->getId()]['montantTotal'] = $commande->getTotalTTC();
 			$tabCommandes[$commande->getId()]['application'] = $commande->getApplication()->getNom();
 
 
-				//On vérifie que la commande a bien 
+
 				//Si la commande est une commande mutualisée,
 				if($commande->getVentilation() === "Mutualisee"){
+					
+					
+					/*	On vérifie que l'information existe bien 
+					*	Sinon c'est qu'elle a été oubliée	
+					*	On met donc un message flash pour avertir la personnes 
+					* 	On ouvre la page admin dans une autre tab
+					*	Et on redirige vers l'index de Facturation
+					*/
+					
+					
+					if(! array_key_exists($commande->getActivite()->getCleRepartition()->getNom(), $infosColl)){
+						
+						$session = new Session();
+						$session->getFlashBag()->add('Error', 'La clé '.$commande->getActivite()->getCleRepartition()->getNom().' n\'a pas été renseignée pour'.$collectivite->getNom().' pour l\'année '.$annee);
+						
+						return $this->redirect($this->generateUrl('jc_facturation_homepage', array($annee)));
+						
+					}
+					
 					
 					//On récupere l'InformationCollectivité
 					$info = $infosColl[$commande->getActivite()->getCleRepartition()->getNom()];
@@ -317,8 +363,12 @@ class FacturationController extends Controller
 					//On met les infos
 					$infosColl['montantMutualisees'] += $montant;
 					$infosColl['nbMutualisees'] += 1;
+					$infosColl['montant'.$commande->getImputation()->getSection()->getLibelle()] += $montant;
+					
 					$tabCommandes[$commande->getId()]['montantAPayer'] = $montant;
 					$tabCommandes[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
+				
+				
 				
 				
 				//Sinon, si c'est une commande directe
@@ -333,6 +383,8 @@ class FacturationController extends Controller
 					//On met les infos
 					$infosColl['montantDirectes'] += $montant;
 					$infosColl['nbDirectes'] += 1;
+					$infosColl['montant'.$commande->getImputation()->getSection()->getLibelle()] += $montant;
+
 					$tabCommandes[$commande->getId()]['montantAPayer'] = $montant;
 					$tabCommandes[$commande->getId()]['repartition'] = $ccc->getRepartition();
 				}			
