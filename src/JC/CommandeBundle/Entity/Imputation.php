@@ -50,6 +50,16 @@ class Imputation
    */
    private $section;
    
+   
+   
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="Est_Facture", type="boolean")
+     */
+    private $estFacture;
+   
+
 
     /**
      * Get id
@@ -153,6 +163,33 @@ class Imputation
     {
         return $this->section;
     }
+
+
+
+	/**
+     * Set estFacture
+     *
+     * @param boolean $estFacture
+     * @return Imputation
+     */
+    public function setEstFacture($estFacture)
+    {
+        $this->estFacture = $estFacture;
+
+        return $this;
+    }
+
+    /**
+     * Get estFacture
+     *
+     * @return boolean 
+     */
+    public function getEstFacture()
+    {
+        return $this->estFacture;
+    }
+
+
 
 
 }

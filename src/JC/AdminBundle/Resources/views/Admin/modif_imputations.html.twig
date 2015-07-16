@@ -32,7 +32,8 @@
 							<th class='col-md-5'>Libelle</th>
 							<th class='col-md-2'>Sous fonction</th>
 							<th class='col-md-2'>Article</th>
-							<th class='col-md-3'>Section</th>
+							<th class='col-md-2'>Section</th>
+							<th class='col-md-1'>Est facturé</th>
 
 						</tr>
 					</thead>
@@ -55,6 +56,7 @@
 						 		<td> {{form_widget(imputation.sousFonction, {attr: {'class':'col-md-10 col-md-offset-1'}})}} </td>
 								<td> {{form_widget(imputation.article, {attr: {'class':'col-md-10 col-md-offset-1'}})}} </td>
 								<td> {{form_widget(imputation.section, {attr: {'class':'col-md-12'}})}} </td>
+								<td> {{form_widget(imputation.estFacture )}} </td>
 											
 							</tr>
 								

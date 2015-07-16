@@ -30,6 +30,7 @@ TODO liste :
 	-> FAIT Pour le bundle admin, faire des form pour chaque chose à modifier (devrait être plus simple que les autre forms, contient surtout des relation et du texte)
 	-> FAIT faire une table section pour imputation, qu’il ne puisse y avoir que fonctionnement ou investissement. Cela dépend si la section est utilisée ou si c’est juste de l’affichage facture
 	-> FAIT Pour la partie admin, mettre les erreur en flash message pour qu’elles soient accessibles dès l’index
+	-> FAIT Dans imputation, faire un attribut ‘estFacturé’ (booléen) qui indique si les commandes de cette imputation doivent être facturé (oui -> facture, non -> facture coriolis)
 
 
 	-> faire une fonction recherche pour la table applications dans admin
@@ -38,7 +39,7 @@ TODO liste :
 	-> Faire un bouton supprimer pour les lignes commande
 	-> Pour les deux points ci-dessus, s’inspirer de la fonction qui enregistre et supprime des utilisateurs dans admin
 
-	-> Dans imputation, faire un attribut ‘estFacturé’ (booléen) qui indique si les commandes de cette imputation doivent être facturé (oui -> facture, non -> facture coriolis)
+	
 
 	-> lors de la facturation, lancer une erreur lorsqu’une clé de rep n’est pas entrée pour une collectivité, voir pour faire une redirection
 

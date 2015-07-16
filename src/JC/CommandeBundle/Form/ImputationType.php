@@ -39,7 +39,10 @@ class ImputationType extends AbstractType
 				    'multiple'  => false ,
 				    'expanded' => false,
 					'error_bubbling' => false,
-					));
+					))
+    
+                
+            ->add('estFacture','checkbox', array('required'=>false, 'error_bubbling' => true ));
         ;
     }
     
