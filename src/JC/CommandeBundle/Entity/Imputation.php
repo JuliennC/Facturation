@@ -43,13 +43,13 @@ class Imputation
     private $article;
 
 
+	
 	/**
-     * @var string
-     *
-     * @ORM\Column(name="Section", type="string", length=255)
-     */
-    private $section;
-
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\SectionImputation", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+   private $section;
+   
 
     /**
      * Get id
@@ -134,7 +134,7 @@ class Imputation
 	/**
      * Set section
      *
-     * @param string $section
+     * @param SectionImputation $section
      * @return Imputation
      */
     public function setSection($section)

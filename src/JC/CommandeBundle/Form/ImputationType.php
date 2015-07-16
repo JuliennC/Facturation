@@ -8,6 +8,20 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ImputationType extends AbstractType
 {
+	
+		
+	protected $listeSections;
+	
+
+    function __construct($listeSections)
+    {
+        $this->listeSections = $listeSections;
+    }
+	
+
+	
+	
+	
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -18,7 +32,14 @@ class ImputationType extends AbstractType
             ->add('libelle', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('sousFonction', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('article', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
-            ->add('section', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
+        
+			->add('section', 'entity', array(
+				    'class'    => 'JCCommandeBundle:SectionImputation',
+				    'choices'   => $this->listeSections,
+				    'multiple'  => false ,
+				    'expanded' => false,
+					'error_bubbling' => false,
+					));
         ;
     }
     

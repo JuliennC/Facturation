@@ -87,9 +87,20 @@ class AdminController extends Controller
 			//Donc si le form est valide, on redirige
 			if($form_est_valid->getContent() === 'true'){
 				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les collectivités ont été enregistrées avec succès.');
+				
 				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
 			
-			} 
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des collectivités');
+			}
+
+		
+		
+		
 		
 		
 		
@@ -107,10 +118,21 @@ class AdminController extends Controller
 			//Donc si le form est valide, on redirige
 			if($form_est_valid->getContent() === 'true'){
 				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les informations sur les collectivités ont été enregistrés avec succès.');
+				
 				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
 			
-			} 
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des informations sur les collectivités');
+			}
 
+
+		
+		
+		
 		
 		
 		//Si le formulaire envoyé est le formulaire de la liste des clés de répartition
@@ -127,9 +149,21 @@ class AdminController extends Controller
 			//Donc si le form est valide, on redirige
 			if($form_est_valid->getContent() === 'true'){
 				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les clés de répartitions ont été enregistrées avec succès.');
+				
 				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
 			
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des clés de répartitions');
 			}
+			
+			
+			
+			
+			
 			
 			
 		//Si le formulaire envoyé est le formulaire de la liste des utilisateurs
@@ -146,9 +180,21 @@ class AdminController extends Controller
 			//Donc si le form est valide, on redirige
 			if($form_est_valid->getContent() === 'true'){
 				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les utilisateurs ont été enregistrés avec succès.');
+				
 				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
 			
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des utilisateurs');
 			}
+			
+			
+			
+			
+			
 			
 			
 		//Si le formulaire envoyé est le formulaire de la liste des services
@@ -165,9 +211,21 @@ class AdminController extends Controller
 			//Donc si le form est valide, on redirige
 			if($form_est_valid->getContent() === 'true'){
 				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les services ont été enregistrés avec succès.');
+				
 				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
 			
-			}
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des services');
+			}			
+			
+			
+			
+			
+			
 			
 			
 		//Si le formulaire envoyé est le formulaire des budgets
@@ -184,9 +242,21 @@ class AdminController extends Controller
 			//Donc si le form est valide, on redirige
 			if($form_est_valid->getContent() === 'true'){
 				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les budgets ont été enregistrés avec succès.');
+				
 				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
 			
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des budgets');
 			}
+			
+			
+			
+			
+			
 			
 			
 		//Si le formulaire envoyé est le formulaire des applications
@@ -203,10 +273,21 @@ class AdminController extends Controller
 			//Donc si le form est valide, on redirige
 			if($form_est_valid->getContent() === 'true'){
 				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les applications ont été enregistrées avec succès.');
+				
 				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
 			
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des applications');
 			}
 			
+		
+		
+		
+		
 		
 		
 		//Si le formulaire envoyé est le formulaire des activites
@@ -223,9 +304,21 @@ class AdminController extends Controller
 			//Donc si le form est valide, on redirige
 			if($form_est_valid->getContent() === 'true'){
 				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les activités ont été enregistrées avec succès.');
+				
 				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
 			
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des activités');
 			}
+			
+			
+			
+			
+			
 			
 			
 		//Si le formulaire envoyé est le formulaire des imputations
@@ -242,8 +335,15 @@ class AdminController extends Controller
 			//Donc si le form est valide, on redirige
 			if($form_est_valid->getContent() === 'true'){
 				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les imputations ont été enregistrées avec succès.');
+				
 				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
 			
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des imputations');
 			}
 		}
 		
@@ -255,7 +355,7 @@ class AdminController extends Controller
 
 		
         	
-
+		//Si aucune requête, alors on affiche simplement les formulaires
 		return $this->render('JCAdminBundle:Admin:index.html.twig', array('request'=>$request, 'annee' => $annee));
 		
 
@@ -572,7 +672,7 @@ class AdminController extends Controller
 			return new Response('true');
 
     	} else {
-	 		
+	    		 		
 	 		return $this->render('JCAdminBundle:Admin:modif_utilisateurs.html.twig', array('form'=>$form->createView()));
 		}
 		
@@ -846,7 +946,7 @@ class AdminController extends Controller
 	 	$listeImputations ->setListeImputations($listeImp);
 	 		 	
 	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
-        $form = $this->get('form.factory')->create(new ListeImputationsType(), $listeImputations);
+        $form = $this->get('form.factory')->create(new ListeImputationsType($em), $listeImputations);
 
 	 	
 		$form->handleRequest($request);
@@ -870,7 +970,9 @@ class AdminController extends Controller
 			return new Response('true');
 
     	} else {
-
+	    	
+	    
+	    
 	 		return $this->render('JCAdminBundle:Admin:modif_imputations.html.twig', array('form'=>$form->createView()));
 		}
 	 }

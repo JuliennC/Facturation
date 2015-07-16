@@ -15,17 +15,23 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
 --
--- Structure de la table `Activite`
+-- Contenu de la table `CleRepartition`
 --
 
-CREATE TABLE `Activite` (
-  `id` int(11) NOT NULL,
-  `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `cleRepartition_id` int(11) NOT NULL,
-  `Est_Ancienne_Activite` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `CleRepartition` (`id`, `Nom`) VALUES
+(1, 'Nombre d''habitants'),
+(2, 'Nombre de bulletins de salaire'),
+(3, 'Nombre de mouvements comptables'),
+(4, 'Nombre de téléphones'),
+(5, 'Nombre de smart/tab'),
+(6, 'Nombre de postes Epn'),
+(7, 'Nombre de postes Adm'),
+(8, 'Nombre de postes Ecole'),
+(9, 'Participation');
+
+-- --------------------------------------------------------
+
 
 --
 -- Contenu de la table `Activite`
@@ -53,16 +59,17 @@ INSERT INTO `Activite` (`id`, `Nom`, `cleRepartition_id`, `Est_Ancienne_Activite
 
 -- --------------------------------------------------------
 
+
 --
--- Structure de la table `Application`
+-- Contenu de la table `Fournisseur`
 --
 
-CREATE TABLE `Application` (
-  `id` int(11) NOT NULL,
-  `fournisseur_id` int(11) NOT NULL,
-  `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Libelle` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`) VALUES
+(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', '0383080808'),
+(2, 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', '0383020202');
+
+-- --------------------------------------------------------
+
 
 --
 -- Contenu de la table `Application`
@@ -243,55 +250,8 @@ INSERT INTO `Application` (`id`, `fournisseur_id`, `Nom`, `Libelle`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `Budget`
---
-
-CREATE TABLE `Budget` (
-  `id` int(11) NOT NULL,
-  `service_id` int(11) NOT NULL,
-  `Montant` int(11) NOT NULL,
-  `Annee` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
-
---
--- Structure de la table `CleRepartition`
---
-
-CREATE TABLE `CleRepartition` (
-  `id` int(11) NOT NULL,
-  `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Contenu de la table `CleRepartition`
---
-
-INSERT INTO `CleRepartition` (`id`, `Nom`) VALUES
-(1, 'Nombre d''habitants'),
-(2, 'Nombre de bulletins de salaire'),
-(3, 'Nombre de mouvements comptables'),
-(4, 'Nombre de téléphones'),
-(5, 'Nombre de smart/tab'),
-(6, 'Nombre de postes Epn'),
-(7, 'Nombre de postes Adm'),
-(8, 'Nombre de postes Ecole'),
-(9, 'Participation');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `Collectivite`
---
-
-CREATE TABLE `Collectivite` (
-  `id` int(11) NOT NULL,
-  `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Date_Debut_Mutualisation` date DEFAULT NULL,
-  `Date_Fin_Mutualisation` date DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `Collectivite`
@@ -326,75 +286,11 @@ INSERT INTO `Collectivite` (`id`, `Nom`, `Date_Debut_Mutualisation`, `Date_Fin_M
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `Commande`
---
-
-CREATE TABLE `Commande` (
-  `id` int(11) NOT NULL,
-  `service_id` int(11) NOT NULL,
-  `application_id` int(11) NOT NULL,
-  `fournisseur_id` int(11) NOT NULL,
-  `livraison_id` int(11) NOT NULL,
-  `activite_id` int(11) NOT NULL,
-  `imputation_id` int(11) NOT NULL,
-  `Reference` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Date_Livraison` datetime DEFAULT NULL,
-  `Ventilation` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Engagement` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Libelle_Facturation` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Total_TTC` decimal(10,2) NOT NULL,
-  `Utilisateur` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `NomFournisseur` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `AdresseFournisseur` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Complement_Adresse_Fournisseur` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Code_Postal_Fournisseur` int(11) NOT NULL,
-  `VilleFournisseur` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `TelephoneFournisseur` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `NomLivraison` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `AdresseLivraison` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Complement_Adresse_Livraison` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Code_Postal_Livraison` int(11) NOT NULL,
-  `VilleLivraison` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `TelephoneLivraison` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+-- --------------------------------------------------------
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `CommandeConcerneCollectivite`
---
 
-CREATE TABLE `CommandeConcerneCollectivite` (
-  `id` int(11) NOT NULL,
-  `commande_id` int(11) NOT NULL,
-  `collectivite_id` int(11) NOT NULL,
-  `Repartion` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `CommandePasseEtat`
---
-
-CREATE TABLE `CommandePasseEtat` (
-  `id` int(11) NOT NULL,
-  `commande_id` int(11) NOT NULL,
-  `etat_id` int(11) NOT NULL,
-  `datePassage` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `EtatCommande`
---
-
-CREATE TABLE `EtatCommande` (
-  `id` int(11) NOT NULL,
-  `Libelle` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `EtatCommande`
@@ -407,171 +303,77 @@ INSERT INTO `EtatCommande` (`id`, `Libelle`) VALUES
 (4, 'Payee');
 
 -- --------------------------------------------------------
-
---
--- Structure de la table `Fournisseur`
---
-
-CREATE TABLE `Fournisseur` (
-  `id` int(11) NOT NULL,
-  `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Adresse` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Complement_Adresse` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Code_Postal` int(11) NOT NULL,
-  `Ville` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Telephone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Fax` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Contenu de la table `Fournisseur`
---
-
-INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`) VALUES
-(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', '0383080808'),
-(2, 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', '0383020202');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `Imputation`
---
-
-CREATE TABLE `Imputation` (
-  `id` int(11) NOT NULL,
-  `Libelle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Sous_fonction` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Article` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Section` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Contenu de la table `Imputation`
 --
 
-INSERT INTO `Imputation` (`id`, `Libelle`, `Sous_fonction`, `Article`, `Section`) VALUES
-(1, 'Cotisation ville-internet', '90.14', '6281,63', 'Fonctionnement'),
-(2, 'Cotisation mission Ecoter', '90.14', '6281.57', 'Fonctionnement'),
-(3, 'Cotisation Avicca', '90.14', '6281.56', 'Fonctionnement'),
-(4, 'Divers Travaux', '90.14', '2318-360', 'Investissement'),
-(5, 'Divers Travaux', '90.14', '2318-496', 'Investissement'),
-(6, 'Logiciels-  Piscines', '413', '205', 'Investissement'),
-(7, 'Matériels -Piscines', '413', '2183', 'Investissement'),
-(8, 'Eau : Participations (HT)', '01', '13918', 'Investissement'),
-(9, 'Eau : Logiciels (HT)', '01', '205', 'Investissement'),
-(10, 'Eau : Matériels (HT)', '01', '2183', 'Investissement'),
-(11, 'Eau : Instal.,outillages tech.et travaux  (HT)', '01', '2315', 'Investissement'),
-(12, 'Eau : Prestations de service (HT)', '01', '618.8', 'Fonctionnement'),
-(13, 'Eau : Maintenance (HT)', '01', '6156', 'Fonctionnement'),
-(14, 'Eau : Frais de telecom (HT)', '01', '6262', 'Fonctionnement'),
-(15, 'Ass. : Participations (HT)', '02', '13918', 'Investissement'),
-(16, 'Ass : Logiciels (HT)', '02', '205', 'Investissement'),
-(17, 'Ass : Matériels (HT)', '02', '2183', 'Investissement'),
-(18, 'Ass : Instal.,outillages tech.et travaux  (HT)', '02', '2315', 'Investissement'),
-(19, 'Ass : Prestations de service (HT)', '02', '618.8', 'Fonctionnement'),
-(20, 'Ass : Maintenance (HT)', '02', '6156', 'Fonctionnement'),
-(21, 'Ass : Frais de telecom (HT)', '02', '6262', 'Fonctionnement'),
-(22, 'Maintenance logiciels piscines', '413', '6156', 'Fonctionnement'),
-(23, 'Maintenance des logiciels', '020.3', '6156', 'Fonctionnement'),
-(24, 'Formations', '020.3', '6184', 'Fonctionnement'),
-(25, 'Prestations de service', '020.3', '6188', 'Fonctionnement'),
-(26, 'Annonces et insertions', '020.3', '6231', 'Fonctionnement'),
-(27, 'Frais de Telecommunication', '020.3', '6262', 'Fonctionnement'),
-(28, 'Autres fournitures- Achat de billet', '020.3', '60228', 'Fonctionnement'),
-(29, 'Fournitures petit équipement', '020.3', '60632', 'Fonctionnement'),
-(30, 'Cotisation "club utilisateur Coriolis"', '020.3', '6281.58', 'Fonctionnement'),
-(31, 'Remboursement de frais au Ciril', '020.3', '62878.3', 'Fonctionnement'),
-(32, 'Frais de telecommunication', '020.5', '6262', 'Fonctionnement'),
-(33, 'Maintenance des logiciels ( SIG)', '820.1', '6156', 'Fonctionnement'),
-(34, 'formations (SIG)', '820.1', '6184', 'Fonctionnement'),
-(35, 'Prestations de service (SIG)', '820.1', '6188', 'Fonctionnement'),
-(36, 'Maintenance Cyberbases - Abonnement', '90.16', '6156', 'Fonctionnement'),
-(37, 'Formations (Cyberbases)', '90.16', '6184', 'Fonctionnement'),
-(38, 'Prestations de service', '90.16', '6188', 'Fonctionnement'),
-(39, 'Frais de telecommunication', '90.16', '6262', 'Fonctionnement'),
-(40, 'Remboursement de frais de location', '90.16', '62878', 'Fonctionnement'),
-(41, 'Logiciels', '020.3', '2051', 'Investissement'),
-(42, 'Matériels', '020.3', '2183', 'Investissement'),
-(43, 'Travaux de cablages', '020.3', '2315', 'Investissement'),
-(44, 'Sub. d''équipement au Ciril', '020.3', '20418.22', 'Investissement'),
-(45, 'Divers Travaux -SIG-', '820.1', '2318', 'Investissement'),
-(46, 'logiciels', '90.14', '2051-308', 'Investissement'),
-(47, 'Matériels', '90.14', '2183-308', 'Investissement'),
-(48, 'Matériels', '90.14', '2183-360', 'Investissement'),
-(49, 'Mobiliers er autres', '90.14', '2184-308', 'Investissement'),
-(50, 'Cotisation ADULLACT', '90.14', '6281,59', 'Fonctionnement'),
-(51, 'locations mobiliers et immobiliers', '90.16', '6132', 'Fonctionnement'),
-(52, 'ImpSpécifique pour Nancy - report 2007', '020.2', '2183-Ncy', 'Investissement'),
-(53, 'Documentation générale et technique', '020.3', '6182-300', 'Fonctionnement'),
-(54, 'Documentation générale et technique', '020.3', '6182', 'Fonctionnement'),
-(55, 'Cotisation au club utilisateurs Droits de Cités', '020.3', '6281.75', 'Fonctionnement'),
-(56, 'Autres fournitures non stockées', '020.3', '60628', 'Fonctionnement'),
-(57, 'Etudes et recherches', '020.3', '617-300', 'Fonctionnement'),
-(58, 'Catalogues et imprimés', '020.3', '6236', 'Fonctionnement'),
-(59, 'Etudes Préopérationnelles', '020.3', '2031', 'Investissement'),
-(60, 'Travaux de réseau et voirie', '020.3', '2315', 'Investissement'),
-(61, 'Club Utilisateur', '020.3', '6281.91', 'Fonctionnement'),
-(62, 'Maintenance G-NY (PDU)', '820.3', '6156', 'Fonctionnement'),
-(63, 'Installations générales', '020.3', '2135', 'Investissement'),
-(64, 'entretien et réparations sur biens mobiliers', '020.3', '61558.300', 'Fonctionnement');
+INSERT INTO `Imputation` (`id`, `section_id`, `Libelle`, `Sous_fonction`, `Article`) VALUES
+(1, 1, 'Cotisation ville-internet', '90.14', '6281,63'),
+(2, 1, 'Cotisation mission Ecoter', '90.14', '6281.57'),
+(3, 1, 'Cotisation Avicca', '90.14', '6281.56'),
+(4, 2, 'Divers Travaux', '90.14', '2318-360'),
+(5, 2, 'Divers Travaux', '90.14', '2318-496'),
+(6, 2, 'Logiciels-  Piscines', '413', '205'),
+(7, 2, 'Matériels -Piscines', '413', '2183'),
+(8, 2, 'Eau : Participations (HT)', '01', '13918'),
+(9, 2, 'Eau : Logiciels (HT)', '01', '205'),
+(10, 2, 'Eau : Matériels (HT)', '01', '2183'),
+(11, 2, 'Eau : Instal.,outillages tech.et travaux  (HT)', '01', '2315'),
+(12, 1, 'Eau : Prestations de service (HT)', '01', '618.8'),
+(13, 1, 'Eau : Maintenance (HT)', '01', '6156'),
+(14, 1, 'Eau : Frais de telecom (HT)', '01', '6262'),
+(15, 2, 'Ass. : Participations (HT)', '02', '13918'),
+(16, 2, 'Ass : Logiciels (HT)', '02', '205'),
+(17, 2, 'Ass : Matériels (HT)', '02', '2183'),
+(18, 2, 'Ass : Instal.,outillages tech.et travaux  (HT)', '02', '2315'),
+(19, 1, 'Ass : Prestations de service (HT)', '02', '618.8'),
+(20, 1, 'Ass : Maintenance (HT)', '02', '6156'),
+(21, 1, 'Ass : Frais de telecom (HT)', '02', '6262'),
+(22, 1, 'Maintenance logiciels piscines', '413', '6156'),
+(23, 1, 'Maintenance des logiciels', '020.3', '6156'),
+(24, 1, 'Formations', '020.3', '6184'),
+(25, 1, 'Prestations de service', '020.3', '6188'),
+(26, 1, 'Annonces et insertions', '020.3', '6231'),
+(27, 1, 'Frais de Telecommunication', '020.3', '6262'),
+(28, 1, 'Autres fournitures- Achat de billet', '020.3', '60228'),
+(29, 1, 'Fournitures petit équipement', '020.3', '60632'),
+(30, 1, 'Cotisation "club utilisateur Coriolis"', '020.3', '6281.58'),
+(31, 1, 'Remboursement de frais au Ciril', '020.3', '62878.3'),
+(32, 1, 'Frais de telecommunication', '020.5', '6262'),
+(33, 1, 'Maintenance des logiciels ( SIG)', '820.1', '6156'),
+(34, 1, 'formations (SIG)', '820.1', '6184'),
+(35, 1, 'Prestations de service (SIG)', '820.1', '6188'),
+(36, 1, 'Maintenance Cyberbases - Abonnement', '90.16', '6156'),
+(37, 1, 'Formations (Cyberbases)', '90.16', '6184'),
+(38, 1, 'Prestations de service', '90.16', '6188'),
+(39, 1, 'Frais de telecommunication', '90.16', '6262'),
+(40, 1, 'Remboursement de frais de location', '90.16', '62878'),
+(41, 2, 'Logiciels', '020.3', '2051'),
+(42, 2, 'Matériels', '020.3', '2183'),
+(43, 2, 'Travaux de cablages', '020.3', '2315'),
+(44, 2, 'Sub. d''équipement au Ciril', '020.3', '20418.22'),
+(45, 2, 'Divers Travaux -SIG-', '820.1', '2318'),
+(46, 2, 'logiciels', '90.14', '2051-308'),
+(47, 2, 'Matériels', '90.14', '2183-308'),
+(48, 2, 'Matériels', '90.14', '2183-360'),
+(49, 2, 'Mobiliers er autres', '90.14', '2184-308'),
+(50, 1, 'Cotisation ADULLACT', '90.14', '6281,59'),
+(51, 1, 'locations mobiliers et immobiliers', '90.16', '6132'),
+(52, 2, 'ImpSpécifique pour Nancy - report 2007', '020.2', '2183-Ncy'),
+(53, 1, 'Documentation générale et technique', '020.3', '6182-300'),
+(54, 1, 'Documentation générale et technique', '020.3', '6182'),
+(55, 1, 'Cotisation au club utilisateurs Droits de Cités', '020.3', '6281.75'),
+(56, 1, 'Autres fournitures non stockées', '020.3', '60628'),
+(57, 1, 'Etudes et recherches', '020.3', '617-300'),
+(58, 1, 'Catalogues et imprimés', '020.3', '6236'),
+(59, 2, 'Etudes Préopérationnelles', '020.3', '2031'),
+(60, 2, 'Travaux de réseau et voirie', '020.3', '2315'),
+(61, 1, 'Club Utilisateur', '020.3', '6281.91'),
+(62, 1, 'Maintenance G-NY (PDU)', '820.3', '6156'),
+(63, 2, 'Installations générales', '020.3', '2135'),
+(64, 1, 'entretien et réparations sur biens mobiliers', '020.3', '61558.300');
 
 -- --------------------------------------------------------
-
---
--- Structure de la table `InformationCollectivite`
---
-
-CREATE TABLE `InformationCollectivite` (
-  `id` int(11) NOT NULL,
-  `collectivite_id` int(11) NOT NULL,
-  `Nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Annee` int(11) NOT NULL,
-  `cleRepartition_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `InformationsCollectiviteListe`
---
-
-CREATE TABLE `InformationsCollectiviteListe` (
-  `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `LigneCommande`
---
-
-CREATE TABLE `LigneCommande` (
-  `id` int(11) NOT NULL,
-  `commande_id` int(11) NOT NULL,
-  `tva_id` int(11) NOT NULL,
-  `Libelle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Reference` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Quantite` int(11) NOT NULL,
-  `Prix_Unitaire` decimal(10,2) NOT NULL,
-  `Total_TTC` decimal(10,2) NOT NULL,
-  `Commentaire` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `Livraison`
---
-
-CREATE TABLE `Livraison` (
-  `id` int(11) NOT NULL,
-  `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Adresse` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Complement_Adresse` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Code_Postal` int(11) NOT NULL,
-  `Ville` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Telephone` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `Livraison`
@@ -581,29 +383,6 @@ INSERT INTO `Livraison` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Pos
 (1, 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212');
 
 -- --------------------------------------------------------
-
---
--- Structure de la table `MasseSalariale`
---
-
-CREATE TABLE `MasseSalariale` (
-  `id` int(11) NOT NULL,
-  `activite_id` int(11) NOT NULL,
-  `Montant` int(11) NOT NULL,
-  `Annee` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `Service`
---
-
-CREATE TABLE `Service` (
-  `id` int(11) NOT NULL,
-  `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Est_Ancien_Service` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `Service`
@@ -617,29 +396,6 @@ INSERT INTO `Service` (`id`, `Nom`, `Est_Ancien_Service`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `TempsPasse`
---
-
-CREATE TABLE `TempsPasse` (
-  `id` int(11) NOT NULL,
-  `activite_id` int(11) NOT NULL,
-  `collectivite_id` int(11) NOT NULL,
-  `Pourcentage` int(11) NOT NULL,
-  `Annee` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `TVA`
---
-
-CREATE TABLE `TVA` (
-  `id` int(11) NOT NULL,
-  `pourcentage` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Contenu de la table `TVA`
 --
 
@@ -651,17 +407,6 @@ INSERT INTO `TVA` (`id`, `pourcentage`) VALUES
 (5, '20.00');
 
 -- --------------------------------------------------------
-
---
--- Structure de la table `Utilisateur`
---
-
-CREATE TABLE `Utilisateur` (
-  `id` int(11) NOT NULL,
-  `service_id` int(11) NOT NULL,
-  `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Prenom` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `Utilisateur`
@@ -718,328 +463,3 @@ INSERT INTO `Utilisateur` (`id`, `service_id`, `Nom`, `Prenom`) VALUES
 --
 -- Index pour les tables exportées
 --
-
---
--- Index pour la table `Activite`
---
-ALTER TABLE `Activite`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_4103374398F35CA9` (`cleRepartition_id`);
-
---
--- Index pour la table `Application`
---
-ALTER TABLE `Application`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_22C75216670C757F` (`fournisseur_id`);
-
---
--- Index pour la table `Budget`
---
-ALTER TABLE `Budget`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_745EF24DED5CA9E6` (`service_id`);
-
---
--- Index pour la table `CleRepartition`
---
-ALTER TABLE `CleRepartition`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Collectivite`
---
-ALTER TABLE `Collectivite`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Commande`
---
-ALTER TABLE `Commande`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_979CC42BED5CA9E6` (`service_id`),
-  ADD KEY `IDX_979CC42B3E030ACD` (`application_id`),
-  ADD KEY `IDX_979CC42B670C757F` (`fournisseur_id`),
-  ADD KEY `IDX_979CC42B8E54FB25` (`livraison_id`),
-  ADD KEY `IDX_979CC42B9B0F88B1` (`activite_id`),
-  ADD KEY `IDX_979CC42B1E40325` (`imputation_id`);
-
---
--- Index pour la table `CommandeConcerneCollectivite`
---
-ALTER TABLE `CommandeConcerneCollectivite`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_71972E2A82EA2E54` (`commande_id`),
-  ADD KEY `IDX_71972E2AA7991F51` (`collectivite_id`);
-
---
--- Index pour la table `CommandePasseEtat`
---
-ALTER TABLE `CommandePasseEtat`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_8B01505982EA2E54` (`commande_id`),
-  ADD KEY `IDX_8B015059D5E86FF` (`etat_id`);
-
---
--- Index pour la table `EtatCommande`
---
-ALTER TABLE `EtatCommande`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Fournisseur`
---
-ALTER TABLE `Fournisseur`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Imputation`
---
-ALTER TABLE `Imputation`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `InformationCollectivite`
---
-ALTER TABLE `InformationCollectivite`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_F212DDF598F35CA9` (`cleRepartition_id`),
-  ADD KEY `IDX_F212DDF5A7991F51` (`collectivite_id`);
-
---
--- Index pour la table `InformationsCollectiviteListe`
---
-ALTER TABLE `InformationsCollectiviteListe`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `LigneCommande`
---
-ALTER TABLE `LigneCommande`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_CF33509A82EA2E54` (`commande_id`),
-  ADD KEY `IDX_CF33509A4D79775F` (`tva_id`);
-
---
--- Index pour la table `Livraison`
---
-ALTER TABLE `Livraison`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `MasseSalariale`
---
-ALTER TABLE `MasseSalariale`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_57DE69C19B0F88B1` (`activite_id`);
-
---
--- Index pour la table `Service`
---
-ALTER TABLE `Service`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `TempsPasse`
---
-ALTER TABLE `TempsPasse`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_BB45A6C79B0F88B1` (`activite_id`),
-  ADD KEY `IDX_BB45A6C7A7991F51` (`collectivite_id`);
-
---
--- Index pour la table `TVA`
---
-ALTER TABLE `TVA`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Utilisateur`
---
-ALTER TABLE `Utilisateur`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_9B80EC64ED5CA9E6` (`service_id`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `Activite`
---
-ALTER TABLE `Activite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
---
--- AUTO_INCREMENT pour la table `Application`
---
-ALTER TABLE `Application`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=181;
---
--- AUTO_INCREMENT pour la table `Budget`
---
-ALTER TABLE `Budget`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `CleRepartition`
---
-ALTER TABLE `CleRepartition`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT pour la table `Collectivite`
---
-ALTER TABLE `Collectivite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
---
--- AUTO_INCREMENT pour la table `Commande`
---
-ALTER TABLE `Commande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `CommandeConcerneCollectivite`
---
-ALTER TABLE `CommandeConcerneCollectivite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `CommandePasseEtat`
---
-ALTER TABLE `CommandePasseEtat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `EtatCommande`
---
-ALTER TABLE `EtatCommande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT pour la table `Fournisseur`
---
-ALTER TABLE `Fournisseur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT pour la table `Imputation`
---
-ALTER TABLE `Imputation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=67;
---
--- AUTO_INCREMENT pour la table `InformationCollectivite`
---
-ALTER TABLE `InformationCollectivite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `InformationsCollectiviteListe`
---
-ALTER TABLE `InformationsCollectiviteListe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `LigneCommande`
---
-ALTER TABLE `LigneCommande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `Livraison`
---
-ALTER TABLE `Livraison`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT pour la table `MasseSalariale`
---
-ALTER TABLE `MasseSalariale`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `Service`
---
-ALTER TABLE `Service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT pour la table `TempsPasse`
---
-ALTER TABLE `TempsPasse`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `TVA`
---
-ALTER TABLE `TVA`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT pour la table `Utilisateur`
---
-ALTER TABLE `Utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=47;
---
--- Contraintes pour les tables exportées
---
-
---
--- Contraintes pour la table `Activite`
---
-ALTER TABLE `Activite`
-  ADD CONSTRAINT `FK_4103374398F35CA9` FOREIGN KEY (`cleRepartition_id`) REFERENCES `CleRepartition` (`id`);
-
---
--- Contraintes pour la table `Application`
---
-ALTER TABLE `Application`
-  ADD CONSTRAINT `FK_22C75216670C757F` FOREIGN KEY (`fournisseur_id`) REFERENCES `Fournisseur` (`id`);
-
---
--- Contraintes pour la table `Budget`
---
-ALTER TABLE `Budget`
-  ADD CONSTRAINT `FK_745EF24DED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`);
-
---
--- Contraintes pour la table `Commande`
---
-ALTER TABLE `Commande`
-  ADD CONSTRAINT `FK_979CC42B1E40325` FOREIGN KEY (`imputation_id`) REFERENCES `Imputation` (`id`),
-  ADD CONSTRAINT `FK_979CC42B3E030ACD` FOREIGN KEY (`application_id`) REFERENCES `Application` (`id`),
-  ADD CONSTRAINT `FK_979CC42B670C757F` FOREIGN KEY (`fournisseur_id`) REFERENCES `Fournisseur` (`id`),
-  ADD CONSTRAINT `FK_979CC42B8E54FB25` FOREIGN KEY (`livraison_id`) REFERENCES `Livraison` (`id`),
-  ADD CONSTRAINT `FK_979CC42B9B0F88B1` FOREIGN KEY (`activite_id`) REFERENCES `Activite` (`id`),
-  ADD CONSTRAINT `FK_979CC42BED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`);
-
---
--- Contraintes pour la table `CommandeConcerneCollectivite`
---
-ALTER TABLE `CommandeConcerneCollectivite`
-  ADD CONSTRAINT `FK_71972E2A82EA2E54` FOREIGN KEY (`commande_id`) REFERENCES `Commande` (`id`),
-  ADD CONSTRAINT `FK_71972E2AA7991F51` FOREIGN KEY (`collectivite_id`) REFERENCES `Collectivite` (`id`);
-
---
--- Contraintes pour la table `CommandePasseEtat`
---
-ALTER TABLE `CommandePasseEtat`
-  ADD CONSTRAINT `FK_8B01505982EA2E54` FOREIGN KEY (`commande_id`) REFERENCES `Commande` (`id`),
-  ADD CONSTRAINT `FK_8B015059D5E86FF` FOREIGN KEY (`etat_id`) REFERENCES `EtatCommande` (`id`);
-
---
--- Contraintes pour la table `InformationCollectivite`
---
-ALTER TABLE `InformationCollectivite`
-  ADD CONSTRAINT `FK_F212DDF598F35CA9` FOREIGN KEY (`cleRepartition_id`) REFERENCES `CleRepartition` (`id`),
-  ADD CONSTRAINT `FK_F212DDF5A7991F51` FOREIGN KEY (`collectivite_id`) REFERENCES `Collectivite` (`id`);
-
---
--- Contraintes pour la table `LigneCommande`
---
-ALTER TABLE `LigneCommande`
-  ADD CONSTRAINT `FK_CF33509A4D79775F` FOREIGN KEY (`tva_id`) REFERENCES `TVA` (`id`),
-  ADD CONSTRAINT `FK_CF33509A82EA2E54` FOREIGN KEY (`commande_id`) REFERENCES `Commande` (`id`);
-
---
--- Contraintes pour la table `MasseSalariale`
---
-ALTER TABLE `MasseSalariale`
-  ADD CONSTRAINT `FK_57DE69C19B0F88B1` FOREIGN KEY (`activite_id`) REFERENCES `Activite` (`id`);
-
---
--- Contraintes pour la table `TempsPasse`
---
-ALTER TABLE `TempsPasse`
-  ADD CONSTRAINT `FK_BB45A6C79B0F88B1` FOREIGN KEY (`activite_id`) REFERENCES `Activite` (`id`),
-  ADD CONSTRAINT `FK_BB45A6C7A7991F51` FOREIGN KEY (`collectivite_id`) REFERENCES `Collectivite` (`id`);
-
---
--- Contraintes pour la table `Utilisateur`
---
-ALTER TABLE `Utilisateur`
-  ADD CONSTRAINT `FK_9B80EC64ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`);
