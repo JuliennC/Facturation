@@ -34,15 +34,13 @@ TODO liste :
 	-> FAIT Regarder pour améliorer l’enregistrement des collectivités dans une commande
 	-> FAIT Faire un bouton supprimer pour les lignes commande
 	-> FAIT Pour les deux points ci-dessus, s’inspirer de la fonction qui enregistre et supprime des utilisateurs dans admin
+	-> FAIT de la facturation, lancer une erreur lorsqu’une clé de rep n’est pas entrée pour une collectivité, voir pour faire une redirection
 
 
+	-> finir l’avertissement lorsqu’un montant dans une facturation est de 0
 
 	-> faire une fonction recherche pour la table applications dans admin
 
-
-	-> lors de la facturation, lancer une erreur lorsqu’une clé de rep n’est pas entrée pour une collectivité, voir pour faire une redirection
-
-	
 
 	-> Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca.
 
