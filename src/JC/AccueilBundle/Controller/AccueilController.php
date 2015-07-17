@@ -5,6 +5,7 @@ namespace JC\AccueilBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 use JC\AccueilBundle\Entity\Recherche;
 use JC\CommandeBundle\Entity\EtatCommande;
@@ -42,6 +43,14 @@ class AccueilController extends Controller
 		   	
 		   		//On cree un tableau pour y stocker les informations du service
 		   		$infoServices[$service->getNom()] = array('nom'=>$service->getNom(),'budget'=>$budget[0]->getMontant(),'nbCommandesPassees'=>0 , 'montantCommandesPassees'=>0);	
+	   		
+	   		} else {
+		   		
+		   		$session = new Session();
+				$session->getFlashBag()->add('Warning', 'Attention : Aucun budget n\'a été saisi pour '.$service->getNom());
+
+		   		$infoServices[$service->getNom()] = array('nom'=>$service->getNom(),'budget'=>1,'nbCommandesPassees'=>0 , 'montantCommandesPassees'=>0);	
+		   		
 	   		}
 
 		}
@@ -108,35 +117,10 @@ class AccueilController extends Controller
 
 
 
-	public function navBarreAction(Request $request) {
-		
-		
-		// On crée un objet Advert
-		$recherche = new Recherche();
-
-		// On crée le FormBuilder grâce au service form factory
-		$form = $this->createFormBuilder($recherche)
-		->add('objetRecherche', 'text')
-		->add('Recherche', 'submit')
-		->getForm()
-		;
-		
-		$form->handleRequest($request);
-
-
-
-		if ($form->isValid()) {
-	      // On redirige vers la page de visualisation de l'annonce nouvellement créée
-	      /*return $this->redirect($this->generateUrl('jc_accueil_recherche', array('recherche' => $recherche->getObjetRecherche() 
-	      																			)));*/
-	      																			
-		  		return $this->render('JCAccueilBundle:Accueil:recherche.html.twig');
-
-	    }
-	
+	public function navBarreAction() {
 	        
 		// Si la requête est en GET, on affiche une page de confirmation avant de supprimer
-		return $this->render('JCAccueilBundle:Accueil:navBarre.html.twig', array('form' => $form->createView()) );
+		return $this->render('JCAccueilBundle:Accueil:navBarre.html.twig');
 		
 	}
 

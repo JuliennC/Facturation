@@ -41,10 +41,10 @@ class MasseSalariale
 // ---------- Cles étrangeres ----------
 
 	/**
-   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Activite", cascade={"persist"})
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Service", cascade={"persist"})
    * @ORM\JoinColumn(nullable=false)
    */
-   private $activite;
+   private $service;
 
 
 
@@ -113,9 +113,9 @@ class MasseSalariale
      * @param Service $service
      * @return MasseSalariale
      */
-    public function setActivite($activite)
+    public function setService($service)
     {
-        $this->activite = $activite;
+        $this->service = $service;
 
         return $this;
     }
@@ -125,9 +125,9 @@ class MasseSalariale
      *
      * @return Service 
      */
-    public function getActivite()
+    public function getService()
     {
-        return $this->activite;
+        return $this->service;
     }
 
 

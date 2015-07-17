@@ -12,4 +12,22 @@ use Doctrine\ORM\EntityRepository;
  */
 class MasseSalarialeRepository extends EntityRepository
 {
+	
+	
+	public function findMasseSalarialeAvecAnneeEtService($annee, $service){
+		
+		return $this
+		->createQueryBuilder('ms')
+		->where('ms.annee = :annee')
+		->setParameter('annee', $annee)
+		->Andwhere('ms.service = :service')
+		->setParameter('service', $service)
+		->getQuery()	
+		->getResult()
+
+		;
+
+	}
+
+	
 }

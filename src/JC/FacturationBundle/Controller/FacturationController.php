@@ -263,6 +263,7 @@ class FacturationController extends Controller
 		 
 		 
 		$em = $this->getDoctrine()->getManager();
+		
 
 	    //On récupere la collectivite
 	    $collectivite = $em->getRepository('JCCommandeBundle:Collectivite')->findOneByNom($nomCollectivite); 
@@ -326,20 +327,30 @@ class FacturationController extends Controller
 					* 	On ouvre la page admin dans une autre tab
 					*	Et on redirige vers l'index de Facturation
 					*/
-					
-					
 					if(! array_key_exists($commande->getActivite()->getCleRepartition()->getNom(), $infosColl)){
-						
+								
 						$session = new Session();
-						$session->getFlashBag()->add('Error', 'La clé '.$commande->getActivite()->getCleRepartition()->getNom().' n\'a pas été renseignée pour'.$collectivite->getNom().' pour l\'année '.$annee);
+						$session->getFlashBag()->add('Error', 'Erreur : La clé '.$commande->getActivite()->getCleRepartition()->getNom().' n\'a pas été renseignée pour'.$collectivite->getNom().' pour l\'année '.$annee);
 						
 						return $this->redirect($this->generateUrl('jc_facturation_homepage', array($annee)));
 						
 					}
 					
 					
+					
 					//On récupere l'InformationCollectivité
 					$info = $infosColl[$commande->getActivite()->getCleRepartition()->getNom()];
+
+
+
+					//Si le $info->getNombre() == 0, c'est qu'il y a sans doute eu un oubli dans la table des infos
+					//On met donc un flash message Warning pour avertir, et être sur que cela est volontaire
+					if ($info->getNombre() === 0 || $info->getNombre() === "0"){
+						
+						$session = new Session();
+						$session->getFlashBag()->add('Warning', 'Attention : La clé '.$info->getCleRepartition()->getNom().' est à 0 pour '.$collectivite->getNom());
+					}
+					
 
 					//On récupere la "somme des clés", ceci afin de faire un ratio pour la collectivite
 					$totalCle = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findSommeDeCleEtAnneePourCommande($info->getCleRepartition(), $annee, $commande)[1];
@@ -348,11 +359,10 @@ class FacturationController extends Controller
 
 					//On fait le ratio
 					//Si le total des clès fait 0, alors on change en 1 ( ce qui ne change rien, car le seul cas serait 0/0 --> donc 0/1 )
-						dump($totalCle);
-
 					if ($totalCle === 0 || $totalCle === "0") {
 						$totalCle = 1;
 					}
+					
 					
 					$ratio = $info->getNombre() / $totalCle;
 						
@@ -364,7 +374,7 @@ class FacturationController extends Controller
 
 					//On explique le ratio
 					$tabCommandes[$commande->getId()]['infoRatioText'] = $info->getNombre()." sur un total de ".$totalCle;
-					$tabCommandes[$commande->getId()]['infoRatioTitre'] = $ccc->getRepartition();
+					$tabCommandes[$commande->getId()]['infoRatioTitre'] = $commande->getActivite()->getCleRepartition()->getNom();
 					
 					
 					//On met les infos
@@ -398,13 +408,7 @@ class FacturationController extends Controller
 			
 			
 			
-			//Si le montant == 0, c'est qu'il y a sans doute eu un oubli dans la table des infos
-			//On met donc un flahs message Warning pour avertir, et être sur que cela est volontaire
-			if ($montant === 0 || $montant === "0"){
-				
-				$session = new Session();
-				$session->getFlashBag()->add('Warning', 'Attention : Assurez-vous que la répartition des informations concernant la commande n°'.$commande->getId().' ont bien été enregistrées .');
-			}
+			
 			
 		}
     
@@ -418,32 +422,86 @@ class FacturationController extends Controller
 		//On stock les montants des masses salariales
 		$tabMassesSalariales = array();
 		
-		//On calcule maintenant la répartition de la masse salarials
+		//On récupère les masses salarials pour l'année donnée
 		$listeMassesSalarialesAnnees = $em->getRepository('JCCommandeBundle:MasseSalariale')->findByAnnee($annee);
+    
+		//On récupère la liste des activites
+		$listeActivites = $em->getRepository('JCCommandeBundle:Activite')->findAll();
     
 		//On additionnera les masses salariales
 		$infosColl['montantMassesSalariales'] = 0;
+		
+		
     
 		//On parcours chaque masse salariale afin de connaitre la part que la collectivite doit payer
 		foreach($listeMassesSalarialesAnnees as $ms) {
 			
-			//On init l'array de l'activite
-			$tabMassesSalariales[$ms->getActivite()->getNom()] = array();
 			
-			//On récupère le temps passé de l'année pour l'Activite
-			$tempsPasse = $em->getRepository('JCCommandeBundle:TempsPasse')->findOneAvecAnneeEtActivitePourCollectivite($annee, $ms->getActivite(), $collectivite)[0];
+			/*	On parcours les masses salariales, 
+			*	On récupère le service, et on parcours les activites pour calcule le ratio de chaque activite
+			*		--> nombre commande activite / nombre total commande 
+			*	
+			*	On peut calculer le montant de chaque activite pour le service
+			*
+			*	Une fois fait, il faut calculer avec le pourcentage de temps passé pour la collectivite
+			*/
+			
+			$service = $ms->getService();
+			
+			//On récupère la liste des commandes du service
+			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->findByService($service);
+			
+			$nbCommandesActivite = 0;
+			
+			//On parcours les commandes
+			foreach($listeActivites as $activite) {
+				
+				
+				//On parcours les activites
+				foreach($listeCommandes as $commande){
+				
+					//On compte le nombre de commande qui correspondent à l'activite
+					if ($commande->getActivite() === $activite){
+						
+						$nbCommandesActivite ++;
+					}	
+				}
+				
+				
+				
+				
+				//On init l'array de l'activite
+				$tabMassesSalariales[$activite->getNom()] = array();
+				
+				//On récupère le temps passé de l'année pour l'Activite
+				$tempsPasse = $em->getRepository('JCCommandeBundle:TempsPasse')->findOneAvecAnneeEtActivitePourCollectivite($annee, $activite, $collectivite);
+				
+				
+				//S'il n'y a pas de temps passé pour l'activite, on le signale à l'utilisateur cela doit être un oubli
+				if(sizeof($tempsPasse) === 0 ) {
+					
+					$session = new Session();
+					$session->getFlashBag()->add('Error', 'Erreur : Le temps passé pour '.$collectivite->getNom().' pour l\'activité '.$activite->getNom().' n\'a pas été définie.');
 
-			//On calule le montant du
-			$montant = $ms->getMontant() * ($tempsPasse->getPourcentage()/100);
+					return $this->redirect($this->generateUrl('jc_facturation_homepage', array($annee)));
+				}
+				
+				
+				//On calule le montant du par la collectivite
+				$masseDeLActivite = $ms->getMontant() * ($nbCommandesActivite / sizeof($listeCommandes));
 			
-			
-			//On stoke les informations concernant la masse salariale (due , totale, etc)
-			$tabMassesSalariales[$ms->getActivite()->getNom()]['activite'] =  $ms->getActivite()->getNom();
-			$tabMassesSalariales[$ms->getActivite()->getNom()]['montantTotal'] =  $ms->getMontant();
-			$tabMassesSalariales[$ms->getActivite()->getNom()]['pourcentage'] =  $tempsPasse->getPourcentage();
-			$tabMassesSalariales[$ms->getActivite()->getNom()]['montantAPayer'] =  $montant;
-			
-			$infosColl['montantMassesSalariales'] += $montant;
+				$montantDuParLaCollectivite = $masseDeLActivite * ($tempsPasse->getPourcentage()/100);
+				
+				
+				
+				//On stoke les informations concernant la masse salariale (due , totale, etc)
+				$tabMassesSalariales[$activite->getNom()]['activite'] = $activite->getNom();
+				$tabMassesSalariales[$activite->getNom()]['montantTotal'] =  $ms->getMontant();
+				$tabMassesSalariales[$activite->getNom()]['pourcentage'] =  $tempsPasse->getPourcentage();
+				$tabMassesSalariales[$activite->getNom()]['montantAPayer'] =  $montantDuParLaCollectivite;
+				
+				$infosColl['montantMassesSalariales'] += $montantDuParLaCollectivite;
+			}
 			
 			
 		}

@@ -52,6 +52,14 @@ use JC\CommandeBundle\Entity\ListeImputations;
 use JC\CommandeBundle\Form\ImputationType;
 use JC\CommandeBundle\Form\ListeImputationsType;
 
+use JC\CommandeBundle\Entity\MasseSalariale;
+use JC\CommandeBundle\Entity\ListeMassesSalariales;
+use JC\CommandeBundle\Form\MasseSalarialeType;
+use JC\CommandeBundle\Form\ListeMassesSalarialesType;
+
+
+
+
 
 
 class AdminController extends Controller
@@ -345,7 +353,36 @@ class AdminController extends Controller
 				$session = $request->getSession();
 				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des imputations');
 			}
+		
+		
+		
+		
+		//Si le formulaire envoyé est le formulaire des masses salariales
+		} else if(isset($formulaireEnvoye['jc_commandebundle_listemassessalariales'])) {
+				
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationMassesSalarialesAction($request, $annee);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les masses salariales ont été enregistrées avec succès.');
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des masses salariales');
+			}
 		}
+
 		
 
 
@@ -977,6 +1014,86 @@ class AdminController extends Controller
 	 		return $this->render('JCAdminBundle:Admin:modif_imputations.html.twig', array('form'=>$form->createView()));
 		}
 	 }
+
+
+
+
+
+
+	 /*
+	 *	Pour modifier les informations des collectivites dont l'année de début de mutualisation
+	 *  est antérieur à l'année passée en paramêtre 
+	 */
+	 public function modificationMassesSalarialesAction(Request $request, $annee) {
+		 		 
+
+		$em = $this->getDoctrine()->getManager();
+
+		 
+		//On récupère les services
+		$listeServices = $em->getRepository('JCCommandeBundle:Service')->getServiceOrdreAlpha()->getQuery()->getResult(); 
+
+
+		//Liste qui sera transformée en form
+		$listeMassesSalariales = new ListeMassesSalariales();
+
+				
+			//On parcours chaque service pour creer leur budget
+			foreach($listeServices as $service) {					
+
+				//On regarde si un budget avait déjà été définie
+				$ms = $em->getRepository('JCCommandeBundle:MasseSalariale')->findMasseSalarialeAvecAnneeEtService($annee, $service);
+					
+
+				//Si une massa salariale existe, on le récupère
+				if (sizeof($ms) > 0){
+
+					$listeMassesSalariales->addMasseSalariale($ms[0]);
+					
+				//Sinon, on en crée un
+				} else {
+
+					$nouvelleMS = new Budget();
+					$nouvelleMS -> setService($service);
+					$nouvelleMS -> setAnnee($annee);
+					$nouvelleMS -> setMontant(0);
+												
+					$listeMassesSalariales->addMasseSalariale($nouvelleMS);
+				}
+
+			}
+		
+			
+	    $form = $this->get('form.factory')->create(new ListeMassesSalarialesType(), $listeMassesSalariales);
+		$form->handleRequest($request);
+								dump($listeMassesSalariales);
+
+		//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+        	//On récupère la liste des informations du formulaire
+        	$listeMassesSalariales = $form->get('listeMassesSalariales')->getData();
+
+        	foreach($$listeMassesSalariales as $ms) {
+			
+				if($ms->getMontant() != 0){
+					$em->persist($ms);
+				}
+        	}
+        	
+        	$em->flush();
+        
+			return new Response('true');
+
+
+    	} else {
+			
+			//return new Response("kjb");
+			return $this->render('JCAdminBundle:Admin:modif_masses_salariales.html.twig', array('form'=>$form->createView(),'annee'=>$annee));
+		      	
+		}
+	}
+
 
 
 

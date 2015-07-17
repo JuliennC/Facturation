@@ -46,7 +46,7 @@ class CollectiviteRepository extends EntityRepository
 	  	->setParameter('annee', $annee)
 		  	
 	  	//On trie par collectivite et par clé 
-	  	->add('orderBy', 'c.id ASC')
+	  	->add('orderBy', 'c.nom ASC')
    			
   		->getQuery()
 		->getResult();
