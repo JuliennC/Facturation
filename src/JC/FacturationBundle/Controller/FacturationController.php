@@ -486,6 +486,7 @@ class FacturationController extends Controller
 					return $this->redirect($this->generateUrl('jc_facturation_homepage', array($annee)));
 				}
 				
+				$tempsPasse = $tempsPasse[0];
 				
 				//On calule le montant du par la collectivite
 				$masseDeLActivite = $ms->getMontant() * ($nbCommandesActivite / sizeof($listeCommandes));

@@ -38,6 +38,9 @@ TODO liste :
 	-> FAIT finir l’avertissement lorsqu’un montant dans une facturation est de 0
 
 
+	-> URGENT : le mode direct ne détecte plus les collectivités sélectionnées
+
+
 	-> faire des liens dans les flash messages
 
 
