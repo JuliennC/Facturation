@@ -1,0 +1,135 @@
+{% extends "JCBugReportBundle::layout.html.twig" %}
+
+
+{% block title %}{{ parent() }} - Bug Report{% endblock %}
+
+
+{% block jcbugreport_body %}
+
+  
+
+  
+  <div class='row top30'>
+  
+  	  
+  	<div class='container col-md-9'>
+  	
+  		<div class='well col-md-12'>
+
+	  		<legend>Reporter un bug ou suggérer une amélioration</legend>
+	
+	  		{{ form_start(form) }}
+	
+	
+						
+						
+	  		<div class='row top30 col-md-12'>
+	  			<p class='col-md-3'> Utilisateur : </p>
+	  			<div class='col-xs-5'>{{form_widget(form.utilisateur, {'attr': {'class':'form-control'}})}}</div>
+	  		</div>
+	  		
+	  		
+	  		
+	  		<div class='row top30 col-md-12'>
+	  			<p class='col-md-3'> Type de bug : </p>
+	  			<div class=' col-xs-5'>{{form_widget(form.type, {'attr': {'class':'form-control'}})}}</div>
+	  		</div>
+	  		
+	  		
+	  		
+	  		<div class='row top30 col-md-12'>
+	  			<p class='col-md-3'> Type de bug : </p>
+	  			<div class='col-xs-9'>{{form_widget(form.circonstances, {'attr': {'class':'form-control'}})}}</div>
+	  		</div>
+	  		
+	  		
+	  		
+	  		<div class='row top30 col-md-12'>
+	  			<p class='col-md-3'> Commentaire : </p>
+	  			<div class='col-xs-9'>{{form_widget(form.commentaire, {'attr': {'class':'form-control'}})}}</div>
+	  		</div>
+  		
+  		
+	  		<div>{{form_widget(form.envoyer, {'attr': {'class':'btn btn-success col-md-3 top30'}})}}</div>
+  		
+  		{{ form_end(form) }}
+  	
+  		</div>
+  	
+  	</div>
+
+  
+  </div>
+  
+  
+  <div class='row  top30'>
+  	<div class='container col-md-8 col-md-offset-2'>
+  		<div class='well col-md-12'>
+  	
+  			<p> Etats des bugs : </p>
+  	
+  			{# On affiche les bugs en cours de correction #}
+  			<div class='row col-md-12'>
+
+	  			<label>Bugs en cours de correction</label>
+	  			
+	  			{% for bug in listeBugs %}
+	  				
+		  			<ul>
+	  				{% if bug.statut == 'En cours' %}
+		  				
+		  				<li> {{bug.libelle}} </li>
+	
+		  			{% endif %}
+		  			</ul>
+		  			
+		  		{% endfor %}
+		  	</div>
+		  		
+	  		
+	  		
+	  		{# On affiche les bugs connus #}
+  			<div class='row col-md-12'>
+
+	  			<label>Bugs connus</label>
+	  			
+	  			{% for bug in listeBugs %}
+	  				
+		  			<ul>
+	  				{% if bug.statut == 'Connu' %}
+		  				
+		  				<li> {{bug.libelle}} </li>
+	
+		  			{% endif %}
+		  			</ul>
+		  			
+		  		{% endfor %}
+		  </div>
+
+
+	  		{# On affiche les bugs corrigés #}
+  			<div class='row col-md-12'>
+  			
+	  			<label>Bugs corrigés</label>
+	  			
+	  			{% for bug in listeBugs %}
+	  				
+		  			<ul>
+	  				{% if bug.statut == 'Corrige' %}
+		  				
+		  				<li> {{bug.libelle}} </li>
+	
+		  			{% endif %}
+		  			</ul>
+		  			
+		  		{% endfor %}
+	  		</div>
+  		</div>
+  	
+
+  </div>
+  
+  </div>
+  
+  
+{% endblock %}

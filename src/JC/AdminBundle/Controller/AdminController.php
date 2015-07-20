@@ -361,6 +361,9 @@ class AdminController extends Controller
 		
 		
 		
+		
+		
+		
 		//Si le formulaire envoyé est le formulaire des masses salariales
 		} else if(isset($formulaireEnvoye['jc_commandebundle_listemassessalariales'])) {
 				
@@ -388,6 +391,10 @@ class AdminController extends Controller
 		
 		
 		
+
+
+
+
 		//Si le formulaire envoyé est le formulaire des temps passés
 		} else if(isset($formulaireEnvoye['jc_commandebundle_listetempspasses'])) {
 				
@@ -459,7 +466,6 @@ class AdminController extends Controller
 	 */
 	 public function modificationCollectivitesAction(Request $request, $annee) {
 
-	 $b = 0;
 	 
 	 	$em = $this->getDoctrine()->getManager();
 
@@ -494,7 +500,7 @@ class AdminController extends Controller
 
     	} else {
 	    	
-	 		return $this->render('JCAdminBundle:Admin:modif_collectivites.html.twig', array('form'=>$form->createView(), 'bool_form'=>$b));
+	 		return $this->render('JCAdminBundle:Admin:modif_collectivites.html.twig', array('form'=>$form->createView()));
     	}
 
 	 	

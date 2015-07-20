@@ -1,0 +1,3 @@
+jc_bug_report_homepage:
+    path:     /bugreport
+    defaults: { _controller: JCBugReportBundle:BugReport:index }

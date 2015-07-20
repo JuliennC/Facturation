@@ -8,6 +8,11 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
+
+			{# A supprimer en production #}
+	        <span class="icon-bar"></span>
+
+
 	      </button>
 	      <a class="navbar-brand" href="{{path('jc_accueil_homepage')}}">Facturation</a>
 	    </div>
@@ -29,25 +34,15 @@
 
 	        <li><a href="{{ path('jc_admin_homepage') }}">Admin</a></li>
 
+
+			{# A supprimer en production #}
+	        <li><a href="{{ path('jc_bug_report_homepage') }}">Bug</a></li>
+
+
 	      </ul>
 
 	    
 	     
-	      <ul class="nav navbar-nav navbar-right" >
-	        
-	        {# form_start(form, {'attr': {'class': 'navbar-form navbar-left'}}) }}
-
-			        {{ form_widget(form.objetRecherche, {'attr': {'class': 'form-control' , ' placeholder':'Recherche..'} }) }}
-			
-					{{ form_widget(form.Recherche, {'attr': {'class': 'btn btn-default'}}) }}
-
-			
-  	        
-			{{ form_end(form) }}
-		
-			#}
-
-
 
 			
 

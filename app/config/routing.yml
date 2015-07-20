@@ -1,3 +1,7 @@
+jc_bug_report:
+    resource: "@JCBugReportBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jc_admin:
     resource: "@JCAdminBundle/Resources/config/routing.yml"
     prefix:   /

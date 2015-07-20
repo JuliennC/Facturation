@@ -36,9 +36,7 @@ TODO liste :
 	-> FAIT Pour les deux points ci-dessus, s’inspirer de la fonction qui enregistre et supprime des utilisateurs dans admin
 	-> FAIT de la facturation, lancer une erreur lorsqu’une clé de rep n’est pas entrée pour une collectivité, voir pour faire une redirection
 	-> FAIT finir l’avertissement lorsqu’un montant dans une facturation est de 0
-
-
-	-> URGENT : le mode direct ne détecte plus les collectivités sélectionnées
+	-> FAIT : le mode direct ne détecte plus les collectivités sélectionnées
 
 
 	-> faire des liens dans les flash messages

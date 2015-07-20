@@ -27,7 +27,7 @@
 	    "symfony/serializer":"~2.7.0",
         "friendsofsymfony/jsrouting-bundle": "^1.5",
         "obtao/html2pdf-bundle": "master-dev",
-        "beberlei/DoctrineExtensions":"master-dev",
+        "beberlei/DoctrineExtensions":"master-dev"
     },
 
     "require-dev": {

@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-use JC\AccueilBundle\Entity\Recherche;
 use JC\CommandeBundle\Entity\EtatCommande;
 use JC\CommandeBundle\Entity\CommandePasseEtat;
 
@@ -119,24 +118,11 @@ class AccueilController extends Controller
 
 	public function navBarreAction() {
 	        
-		// Si la requête est en GET, on affiche une page de confirmation avant de supprimer
 		return $this->render('JCAccueilBundle:Accueil:navBarre.html.twig');
 		
 	}
 
 
-	
-	
-	
-	
-	public function rechercheAction($recherche, $role) {
-
-					
-		return $this->render('JCAccueilBundle:Accueil:recherche.html.twig');
-	
-	}
-
-	
 	
     
 }
