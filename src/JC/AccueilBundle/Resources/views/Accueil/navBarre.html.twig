@@ -24,7 +24,6 @@
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Commande <span class="caret"></span></a>
 	          <ul class="dropdown-menu" role="menu">
 	            <li><a href="{{ path('jc_commande_creation') }}">Créer une commande</a></li>
-	            <li id='li_recherche_commande'><a href="#">Rechercher une commande</a></li>
 	            <li><a href="{{ path('jc_commande_liste') }}">Liste des commandes</a></li>
 	          </ul>
 	        </li>
@@ -34,21 +33,20 @@
 
 	        <li><a href="{{ path('jc_admin_homepage') }}">Admin</a></li>
 
-
-			{# A supprimer en production #}
-	        <li><a href="{{ path('jc_bug_report_homepage') }}">Bug</a></li>
-
-
 	      </ul>
 
 	    
 	     
+		<ul class="nav navbar-nav navbar-right" >
 
+		  	{# A supprimer en production #}
+	        <li><a href="{{ path('jc_bug_report_homepage') }}">Bug</a></li>
+
+		</ul>
 			
 
 
 
-	          </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>	

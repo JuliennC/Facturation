@@ -1104,7 +1104,6 @@ class AdminController extends Controller
 			
 	    $form = $this->get('form.factory')->create(new ListeMassesSalarialesType(), $listeMassesSalariales);
 		$form->handleRequest($request);
-		dump($listeMassesSalariales);
 
 		//Si le formulaire est valide, on sauvegarde dans la base
 		if ($form->isValid()) {
@@ -1231,7 +1230,13 @@ class AdminController extends Controller
         $form = $this->get('form.factory')->create(new ListeTempsPassesType(), $listeTempsPourForm);
 		$form->handleRequest($request);
 
-			
+		
+		//On affiche la mémoire utilisée
+		// A SUPPRIMER
+        $mem_usage = memory_get_usage(true); 
+		//var_dump(round($mem_usage/1048576,2)." megabytes");
+
+
 		//Si le formulaire est valide, on sauvegarde dans la base
 		if ($form->isValid()) {
 

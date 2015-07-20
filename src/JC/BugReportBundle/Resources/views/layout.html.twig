@@ -3,18 +3,7 @@
 {% block import %}
 	{{ parent() }}
 	    
-   {% stylesheets filter='cssrewrite' '@JCBugReportBundle/Resources/public/css/*' %}
-
-     	<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-
-   	{% endstylesheets %}
-   	
-   	
-   	{% javascripts '@JCBugReportBundle/Resources/public/js/*' %}
-    	<script type="text/javascript" src="{{ asset_url }}"></script>
-	{% endjavascripts %}
-
-
+   
 {% endblock %}
 
 
