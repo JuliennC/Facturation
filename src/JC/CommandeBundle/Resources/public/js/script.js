@@ -4,10 +4,13 @@
 */
  function metVille(ventilation, nomColl, idColl, repartition){
 
+ 	console.log('remet '+ventilation);
+
  	if(ventilation == "Mutualisee"){
         
         //On marque le checkbox
-        
+        console.log('met ville : '+nomColl);
+
         //On recupere la ville selectionnee
 		var checkbox = document.getElementById("jc_commandebundle_commande_villes_concernees_"+nomColl);
         //Dans les deux cas (mutualise et directe) on met check le checkbox
@@ -364,7 +367,7 @@ $(document).ready(function() {
 		var villeConcernee = $(this).attr('for');
 		
 		//On met à jour le champs cache concerne
-		var hidden = $('input[attr_nom_ville='+villeConcernee+']');
+		var hidden = $('input[attr_nom_ville="'+villeConcernee+'"]');
 
         //On sauvegarde la repartition
 		hidden.attr('value', $(this).val());

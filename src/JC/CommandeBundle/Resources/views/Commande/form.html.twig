@@ -367,8 +367,9 @@
 			$( document ).ready(function() {
 				
 				{# On coche les villes selectionnees dans la database #}
+				{# On se sert pour cela de la ventilation de la base de donnée (l'ancienne ventilation s'il sagit d'un changement) #}
 				{% for ccc in cCCDejaBDD %}
-					metVille('{{commande.ventilation}}','{{ccc.collectivite.nom}}','{{ccc.collectivite.id}}','{{ccc.repartition}}');
+					metVille('{{ancienneVentilation}}','{{ccc.collectivite.nom}}','{{ccc.collectivite.id}}','{{ccc.repartition}}');
 				{% endfor %}
 				
 				{# On remet les valeurs saisie si une erreur etait dans le form #}

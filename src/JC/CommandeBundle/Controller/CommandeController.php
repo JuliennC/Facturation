@@ -212,6 +212,13 @@ class CommandeController extends Controller
 	  	
 			$em = $this->getDoctrine()->getManager();
 			
+			
+			/*	On a besoin de connaitre l'ancienne ventilation pour le formulaire
+			*	C'est ˆ dire la ventilation de dpart, ou la ventilation avant qu'un changement dans le form soit fait
+			*/
+			$ancienneVentilation = $commande->getVentilation();
+			
+			
 			//	On creee le formulaire avec la commande
             $form = $this->get('form.factory')->create(new CommandeType($em), $commande);
 			$form->handleRequest($request);
@@ -236,6 +243,7 @@ class CommandeController extends Controller
 			//On rcupre les ligne de la commandes entres avant la modification du formulaire pour voir les lignes supprimes
 			$listeLigneComAvant = $em->getRepository('JCCommandeBundle:LigneCommande')->findByCommande($commande);
 			
+					
 			
 			//	Si le formulaire est valide, on l'enregistre en base.
 		    if ($form->isValid()) {
@@ -378,7 +386,7 @@ class CommandeController extends Controller
                             
                 //On affiche le formulaire, il faut donc plus d'informations
 				return $this->render('JCCommandeBundle:Commande:modification.html.twig', array( 'form' => $form->createView(), 'commande'=>$commande , 
-																								'cCCDejaBDD'=>$cCCDejaBDD,'tabVilles'=>$listeToutesLesVilles, 																													'listeLivraisons'=>$listeLivraisons, 'listeFournisseurs'=>$listeFournisseurs));	
+																								'cCCDejaBDD'=>$cCCDejaBDD, 'ancienneVentilation'=>$ancienneVentilation, 																										'tabVilles'=>$listeToutesLesVilles, 'listeLivraisons'=>$listeLivraisons, 																										'listeFournisseurs'=>$listeFournisseurs));	
 	    	}
 	    	  
 		
