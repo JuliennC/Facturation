@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Session\Session;
-
+use Symfony\Component\HttpFoundation\Response;
 
 use JC\CommandeBundle\Entity\Commande;
 use JC\CommandeBundle\Entity\CleRepartition;
@@ -423,7 +423,7 @@ class FacturationController extends Controller
 		$tabMassesSalariales = array();
 		
 		//On récupère les masses salarials pour l'année donnée
-		$listeMassesSalarialesAnnees = $em->getRepository('JCCommandeBundle:MasseSalariale')->findByAnnee($annee);
+		$listeMassesSalarialesAnnee = $em->getRepository('JCCommandeBundle:MasseSalariale')->findByAnnee($annee);
     
 		//On récupère la liste des activites
 		$listeActivites = $em->getRepository('JCCommandeBundle:Activite')->findAll();
@@ -432,9 +432,15 @@ class FacturationController extends Controller
 		$infosColl['montantMassesSalariales'] = 0;
 		
 		
+		//Si aucune masse salariale n'est définie pour l'année, on le signale, cela doit être une erreur
+		if (sizeof($listeMassesSalarialesAnnee) === 0){
+			
+			$session = new Session();
+			$session->getFlashBag()->add('Warning', 'Attention : Aucune masse salariale n\'a pas été définie pour l\'année '.$annee.'.');
+		}
     
 		//On parcours chaque masse salariale afin de connaitre la part que la collectivite doit payer
-		foreach($listeMassesSalarialesAnnees as $ms) {
+		foreach($listeMassesSalarialesAnnee as $ms) {
 			
 			
 			/*	On parcours les masses salariales, 
@@ -451,12 +457,12 @@ class FacturationController extends Controller
 			//On récupère la liste des commandes du service
 			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->findByService($service);
 			
-			$nbCommandesActivite = 0;
 			
 			//On parcours les commandes
 			foreach($listeActivites as $activite) {
 				
-				
+				$nbCommandesActivite = 0;
+
 				//On parcours les activites
 				foreach($listeCommandes as $commande){
 				
@@ -465,9 +471,7 @@ class FacturationController extends Controller
 						
 						$nbCommandesActivite ++;
 					}	
-				}
-				
-				
+				}				
 				
 				
 				//On init l'array de l'activite
@@ -485,10 +489,10 @@ class FacturationController extends Controller
 
 					return $this->redirect($this->generateUrl('jc_facturation_homepage', array($annee)));
 				}
-				
+				echo(sizeof($tempsPasse));
 				$tempsPasse = $tempsPasse[0];
 				
-				//On calule le montant du par la collectivite
+				//On calule le montant dû par la collectivite
 				$masseDeLActivite = $ms->getMontant() * ($nbCommandesActivite / sizeof($listeCommandes));
 			
 				$montantDuParLaCollectivite = $masseDeLActivite * ($tempsPasse->getPourcentage()/100);
@@ -513,7 +517,7 @@ class FacturationController extends Controller
 		$tabRes['infosColl'] = $infosColl;
 		$tabRes['tabCommandes'] = $tabCommandes;
 		$tabRes['tabMassesSalariales'] = $tabMassesSalariales;
-		
+	    //throw new NotFoundHttpexception('sd.');
 		return $tabRes;
 	 }
     

@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.9
+-- version 4.4.10
 -- http://www.phpmyadmin.net
 --
--- Client :  localhost:8889
--- Généré le :  Mer 15 Juillet 2015 à 16:43
+-- Client :  localhost
+-- Généré le :  Lun 20 Juillet 2015 à 08:04
 -- Version du serveur :  5.5.42
 -- Version de PHP :  5.6.10
 
@@ -14,62 +14,29 @@ SET time_zone = "+00:00";
 -- Base de données :  `symfony`
 --
 
--- --------------------------------------------------------
---
--- Contenu de la table `CleRepartition`
---
-
-INSERT INTO `CleRepartition` (`id`, `Nom`) VALUES
-(1, 'Nombre d''habitants'),
-(2, 'Nombre de bulletins de salaire'),
-(3, 'Nombre de mouvements comptables'),
-(4, 'Nombre de téléphones'),
-(5, 'Nombre de smart/tab'),
-(6, 'Nombre de postes Epn'),
-(7, 'Nombre de postes Adm'),
-(8, 'Nombre de postes Ecole'),
-(9, 'Participation');
-
--- --------------------------------------------------------
-
-
 --
 -- Contenu de la table `Activite`
 --
 
-INSERT INTO `Activite` (`id`, `Nom`, `cleRepartition_id`, `Est_Ancienne_Activite`) VALUES
-(1, 'Gérer les postes Adm', 7, 0),
-(2, 'Gérer les smartphone/tablettes', 5, 0),
-(3, 'Gérer les postes Ecole', 8, 0),
-(4, 'Gérer les postes internet publiques', 6, 0),
-(5, 'Gérer les télécoms', 4, 0),
-(6, 'Gérer l''infrastructure', 7, 0),
-(7, 'Intervenir sur demande - Bureautique', 9, 0),
-(8, 'Intervenir sur demande - Infra', 9, 0),
-(9, 'Intervenir sur demande - Etude', 9, 0),
-(10, 'Gérer FI', 3, 0),
-(11, 'Gérer POP', 1, 0),
-(12, 'Gérer RH', 2, 0),
-(13, 'Gérer GEST', 9, 0),
-(14, 'Gérer TECH', 9, 0),
-(15, 'Gérer WEB', 9, 0),
-(16, 'Gérer SIG', 9, 0),
-(17, 'Gérer SOC', 9, 0),
-(18, 'Gérer CULT', 9, 0);
-
--- --------------------------------------------------------
-
-
---
--- Contenu de la table `Fournisseur`
---
-
-INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`) VALUES
-(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', '0383080808'),
-(2, 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', '0383020202');
-
--- --------------------------------------------------------
-
+INSERT INTO `Activite` (`id`, `Nom`, `Est_Ancienne_Activite`, `cleRepartition_id`) VALUES
+(1, 'Gérer les postes Adm', 0, 7),
+(2, 'Gérer les smartphone/tablettes', 0, 5),
+(3, 'Gérer les postes Ecole', 0, 8),
+(4, 'Gérer les postes internet publiques', 0, 6),
+(5, 'Gérer les télécoms', 0, 4),
+(6, 'Gérer l''infrastructure', 0, 7),
+(7, 'Intervenir sur demande - Bureautique', 0, 9),
+(8, 'Intervenir sur demande - Infra', 0, 9),
+(9, 'Intervenir sur demande - Etude', 0, 9),
+(10, 'Gérer FI', 0, 3),
+(11, 'Gérer POP', 0, 1),
+(12, 'Gérer RH', 0, 2),
+(13, 'Gérer GEST', 0, 9),
+(14, 'Gérer TECH', 0, 9),
+(15, 'Gérer WEB', 0, 9),
+(16, 'Gérer SIG', 0, 9),
+(17, 'Gérer SOC', 0, 9),
+(18, 'Gérer CULT', 0, 9);
 
 --
 -- Contenu de la table `Application`
@@ -248,10 +215,29 @@ INSERT INTO `Application` (`id`, `fournisseur_id`, `Nom`, `Libelle`) VALUES
 (179, 1, 'POP SEDI - Recensement militaire', ''),
 (180, 1, 'GEST Sondage et enquete', 'Ville de NANCY');
 
--- --------------------------------------------------------
+--
+-- Contenu de la table `Budget`
+--
 
+INSERT INTO `Budget` (`id`, `service_id`, `Montant`, `Annee`) VALUES
+(1, 1, 2500, 2015),
+(2, 3, 10000, 2015),
+(3, 2, 12000, 2015);
 
--- --------------------------------------------------------
+--
+-- Contenu de la table `CleRepartition`
+--
+
+INSERT INTO `CleRepartition` (`id`, `Nom`) VALUES
+(1, 'Nombre d''habitants'),
+(2, 'Nombre de bulletins de salaire'),
+(3, 'Nombre de mouvements comptables'),
+(4, 'Nombre de téléphones'),
+(5, 'Nombre de smart/tab'),
+(6, 'Nombre de postes Epn'),
+(7, 'Nombre de postes Adm'),
+(8, 'Nombre de postes Ecole'),
+(9, 'Participation');
 
 --
 -- Contenu de la table `Collectivite`
@@ -282,15 +268,43 @@ INSERT INTO `Collectivite` (`id`, `Nom`, `Date_Debut_Mutualisation`, `Date_Fin_M
 (22, 'Sillon Lorrain', '2010-01-01', '2050-01-01'),
 (23, 'Mairie de Fléville', '2010-01-01', '2050-01-01'),
 (24, 'Mairie d Houdemont', '2010-01-01', '2050-01-01'),
-(25, 'Mairie d Heillecourt', '2010-01-01', '2050-01-01');
+(25, 'Mairie d Heillecourt', '2010-01-01', '2050-01-01'),
+(26, 'Mairie de Dommartemont', '2010-01-01', '2050-01-01'),
+(27, 'Mairie de Tomblaine', '2010-01-01', '2050-01-01'),
+(28, 'CCAS de Vandoeurvre', '2010-01-01', '2050-01-01'),
+(29, 'CCAS de Laxou', '2010-01-01', '2050-01-01'),
+(30, 'ONL', '2010-01-01', '2050-01-01');
 
--- --------------------------------------------------------
+--
+-- Contenu de la table `Commande`
+--
 
--- --------------------------------------------------------
+INSERT INTO `Commande` (`id`, `service_id`, `application_id`, `fournisseur_id`, `livraison_id`, `activite_id`, `imputation_id`, `Reference`, `Date_Livraison`, `Ventilation`, `Engagement`, `Libelle_Facturation`, `Total_TTC`, `Utilisateur`, `NomFournisseur`, `AdresseFournisseur`, `Complement_Adresse_Fournisseur`, `Code_Postal_Fournisseur`, `VilleFournisseur`, `TelephoneFournisseur`, `NomLivraison`, `AdresseLivraison`, `Complement_Adresse_Livraison`, `Code_Postal_Livraison`, `VilleLivraison`, `TelephoneLivraison`) VALUES
+(1, 1, 173, 1, 1, 10, 46, NULL, '2015-10-03 00:00:00', 'Mutualisee', '123', 'Libelle facture', '1851.52', 'BIET Alain', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212'),
+(2, 1, 173, 2, 1, 18, 1, 'refz', '2015-07-10 00:00:00', 'Mutualisee', 'r', 'eer', '0.00', 'BIET Alain', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212');
 
--- --------------------------------------------------------
+--
+-- Contenu de la table `CommandeConcerneCollectivite`
+--
 
+INSERT INTO `CommandeConcerneCollectivite` (`id`, `commande_id`, `collectivite_id`, `Repartion`) VALUES
+(37, 1, 16, 'Participation'),
+(38, 1, 25, 'Participation'),
+(39, 1, 3, 'Participation'),
+(40, 1, 19, 'Participation'),
+(43, 2, 5, 'Participation');
 
+--
+-- Contenu de la table `CommandePasseEtat`
+--
+
+INSERT INTO `CommandePasseEtat` (`id`, `commande_id`, `etat_id`, `datePassage`) VALUES
+(1, 1, 1, '2015-07-16'),
+(2, 1, 2, '2015-07-16'),
+(3, 1, 3, '2015-07-16'),
+(4, 1, 4, '2015-07-16'),
+(5, 2, 1, '2015-07-18'),
+(6, 2, 2, '2015-07-18');
 
 --
 -- Contenu de la table `EtatCommande`
@@ -302,78 +316,366 @@ INSERT INTO `EtatCommande` (`id`, `Libelle`) VALUES
 (3, 'Envoyee'),
 (4, 'Payee');
 
--- --------------------------------------------------------
+--
+-- Contenu de la table `Fournisseur`
+--
+
+INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`) VALUES
+(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', '0383080808'),
+(2, 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', '0383020202');
+
 --
 -- Contenu de la table `Imputation`
 --
 
-INSERT INTO `Imputation` (`id`, `section_id`, `Libelle`, `Sous_fonction`, `Article`) VALUES
-(1, 1, 'Cotisation ville-internet', '90.14', '6281,63'),
-(2, 1, 'Cotisation mission Ecoter', '90.14', '6281.57'),
-(3, 1, 'Cotisation Avicca', '90.14', '6281.56'),
-(4, 2, 'Divers Travaux', '90.14', '2318-360'),
-(5, 2, 'Divers Travaux', '90.14', '2318-496'),
-(6, 2, 'Logiciels-  Piscines', '413', '205'),
-(7, 2, 'Matériels -Piscines', '413', '2183'),
-(8, 2, 'Eau : Participations (HT)', '01', '13918'),
-(9, 2, 'Eau : Logiciels (HT)', '01', '205'),
-(10, 2, 'Eau : Matériels (HT)', '01', '2183'),
-(11, 2, 'Eau : Instal.,outillages tech.et travaux  (HT)', '01', '2315'),
-(12, 1, 'Eau : Prestations de service (HT)', '01', '618.8'),
-(13, 1, 'Eau : Maintenance (HT)', '01', '6156'),
-(14, 1, 'Eau : Frais de telecom (HT)', '01', '6262'),
-(15, 2, 'Ass. : Participations (HT)', '02', '13918'),
-(16, 2, 'Ass : Logiciels (HT)', '02', '205'),
-(17, 2, 'Ass : Matériels (HT)', '02', '2183'),
-(18, 2, 'Ass : Instal.,outillages tech.et travaux  (HT)', '02', '2315'),
-(19, 1, 'Ass : Prestations de service (HT)', '02', '618.8'),
-(20, 1, 'Ass : Maintenance (HT)', '02', '6156'),
-(21, 1, 'Ass : Frais de telecom (HT)', '02', '6262'),
-(22, 1, 'Maintenance logiciels piscines', '413', '6156'),
-(23, 1, 'Maintenance des logiciels', '020.3', '6156'),
-(24, 1, 'Formations', '020.3', '6184'),
-(25, 1, 'Prestations de service', '020.3', '6188'),
-(26, 1, 'Annonces et insertions', '020.3', '6231'),
-(27, 1, 'Frais de Telecommunication', '020.3', '6262'),
-(28, 1, 'Autres fournitures- Achat de billet', '020.3', '60228'),
-(29, 1, 'Fournitures petit équipement', '020.3', '60632'),
-(30, 1, 'Cotisation "club utilisateur Coriolis"', '020.3', '6281.58'),
-(31, 1, 'Remboursement de frais au Ciril', '020.3', '62878.3'),
-(32, 1, 'Frais de telecommunication', '020.5', '6262'),
-(33, 1, 'Maintenance des logiciels ( SIG)', '820.1', '6156'),
-(34, 1, 'formations (SIG)', '820.1', '6184'),
-(35, 1, 'Prestations de service (SIG)', '820.1', '6188'),
-(36, 1, 'Maintenance Cyberbases - Abonnement', '90.16', '6156'),
-(37, 1, 'Formations (Cyberbases)', '90.16', '6184'),
-(38, 1, 'Prestations de service', '90.16', '6188'),
-(39, 1, 'Frais de telecommunication', '90.16', '6262'),
-(40, 1, 'Remboursement de frais de location', '90.16', '62878'),
-(41, 2, 'Logiciels', '020.3', '2051'),
-(42, 2, 'Matériels', '020.3', '2183'),
-(43, 2, 'Travaux de cablages', '020.3', '2315'),
-(44, 2, 'Sub. d''équipement au Ciril', '020.3', '20418.22'),
-(45, 2, 'Divers Travaux -SIG-', '820.1', '2318'),
-(46, 2, 'logiciels', '90.14', '2051-308'),
-(47, 2, 'Matériels', '90.14', '2183-308'),
-(48, 2, 'Matériels', '90.14', '2183-360'),
-(49, 2, 'Mobiliers er autres', '90.14', '2184-308'),
-(50, 1, 'Cotisation ADULLACT', '90.14', '6281,59'),
-(51, 1, 'locations mobiliers et immobiliers', '90.16', '6132'),
-(52, 2, 'ImpSpécifique pour Nancy - report 2007', '020.2', '2183-Ncy'),
-(53, 1, 'Documentation générale et technique', '020.3', '6182-300'),
-(54, 1, 'Documentation générale et technique', '020.3', '6182'),
-(55, 1, 'Cotisation au club utilisateurs Droits de Cités', '020.3', '6281.75'),
-(56, 1, 'Autres fournitures non stockées', '020.3', '60628'),
-(57, 1, 'Etudes et recherches', '020.3', '617-300'),
-(58, 1, 'Catalogues et imprimés', '020.3', '6236'),
-(59, 2, 'Etudes Préopérationnelles', '020.3', '2031'),
-(60, 2, 'Travaux de réseau et voirie', '020.3', '2315'),
-(61, 1, 'Club Utilisateur', '020.3', '6281.91'),
-(62, 1, 'Maintenance G-NY (PDU)', '820.3', '6156'),
-(63, 2, 'Installations générales', '020.3', '2135'),
-(64, 1, 'entretien et réparations sur biens mobiliers', '020.3', '61558.300');
+INSERT INTO `Imputation` (`id`, `section_id`, `Libelle`, `Sous_fonction`, `Article`, `Est_Facture`) VALUES
+(1, 1, 'Cotisation ville-internet', '90.14', '6281,63', 1),
+(2, 1, 'Cotisation mission Ecoter', '90.14', '6281.57', 1),
+(3, 1, 'Cotisation Avicca', '90.14', '6281.56', 1),
+(4, 2, 'Divers Travaux', '90.14', '2318-360', 1),
+(5, 2, 'Divers Travaux', '90.14', '2318-496', 1),
+(6, 2, 'Logiciels-  Piscines', '413', '205', 1),
+(7, 2, 'Matériels -Piscines', '413', '2183', 1),
+(8, 2, 'Eau : Participations (HT)', '01', '13918', 1),
+(9, 2, 'Eau : Logiciels (HT)', '01', '205', 1),
+(10, 2, 'Eau : Matériels (HT)', '01', '2183', 1),
+(11, 2, 'Eau : Instal.,outillages tech.et travaux  (HT)', '01', '2315', 1),
+(12, 1, 'Eau : Prestations de service (HT)', '01', '618.8', 1),
+(13, 1, 'Eau : Maintenance (HT)', '01', '6156', 1),
+(14, 1, 'Eau : Frais de telecom (HT)', '01', '6262', 1),
+(15, 2, 'Ass. : Participations (HT)', '02', '13918', 1),
+(16, 2, 'Ass : Logiciels (HT)', '02', '205', 1),
+(17, 2, 'Ass : Matériels (HT)', '02', '2183', 1),
+(18, 2, 'Ass : Instal.,outillages tech.et travaux  (HT)', '02', '2315', 1),
+(19, 1, 'Ass : Prestations de service (HT)', '02', '618.8', 1),
+(20, 1, 'Ass : Maintenance (HT)', '02', '6156', 1),
+(21, 1, 'Ass : Frais de telecom (HT)', '02', '6262', 1),
+(22, 1, 'Maintenance logiciels piscines', '413', '6156', 1),
+(23, 1, 'Maintenance des logiciels', '020.3', '6156', 1),
+(24, 1, 'Formations', '020.3', '6184', 1),
+(25, 1, 'Prestations de service', '020.3', '6188', 1),
+(26, 1, 'Annonces et insertions', '020.3', '6231', 1),
+(27, 1, 'Frais de Telecommunication', '020.3', '6262', 1),
+(28, 1, 'Autres fournitures- Achat de billet', '020.3', '60228', 1),
+(29, 1, 'Fournitures petit équipement', '020.3', '60632', 1),
+(30, 1, 'Cotisation "club utilisateur Coriolis"', '020.3', '6281.58', 1),
+(31, 1, 'Remboursement de frais au Ciril', '020.3', '62878.3', 1),
+(32, 1, 'Frais de telecommunication', '020.5', '6262', 1),
+(33, 1, 'Maintenance des logiciels ( SIG)', '820.1', '6156', 1),
+(34, 1, 'formations (SIG)', '820.1', '6184', 1),
+(35, 1, 'Prestations de service (SIG)', '820.1', '6188', 1),
+(36, 1, 'Maintenance Cyberbases - Abonnement', '90.16', '6156', 1),
+(37, 1, 'Formations (Cyberbases)', '90.16', '6184', 1),
+(38, 1, 'Prestations de service', '90.16', '6188', 1),
+(39, 1, 'Frais de telecommunication', '90.16', '6262', 1),
+(40, 1, 'Remboursement de frais de location', '90.16', '62878', 1),
+(41, 2, 'Logiciels', '020.3', '2051', 1),
+(42, 2, 'Matériels', '020.3', '2183', 1),
+(43, 2, 'Travaux de cablages', '020.3', '2315', 1),
+(44, 2, 'Sub. d''équipement au Ciril', '020.3', '20418.22', 1),
+(45, 2, 'Divers Travaux -SIG-', '820.1', '2318', 1),
+(46, 2, 'logiciels', '90.14', '2051-308', 1),
+(47, 2, 'Matériels', '90.14', '2183-308', 1),
+(48, 2, 'Matériels', '90.14', '2183-360', 1),
+(49, 2, 'Mobiliers er autres', '90.14', '2184-308', 1),
+(50, 1, 'Cotisation ADULLACT', '90.14', '6281,59', 1),
+(51, 1, 'locations mobiliers et immobiliers', '90.16', '6132', 1),
+(52, 2, 'ImpSpécifique pour Nancy - report 2007', '020.2', '2183-Ncy', 1),
+(53, 1, 'Documentation générale et technique', '020.3', '6182-300', 1),
+(54, 1, 'Documentation générale et technique', '020.3', '6182', 1),
+(55, 1, 'Cotisation au club utilisateurs Droits de Cités', '020.3', '6281.75', 1),
+(56, 1, 'Autres fournitures non stockées', '020.3', '60628', 1),
+(57, 1, 'Etudes et recherches', '020.3', '617-300', 1),
+(58, 1, 'Catalogues et imprimés', '020.3', '6236', 1),
+(59, 2, 'Etudes Préopérationnelles', '020.3', '2031', 1),
+(60, 2, 'Travaux de réseau et voirie', '020.3', '2315', 1),
+(61, 1, 'Club Utilisateur', '020.3', '6281.91', 1),
+(62, 1, 'Maintenance G-NY (PDU)', '820.3', '6156', 1),
+(63, 2, 'Installations générales', '020.3', '2135', 1),
+(64, 1, 'entretien et réparations sur biens mobiliers', '020.3', '61558.300', 1);
 
--- --------------------------------------------------------
+--
+-- Contenu de la table `InformationCollectivite`
+--
+
+INSERT INTO `InformationCollectivite` (`id`, `collectivite_id`, `Nombre`, `Annee`, `cleRepartition_id`) VALUES
+(1, 8, '100', 2015, 4),
+(2, 17, '123', 2015, 8),
+(3, 1, '0', 2015, 1),
+(4, 1, '0', 2015, 2),
+(5, 1, '0', 2015, 3),
+(6, 1, '90', 2015, 4),
+(7, 1, '12', 2015, 5),
+(8, 1, '0', 2015, 6),
+(9, 1, '0', 2015, 7),
+(10, 1, '34', 2015, 8),
+(11, 1, '0', 2015, 9),
+(12, 2, '107334', 2015, 1),
+(13, 2, '27669', 2015, 2),
+(14, 2, '27529', 2015, 3),
+(15, 2, '2678', 2015, 4),
+(16, 2, '76', 2015, 5),
+(17, 2, '0', 2015, 6),
+(18, 2, '0', 2015, 7),
+(19, 2, '0', 2015, 8),
+(20, 2, '0', 2015, 9),
+(21, 3, '31017', 2015, 1),
+(22, 3, '8305', 2015, 2),
+(23, 3, '17697', 2015, 3),
+(24, 3, '741', 2015, 4),
+(25, 3, '10', 2015, 5),
+(26, 3, '0', 2015, 6),
+(27, 3, '0', 2015, 7),
+(28, 3, '0', 2015, 8),
+(29, 3, '0', 2015, 9),
+(30, 4, '1599', 2015, 1),
+(31, 4, '0', 2015, 2),
+(32, 4, '0', 2015, 3),
+(33, 4, '0', 2015, 4),
+(34, 4, '8', 2015, 5),
+(35, 4, '0', 2015, 6),
+(36, 4, '0', 2015, 7),
+(37, 4, '0', 2015, 8),
+(38, 4, '0', 2015, 9),
+(39, 5, '8832', 2015, 1),
+(40, 5, '0', 2015, 2),
+(41, 5, '0', 2015, 3),
+(42, 5, '162', 2015, 4),
+(43, 5, '10', 2015, 5),
+(44, 5, '0', 2015, 6),
+(45, 5, '0', 2015, 7),
+(46, 5, '0', 2015, 8),
+(47, 5, '0', 2015, 9),
+(48, 6, '9628', 2015, 1),
+(49, 6, '0', 2015, 2),
+(50, 6, '0', 2015, 3),
+(51, 6, '0', 2015, 4),
+(52, 6, '5', 2015, 5),
+(53, 6, '0', 2015, 6),
+(54, 6, '0', 2015, 7),
+(55, 6, '0', 2015, 8),
+(56, 6, '0', 2015, 9),
+(57, 7, '15197', 2015, 1),
+(58, 7, '2894', 2015, 2),
+(59, 7, '3933', 2015, 3),
+(60, 7, '167', 2015, 4),
+(61, 7, '4', 2015, 5),
+(62, 7, '0', 2015, 6),
+(63, 7, '0', 2015, 7),
+(64, 7, '0', 2015, 8),
+(65, 7, '0', 2015, 9),
+(66, 8, '8302', 2015, 1),
+(67, 8, '0', 2015, 2),
+(68, 8, '0', 2015, 3),
+(69, 8, '2', 2015, 5),
+(70, 8, '0', 2015, 6),
+(71, 8, '0', 2015, 7),
+(72, 8, '0', 2015, 8),
+(73, 8, '0', 2015, 9),
+(74, 9, '9785', 2015, 1),
+(75, 9, '0', 2015, 2),
+(76, 9, '0', 2015, 3),
+(77, 9, '0', 2015, 4),
+(78, 9, '1', 2015, 5),
+(79, 9, '0', 2015, 6),
+(80, 9, '0', 2015, 7),
+(81, 9, '0', 2015, 8),
+(82, 9, '0', 2015, 9),
+(83, 10, '4978', 2015, 1),
+(84, 10, '0', 2015, 2),
+(85, 10, '0', 2015, 3),
+(86, 10, '0', 2015, 4),
+(87, 10, '0', 2015, 5),
+(88, 10, '0', 2015, 6),
+(89, 10, '0', 2015, 7),
+(90, 10, '0', 2015, 8),
+(91, 10, '0', 2015, 9),
+(92, 11, '6063', 2015, 1),
+(93, 11, '0', 2015, 2),
+(94, 11, '0', 2015, 3),
+(95, 11, '0', 2015, 4),
+(96, 11, '0', 2015, 5),
+(97, 11, '0', 2015, 6),
+(98, 11, '0', 2015, 7),
+(99, 11, '0', 2015, 8),
+(100, 11, '0', 2015, 9),
+(101, 12, '6648', 2015, 1),
+(102, 12, '0', 2015, 2),
+(103, 12, '0', 2015, 3),
+(104, 12, '112', 2015, 4),
+(105, 12, '3', 2015, 5),
+(106, 12, '0', 2015, 6),
+(107, 12, '0', 2015, 7),
+(108, 12, '0', 2015, 8),
+(109, 12, '0', 2015, 9),
+(110, 13, '9661', 2015, 1),
+(111, 13, '0', 2015, 2),
+(112, 13, '0', 2015, 3),
+(113, 13, '0', 2015, 4),
+(114, 13, '0', 2015, 5),
+(115, 13, '0', 2015, 6),
+(116, 13, '0', 2015, 7),
+(117, 13, '0', 2015, 8),
+(118, 13, '0', 2015, 9),
+(119, 14, '4428', 2015, 1),
+(120, 14, '0', 2015, 2),
+(121, 14, '0', 2015, 3),
+(122, 14, '0', 2015, 4),
+(123, 14, '2', 2015, 5),
+(124, 14, '0', 2015, 6),
+(125, 14, '0', 2015, 7),
+(126, 14, '0', 2015, 8),
+(127, 14, '0', 2015, 9),
+(128, 15, '4010', 2015, 1),
+(129, 15, '0', 2015, 2),
+(130, 15, '0', 2015, 3),
+(131, 15, '40', 2015, 4),
+(132, 15, '2', 2015, 5),
+(133, 15, '0', 2015, 6),
+(134, 15, '0', 2015, 7),
+(135, 15, '0', 2015, 8),
+(136, 15, '0', 2015, 9),
+(137, 16, '0', 2015, 1),
+(138, 16, '7534', 2015, 2),
+(139, 16, '8849', 2015, 3),
+(140, 16, '311', 2015, 4),
+(141, 16, '0', 2015, 5),
+(142, 16, '0', 2015, 6),
+(143, 16, '0', 2015, 7),
+(144, 16, '0', 2015, 8),
+(145, 16, '0', 2015, 9),
+(146, 17, '0', 2015, 1),
+(147, 17, '0', 2015, 2),
+(148, 17, '983', 2015, 3),
+(149, 17, '0', 2015, 4),
+(150, 17, '4', 2015, 5),
+(151, 17, '0', 2015, 6),
+(152, 17, '0', 2015, 7),
+(153, 17, '0', 2015, 9),
+(154, 18, '0', 2015, 1),
+(155, 18, '21046', 2015, 2),
+(156, 18, '34412', 2015, 3),
+(157, 18, '2633', 2015, 4),
+(158, 18, '222', 2015, 5),
+(159, 18, '0', 2015, 6),
+(160, 18, '0', 2015, 7),
+(161, 18, '0', 2015, 8),
+(162, 18, '0', 2015, 9),
+(163, 19, '14827', 2015, 1),
+(164, 19, '0', 2015, 2),
+(165, 19, '0', 2015, 3),
+(166, 19, '131', 2015, 4),
+(167, 19, '0', 2015, 5),
+(168, 19, '0', 2015, 6),
+(169, 19, '0', 2015, 7),
+(170, 19, '0', 2015, 8),
+(171, 19, '0', 2015, 9),
+(172, 20, '0', 2015, 1),
+(173, 20, '0', 2015, 2),
+(174, 20, '0', 2015, 3),
+(175, 20, '0', 2015, 4),
+(176, 20, '0', 2015, 5),
+(177, 20, '0', 2015, 6),
+(178, 20, '0', 2015, 7),
+(179, 20, '0', 2015, 8),
+(180, 20, '0', 2015, 9),
+(181, 21, '0', 2015, 1),
+(182, 21, '0', 2015, 2),
+(183, 21, '0', 2015, 3),
+(184, 21, '18', 2015, 4),
+(185, 21, '0', 2015, 5),
+(186, 21, '0', 2015, 6),
+(187, 21, '0', 2015, 7),
+(188, 21, '0', 2015, 8),
+(189, 21, '0', 2015, 9),
+(190, 22, '0', 2015, 1),
+(191, 22, '0', 2015, 2),
+(192, 22, '0', 2015, 3),
+(193, 22, '0', 2015, 4),
+(194, 22, '0', 2015, 5),
+(195, 22, '0', 2015, 6),
+(196, 22, '0', 2015, 7),
+(197, 22, '0', 2015, 8),
+(198, 22, '0', 2015, 9),
+(199, 23, '2374', 2015, 1),
+(200, 23, '0', 2015, 2),
+(201, 23, '0', 2015, 3),
+(202, 23, '0', 2015, 4),
+(203, 23, '0', 2015, 5),
+(204, 23, '0', 2015, 6),
+(205, 23, '0', 2015, 7),
+(206, 23, '0', 2015, 8),
+(207, 23, '0', 2015, 9),
+(208, 24, '2354', 2015, 1),
+(209, 24, '0', 2015, 2),
+(210, 24, '0', 2015, 3),
+(211, 24, '0', 2015, 4),
+(212, 24, '0', 2015, 5),
+(213, 24, '0', 2015, 6),
+(214, 24, '0', 2015, 7),
+(215, 24, '0', 2015, 8),
+(216, 24, '0', 2015, 9),
+(217, 25, '5796', 2015, 1),
+(218, 25, '0', 2015, 2),
+(219, 25, '0', 2015, 3),
+(220, 25, '0', 2015, 4),
+(221, 25, '0', 2015, 5),
+(222, 25, '0', 2015, 6),
+(223, 25, '0', 2015, 7),
+(224, 25, '0', 2015, 8),
+(225, 25, '0', 2015, 9),
+(226, 26, '670', 2015, 1),
+(227, 26, '0', 2015, 2),
+(228, 26, '0', 2015, 3),
+(229, 26, '0', 2015, 4),
+(230, 26, '0', 2015, 5),
+(231, 26, '0', 2015, 6),
+(232, 26, '0', 2015, 7),
+(233, 26, '0', 2015, 8),
+(234, 26, '0', 2015, 9),
+(235, 27, '8101', 2015, 1),
+(236, 27, '0', 2015, 2),
+(237, 27, '0', 2015, 3),
+(238, 27, '0', 2015, 4),
+(239, 27, '0', 2015, 5),
+(240, 27, '0', 2015, 6),
+(241, 27, '0', 2015, 7),
+(242, 27, '0', 2015, 8),
+(243, 27, '0', 2015, 9),
+(244, 28, '0', 2015, 1),
+(245, 28, '217', 2015, 2),
+(246, 28, '983', 2015, 3),
+(247, 28, '0', 2015, 4),
+(248, 28, '15', 2015, 5),
+(249, 28, '0', 2015, 6),
+(250, 28, '0', 2015, 7),
+(251, 28, '0', 2015, 8),
+(252, 28, '0', 2015, 9),
+(253, 29, '0', 2015, 1),
+(254, 29, '476', 2015, 2),
+(255, 29, '983', 2015, 3),
+(256, 29, '0', 2015, 4),
+(257, 29, '0', 2015, 5),
+(258, 29, '0', 2015, 6),
+(259, 29, '0', 2015, 7),
+(260, 29, '0', 2015, 8),
+(261, 29, '0', 2015, 9),
+(262, 30, '0', 2015, 1),
+(263, 30, '1941', 2015, 2),
+(264, 30, '2949', 2015, 3),
+(265, 30, '0', 2015, 4),
+(266, 30, '0', 2015, 5),
+(267, 30, '0', 2015, 6),
+(268, 30, '0', 2015, 7),
+(269, 30, '0', 2015, 8),
+(270, 30, '0', 2015, 9);
+
+--
+-- Contenu de la table `LigneCommande`
+--
+
+INSERT INTO `LigneCommande` (`id`, `commande_id`, `tva_id`, `Libelle`, `Reference`, `Quantite`, `Prix_Unitaire`, `Total_TTC`, `Commentaire`) VALUES
+(1, 1, 3, 'Ligne commande test', 'REF l_c_test', 13, '135.00', '1851.52', 'Aucun');
 
 --
 -- Contenu de la table `Livraison`
@@ -382,7 +684,20 @@ INSERT INTO `Imputation` (`id`, `section_id`, `Libelle`, `Sous_fonction`, `Artic
 INSERT INTO `Livraison` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`) VALUES
 (1, 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212');
 
--- --------------------------------------------------------
+--
+-- Contenu de la table `massesalariale`
+--
+
+INSERT INTO `massesalariale` (`id`, `service_id`, `Montant`, `Annee`) VALUES
+(1, 1, 100000, 2015);
+
+--
+-- Contenu de la table `SectionImputation`
+--
+
+INSERT INTO `SectionImputation` (`id`, `Libelle`) VALUES
+(1, 'Fonctionnement'),
+(2, 'Investissement');
 
 --
 -- Contenu de la table `Service`
@@ -393,7 +708,29 @@ INSERT INTO `Service` (`id`, `Nom`, `Est_Ancien_Service`) VALUES
 (2, 'Infrastructure', 0),
 (3, 'Etude', 0);
 
--- --------------------------------------------------------
+--
+-- Contenu de la table `TempsPasse`
+--
+
+INSERT INTO `TempsPasse` (`id`, `activite_id`, `collectivite_id`, `Pourcentage`, `Annee`) VALUES
+(1, 1, 3, 30, 2015),
+(2, 2, 3, 20, 2015),
+(3, 3, 3, 20, 2015),
+(4, 4, 3, 20, 2015),
+(5, 5, 3, 20, 2015),
+(6, 6, 3, 30, 2015),
+(7, 7, 3, 20, 2015),
+(8, 8, 3, 30, 2015),
+(9, 9, 3, 20, 2015),
+(10, 10, 3, 30, 2015),
+(11, 11, 3, 20, 2015),
+(12, 12, 3, 30, 2015),
+(13, 13, 3, 20, 2015),
+(14, 14, 3, 30, 2015),
+(15, 15, 3, 20, 2015),
+(16, 16, 3, 30, 2015),
+(17, 17, 3, 20, 2015),
+(18, 18, 3, 30, 2015);
 
 --
 -- Contenu de la table `TVA`
@@ -405,8 +742,6 @@ INSERT INTO `TVA` (`id`, `pourcentage`) VALUES
 (3, '5.50'),
 (4, '7.00'),
 (5, '20.00');
-
--- --------------------------------------------------------
 
 --
 -- Contenu de la table `Utilisateur`
@@ -459,7 +794,3 @@ INSERT INTO `Utilisateur` (`id`, `service_id`, `Nom`, `Prenom`) VALUES
 (44, 3, 'CERQUEIRA', 'Georges'),
 (45, 3, 'BEITSCHER', 'Myriam'),
 (46, 3, 'CHAUDOIN', 'Julien');
-
---
--- Index pour les tables exportées
---

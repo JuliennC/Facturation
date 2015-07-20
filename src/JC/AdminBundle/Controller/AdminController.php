@@ -1053,7 +1053,7 @@ class AdminController extends Controller
 				//Sinon, on en crée un
 				} else {
 
-					$nouvelleMS = new Budget();
+					$nouvelleMS = new MasseSalariale();
 					$nouvelleMS -> setService($service);
 					$nouvelleMS -> setAnnee($annee);
 					$nouvelleMS -> setMontant(0);
@@ -1066,7 +1066,7 @@ class AdminController extends Controller
 			
 	    $form = $this->get('form.factory')->create(new ListeMassesSalarialesType(), $listeMassesSalariales);
 		$form->handleRequest($request);
-								dump($listeMassesSalariales);
+		dump($listeMassesSalariales);
 
 		//Si le formulaire est valide, on sauvegarde dans la base
 		if ($form->isValid()) {
@@ -1074,7 +1074,7 @@ class AdminController extends Controller
         	//On récupère la liste des informations du formulaire
         	$listeMassesSalariales = $form->get('listeMassesSalariales')->getData();
 
-        	foreach($$listeMassesSalariales as $ms) {
+        	foreach($listeMassesSalariales as $ms) {
 			
 				if($ms->getMontant() != 0){
 					$em->persist($ms);
