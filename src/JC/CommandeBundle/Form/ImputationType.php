@@ -33,13 +33,7 @@ class ImputationType extends AbstractType
             ->add('sousFonction', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('article', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
         
-			->add('section', 'entity', array(
-				    'class'    => 'JCCommandeBundle:SectionImputation',
-				    'choices'   => $this->listeSections,
-				    'multiple'  => false ,
-				    'expanded' => false,
-					'error_bubbling' => false,
-					))
+			->add('section'))
     
                 
             ->add('estFacture','checkbox', array('required'=>false, 'error_bubbling' => true ));

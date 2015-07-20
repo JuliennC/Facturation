@@ -414,11 +414,26 @@ $(document).ready(function() {
 						+"<td class='col-md-3'>"
 							+"<input type='text' id='jc_commandebundle_listeimputations_listeImputations___name___article' name='jc_commandebundle_listeimputations[listeImputations][__name__][article]' required='required' class='col-md-10 col-md-offset-1'>"
 						+"</td>"
-								
+							
+									
 						+"<td class='col-md-3'>"
-							+"<input type='text' id='jc_commandebundle_listeimputations_listeImputations___name___section' name='jc_commandebundle_listeimputations[listeImputations][__name__][section]' required='required' class='col-md-12'>" 
+							+"<select id='jc_commandebundle_listeimputations_listeImputations___name___section' 																name='jc_commandebundle_listeimputations[listeImputations][__name__][section]' required='required' class='col-md-12'>"
+							
+								+"<option>"
+									+"Fonctionnement"
+								+"</option>"
+								
+								+"<option>"
+									+"Investissement"
+								+"</option>"
+							+"</select>" 
+						+"</td>"		
+						
+						
+						+"<td>" 
+							+"<input type='checkbox' id='jc_commandebundle_listeimputations_listeImputations___name___estFacture' name='jc_commandebundle_listeimputations[listeImputations][__name__][estFacture]' value='1' checked=checked'>" 
 						+"</td>"
-											
+					
 					+"</tr>";
 										
 						 	

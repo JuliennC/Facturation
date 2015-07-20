@@ -45,9 +45,11 @@ class Imputation
 
 	
 	/**
-   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\SectionImputation", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=false)
-   */
+     * @var string
+	 *
+     * @ORM\Column(name="Section", type="string", length=255)
+	 *
+   	*/
    private $section;
    
    

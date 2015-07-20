@@ -39,10 +39,20 @@ TODO liste :
 	-> FAIT : le mode direct ne détecte plus les collectivités sélectionnées
 
 
-	-> faire des liens dans les flash messages
+	-> Enlever la modification de la section d’une imputation dans admin
+
+	-> Enlever la modification de la case d’une imputation dans admin
+
+	-> faire le formulaire de connection admin
 
 
 	-> faire une fonction recherche pour la table applications dans admin
+
+	-> faire le paiement des commandes.
+
+	-> transformer ‘envoyer’ en ‘engager’
+
+	-> Faire avec les role pour désengager une commande
 
 
 
@@ -51,6 +61,7 @@ TODO liste :
 
 	-> Vérifier dans validator qu’une commande qui passe envoyé à bien n° coriolis etc
 		(voir avec Severine) + Savoir à quel stade de la commande le num coriolis 		doit être entré, etc
+
 
 	-> demander si une activité peut changer de clé en cours d’année, si non, changer pour prendre directement l’activite de la commande. ATTENTION, si on change comme ça, ça veut dire que si on veut changer de clé pour X raison, les commandes antérieures ne seront pas affectées.
 	
@@ -79,4 +90,3 @@ DETAILS :
 
 	-> formatter le total d’une commande dans form.html.twig
 	-> revoir la fonction de trie dans les tableau (js)
-	-> Faire le form recherche en haut

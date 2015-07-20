@@ -489,11 +489,20 @@ class FacturationController extends Controller
 
 					return $this->redirect($this->generateUrl('jc_facturation_homepage', array($annee)));
 				}
-				echo(sizeof($tempsPasse));
+
 				$tempsPasse = $tempsPasse[0];
 				
 				//On calule le montant dû par la collectivite
 				$masseDeLActivite = $ms->getMontant() * ($nbCommandesActivite / sizeof($listeCommandes));
+			
+				//S'il le temps passé en pourcentage est 0, alors on prévient l'utilisateur car cela doit être une erreur
+				if($tempsPasse->getPourcentage() === 0 ) {
+					
+					$session = new Session();
+					$session->getFlashBag()->add('Error', 'Erreur : Le temps passé pour '.$collectivite->getNom().' pour l\'activité '.$activite->getNom().' est de 0.');
+
+					return $this->redirect($this->generateUrl('jc_facturation_homepage', array($annee)));
+				}
 			
 				$montantDuParLaCollectivite = $masseDeLActivite * ($tempsPasse->getPourcentage()/100);
 				

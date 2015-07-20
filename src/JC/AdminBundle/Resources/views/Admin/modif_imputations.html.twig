@@ -43,7 +43,7 @@
 					
 						<tr id='last_tr_imputation'>
 			      
-			      			<td colspan='4'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_imputation' > Ajouter une Imputation </a> </td>
+			      			<td colspan='5'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_imputation' > Ajouter une Imputation </a> </td>
 			      	
 				  		</tr>  
 					
@@ -55,9 +55,18 @@
  								<td> {{form_widget(imputation.libelle, {attr: {'class':'col-md-11'}})}} </td>
 						 		<td> {{form_widget(imputation.sousFonction, {attr: {'class':'col-md-10 col-md-offset-1'}})}} </td>
 								<td> {{form_widget(imputation.article, {attr: {'class':'col-md-10 col-md-offset-1'}})}} </td>
-								<td> {{form_widget(imputation.section, {attr: {'class':'col-md-12'}})}} </td>
-								<td> {{form_widget(imputation.estFacture )}} </td>
-											
+								<td> {{ imputation.vars.value.section.libelle }} </td>
+								
+								{% if imputation.vars.value.estFacture == 1 %}
+									
+									<td> Oui </td>
+								
+								{% else%}
+								
+									<td> Non </td>
+								
+								{% endif %}
+
 							</tr>
 								
 															
