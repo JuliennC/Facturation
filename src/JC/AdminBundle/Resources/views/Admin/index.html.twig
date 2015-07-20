@@ -24,7 +24,7 @@
             <li><a href="#tab8" data-toggle="tab">Applications</a></li>
             <li><a href="#tab9" data-toggle="tab">Imputations</a></li>
             <li><a href="#tab10" data-toggle="tab">Masses Salariales</a></li>
-
+            <li><a href="#tab11" data-toggle="tab">Temps Passés</a></li>
 
           </ul>
         </div>
@@ -106,6 +106,14 @@
 		    	{{ render(controller("JCAdminBundle:Admin:modificationMassesSalariales" , { 'request' :request, 'annee':annee })) }}
 
 		</div>
+
+
+		<div class="tab-pane col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 main" id="tab11">
+		  
+		    	{{ render(controller("JCAdminBundle:Admin:modificationTempsPasses" , { 'request' :request, 'annee':annee })) }}
+
+		</div>
+
 
 			
 	</div>

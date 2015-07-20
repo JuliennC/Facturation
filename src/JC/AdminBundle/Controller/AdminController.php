@@ -57,6 +57,10 @@ use JC\CommandeBundle\Entity\ListeMassesSalariales;
 use JC\CommandeBundle\Form\MasseSalarialeType;
 use JC\CommandeBundle\Form\ListeMassesSalarialesType;
 
+use JC\CommandeBundle\Entity\TempsPasse;
+use JC\CommandeBundle\Entity\ListeTempsPasses;
+use JC\CommandeBundle\Form\TempsPasseType;
+use JC\CommandeBundle\Form\ListeTempsPassesType;
 
 
 
@@ -381,7 +385,35 @@ class AdminController extends Controller
 				$session = $request->getSession();
 				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des masses salariales');
 			}
+		
+		
+		
+		//Si le formulaire envoyé est le formulaire des temps passés
+		} else if(isset($formulaireEnvoye['jc_commandebundle_listetempspasses'])) {
+				
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationTempsPassesAction($request, $annee);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les temps passés ont été enregistrées avec succès.');
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des temps passés');
+			}
 		}
+
 
 		
 
@@ -1094,6 +1126,128 @@ class AdminController extends Controller
 		}
 	}
 
+
+
+
+
+
+
+
+
+	
+
+
+
+	 /*
+	 *	Pour modifier les temps passés
+	 *  (Rappel : Chaque collectivite passe un certain temps (en %) sur chaque activite
+	 *	informations tirées d'EasyLog 
+	 */
+	 public function modificationTempsPassesAction(Request $request, $annee) {
+		 		 
+		 
+		 $listeTempsATransformee = array();
+
+		 $em = $this->getDoctrine()->getManager();
+
+		 
+		//On récupère les collectivite pour l'année 
+		$listeCollectivites = $em->getRepository('JCCommandeBundle:Collectivite')->findCollectivitesPourAnnee($annee); 
+
+		//On récupère toutes les activites
+		$listeActivites = $em->getRepository('JCCommandeBundle:Activite')->findAll(); 
+
+		//On récupère la liste des temps passés, pour les collectivites "mutualisées" au cours de l'année $année
+		//C'est à dire : - date début mutualisation <= $annee
+		// 				- ET date fin mutualisation >= $annee
+		// Note : On fait deux orderBy dans la requête, ce qui évite de réaliser des traitements pour trier les données
+		$listeTemps = $em->getRepository('JCCommandeBundle:TempsPasse')->findTempsPourAnnee($annee);
+
+
+		//On ajoute touts les temps récupérées dans la liste qui sera transformée en formulaire
+		$listeTempsPourForm = new ListeTempsPasses();
+
+
+
+			
+		//On parcours chaque collectivite pour mettre leur temps manquants
+		foreach($listeCollectivites as $coll) {
+					
+					
+			/*	On a récupéré les informations déjà entrées
+			* 	On cherche les temps manquants
+			*/
+				
+			//Pour cela on stocke les temps entrés pour l'année donnée
+			$listeActivitesUtilisees = array();
+	
+			foreach($listeTemps as $temps){
+				
+				if($temps->getCollectivite() === $coll){
+					array_push($listeActivitesUtilisees, $temps->getActivite());
+
+					//Et on ajoute le temps dans la liste qui sera transformée en formulaire
+					$listeTempsPourForm->addTempsPasse($temps);		
+				}
+			}
+	
+					
+					
+
+
+						
+			//On parcours les clés qui doivent être remplies
+			foreach($listeActivites as $activite) {
+						
+				/*	On regarde si l'activite a déjà son information
+				*	Si elle n'est pas présente dans le tableau des activites utilisées, il faut alors la rajouter
+				*	On crée alors une nouvelle information
+				*/	
+				if(! in_array($activite, $listeActivitesUtilisees)){ 
+							
+					$nouveauTemps = new TempsPasse();
+					$nouveauTemps -> setCollectivite($coll);
+					$nouveauTemps -> setActivite($activite);
+					$nouveauTemps -> setAnnee($annee);			
+					$nouveauTemps -> setPourcentage(0);
+
+					//On met l'information dans la liste
+					$listeTempsPourForm->addTempsPasse($nouveauTemps);		
+				}
+				
+			}
+
+		}
+				
+				
+
+		//On crée le formulaire (c'est lui qui contient chaque form pour chaque infos)
+        $form = $this->get('form.factory')->create(new ListeTempsPassesType(), $listeTempsPourForm);
+		$form->handleRequest($request);
+
+			
+		//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+        	//On récupère la liste des informations du formulaire
+        	$liste = $form->get('listeTempsPasses')->getData();
+        	
+        	foreach($liste as $l) {
+	        	
+				$em->persist($l);
+
+        	}
+        	
+        	$em->flush();
+        
+			return new Response('true');
+
+    	} else {
+
+			return $this->render('JCAdminBundle:Admin:modif_temps_passes.html.twig', array('form'=>$form->createView(),'annee'=>$annee, 'listeActivites'=>$listeActivites, 'listeCollectivites'=>$listeCollectivites));
+		}        	
+
+	}
 
 
 

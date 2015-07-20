@@ -7,13 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-
 /**
- * ListeMassesSalariales
+ * ListeTempsPasses
  *
  * @ORM\Entity
  */
-class ListeMassesSalariales
+class ListeTempsPasses
 {
     /**
      * @var integer
@@ -24,22 +23,20 @@ class ListeMassesSalariales
      */
     private $id;
 
-
-
+	
 	/**
      * @var \Doctrine\Common\Collections\ArrayCollection
      * @Assert\Valid()   
      */
-    private $listeMassesSalariales;
+    private $listeTempsPasses;
 
 
 
 
     public function __construct()
     {
-        $this->listeMassesSalariales = new ArrayCollection();
+        $this->listeTempsPasses = new ArrayCollection();
     }
-
 
 
 
@@ -56,25 +53,24 @@ class ListeMassesSalariales
     
     
     
-    
-	/**
-     * @param MasseSalariale $ms
+    /**
+     * @param TempsPasse $tp
      * @return $this
      */
-    public function addMasseSalariale($ms)
+    public function addTempsPasse($tp)
     {
-        $this->listeMassesSalariales[] = $ms;
+        $this->listeTempsPasses[] = $tp;
 
         return $this;
     }
 
     /**
-     * @param MasseSalariale $ms
+     * @param TempsPasse $tp
      * @return $this
      */
-    public function removeMasseSalariale($ms)
+    public function removeMasseSalariale($tp)
     {
-        $this->listeMassesSalariales->remove($ms);
+        $this->listeTempsPasses->remove($tp);
 
         return $this;
     }
@@ -82,21 +78,23 @@ class ListeMassesSalariales
     /**
      * @return ArrayCollection
      */
-    public function getListeMassesSalariales()
+    public function getListeTempsPasses()
     {
-        return $this->listeMassesSalariales;
+        return $this->listeTempsPasses;
     }
 
     /**
      * @param ArrayCollection $a
      * @return $this
      */
-    public function setListeMassesSalariales($a)
+    public function setListeTempsPasses($a)
     {
-        $this->listeMassesSalariales = $a;
+        $this->listeTempsPasses = $a;
 
         return $this;
     }
 
     
 }
+
+    

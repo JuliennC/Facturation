@@ -2,7 +2,7 @@
 
 
 
-<div class='row' id='form_collectivite'>
+<div class='row' id='form_temps_passes'>
 
 	{{ form_start(form) }}
 
@@ -13,10 +13,10 @@
 					<div class="tabbable-line">
 						<ul class="nav nav-tabs ">
 											
-							{% for cle in listeCles %}
+							{% for activite in listeActivites %}
 											
 								<li >
-									<a href="#sub_tab_infos_{{cle.id}}" data-toggle="tab">{{cle.nom}}</a>
+									<a href="#sub_tab_temps_{{activite.id}}" data-toggle="tab">{{activite.nom}}</a>
 								</li>
 												
 							{% endfor %}
@@ -30,7 +30,7 @@
 
 				
 				
-	{# C'est la qu'on affiche les différents form des informations collectivite #}
+	{# C'est la qu'on affiche les différents form des temps passés #}
 				
 	<div class="tab-content">
 					
@@ -54,10 +54,10 @@
 						       
 
 					
-		{% for cle in listeCles %}
+		{% for activite in listeActivites %}
 	
 	
-			<div class="tab-pane active col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="sub_tab_infos_{{cle.id}}">
+			<div class="tab-pane active col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="sub_tab_temps_{{activite.id}}">
 												
 				<div class='table-responsive'>
 
@@ -76,9 +76,9 @@
 							<thead>
 								<tr class="filters">
 																
-									<th class='col-md-5'> Collectivite </th>
+									<th class='col-md-5'> Collectivites </th>
 													
-									<th class='col-md-5'> {{cle}} </th>
+									<th class='col-md-5'> {{activite.nom}} </th>
 																						
 								</tr>
 							</thead>
@@ -86,17 +86,17 @@
 							
 							<tbody>				  	
 											  		
-								{# On parcours les infos #}
-								{% for info in form.children.listeInformations %}
+								{# On parcours les temps #}
+								{% for temps in form.children.listeTempsPasses %}
 														
-									{# On affiche la valeur de la clé si elle correspond à la tab #}
+									{# On affiche la valeur du temps si l'activite correspond à la tab #}
 															
-										{% if cle == info.vars.value.cleRepartition.nom %}
+										{% if activite == temps.vars.value.activite %}
 	
 											<tr>
-												<td>{{info.vars.value.collectivite.nom}}</td>
+												<td>{{temps.vars.value.collectivite.nom}}</td>
 																
-												<td>{{form_widget(info , {'attr': {'class':'col-md-12'}} )}}</td>
+												<td>{{form_widget(temps , {'attr': {'class':'col-md-12'}} )}}</td>
 											</tr>
 	
 										{% endif %}

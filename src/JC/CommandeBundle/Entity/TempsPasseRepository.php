@@ -27,4 +27,44 @@ class TempsPasseRepository extends EntityRepository
 			->getQuery()	
 			->getResult();
 	}
+
+
+
+
+
+
+	
+	/*
+	*	Recherche touts les temps passés des collectivites mutualisée à une année donnée
+	*/
+	public function findTempsPourAnnee($annee) {
+		
+		/* Pour voir le resultat que l'on veut sur PHPMyAdmin
+			
+			SELECT i0_.id AS id0, i0_.Nombre AS Nombre1, i0_.Annee AS Annee2, c2_.Nom AS cleRepartition_id3, c1_.Nom AS collectivite_id4 FROM InformationCollectivite i0_ LEFT JOIN CleRepartition c2_ ON (c2_.id = i0_.cleRepartition_id) LEFT JOIN Collectivite c1_ ON (c1_.id = i0_.collectivite_id) WHERE YEAR(c1_.Date_Debut_Mutualisation) <= '2014' AND YEAR(c1_.Date_Fin_Mutualisation) >= '2014' AND i0_.Annee = '2014' ORDER BY c1_.id ASC, c2_.id ASC
+			
+		*/
+		
+		
+		return $this
+			
+			->createQueryBuilder('tp')
+			->leftJoin('JCCommandeBundle:Collectivite', 'c', 'WITH', 'c = tp.collectivite')
+			->leftJoin('JCCommandeBundle:Activite', 'a', 'WITH', 'a = tp.activite')
+
+			->where('year(c.dateDebutMutualisation) <= :annee AND year(c.dateFinMutualisation) >= :annee AND tp.annee = :annee')
+		  	->setParameter('annee', $annee)
+		  	
+		  	//On trie par collectivite et par clé 
+		  	->add('orderBy', 'a.id ASC')
+		  	->add('orderBy', 'c.id ASC')
+   			
+   			->getQuery()
+			->getResult();
+		
+	}
+		
+
+
+
 }

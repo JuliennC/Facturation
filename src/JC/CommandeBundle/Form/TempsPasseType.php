@@ -6,9 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-
-
-class InformationsCollectiviteListeType extends AbstractType
+class TempsPasseType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,18 +15,8 @@ class InformationsCollectiviteListeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('listeInformations', 'collection', array(
-            	'label' => false,
-		        'type'         => new InformationCollectiviteType(),
-		        'error_bubbling' => true,
-		        'by_reference' => false,
-		        'error_bubbling' => true)   )
-
-            ->add('enregistrer', 'submit');
+            ->add('pourcentage', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
         ;
-                    $builder ->getForm();
-
-    
     }
     
     /**
@@ -37,7 +25,7 @@ class InformationsCollectiviteListeType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JC\CommandeBundle\Entity\InformationsCollectiviteListe'
+            'data_class' => 'JC\CommandeBundle\Entity\TempsPasse'
         ));
     }
 
@@ -46,6 +34,6 @@ class InformationsCollectiviteListeType extends AbstractType
      */
     public function getName()
     {
-        return 'jc_commandebundle_informationscollectiviteliste';
+        return 'jc_commandebundle_tempspasse';
     }
 }
