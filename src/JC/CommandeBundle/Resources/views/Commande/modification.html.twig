@@ -19,15 +19,15 @@
 			
 			<p class='col-md-5 h3 vcenter'>Etat : {{commande.etat}} </p><!--
 			
-			{# ----- Si la commande est "Enregistree", on propose de la passer "Envoyer" ----- #}
+			{# ----- Si la commande est "Enregistree", on propose de la passer "Engager" ----- #}
 			
 			{% if commande.etat == "Enregistree" %}
-				--><button class='btn btn-warning col-md-3 vcenter' data-toggle="modal" data-target="#modalEnvoyer">Envoyer</button><!--
+				--><button class='btn btn-warning col-md-3 vcenter' data-toggle="modal" data-target="#modalEngager">Engager</button><!--
 				
 				--><button class='btn btn-danger col-md-3 col-md-offset-1 vcenter' data-toggle="modal" data-target="#modalSupprimer">Supprimer</button>
 
-				<!-- Modal Envoyer -->
-				<div class="modal fade" id="modalEnvoyer" tabindex="-1" role="dialog" aria-labelledby="modalEnvoyer">
+				<!-- Modal Engager -->
+				<div class="modal fade" id="modalEngager" tabindex="-1" role="dialog" aria-labelledby="modalEngager">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header">
@@ -35,12 +35,12 @@
 				        <h4 class="modal-title">Êtes-vous sûr ?</h4>
 				      </div>
 				      <div class="modal-body">
-					  	<p>En marquant cette commande comme "Envoyee" vous ne pourrez-plus la modifier.</p>
+					  	<p>En marquant cette commande comme "Engagee" vous ne pourrez-plus la modifier.</p>
 					  	<p>Êtes-vous sur de vouloir changer le statut de la commande ?</p>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
-				        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande({{commande.id}},'Envoyee')">Confirmer</button>
+				        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande({{commande.id}},'Engagee')">Confirmer</button>
 				      </div>
 				    </div>
 				  </div>

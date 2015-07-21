@@ -57,6 +57,7 @@ TODO liste :
 
 	-> demander si une activité peut changer de clé en cours d’année, si non, changer pour prendre directement l’activite de la commande. ATTENTION, si on change comme ça, ça veut dire que si on veut changer de clé pour X raison, les commandes antérieures ne seront pas affectées.
 	
+	-> finir les pdf
 	
 
 	

@@ -97,7 +97,7 @@ class CommandeController extends Controller
 	    } 
 		
 
-		//	Si la commande n'est ni payee, ni envoyee, on redirige vers la page de moficiation
+		//	Si la commande n'est ni payee, ni Engagee, on redirige vers la page de moficiation
 		if( ($commande->getEtat() === "Creee") || ($commande->getEtat() === "Enregistree")){
 								
 			//Si la commande est envoye ou payee, on ne peux pas la modifier. en renvoie donc sur la page detail
@@ -185,7 +185,7 @@ class CommandeController extends Controller
 
 
 			//	On verifie l'etat de la commande
-			if( ($commande->getEtat() === "Envoyee") || ($commande->getEtat() === "Payee")){
+			if( ($commande->getEtat() === "Engagee") || ($commande->getEtat() === "Payee")){
 				
 				//Si la commande est envoye ou payee, on ne peux pas la modifier. en renvoie donc sur la page detail
 				return $this->redirect($this->generateUrl('jc_commande_detail', array('id' => $commande->getId())));
@@ -1486,7 +1486,7 @@ class CommandeController extends Controller
 		$em->persist($etat2);		
 
 		$etat3 = new EtatCommande();
-		$etat3 -> setLibelle("Envoyee");
+		$etat3 -> setLibelle("Engagee");
 		$em->persist($etat3);		
 
 		$etat4 = new EtatCommande();
