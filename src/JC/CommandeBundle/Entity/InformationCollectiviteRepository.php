@@ -73,7 +73,6 @@ class InformationCollectiviteRepository extends EntityRepository
    			->getQuery()
 	    	->getSingleResult();
 		
-		
 			}
 	
 	

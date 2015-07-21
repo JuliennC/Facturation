@@ -795,15 +795,9 @@ class AdminController extends Controller
 					$em->persist($service);
 				
 				} 
-					
-					
-				
-				
 				
 			}     
-			
-			
-			
+						
 			
 		   	$em->flush();
         	
