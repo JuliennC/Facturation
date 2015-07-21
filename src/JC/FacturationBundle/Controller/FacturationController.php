@@ -324,8 +324,7 @@ class FacturationController extends Controller
 					/*	On vérifie que l'information existe bien 
 					*	Sinon c'est qu'elle a été oubliée	
 					*	On met donc un message flash pour avertir la personnes 
-					* 	On ouvre la page admin dans une autre tab
-					*	Et on redirige vers l'index de Facturation
+					*	Et on redirige vers l'accueil de Facturation
 					*/
 					if(! array_key_exists($commande->getActivite()->getCleRepartition()->getNom(), $infosColl)){
 								
@@ -335,7 +334,6 @@ class FacturationController extends Controller
 						return $this->redirect($this->generateUrl('jc_facturation_homepage', array($annee)));
 						
 					}
-					
 					
 					
 					//On récupere l'InformationCollectivité
@@ -359,9 +357,17 @@ class FacturationController extends Controller
 
 					//On fait le ratio
 					//Si le total des clès fait 0, alors on change en 1 ( ce qui ne change rien, car le seul cas serait 0/0 --> donc 0/1 )
+					// et c'est qu'il y a sans doute eu un oubli dans la table des infos
+					//On met donc un flash message Warning pour avertir, et être sur que cela est volontaire
 					if ($totalCle === 0 || $totalCle === "0") {
+						
+						$session = new Session();
+						$session->getFlashBag()->add('Warning', 'Attention : La somme des clés '.$info->getCleRepartition()->getNom().' = 0.');
+						
 						$totalCle = 1;
 					}
+					
+					
 					
 					
 					$ratio = $info->getNombre() / $totalCle;
@@ -415,8 +421,10 @@ class FacturationController extends Controller
     
     
     
-    
 		// --------------- On a donc finit de calculer les montant des commandes ---------------
+
+
+		// --------------- On passe au calcul des masses salariales ---------------
 		
 		
 		//On stock les montants des masses salariales
@@ -428,7 +436,7 @@ class FacturationController extends Controller
 		//On récupère la liste des activites
 		$listeActivites = $em->getRepository('JCCommandeBundle:Activite')->findAll();
     
-		//On additionnera les masses salariales
+		//On additionnera les montants des masses salariales
 		$infosColl['montantMassesSalariales'] = 0;
 		
 		
@@ -439,12 +447,14 @@ class FacturationController extends Controller
 			$session->getFlashBag()->add('Warning', 'Attention : Aucune masse salariale n\'a pas été définie pour l\'année '.$annee.'.');
 		}
     
+    
+    
 		//On parcours chaque masse salariale afin de connaitre la part que la collectivite doit payer
 		foreach($listeMassesSalarialesAnnee as $ms) {
 			
 			
 			/*	On parcours les masses salariales, 
-			*	On récupère le service, et on parcours les activites pour calcule le ratio de chaque activite
+			*	On récupère le service, et on parcours les commandes pour calcule le ratio de chaque activite
 			*		--> nombre commande activite / nombre total commande 
 			*	
 			*	On peut calculer le montant de chaque activite pour le service
@@ -454,17 +464,56 @@ class FacturationController extends Controller
 			
 			$service = $ms->getService();
 			
-			//On récupère la liste des commandes du service
-			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->findByService($service);
 			
+			//On compte le nombre de commande qui concerne le service
+			$nbCommandeService = 0;
 			
 			//On parcours les commandes
+			foreach($listeCCC as $ccc){
+				
+				//On récupère la commande
+				$commande = $ccc->getCommande();
+				
+				//On compte le nombre de commande qui correspondent à l'activite
+				if ($commande->getService() === $service){
+					$nbCommandeService ++;
+				
+				//Si la commande ne concerne pas le service, on la supprime du tableau
+				} else {
+					unset($commande);
+				}
+						
+			}
+			
+		
+				
+			/*	S'il n'y a aucune commande pour le service, on avertie l'utilisateur
+			*
+			*	Cela doit être une erreur car sinon la masse salariale du service ne sera JAMAIS repartie sur les collectivites
+			*/
+				
+			if($nbCommandeService === 0 && $ms->getMontant()){
+					
+				$session = new Session();
+				$session->getFlashBag()->add('Warning', 'Attention : Aucune commande ne concerne le service '.$service.'. Ce qui veut dire que la masse salariale du service ('.$ms->getMontant().' €) ne sera pas répartie sur les collectivites !');
+					
+				//On passe à un autre service
+				continue;
+			}
+				
+		
+		
+			
+			//On parcours les activites
 			foreach($listeActivites as $activite) {
 				
 				$nbCommandesActivite = 0;
 
-				//On parcours les activites
-				foreach($listeCommandes as $commande){
+				//On parcours les commandes
+				foreach($listeCCC as $ccc){
+				
+					//On récupère la commande
+					$commande = $ccc->getCommande();
 				
 					//On compte le nombre de commande qui correspondent à l'activite
 					if ($commande->getActivite() === $activite){
@@ -481,8 +530,12 @@ class FacturationController extends Controller
 				$tempsPasse = $em->getRepository('JCCommandeBundle:TempsPasse')->findOneAvecAnneeEtActivitePourCollectivite($annee, $activite, $collectivite);
 				
 				
-				//S'il n'y a pas de temps passé pour l'activite, on le signale à l'utilisateur cela doit être un oubli
-				if(sizeof($tempsPasse) === 0 ) {
+				/*  S'il n'y a pas de temps passé pour l'activite, ET QUE le nb de commandes concernant l'activité est à 0
+				*	alors on prévient l'utilisateur car cela est une erreur
+				*
+				*	Car on est obligé de facturer une partie de la masse si le nombre de commande est > 0
+				*/
+				if(sizeof($tempsPasse) === 0 && $nbCommandesActivite != 0) {
 					
 					$session = new Session();
 					$session->getFlashBag()->add('Error', 'Erreur : Le temps passé pour '.$collectivite->getNom().' pour l\'activité '.$activite->getNom().' n\'a pas été définie.');
@@ -493,10 +546,15 @@ class FacturationController extends Controller
 				$tempsPasse = $tempsPasse[0];
 				
 				//On calule le montant dû par la collectivite
-				$masseDeLActivite = $ms->getMontant() * ($nbCommandesActivite / sizeof($listeCommandes));
+				$masseDeLActivite = $ms->getMontant() * ($nbCommandesActivite / $nbCommandeService);
 			
-				//S'il le temps passé en pourcentage est 0, alors on prévient l'utilisateur car cela doit être une erreur
-				if($tempsPasse->getPourcentage() === 0 ) {
+			
+				/*	S'il le temps passé en pourcentage est 0, ET QUE le nb de commandes concernant l'activité est à 0
+				*	alors on prévient l'utilisateur car cela est une erreur
+				*
+				*	Car on est obligé de facturer une partie de la masse si le nombre de commande est > 0
+				*/
+				if($tempsPasse->getPourcentage() === 0 && $nbCommandesActivite != 0) {
 					
 					$session = new Session();
 					$session->getFlashBag()->add('Error', 'Erreur : Le temps passé pour '.$collectivite->getNom().' pour l\'activité '.$activite->getNom().' est de 0.');

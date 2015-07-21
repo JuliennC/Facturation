@@ -31,6 +31,15 @@ class CommandeRepository extends EntityRepository
 			->leftJoin('passeEtat.etat', 'et')
 			->addSelect('et')
 			
+			->leftJoin('com.application', 'app')
+			->addSelect('app')
+			
+			->leftJoin('com.activite', 'act')
+			->addSelect('act')
+			
+			->leftJoin('act.cleRepartition', 'cle')
+			->addSelect('cle')
+			
 			->where('ccc.collectivite = :collectivite AND et.libelle = :statut AND passeEtat.datePassage > :annee AND passeEtat.datePassage < :annee2')
 			->setParameter('collectivite',$collectivite)
 			->setParameter('statut',$statut)

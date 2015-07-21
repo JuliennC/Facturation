@@ -269,7 +269,9 @@ class CommandeController extends Controller
                 if($etat === "Creee"){
                     $this->creeeToEnregistree($commande);
                     $etat = "Enregistree";
+                
                 }
+                
                         
                 
                             
@@ -362,17 +364,14 @@ class CommandeController extends Controller
         		$em->flush();
                                 
                                  
-                                 
-                                 
-                $etats = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findEtatPourCommande($commande, $etat);            	
+                        
+				$etatCree = new CommandePasseEtat();
+				$etatCree -> setCommande($commande);
+				$etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle($etat));
+				$etatCree -> setDatePassage(new \Datetime());
+				$em->persist($etatCree);
 
-            	if(sizeof($etats) === 0){ 
-					$etatCree = new CommandePasseEtat();
-					$etatCree -> setCommande($commande);
-					$etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle($etat));
-					$etatCree -> setDatePassage(new \Datetime());
-					$em->persist($etatCree);
-        		}
+    
         		$em->flush();
 
         		

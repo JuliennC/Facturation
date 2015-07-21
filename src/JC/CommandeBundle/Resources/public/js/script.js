@@ -79,6 +79,7 @@ function changementEtatCommande(idC, etatC){
 	
 	
 	} else {
+		alert(etatC);
 		
 		$(".hidden_etat").attr('value',etatC);
 

@@ -38,6 +38,10 @@ class InformationCollectiviteRepository extends EntityRepository
 		
 		return $qb = $this
 	    	->createQueryBuilder('ic')
+	    	
+	    	->leftJoin('ic.cleRepartition', 'cle')
+			->addSelect('cle')
+	    	
 			->where('ic.collectivite = :collectivite')
 			->setParameter('collectivite', $collectivite)
            	
