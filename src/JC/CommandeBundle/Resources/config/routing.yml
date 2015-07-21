@@ -33,17 +33,11 @@ jc_commande_get_tva:
         expose: true
 
 
-jc_commande_marque_payee:
-    path:	/commande/marquePayee
-    defaults:  { _controller: JCCommandeBundle:Commande:marqueCommandePayee }
+jc_commande_change_etat:
+    path:	/commande/changeEtat
+    defaults:  { _controller: JCCommandeBundle:Commande:changeEtat }
     options:
         expose: true
-
-
-jc_commande_application_pour_activite:
-    path:	/commande/applicationPourActivite
-    defaults:  { _controller: JCCommandeBundle:Commande:applicationPourActivite }
-
 
 
 
@@ -52,9 +46,6 @@ jc_commande_bdd:
     path:      /insert_donnees
     defaults:  { _controller: JCCommandeBundle:Commande:bdd }
 
-
-jc_commande_b:
-    path:      /b
-    defaults:  { _controller: JCCommandeBundle:Commande:b } 
+ 
  
  

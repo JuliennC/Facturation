@@ -605,12 +605,12 @@ public function __construct() {
 
 
 	public function getEtat(){
-		$etatID = 0;
+		$dateEtat = new \DateTime("1970-01-01 00:00:00.0");
 		$etat = null;
 		
 		foreach($this->etats as $e){
-			if($e->getEtat()->getId() >= $etatID){
-				$etatID = $e->getEtat()->getId();
+			if($e->getDatePassage() >= $dateEtat){
+				$dateEtat = $e->getDatePassage();
 				$etat = $e;
 				
 			}

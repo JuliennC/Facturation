@@ -24,7 +24,7 @@ class CommandePasseEtat
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datePassage", type="date")
+     * @ORM\Column(name="datePassage", type="datetime")
      */
     private $datePassage;
 

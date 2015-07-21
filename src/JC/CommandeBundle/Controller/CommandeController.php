@@ -553,10 +553,10 @@ class CommandeController extends Controller
 	  	  
 	  	  
 	  	  
-	  	  /*
-	  	*		Fonction qui marque une commande ˆ paye
+	  	/*
+	  	*		Fonction qui change l'tat d'une commande
 	  	*/
-	  	public function marqueCommandePayeeAction() {
+	  	public function changeEtatAction() {
 		  
 		  	$request = $this->container->get('request');
 		  	
@@ -564,7 +564,10 @@ class CommandeController extends Controller
 	        $idCom = '';
 	        $idCom = $request->get('id');
 
-	  		if($request->isXmlHttpRequest() && $idCom != '') {
+			$nvlEtat = '';
+	        $nvlEtat = $request->get('etat');
+
+	  		if( $idCom != '' && $nvlEtat != '') {
 		    
 	
 				$em = $this->getDoctrine()->getManager();
@@ -573,7 +576,7 @@ class CommandeController extends Controller
 				
 				$etatCree = new CommandePasseEtat();
 				$etatCree -> setCommande($com);
-				$etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle("Payee"));
+				$etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle($nvlEtat));
 				$etatCree -> setDatePassage(new \Datetime());
 				$em->persist($etatCree);
 				

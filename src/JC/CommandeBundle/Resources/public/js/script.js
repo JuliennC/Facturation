@@ -52,14 +52,23 @@ function remetValeur(nomColl, idColl){
 	*/
 function changementEtatCommande(idC, etatC){
 	
-	if(etatC == "Payee"){
+	if(etatC == "Payee" || etatC == "Desengager"){
 		
 		var data = 'id='+idC;
+		
+		if(etatC == "Payee"){
+			
+			 data += '&etat='+'Payee';
+
+		} else if(etatC == "Desengager"){
+
+			 data += '&etat='+'Enregistree';			
+		}
 		
 		//On appelle la route qui va mettre la commande à payée
 		$.ajax({
 				type: "get",
-				url: Routing.generate('jc_commande_marque_payee'),
+				url: Routing.generate('jc_commande_change_etat'),
 				data: data,
 				success: function(json){	
 	   				
