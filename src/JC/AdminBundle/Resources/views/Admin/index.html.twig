@@ -34,85 +34,289 @@
 <!-- tab content -->
 	<div class="tab-content">
 		
-		<div class="tab-pane active col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab1">
 		  
+	  	{# Seuls les admin peuvent modifier ces informations #}
+	  	{% if is_granted('ROLE_ADMIN') %}
+			
+			<div class="tab-pane active col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab1">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationCollectivites" , { 'request' :request, 'annee': annee })) }}
-				
-		</div>
+			</div>
+			
+		{% else %}
+			
+			<div class="tab-pane active col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab1">
+
+				<div class="alert-message alert-message-danger">	                
+		            <h4>Oops ..</h4>
+		            <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+	        </div>
+
+		{% endif %}
+			
 	
 		
-		<div class="tab-pane col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 main" id="tab2">
+	
+	
+	
+		
+
+		{# Seuls les admin peuvent modifier ces informations #}
+	    {% if is_granted('ROLE_ADMIN') %}
+
+			<div class="tab-pane col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 main" id="tab2">
+				{{ render(controller("JCAdminBundle:Admin:modificationInformationsCollectivites" , { 'request' :request, 'annee': annee })) }}
+			</div>
 				
-		    
-		    {{ render(controller("JCAdminBundle:Admin:modificationInformationsCollectivites" , { 'request' :request, 'annee': annee })) }}
+		{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab2">
+
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
 						
-				
-		</div>
 
 
 
-		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab3">
+
+
+
 		  
+		{# Seuls les admin peuvent modifier ces informations #}
+	    {% if is_granted('ROLE_ADMIN') %}
+
+			<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab3">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationClesRepartition" , { 'request' :request, 'annee': annee })) }}
+			</div>
 
-		</div>
+		{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab3">
+
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
+
 		
 		
 
-		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab4">
+		
+		
+		
 		  
+		{# Seuls les admin peuvent modifier ces informations #}
+		{% if is_granted('ROLE_ADMIN') %}
+		
+			<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab4">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationUtilisateurs" , { 'request' :request })) }}
+			</div>
 
-		</div>
+		{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab4">
+
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
 		
 		
-		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab5">
-		  
+		
+		
+		
+		
+		  	
+		{# Seuls les admin peuvent modifier ces informations #}
+		{% if is_granted('ROLE_ADMIN') %}
+
+			<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab5">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationServices" , { 'request' :request })) }}
+			</div>
 
-		</div>
+		{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab5">
+
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
 		
 		
-		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab6">
+		
+		
+		
+		
 		  
+	  	{# Seuls les admin peuvent modifier ces informations #}
+		{% if is_granted('ROLE_ADMIN') %}
+
+			<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab6">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationBudgets" , { 'request' :request, 'annee':annee })) }}
+			</div>
+			
+		{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab6">
 
-		</div>
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
 		
 		
-		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab7">
+		
+		
+		
+		
 		  
+		{# Seuls les admin peuvent modifier ces informations #}
+	    {% if is_granted('ROLE_ADMIN') %}
+		
+			<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab7">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationActivites" , { 'request' :request })) }}
+			</div>
 
-		</div>
+		{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab7">
+
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
 		
 		
-		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab8">
-		  
+		
+		
+		
+		
+		  	
+	  	{# Seuls les admin peuvent modifier ces informations #}
+	    {% if is_granted('ROLE_ADMIN') %}
+	
+			<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab8">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationApplications" , { 'request' :request })) }}
+			</div>
+				
+		{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab8">
 
-		</div>
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
 		
 		
-		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-2 main" id="tab9">
+		
+		
+		
+		
 		  
+	  	{# Seuls les (minimum) COMPTA peuvent modifier ces informations #}
+	    {% if is_granted('ROLE_COMPTA') %}
+	
+			<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-2 main" id="tab9">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationImputations" , { 'request' :request })) }}
+			</div>
+			
+		{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab9">
 
-		</div>
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls le service compta peut accèder à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
 		
 		
-		<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab10">
+		
+		
+		
+		
 		  
+	  	{# Seuls les admin peuvent modifier ces informations #}
+	    {% if is_granted('ROLE_ADMIN') %}
+	
+			<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main" id="tab10">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationMassesSalariales" , { 'request' :request, 'annee':annee })) }}
+		    </div>
+		    	
+		{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab10">
 
-		</div>
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
 
 
-		<div class="tab-pane col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 main" id="tab11">
-		  
-		    	{{ render(controller("JCAdminBundle:Admin:modificationTempsPasses" , { 'request' :request, 'annee':annee })) }}
+		 
+		 
+		 
+		 
 
-		</div>
+	  	{# Seuls les admin peuvent modifier ces informations #}
+	  	{% if is_granted('ROLE_ADMIN') %}
+			
+			 <div class="tab-pane col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 main" id="tab11">
+		    	{{ render(controller("JCAdminBundle:Admin:modificationTempsPasses" , { 'request' :request, 'annee':annee })) }}	
+		    </div>
+		    	
+			{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab11">
+
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
 
 
 			

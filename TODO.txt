@@ -41,8 +41,8 @@ TODO liste :
 	-> FAIT la modification de la case d’une imputation dans admin
 	-> FAIT transformer ‘envoyer’ en ‘engager’
 	-> FAIT avec les role pour désengager une commande
+	-> FAIT faire le formulaire de connection admin
 
-	-> faire le formulaire de connection admin
 
 	-> faire une fonction recherche pour la table applications dans admin
 
