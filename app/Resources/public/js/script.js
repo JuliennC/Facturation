@@ -1,6 +1,9 @@
 $(document).ready(function() 
  {
 	 
+  // Pour afficher le modal de connection correctement
+  $('#modalConnection').appendTo("body") 
+	 
   //Fonction qui affiche un datepicker (avec la propriété readonly
   $(".datepicker_readonly").datepicker({
     dateFormat: 'dd/mm/yy', 

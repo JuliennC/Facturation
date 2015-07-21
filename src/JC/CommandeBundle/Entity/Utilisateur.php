@@ -3,6 +3,7 @@
 namespace JC\CommandeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Utilisateur
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="JC\CommandeBundle\Entity\UtilisateurRepository")
  */
-class Utilisateur
+class Utilisateur extends BaseUser
 {
     /**
      * @var integer
@@ -19,7 +20,7 @@ class Utilisateur
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -35,8 +36,8 @@ class Utilisateur
      */
     private $prenom;
 
-
 	
+
 
 // ---------- Cles étrangeres ----------
 
@@ -64,21 +65,6 @@ class Utilisateur
 
 
 
-
-	
-
-// ---------- Getter / Setter ----------
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set nom
@@ -152,7 +138,7 @@ class Utilisateur
     }
     
     
+  
     
- 
-    
+      
 }

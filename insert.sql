@@ -747,50 +747,73 @@ INSERT INTO `TVA` (`id`, `pourcentage`) VALUES
 -- Contenu de la table `Utilisateur`
 --
 
-INSERT INTO `Utilisateur` (`id`, `service_id`, `Nom`, `Prenom`) VALUES
-(1, 1, 'OZBEK', 'Gökhan'),
-(2, 1, 'PRINET', 'Patricia'),
-(3, 1, 'THIEBAUT', 'Jean-Baptiste'),
-(4, 1, 'FIRLEJ', 'Samuel'),
-(5, 1, 'PAULY', 'Francis'),
-(6, 1, 'HELMER', 'Nicole'),
-(7, 1, 'VIRY', 'Jacques'),
-(8, 1, 'HAZOTTE', 'Patrick'),
-(9, 1, 'PAGNOTTA', 'Alexandre'),
-(10, 1, 'BUN', 'Vanthy'),
-(11, 1, 'CHEROUGE', 'Antoine'),
-(12, 1, 'TOURTELLE', 'Bruno'),
-(13, 1, 'WILT', 'Frédéric'),
-(14, 1, 'MASONI', 'Jean-Marie'),
-(15, 1, 'LIBERT', 'Isabelle'),
-(16, 1, 'BIET', 'Alain'),
-(17, 1, 'BERNEZ', 'Pierre-Marie'),
-(18, 2, 'LEGER', 'Marc'),
-(19, 2, 'KOZIAR', 'Jean-Marc'),
-(20, 2, 'THIRIET', 'Daniel'),
-(21, 2, 'MOQUE', 'Yann'),
-(22, 2, 'DELICOURT', 'Jean-Luc'),
-(23, 2, 'RAFENONIRINA-LAZA', 'Antso'),
-(24, 2, 'SOLT', 'Christine'),
-(25, 2, 'FREULET', 'Valérie'),
-(26, 2, 'SAILLET-BARTHE', 'Pascale'),
-(27, 2, 'RODAK', 'Patrick'),
-(28, 2, 'GILSON-FOURNIER', 'Claudine'),
-(29, 2, 'VIVILLE', 'Brigitte'),
-(30, 2, 'GRANDEMANGE', 'Arnaud'),
-(31, 2, 'WEYANT', 'Frédéric'),
-(32, 2, 'DUPONT', 'François'),
-(33, 3, 'RUVERA', 'Martine'),
-(34, 3, 'FREIHUBER', 'Danielle'),
-(35, 3, 'HAYON', 'Marcel'),
-(36, 3, 'DI CRESCENZO', 'Marc'),
-(37, 3, 'RUEZ', 'Muriel'),
-(38, 3, 'TROUY', 'Lionel'),
-(39, 3, 'BROUSSAIS', 'François'),
-(40, 3, 'RICHARD', 'Antoine'),
-(41, 3, 'BARDOT', 'Claire'),
-(42, 3, 'ADLER', 'Rebecca'),
-(43, 3, 'SCHEIBLING', 'Séverine'),
-(44, 3, 'CERQUEIRA', 'Georges'),
-(45, 3, 'BEITSCHER', 'Myriam'),
-(46, 3, 'CHAUDOIN', 'Julien');
+-- phpMyAdmin SQL Dump
+-- version 4.4.10
+-- http://www.phpmyadmin.net
+--
+-- Client :  localhost
+-- Généré le :  Mar 21 Juillet 2015 à 11:47
+-- Version du serveur :  5.5.42
+-- Version de PHP :  5.6.10
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Base de données :  `symfony`
+--
+
+--
+-- Contenu de la table `Utilisateur`
+--  UPDATE `Utilisateur` SET roles ="a:0:{}" WHERE roles = "";
+--  php app/console fos:user:promote admin ROLE_ADMIN
+--
+
+
+INSERT INTO `Utilisateur` (`id`, `service_id`, `Nom`, `Prenom`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`) VALUES
+(1, 1, 'OZBEK', 'Gökhan', 'og', '', 'og@dsit.fr', '', 0, '', 'test', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(2, 1, 'PRINET', 'Patricia', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(3, 1, 'THIEBAUT', 'Jean-Baptiste', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(4, 1, 'FIRLEJ', 'Samuel', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(5, 1, 'PAULY', 'Francis', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(6, 1, 'HELMER', 'Nicole', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(7, 1, 'VIRY', 'Jacques', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(8, 1, 'HAZOTTE', 'Patrick', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(9, 1, 'PAGNOTTA', 'Alexandre', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(10, 1, 'BUN', 'Vanthy', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(11, 1, 'CHEROUGE', 'Antoine', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(12, 1, 'TOURTELLE', 'Bruno', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(13, 1, 'WILT', 'Frédéric', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(14, 1, 'MASONI', 'Jean-Marie', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(15, 1, 'LIBERT', 'Isabelle', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(16, 1, 'BIET', 'Alain', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(17, 1, 'BERNEZ', 'Pierre-Marie', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(18, 2, 'LEGER', 'Marc', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(19, 2, 'KOZIAR', 'Jean-Marc', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(20, 2, 'THIRIET', 'Daniel', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(21, 2, 'MOQUE', 'Yann', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(22, 2, 'DELICOURT', 'Jean-Luc', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(23, 2, 'RAFENONIRINA-LAZA', 'Antso', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(24, 2, 'SOLT', 'Christine', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(25, 2, 'FREULET', 'Valérie', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(26, 2, 'SAILLET-BARTHE', 'Pascale', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(27, 2, 'RODAK', 'Patrick', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(28, 2, 'GILSON-FOURNIER', 'Claudine', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(29, 2, 'VIVILLE', 'Brigitte', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(30, 2, 'GRANDEMANGE', 'Arnaud', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(31, 2, 'WEYANT', 'Frédéric', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(32, 2, 'DUPONT', 'François', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(33, 3, 'RUVERA', 'Martine', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(34, 3, 'FREIHUBER', 'Danielle', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(35, 3, 'HAYON', 'Marcel', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(36, 3, 'DI CRESCENZO', 'Marc', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(37, 3, 'RUEZ', 'Muriel', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(38, 3, 'TROUY', 'Lionel', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(39, 3, 'BROUSSAIS', 'François', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(40, 3, 'RICHARD', 'Antoine', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(41, 3, 'BARDOT', 'Claire', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(42, 3, 'ADLER', 'Rebecca', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(43, 3, 'SCHEIBLING', 'Séverine', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(44, 3, 'CERQUEIRA', 'Georges', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(45, 3, 'BEITSCHER', 'Myriam', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL),
+(46, 3, 'CHAUDOIN', 'Julien', '', '', '', '', 0, '', '', NULL, 0, 0, NULL, NULL, NULL, 'ROLE_SERVICE', 0, NULL);

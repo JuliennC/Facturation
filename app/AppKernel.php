@@ -23,6 +23,8 @@ class AppKernel extends Kernel
             new JC\AdminBundle\JCAdminBundle(),
             new Obtao\Bundle\Html2PdfBundle\ObtaoHtml2PdfBundle(),
             new JC\BugReportBundle\JCBugReportBundle(),
+            new JC\UserBundle\JCUserBundle(),
+			new FOS\UserBundle\FOSUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -39,6 +39,7 @@ TODO liste :
 	-> FAIT : le mode direct ne détecte plus les collectivités sélectionnées
 	-> FAIT Enlever la modification de la section d’une imputation dans admin
 	-> FAIT la modification de la case d’une imputation dans admin
+	-> FAIT transformer ‘envoyer’ en ‘engager’
 
 
 	-> faire le formulaire de connection admin
@@ -46,8 +47,6 @@ TODO liste :
 	-> faire une fonction recherche pour la table applications dans admin
 
 	-> faire le paiement des commandes.
-
-	-> transformer ‘envoyer’ en ‘engager’
 
 	-> Faire avec les role pour désengager une commande
 	-> FAIT Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca. —> On garde comme ca, si on change, ca change pour toutes les commandes de l’année en cours.

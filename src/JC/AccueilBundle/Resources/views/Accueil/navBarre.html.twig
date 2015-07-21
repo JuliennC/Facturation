@@ -39,7 +39,21 @@
 	     
 		<ul class="nav navbar-nav navbar-right" >
 
-		  	{# A supprimer en production #}
+			{# Si l'utilisateur est connecte, on propose le bouton déconnecter #}
+			{% if is_granted('ROLE_SERVICE') %}
+
+		        <li><a href="{{ path('fos_user_security_logout') }}">Déconnection</a></li>			
+
+			{% else %}
+
+		        <li><a href="{{ path('fos_user_security_login') }}">Connection</a></li>			
+
+			{% endif %}
+
+	        
+		   
+
+		  	{# A supprimer après la phase de test #}
 	        <li><a href="{{ path('jc_bug_report_homepage') }}">Bug</a></li>
 
 		</ul>

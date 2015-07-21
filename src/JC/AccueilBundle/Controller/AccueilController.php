@@ -116,9 +116,9 @@ class AccueilController extends Controller
 
 
 
-	public function navBarreAction() {
+	public function navBarreAction(Request $request) {
 	        
-		return $this->render('JCAccueilBundle:Accueil:navBarre.html.twig');
+		return $this->render('JCAccueilBundle:Accueil:navBarre.html.twig', array('request'=>$request));
 		
 	}
 
