@@ -39,9 +39,11 @@
 	     
 		<ul class="nav navbar-nav navbar-right" >
 
-			{# Si l'utilisateur est connecte, on propose le bouton déconnecter #}
-			{% if is_granted('ROLE_SERVICE') %}
-
+			{# Si l'utilisateur est connecté, on propose le bouton déconnecter #}
+			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+			    
+			    <li><a class="not-active">Connecté : {{ app.user.username }}</a></li>
+			    
 		        <li><a href="{{ path('fos_user_security_logout') }}">Déconnection</a></li>			
 
 			{% else %}

@@ -2,6 +2,11 @@
 *	TOUTES LES PAGES
 */
 
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
+
 
 .vcenter {
     display: inline-block;

@@ -40,7 +40,7 @@ TODO liste :
 	-> FAIT Enlever la modification de la section d’une imputation dans admin
 	-> FAIT la modification de la case d’une imputation dans admin
 	-> FAIT transformer ‘envoyer’ en ‘engager’
-
+	-> FAIT avec les role pour désengager une commande
 
 	-> faire le formulaire de connection admin
 
@@ -48,8 +48,7 @@ TODO liste :
 
 	-> faire le paiement des commandes.
 
-	-> Faire avec les role pour désengager une commande
-	-> FAIT Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca. —> On garde comme ca, si on change, ca change pour toutes les commandes de l’année en cours.
+	-> FAIT Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca. —> On garde comme ca, si on change, ca change pour toutes les commandes de l’année en cours OU NON (oublie de préciser ou non).
 
 
 	-> revoir le suivi du budget (faire des « lignes de budget » connecté chacune à un service)
