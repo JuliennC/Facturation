@@ -146,7 +146,7 @@ class Imputation
 	/**
      * Set section
      *
-     * @param SectionImputation $section
+     * @param string $section
      * @return Imputation
      */
     public function setSection($section)

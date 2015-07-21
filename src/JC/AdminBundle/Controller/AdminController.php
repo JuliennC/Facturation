@@ -1022,7 +1022,7 @@ class AdminController extends Controller
 	 	$listeImputations ->setListeImputations($listeImp);
 	 		 	
 	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
-        $form = $this->get('form.factory')->create(new ListeImputationsType($em), $listeImputations);
+        $form = $this->get('form.factory')->create(new ListeImputationsType(), $listeImputations);
 
 	 	
 		$form->handleRequest($request);

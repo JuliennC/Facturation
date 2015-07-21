@@ -55,7 +55,7 @@
  								<td> {{form_widget(imputation.libelle, {attr: {'class':'col-md-11'}})}} </td>
 						 		<td> {{form_widget(imputation.sousFonction, {attr: {'class':'col-md-10 col-md-offset-1'}})}} </td>
 								<td> {{form_widget(imputation.article, {attr: {'class':'col-md-10 col-md-offset-1'}})}} </td>
-								<td> {{ imputation.vars.value.section.libelle }} </td>
+								<td> {{ imputation.vars.value.section }} </td>
 								
 								{% if imputation.vars.value.estFacture == 1 %}
 									
@@ -80,6 +80,8 @@
 			
 		</div>	
 	
-		{{ form_end(form) }}
+		{{ form_widget(form._token) }}
+
+		{{ form_end(form, {'render_rest': false} ) }}
 </div>
 

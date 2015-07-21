@@ -10,15 +10,6 @@ class ImputationType extends AbstractType
 {
 	
 		
-	protected $listeSections;
-	
-
-    function __construct($listeSections)
-    {
-        $this->listeSections = $listeSections;
-    }
-	
-
 	
 	
 	
@@ -33,7 +24,7 @@ class ImputationType extends AbstractType
             ->add('sousFonction', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('article', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
         
-			->add('section'))
+			->add('section')
     
                 
             ->add('estFacture','checkbox', array('required'=>false, 'error_bubbling' => true ));

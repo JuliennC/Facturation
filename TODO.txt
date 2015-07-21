@@ -37,14 +37,11 @@ TODO liste :
 	-> FAIT de la facturation, lancer une erreur lorsqu’une clé de rep n’est pas entrée pour une collectivité, voir pour faire une redirection
 	-> FAIT finir l’avertissement lorsqu’un montant dans une facturation est de 0
 	-> FAIT : le mode direct ne détecte plus les collectivités sélectionnées
+	-> FAIT Enlever la modification de la section d’une imputation dans admin
+	-> FAIT la modification de la case d’une imputation dans admin
 
-
-	-> Enlever la modification de la section d’une imputation dans admin
-
-	-> Enlever la modification de la case d’une imputation dans admin
 
 	-> faire le formulaire de connection admin
-
 
 	-> faire une fonction recherche pour la table applications dans admin
 
@@ -53,15 +50,10 @@ TODO liste :
 	-> transformer ‘envoyer’ en ‘engager’
 
 	-> Faire avec les role pour désengager une commande
+	-> FAIT Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca. —> On garde comme ca, si on change, ca change pour toutes les commandes de l’année en cours.
 
 
-
-	-> Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca.
-
-
-	-> Vérifier dans validator qu’une commande qui passe envoyé à bien n° coriolis etc
-		(voir avec Severine) + Savoir à quel stade de la commande le num coriolis 		doit être entré, etc
-
+	-> revoir le suivi du budget (faire des « lignes de budget » connecté chacune à un service)
 
 	-> demander si une activité peut changer de clé en cours d’année, si non, changer pour prendre directement l’activite de la commande. ATTENTION, si on change comme ça, ça veut dire que si on veut changer de clé pour X raison, les commandes antérieures ne seront pas affectées.
 	
@@ -76,7 +68,6 @@ A LA FIN :
 	-> revoir les noms des variables
 	-> revoir les type des attributs
 	
-	-> lorsqu’on enregistre un service sans nom, il s’enregistre
 
 TESTS : 
 

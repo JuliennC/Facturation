@@ -309,7 +309,7 @@ class FacturationController extends Controller
 			
 			$tabCommandes[$commande->getId()]['id'] = $commande->getId();
 			$tabCommandes[$commande->getId()]['ventilation'] = $commande->getVentilation();
-			$tabCommandes[$commande->getId()]['imputation'] = $commande->getImputation()->getSection()->getLibelle();
+			$tabCommandes[$commande->getId()]['imputation'] = $commande->getImputation()->getSection();
 			$tabCommandes[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
 			$tabCommandes[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
 			$tabCommandes[$commande->getId()]['montantTotal'] = $commande->getTotalTTC();
@@ -380,7 +380,7 @@ class FacturationController extends Controller
 					//On met les infos
 					$infosColl['montantMutualisees'] += $montant;
 					$infosColl['nbMutualisees'] += 1;
-					$infosColl['montant'.$commande->getImputation()->getSection()->getLibelle()] += $montant;
+					$infosColl['montant'.$commande->getImputation()->getSection()] += $montant;
 					
 					$tabCommandes[$commande->getId()]['montantAPayer'] = $montant;
 					$tabCommandes[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
@@ -400,7 +400,7 @@ class FacturationController extends Controller
 					//On met les infos
 					$infosColl['montantDirectes'] += $montant;
 					$infosColl['nbDirectes'] += 1;
-					$infosColl['montant'.$commande->getImputation()->getSection()->getLibelle()] += $montant;
+					$infosColl['montant'.$commande->getImputation()->getSection()] += $montant;
 
 					$tabCommandes[$commande->getId()]['montantAPayer'] = $montant;
 					$tabCommandes[$commande->getId()]['repartition'] = $ccc->getRepartition();

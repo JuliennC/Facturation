@@ -11,15 +11,7 @@ class ListeImputationsType extends AbstractType
 {
 
 	
-	protected $em;
-	
-
-    function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-	
+		
 	
 	/**
      * @param FormBuilderInterface $builder
@@ -29,14 +21,10 @@ class ListeImputationsType extends AbstractType
     {
 	    	    
 	  	
-	  	  //On récupère toutes les sections pour ne pas avoir à faire autant de requete qu'li y a d'imputation
-		$listeSections = $this->em->getRepository('JCCommandeBundle:SectionImputation')->findAll();
-
-	  	
         $builder
             ->add('listeImputations', 'collection', array(
             	'label' => false,
-		        'type'         => new ImputationType($listeSections),
+		        'type'         => new ImputationType(),
 		        'allow_add'    => true,
 		        'error_bubbling' => true,
 		        'by_reference' => false))
