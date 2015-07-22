@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost:8889
--- Généré le :  Mer 22 Juillet 2015 à 09:55
+-- Généré le :  Mer 22 Juillet 2015 à 13:31
 -- Version du serveur :  5.5.42
 -- Version de PHP :  5.4.42
 
@@ -219,12 +219,12 @@ INSERT INTO `Application` (`id`, `fournisseur_id`, `Nom`, `Libelle`) VALUES
 -- Contenu de la table `Budget`
 --
 
-INSERT INTO `Budget` (`id`, `service_id`, `Montant`, `Annee`) VALUES
-(1, 1, 2500, 2015),
-(2, 3, 10000, 2015),
-(3, 2, 12000, 2015),
-(4, 5, 10000, 2015),
-(5, 4, 10000, 2015);
+INSERT INTO `Budget` (`id`, `service_id`, `Montant`, `Annee`, `Libelle`) VALUES
+(1, 1, 2500, 2015, 'Logiciel'),
+(2, 3, 10000, 2015, 'Logiciel'),
+(3, 2, 12000, 2015, 'Logiciel'),
+(4, 5, 10000, 2015, 'Materiel'),
+(5, 4, 10000, 2015, 'Formation');
 
 --
 -- Contenu de la table `CleRepartition`
@@ -1266,9 +1266,9 @@ INSERT INTO `TVA` (`id`, `pourcentage`) VALUES
 (5, '20.00');
 
 --
--- Contenu de la table `Utilisateur`
+-- Contenu de la table `utilisateur`
 --
 
-INSERT INTO `Utilisateur` (`id`, `service_id`, `Nom`, `Prenom`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`) VALUES
+INSERT INTO `utilisateur` (`id`, `service_id`, `Nom`, `Prenom`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`) VALUES
 (49, 2, 'nomA', 'prenomA', 'testA', 'testa', 'a@a.fr', 'a@a.fr', 1, '', 'mdp', '2015-07-22 08:02:49', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL),
 (50, 3, 'nomC', 'prenomC', 'testC', 'testc', 't@f.fr', 't@f.fr', 1, '', 'mdp', '2015-07-21 15:10:12', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:11:"ROLE_COMPTA";}', 0, NULL);
