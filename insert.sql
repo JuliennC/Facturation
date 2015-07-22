@@ -741,7 +741,7 @@ INSERT INTO `LigneCommande` (`id`, `commande_id`, `tva_id`, `Libelle`, `Referenc
 -- Contenu de la table `massesalariale`
 --
 
-INSERT INTO `massesalariale` (`id`, `service_id`, `Montant`, `Annee`) VALUES
+INSERT INTO `MasseSalariale` (`id`, `service_id`, `Montant`, `Annee`) VALUES
 (4, 1, 10000, 2015),
 (5, 3, 20000, 2015),
 (6, 2, 30000, 2015);
@@ -1297,6 +1297,6 @@ INSERT INTO `TempsPasse` (`id`, `activite_id`, `collectivite_id`, `Pourcentage`,
 -- Contenu de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`id`, `service_id`, `Nom`, `Prenom`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`) VALUES
+INSERT INTO `Utilisateur` (`id`, `service_id`, `Nom`, `Prenom`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`) VALUES
 (49, 2, 'nomA', 'prenomA', 'testA', 'testa', 'a@a.fr', 'a@a.fr', 1, '', 'mdp', '2015-07-22 08:02:49', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL),
 (50, 3, 'nomC', 'prenomC', 'testC', 'testc', 't@f.fr', 't@f.fr', 1, '', 'mdp', '2015-07-21 15:10:12', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:11:"ROLE_COMPTA";}', 0, NULL);
