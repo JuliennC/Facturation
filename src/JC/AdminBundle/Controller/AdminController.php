@@ -77,6 +77,14 @@ class AdminController extends Controller
 		}
 
 
+
+
+
+
+
+
+
+
 		$formulaireEnvoye = $request->request->all();
 		
 		/*
@@ -567,8 +575,6 @@ class AdminController extends Controller
 	
 					
 					
-			//On récupère les informations de l'année dernière pour pré-remplir les champs des clés manquantes
-			$listeInformationsPrecendentes = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findToutesInfosPourCollectiviteEtAnnee($coll,$annee-1);
 
 
 						
@@ -584,23 +590,8 @@ class AdminController extends Controller
 					$nouvelleInformation = new InformationCollectivite();
 					$nouvelleInformation -> setCollectivite($coll);
 					$nouvelleInformation -> setCleRepartition($cle);
-					$nouvelleInformation -> setAnnee($annee);
-							
-					$nombre = 0;
-
-
-					//On regarde si la clé été déjà utilisée l'année précédente
-					foreach($listeInformationsPrecendentes as $ip){
-							
-						//Si elle était utilisée, on peut prendre le nombre comme 'base'
-						if($ip->getCleRepartition() === $cle) {
-							$nombre = $ip->getNombre();
-							break;
-						}
-					}
-						
-					
-					$nouvelleInformation -> setNombre($nombre);
+					$nouvelleInformation -> setAnnee($annee);					
+					$nouvelleInformation -> setNombre(0);
 
 					//On met l'information dans la liste
 					$listeInfosPourForm->addInformation($nouvelleInformation);		
@@ -759,7 +750,7 @@ class AdminController extends Controller
 
 
 	 /*
-	 *	Pour modifier les utilisateurs
+	 *	Pour modifier les Services
 	 *  
 	 */
 	 public function modificationServicesAction(Request $request) {
@@ -818,8 +809,7 @@ class AdminController extends Controller
 
 
 	 /*
-	 *	Pour modifier les informations des collectivites dont l'année de début de mutualisation
-	 *  est antérieur à l'année passée en paramêtre 
+	 *	Pour modifier les informations des budgets des services
 	 */
 	 public function modificationBudgetsAction(Request $request, $annee) {
 		 		 
@@ -830,34 +820,45 @@ class AdminController extends Controller
 		//On récupère les services
 		$listeServices = $em->getRepository('JCCommandeBundle:Service')->getServiceOrdreAlpha()->getQuery()->getResult(); 
 
+		$listeBudgets = $em->getRepository('JCCommandeBundle:Budget')->getQueryByAnnee($annee)->leftJoin('b.service', 's')->addSelect('s')->getQuery()->getResult();
+				
+		//On crée une liste des services que l'on trouvent grâce aux budgets, elle sera comparée à la liste de tous les services
+		$listeServicesTrouves = array();
 
+		//On parcours les budgets
+		foreach($listeBudgets as $budget){
+					
+			//Et si le service n'est pas déjà ajouté, on l'ajoute
+			if(! array_key_exists($budget->getService()->getNom(), $listeServicesTrouves)){
+				$listeServicesTrouves[$budget->getService()->getNom()] = $budget;
+			}
+		}
+				
+				
 		//Liste qui sera transformée en form
 		$listeBudgets = new ListeBudgets();
 
 				
-			//On parcours chaque service pour creer leur budget
-			foreach($listeServices as $service) {					
-
-				//On regarde si un budget avait déjà été définie
-				$budget = $em->getRepository('JCCommandeBundle:Budget')->findBudgetAvecAnneeEtService($annee, $service);
+		//On parcours les services
+		foreach($listeServices as $service) {					
 					
 
-				//Si un budget existe, on le récupère
-				if (sizeof($budget) > 0){
-					$listeBudgets->addBudget($budget[0]);
+			//Si le service a un budget, on le récupère
+			if (array_key_exists($service->getNom(), $listeServicesTrouves)){
+				$listeBudgets->addBudget( $listeServicesTrouves[$service->getNom()] );
 					
-				//Sinon, on en crée un
-				} else {
+			//Sinon, on en crée un
+			} else {
 
-					$nouveauBudget = new Budget();
-					$nouveauBudget -> setService($service);
-					$nouveauBudget -> setAnnee($annee);
-					$nouveauBudget -> setMontant(0);
+				$nouveauBudget = new Budget();
+				$nouveauBudget -> setService($service);
+				$nouveauBudget -> setAnnee($annee);
+				$nouveauBudget -> setMontant(0);
 												
-					$listeBudgets->addBudget($nouveauBudget);
-				}
-
+				$listeBudgets->addBudget($nouveauBudget);
 			}
+
+		}
 		
 			
 	    $form = $this->get('form.factory')->create(new ListeBudgetsType(), $listeBudgets);
@@ -1065,35 +1066,48 @@ class AdminController extends Controller
 		//On récupère les services
 		$listeServices = $em->getRepository('JCCommandeBundle:Service')->getServiceOrdreAlpha()->getQuery()->getResult(); 
 
+		//On récupère les masses salariales
+		$listeMS = $em->getRepository('JCCommandeBundle:MasseSalariale')->getQueryByAnnee($annee)->leftJoin('ms.service', 's')->addSelect('s')->getQuery()->getResult();
+
+
+		//On crée une liste des services que l'on trouvent grâce aux budgets, elle sera comparée à la liste de tous les services
+		$listeServicesTrouves = array();
+
+		//On parcours les budgets
+		foreach($listeMS as $ms){
+					
+			//Et si le service n'est pas déjà ajouté, on l'ajoute
+			if(! array_key_exists($ms->getService()->getNom(), $listeServicesTrouves)){
+				$listeServicesTrouves[$ms->getService()->getNom()] = $ms;
+			}
+		}
+
 
 		//Liste qui sera transformée en form
 		$listeMassesSalariales = new ListeMassesSalariales();
 
 				
-			//On parcours chaque service pour creer leur budget
-			foreach($listeServices as $service) {					
+		//On parcours chaque service pour savoir s'il a déjà une masse salariale de créée
+		foreach($listeServices as $service) {										
 
-				//On regarde si un budget avait déjà été définie
-				$ms = $em->getRepository('JCCommandeBundle:MasseSalariale')->findMasseSalarialeAvecAnneeEtService($annee, $service);
+			//Si une massa salariale existe, on le récupère
+			if (array_key_exists($service->getNom(), $listeServicesTrouves)){
+
+				$listeMassesSalariales->addMasseSalariale( $listeServicesTrouves[$service->getNom()] );
 					
+			//Sinon, on en crée un
+			} else {
 
-				//Si une massa salariale existe, on le récupère
-				if (sizeof($ms) > 0){
-
-					$listeMassesSalariales->addMasseSalariale($ms[0]);
-					
-				//Sinon, on en crée un
-				} else {
-
-					$nouvelleMS = new MasseSalariale();
-					$nouvelleMS -> setService($service);
-					$nouvelleMS -> setAnnee($annee);
-					$nouvelleMS -> setMontant(0);
+				$nouvelleMS = new MasseSalariale();
+				$nouvelleMS -> setService($service);
+				$nouvelleMS -> setAnnee($annee);
+				$nouvelleMS -> setMontant(0);
 												
-					$listeMassesSalariales->addMasseSalariale($nouvelleMS);
-				}
-
+				$listeMassesSalariales->addMasseSalariale($nouvelleMS);
 			}
+
+		}
+		
 		
 			
 	    $form = $this->get('form.factory')->create(new ListeMassesSalarialesType(), $listeMassesSalariales);

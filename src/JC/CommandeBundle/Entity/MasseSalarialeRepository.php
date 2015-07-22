@@ -30,4 +30,15 @@ class MasseSalarialeRepository extends EntityRepository
 	}
 
 	
+	
+	public function getQueryByAnnee($annee){
+		
+		return $this
+		->createQueryBuilder('ms')
+		->where('ms.annee = :annee')
+		->setParameter('annee', $annee);
+
+	}
+
+	
 }

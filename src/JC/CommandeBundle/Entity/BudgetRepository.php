@@ -26,4 +26,15 @@ class BudgetRepository extends EntityRepository
 		;
 
 	}
+	
+	
+	
+	public function getQueryByAnnee($annee){
+		
+		return $this
+		->createQueryBuilder('b')
+		->where('b.annee = :annee')
+		->setParameter('annee', $annee);
+
+	}
 }

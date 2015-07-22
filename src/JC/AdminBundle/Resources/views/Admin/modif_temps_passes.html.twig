@@ -13,12 +13,20 @@
 					<div class="tabbable-line">
 						<ul class="nav nav-tabs ">
 											
+							{% set i = 0 %}				
+							
 							{% for activite in listeActivites %}
-											
-								<li >
+								
+								{% if i == 0 %}		
+									<li class="active">
+								{% else %}
+									<li>
+								{% endif %}
+								
 									<a href="#sub_tab_temps_{{activite.id}}" data-toggle="tab">{{activite.nom}}</a>
 								</li>
-												
+								
+								{% set i = 1 %}	
 							{% endfor %}
 											
 						</ul>
@@ -40,7 +48,7 @@
 		</div>
 		
 		
-		
+
 		<nav>
 			<ul class="pager">
 				<li class='pull-right'><a href="{{  path('jc_admin_homepage', {'annee': (annee+1) }) }}">{{annee+1}} <span aria-hidden="true">&rarr;</span></a></li>
@@ -52,12 +60,24 @@
 		</nav>
 
 						       
-
+			
+		{% set i = 0 %}		
 					
 		{% for activite in listeActivites %}
 	
-	
-			<div class="tab-pane active col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="sub_tab_temps_{{activite.id}}">
+			
+			{% if i == 0 %}
+
+				<div class="tab-pane active col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="sub_tab_temps_{{activite.id}}">
+			
+				{% set i = 1 %}		
+
+			{% else %}		
+		
+				<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="sub_tab_temps_{{activite.id}}">
+
+			{% endif %}
+			
 												
 				<div class='table-responsive'>
 
@@ -115,7 +135,6 @@
 							
 			</div>
 											
-	
 		{% endfor %}
 				
 				
