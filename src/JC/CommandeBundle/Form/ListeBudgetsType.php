@@ -1,13 +1,25 @@
 <?php
 
 namespace JC\CommandeBundle\Form;
+use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+
 class ListeBudgetsType extends AbstractType
 {
+
+	protected $em;
+	
+
+    function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
+
 
 	 /**
      * @param FormBuilderInterface $builder
@@ -15,10 +27,16 @@ class ListeBudgetsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+	    
+	    
+	    //On récupère tous les services pour ne pas avoir à faire autant de requete que de budget
+		$listeServices = $this->em->getRepository('JCCommandeBundle:Service')->getServiceNonAncienOrdreAlpha()->getQuery()->getResult();
+		
+	    
         $builder
             ->add('listeBudgets', 'collection', array(
             	'label' => false,
-		        'type'         => new BudgetType(),
+		        'type'         => new BudgetType($listeServices),
 		        'error_bubbling' => true,
 		        'by_reference' => false,
 		        'error_bubbling' => true)   )

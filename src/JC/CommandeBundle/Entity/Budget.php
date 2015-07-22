@@ -36,6 +36,16 @@ class Budget
     private $annee;
 
 
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="Libelle", type="string", length=255, nullable=false)
+     */
+    private $libelle;
+
+
+
+
 // DEBUT CLES ETRANGERES
 
 
@@ -46,6 +56,10 @@ class Budget
    * @ORM\JoinColumn(nullable=false)
    */
    private $service;
+
+
+
+
 
 
 
@@ -133,6 +147,33 @@ class Budget
     {
         return $this->service;
     }
+
+
+
+
+	/**
+     * Set libelle
+     *
+     * @param string $libelle
+     * @return Budget
+     */
+    public function setLibelle($libelle)
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    /**
+     * Get libelle
+     *
+     * @return string 
+     */
+    public function getLibelle()
+    {
+        return $this->libelle;
+    }
+
 
 
 

@@ -8,6 +8,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BudgetType extends AbstractType
 {
+	
+	
+	protected $listeServices;
+	
+
+    function __construct($listeServices)
+    {
+        $this->listeServices = $listeServices;
+    }
+	
+	
+	
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -15,6 +27,16 @@ class BudgetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
+				->add('service', 'entity', array(
+				    'class'    => 'JCCommandeBundle:Service',
+				    'choices'   => $this->listeServices,
+				    'multiple'  => false ,
+				    'expanded' => false,
+					'error_bubbling' => false,
+					))
+					
+            ->add('libelle', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('montant', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
 
         ;

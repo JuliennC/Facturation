@@ -7,7 +7,7 @@
 </div>
 
 
-<div class='row' id='form_services'>
+<div class='row' id='form_budget'>
 
 	{{ form_start(form) }}
  
@@ -33,20 +33,29 @@
 
 						<tr>				
 							<th> Service </th>
+							<th> Libelle </th>
 							<th> Budget </th>
 						</tr>			
 									
 				    </thead>
+				   
 
 					
-					<tbody id='body_service'>
+					<tbody id='body_budget'>
 					
-						{# On parcours les services 'non anciens' #}
+					
+						<tr id='last_tr_budget'>
+			      			<td colspan='3'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_budget' > Ajouter un Budget </a> </td>
+				  		</tr>  
+				  		
+					
+						{# On parcours les budgets #}
 						{% for budget in form.listeBudgets %}
 											  
 							  	<tr>
 							  	
-									<td> {{budget.vars.value.service.nom}} </td>
+									<td> {{form_widget(budget.service)}} </td>
+									<td> {{form_widget(budget.libelle)}} </td>
 									<td> {{form_widget(budget.montant)}} € </td>
 											
 								</tr>

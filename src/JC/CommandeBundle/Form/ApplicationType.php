@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use JC\CommandeBundle\Entity\FournisseurRepository;
 
 
 class ApplicationType extends AbstractType

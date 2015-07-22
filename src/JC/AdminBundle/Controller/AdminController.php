@@ -817,51 +817,15 @@ class AdminController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
 		 
-		//On récupère les services
-		$listeServices = $em->getRepository('JCCommandeBundle:Service')->getServiceOrdreAlpha()->getQuery()->getResult(); 
+		//On récupère les budgets
+		$listeB = $em->getRepository('JCCommandeBundle:Budget')->findByAnnee($annee);
+				
 
-		$listeBudgets = $em->getRepository('JCCommandeBundle:Budget')->getQueryByAnnee($annee)->leftJoin('b.service', 's')->addSelect('s')->getQuery()->getResult();
-				
-		//On crée une liste des services que l'on trouvent grâce aux budgets, elle sera comparée à la liste de tous les services
-		$listeServicesTrouves = array();
-
-		//On parcours les budgets
-		foreach($listeBudgets as $budget){
-					
-			//Et si le service n'est pas déjà ajouté, on l'ajoute
-			if(! array_key_exists($budget->getService()->getNom(), $listeServicesTrouves)){
-				$listeServicesTrouves[$budget->getService()->getNom()] = $budget;
-			}
-		}
-				
-				
 		//Liste qui sera transformée en form
 		$listeBudgets = new ListeBudgets();
-
-				
-		//On parcours les services
-		foreach($listeServices as $service) {					
-					
-
-			//Si le service a un budget, on le récupère
-			if (array_key_exists($service->getNom(), $listeServicesTrouves)){
-				$listeBudgets->addBudget( $listeServicesTrouves[$service->getNom()] );
-					
-			//Sinon, on en crée un
-			} else {
-
-				$nouveauBudget = new Budget();
-				$nouveauBudget -> setService($service);
-				$nouveauBudget -> setAnnee($annee);
-				$nouveauBudget -> setMontant(0);
-												
-				$listeBudgets->addBudget($nouveauBudget);
-			}
-
-		}
-		
+		$listeBudgets -> setListeBudgets($listeB);
 			
-	    $form = $this->get('form.factory')->create(new ListeBudgetsType(), $listeBudgets);
+	    $form = $this->get('form.factory')->create(new ListeBudgetsType($em), $listeBudgets);
 		$form->handleRequest($request);
 			
 		//Si le formulaire est valide, on sauvegarde dans la base
@@ -874,7 +838,7 @@ class AdminController extends Controller
 			
 				if($b->getMontant() != 0){
 					$em->persist($b);
-					}
+				}
         	}
         	
         	$em->flush();
