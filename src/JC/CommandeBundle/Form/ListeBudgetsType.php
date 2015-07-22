@@ -37,7 +37,7 @@ class ListeBudgetsType extends AbstractType
             ->add('listeBudgets', 'collection', array(
             	'label' => false,
 		        'type'         => new BudgetType($listeServices),
-		        'error_bubbling' => true,
+			    'allow_add' => true,
 		        'by_reference' => false,
 		        'error_bubbling' => true)   )
 

@@ -837,6 +837,7 @@ class AdminController extends Controller
         	foreach($listeBudgets as $b) {
 			
 				if($b->getMontant() != 0){
+					$b->setAnnee($annee);
 					$em->persist($b);
 				}
         	}
