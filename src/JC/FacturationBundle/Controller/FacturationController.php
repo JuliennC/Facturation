@@ -63,6 +63,8 @@ class FacturationController extends Controller
 		//Dans lesquels on pourra récupérer la commande
 		foreach($listePasseEtat as $etat){
 			
+			$etat = $etat[0];
+			
 			//On récupère la commande
 			$commande = $etat->getCommande();
 			

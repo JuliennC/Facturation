@@ -32,7 +32,6 @@ class ListeImputationsType extends AbstractType
 	    	    
 	  	//On récupère tous les budgets pour ne pas avoir à faire autant de requete que de budget
 		$listeBudgets = $this->em->getRepository('JCCommandeBundle:Budget')->findByAnnee($this->annee);
-		
 
         $builder
             ->add('listeImputations', 'collection', array(

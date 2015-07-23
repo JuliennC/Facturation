@@ -439,6 +439,20 @@ class AdminController extends Controller
 	 	$listeCles = $em->getRepository('JCCommandeBundle:CleRepartition')->findAll(); 
 		        	
 
+$em = $this->getDoctrine()->getManager();
+
+	 	//On récupère la liste de toutes les activites
+	 	$listeImp = $em->getRepository('JCCommandeBundle:Imputation')->getQueryOrdreAlpha($annee)->getQuery()->getResult(); 
+	 	
+	 	//Liste qui sera transformée en formulaire
+	 	$listeImputations = new ListeImputations();
+	 	$listeImputations ->setListeImputations($listeImp);
+	 		 	
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
+        $form = $this->get('form.factory')->create(new ListeImputationsType($em,$annee), $listeImputations);
+
+	 	
+		$form->handleRequest($request);
 
         	
 		//Si aucune requête, alors on affiche simplement les formulaires
@@ -975,7 +989,7 @@ class AdminController extends Controller
 	 	$em = $this->getDoctrine()->getManager();
 
 	 	//On récupère la liste de toutes les activites
-	 	$listeImp = $em->getRepository('JCCommandeBundle:Imputation')->getQueryOrdreAlphaAvecAnnee($annee)->getQuery()->getResult(); 
+	 	$listeImp = $em->getRepository('JCCommandeBundle:Imputation')->getQueryOrdreAlpha($annee)->getQuery()->getResult(); 
 	 	
 	 	//Liste qui sera transformée en formulaire
 	 	$listeImputations = new ListeImputations();

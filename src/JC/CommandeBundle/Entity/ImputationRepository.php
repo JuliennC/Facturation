@@ -22,13 +22,11 @@ class ImputationRepository extends EntityRepository
     
     
     
-	public function getQueryOrdreAlphaAvecAnnee($annee) {
+	public function getQueryOrdreAlpha() {
     return $this
       ->createQueryBuilder('i')
       ->orderBy('i.libelle', 'ASC')
       ->orderBy('i.sousFonction', 'ASC')
-      ->where('i.annee = :annee')
-      ->setParameter('annee', $annee)
 
     ;
   }

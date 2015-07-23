@@ -8,22 +8,26 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ImputationConcerneBudgetType extends AbstractType
 {
+	
+	protected $listeBudgets;
+	
+
+    function __construct($listeBudgets)
+    {
+        $this->listeBudgets = $listeBudgets;
+    }
+	
+	
+
+	
+	
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-
-            ->add('budget', 'entity', array(
-				'class'    => 'JCCommandeBundle:Budget',
-				'property' => 'display',
-				'multiple' => true,
-				'expended' => true,
-				'choices' => array(),
-				'error_bubbling' => true))
-        ;
+    public function buildForm(FormBuilderInterface $builder, array $options) {
+    
+        
     }
     
     /**

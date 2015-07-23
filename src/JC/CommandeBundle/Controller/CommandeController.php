@@ -440,7 +440,7 @@ class CommandeController extends Controller
                                     $fournisseur = new Fournisseur();
                                 }
 
-                                $lieu->setNom($commande->getNomFournisseur());                                
+                                $$fournisseur->setNom($commande->getNomFournisseur());                                
                                 $fournisseur->setAdresse($commande->getAdresseFournisseur());
                                 $fournisseur->setComplementAdresse($commande->getComplementAdresseFournisseur());
                                 $fournisseur->setCodePostal($commande->getCodePostalFournisseur());
@@ -1066,7 +1066,7 @@ class CommandeController extends Controller
 		$em->persist($info_Coll_5_2);
 		
 		
- 
+
 
 		$coll6 = new Collectivite();
 		$coll6 -> setNom('essey-les-Nancy');

@@ -59,8 +59,27 @@
 						 		<td> {{form_widget(imputation.sousFonction, {attr: {'class':'col-md-10 col-md-offset-1'}})}} </td>
 								<td> {{form_widget(imputation.article, {attr: {'class':'col-md-10 col-md-offset-1'}})}} </td>
 								<td> {{ imputation.vars.value.section }} </td>
+								
+								<td> <a class='btn' data-toggle='modal' data-target='#modalBudgets_{{imputation.vars.value.id}}'>Lier aux budgets</a></td>
 					
-
+								<!-- Modal Engager -->
+								<div class="modal fade" id="modalBudgets_{{imputation.vars.value.id}}" tabindex="-1" role="dialog" aria-labelledby="modalBudgets_{{imputation.vars.value.id}}">
+								  <div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h4 class="modal-title">Lier aux budgets</h4>
+								      </div>
+								      <div class="modal-body">
+									  	
+									  	{{form_widget(imputation.listeImputationConcerneBudget)}}
+									  	
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal"">Confirmer</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
 								
 								{% if imputation.vars.value.estFacture == 1 %}
 									

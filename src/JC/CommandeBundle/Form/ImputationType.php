@@ -26,6 +26,8 @@ class ImputationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+	   
+	    
         $builder
             ->add('libelle', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('sousFonction', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
@@ -34,12 +36,13 @@ class ImputationType extends AbstractType
             ->add('estFacture','checkbox', array('required'=>false, 'error_bubbling' => true ))
         
         
-			->add('listeImputationConcerneBudget', 'collection', array(
-            	'label' => false,
-		        'type'         => new ImputationConcerneBudgetType(),
-		        'error_bubbling' => true,
-		        'mapped' => false,
-		        'by_reference' => false)   )
+			// On s'oocupe des différentes villes
+			->add('listeImputationConcerneBudget', 'choice', array('choices' => $this->listeBudgets, 
+											'label'=> false,
+											'mapped' => false,
+											'multiple'=> true,
+											'expanded' => true,
+											'error_bubbling' => true))
         
         ;
     }

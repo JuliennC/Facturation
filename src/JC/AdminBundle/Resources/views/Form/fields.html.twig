@@ -30,3 +30,52 @@
 
 
 
+
+{# On redéfini les checkbox pour les villes mutualisées #}
+{% block checkbox_widget %}
+{% spaceless %}
+					
+			
+         <div class=" col-md-12">
+		 	<div class="form-group">
+            <input type="checkbox"  name="jc_commandebundle_listeimputations[listeImputationConcerneBudget][]" id="jc_commandebundle_listeimputations_listeImputationConcerneBudget_{{value}}" autocomplete="off" value='{{value}}' tag='checkbox_{{label}}'/>
+             
+      
+					{{label}}
+					
+                    
+
+               
+             
+               
+			</div>
+              
+                    
+            
+                    
+         </div>
+
+                    
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+
+
+
+
+
+{# On met en forme la partie du formulaire concernant les budgets #}
+{% block _jc_commandebundle_listeimputations_listeImputationConcerneBudget_widget %}
+{% spaceless %}
+	
+	
+	{% for child in form %}
+	
+        {{ form_widget(child) }}
+    	
+    {% endfor %}
+   
+		
+{% endspaceless %}
+{% endblock _jc_commandebundle_listeimputations_listeImputationConcerneBudget_widget %}
+
