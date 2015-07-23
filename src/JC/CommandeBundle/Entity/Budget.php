@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Budget
 {
+	
+	public function __tostring(){
+		return $this->service->getNom().' - '.$this->libelle;
+	}
+	
     /**
      * @var integer
      *

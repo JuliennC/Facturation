@@ -32,7 +32,7 @@ class ListeBudgetsType extends AbstractType
 	    //On récupère tous les services pour ne pas avoir à faire autant de requete que de budget
 		$listeServices = $this->em->getRepository('JCCommandeBundle:Service')->getServiceNonAncienOrdreAlpha()->getQuery()->getResult();
 		
-	    
+			    
         $builder
             ->add('listeBudgets', 'collection', array(
             	'label' => false,

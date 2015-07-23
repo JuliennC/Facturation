@@ -439,7 +439,7 @@ class AdminController extends Controller
 	 	$listeCles = $em->getRepository('JCCommandeBundle:CleRepartition')->findAll(); 
 		        	
 
-		
+
         	
 		//Si aucune requête, alors on affiche simplement les formulaires
 		return $this->render('JCAdminBundle:Admin:index.html.twig', array('request'=>$request, 'annee' => $annee, 'listeCles'=>$listeCles));
@@ -970,19 +970,19 @@ class AdminController extends Controller
 	/*
 	 *	Pour modifier les imputations 
 	 */
-	 public function modificationImputationsAction(Request $request) {
+	 public function modificationImputationsAction(Request $request, $annee) {
 
 	 	$em = $this->getDoctrine()->getManager();
 
 	 	//On récupère la liste de toutes les activites
-	 	$listeImp = $em->getRepository('JCCommandeBundle:Imputation')->getImputationOrdreAlpha()->getQuery()->getResult(); 
+	 	$listeImp = $em->getRepository('JCCommandeBundle:Imputation')->getQueryOrdreAlphaAvecAnnee($annee)->getQuery()->getResult(); 
 	 	
 	 	//Liste qui sera transformée en formulaire
 	 	$listeImputations = new ListeImputations();
 	 	$listeImputations ->setListeImputations($listeImp);
 	 		 	
 	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
-        $form = $this->get('form.factory')->create(new ListeImputationsType(), $listeImputations);
+        $form = $this->get('form.factory')->create(new ListeImputationsType($em,$annee), $listeImputations);
 
 	 	
 		$form->handleRequest($request);

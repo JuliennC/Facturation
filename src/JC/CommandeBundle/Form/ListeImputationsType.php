@@ -10,7 +10,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ListeImputationsType extends AbstractType
 {
 
+	protected $em;
+	protected $annee;
 	
+
+    function __construct(EntityManager $em, $annee)
+    {
+        $this->em = $em;
+        $this->annee = $annee;
+    }
+
+
 		
 	
 	/**
@@ -20,11 +30,14 @@ class ListeImputationsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	    	    
-	  	
+	  	//On récupère tous les budgets pour ne pas avoir à faire autant de requete que de budget
+		$listeBudgets = $this->em->getRepository('JCCommandeBundle:Budget')->findByAnnee($this->annee);
+		
+
         $builder
             ->add('listeImputations', 'collection', array(
             	'label' => false,
-		        'type'         => new ImputationType(),
+		        'type'         => new ImputationType($listeBudgets),
 		        'allow_add'    => true,
 		        'error_bubbling' => true,
 		        'by_reference' => false))

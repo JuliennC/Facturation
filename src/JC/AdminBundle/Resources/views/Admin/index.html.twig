@@ -19,12 +19,12 @@
             <li><a href="#tab3" data-toggle="tab">Clés de répartition </a></li>
             <li><a href="#tab4" data-toggle="tab">Utilisateurs</a></li>
             <li><a href="#tab5" data-toggle="tab">Service</a></li>
-            <li><a href="#tab6" data-toggle="tab">Budgets des service</a></li>
+            <li><a href="#tab6" data-toggle="tab">Budgets des services</a></li>
             <li><a href="#tab7" data-toggle="tab">Activites</a></li>
             <li><a href="#tab8" data-toggle="tab">Applications</a></li>
             <li><a href="#tab9" data-toggle="tab">Imputations</a></li>
-            <li><a href="#tab10" data-toggle="tab">Masses Salariales</a></li>
-            <li><a href="#tab11" data-toggle="tab">Temps Passés</a></li>
+            <li><a href="#tab11" data-toggle="tab">Masses Salariales</a></li>
+            <li><a href="#tab12" data-toggle="tab">Temps Passés</a></li>
 
           </ul>
         </div>
@@ -249,8 +249,8 @@
 	  	{# Seuls les (minimum) COMPTA peuvent modifier ces informations #}
 	    {% if is_granted('ROLE_COMPTA') %}
 	
-			<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-2 main" id="tab9">
-		    	{{ render(controller("JCAdminBundle:Admin:modificationImputations" , { 'request' :request })) }}
+			<div class="tab-pane col-sm-9 col-sm-offset-3 col-md-12 col-md-offset-1 main" id="tab9">
+		    	{{ render(controller("JCAdminBundle:Admin:modificationImputations" , { 'request' :request, 'annee':annee })) }}
 			</div>
 			
 		{% else %}

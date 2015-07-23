@@ -26,35 +26,38 @@ class AccueilController extends Controller
         } 
 		
 
-   		//On recupere la liste des services
-		$listeServices = $em->getRepository('JCCommandeBundle:Service')->findAll();	
+   		//On recupere la liste des budgets pour l'année donnée
+		$listeBudgets = $em->getRepository('JCCommandeBundle:Budget')->getQueryByAnnee($annee)->leftJoin('b.service','s')->addSelect('s')->getQuery()->getResult();	
+		
+		//On stockera les informations sur les différents services
 		$infoServices = array();
 
+		
+		//On parcours les budgets
+		foreach($listeBudgets as $budget){
+			
+			
+			//Si c'est la première fois que l'on tombe sur ce service
+			if(! array_key_exists($budget->getService()->getNom(), $infoServices)) {
 
-   		foreach($listeServices as $service){
-	   		
-	   		//On recupere le budget du service pour l'annee correspondante a 'date'
-	   		$budget = $em->getRepository('JCCommandeBundle:Budget')->findBudgetAvecAnneeEtService($annee, $service);
+				//On l'ajoute à la liste, pour stocker le budget
+				$infoServices[$budget->getService()->getNom()] = array();
+			}
+			
+			//On enregistre le budget dans la liste
+			$infoServices[$budget->getService()->getNom()][$budget->getLibelle()] = array();
 
-			//On vérifie qu'un budget a bien été créée
-			// (Exemple, dans le cas de la création d'un nouveau service, le service n'a pas de budget pour l'année d'avant)	   		
-	   		if(sizeof($budget) > 0){
-		   	
-		   		//On cree un tableau pour y stocker les informations du service
-		   		$infoServices[$service->getNom()] = array('nom'=>$service->getNom(),'budget'=>$budget[0]->getMontant(),'nbCommandesPassees'=>0 , 'montantCommandesPassees'=>0);	
-	   		
-	   		} else {
-		   		
-		   		$session = new Session();
-				$session->getFlashBag()->add('Warning', 'Attention : Aucun budget n\'a été saisi pour '.$service->getNom());
-
-		   		$infoServices[$service->getNom()] = array('nom'=>$service->getNom(),'budget'=>1,'nbCommandesPassees'=>0 , 'montantCommandesPassees'=>0);	
-		   		
-	   		}
-
+			$infoServices[$budget->getService()->getNom()][$budget->getLibelle()]['libelle'] = $budget->getLibelle();
+			$infoServices[$budget->getService()->getNom()][$budget->getLibelle()]['montant'] = $budget->getMontant();
+			$infoServices[$budget->getService()->getNom()][$budget->getLibelle()]['montantUtilise'] = 0;
 		}
-
-		//On calcule le total des commandes crees en dans l'annee courrante		
+		
+		
+		// On récupète toutes les commandes qui ont été Enregistrée dans l'année 'date'
+		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansAnnee("Enregistree", $annee);
+		
+		
+		//On calcule le total des commandes créées dans l'annee donnée		
 		$infoCommandes = array();
 		$infoCommandes['nombreCommandesPassees'] = 0;
 		$infoCommandes['montantCommandesPassees'] = 0;
@@ -63,20 +66,15 @@ class AccueilController extends Controller
 		$infoCommandes['nombreCommandesMutualisees'] = 0;
 		$infoCommandes['montantCommandesMutualisees'] = 0;
 
-		
 
-		 
-
-		// On récupète toutes les commandes qui ont été Enregistrée dans l'année 'date'
-		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansAnnee("Enregistree", $annee);
-		
-				
 		
 		foreach($listePasseEtat as $etat){
+
+			$etat = $etat[0];
 			
 			//On récupère la commande de l'état
 			$commande = $etat->getCommande();
-			
+
 			//On calcule le nombre total de commandes 
 			$infoCommandes['nombreCommandesPassees'] += 1;
 				
@@ -101,14 +99,17 @@ class AccueilController extends Controller
 				$infoCommandes['montantCommandesMutualisees'] += $commande->getTotalTTC();
 
 			}
-				
-			$infoServices[$commande->getService()->getNom()]['nbCommandesPassees'] += 1;
-			$infoServices[$commande->getService()->getNom()]['montantCommandesPassees'] += $commande->getTotalTTC();
-
+			
+			
+			//On stocke les infos
+			$infoServices[$commande->getService()->getNom()][$commande->getImputation()->getBudget()->getLibelle()]['montantUtilise'] += $commande->getTotalTTC();
+			
 		}
 		
 		
 		
+		dump($infoServices);
+
 
         return $this->render('JCAccueilBundle:Accueil:index.html.twig', array('infoCommandes'=>$infoCommandes, 'annee'=>$annee, 'infoServices'=>$infoServices));
     }

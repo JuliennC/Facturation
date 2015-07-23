@@ -10,8 +10,8 @@ class BudgetType extends AbstractType
 {
 	
 	
-	protected $listeServices;
-	
+	protected $listeServices;	
+
 
     function __construct($listeServices)
     {
@@ -28,17 +28,18 @@ class BudgetType extends AbstractType
     {
         $builder
 
-				->add('service', 'entity', array(
-				    'class'    => 'JCCommandeBundle:Service',
-				    'choices'   => $this->listeServices,
-				    'multiple'  => false ,
-				    'expanded' => false,
-					'error_bubbling' => false,
-					))
+			->add('service', 'entity', array(
+			    'class'    => 'JCCommandeBundle:Service',
+			    'choices'   => $this->listeServices,
+			    'multiple'  => false ,
+			    'expanded' => false,
+				'error_bubbling' => false,
+				))
 					
             ->add('libelle', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('montant', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
 
+            
         ;
     }
     

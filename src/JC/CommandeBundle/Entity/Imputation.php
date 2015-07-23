@@ -63,6 +63,28 @@ class Imputation
    
 
 
+
+	/**
+     * @var integer
+     *
+     * @ORM\Column(name="Annee", type="integer")
+     */
+    private $annee;
+
+
+	
+	/**
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Budget", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+   private $budget;
+
+
+
+
+
+
+
     /**
      * Get id
      *
@@ -193,6 +215,53 @@ class Imputation
 
 
 
+	/**
+     * Set annee
+     *
+     * @param integer $annee
+     * @return Budget
+     */
+    public function setAnnee($annee)
+    {
+        $this->annee = $annee;
+
+        return $this;
+    }
+
+    /**
+     * Get annee
+     *
+     * @return integer 
+     */
+    public function getAnnee()
+    {
+        return $this->annee;
+    }
+
+
+
+	/**
+     * Set budget
+     *
+     * @param Budget $budget
+     * @return Imputation
+     */
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+
+        return $this;
+    }
+
+    /**
+     * Get budget
+     *
+     * @return Budget 
+     */
+    public function getBudget()
+    {
+        return $this->budget;
+    }
 
 }
 

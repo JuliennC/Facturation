@@ -40,43 +40,56 @@
 
 	{# On affiche les infos de chaque service #}
 	<div class="center">
-		{% for service in infoServices %}
+
+		{% for service in infoServices|keys %}
+
 		    <div class="col-md-4 text-center top30">
 		    	<div class="panel panel-success panel-pricing">
 					
 					<div class="panel-heading">
-		                <h3> {{service['nom']}} </h3>
+		                <h3> {{service}} </h3>
 		            </div>
 		            
-		            <div class="panel-body text-center">
-		                <strong> {{service['nbCommandesPassees']}} commande(s) : {{service['montantCommandesPassees']|number_format(2, ',', ' ')}} €</strong>
-		            </div>
+		            
 		            
 		            <ul class="list-group text-center">
-		                <li class="list-group-item"><i class="fa fa-check"></i> Budget de l'annee : {{ service['budget']|number_format(2, ',', ' ') }} €</li>
+		            
+						
+						{% for budget in infoServices[service] %}
+		            
+		            
+							<li class="list-group-item">
+								<div>
+									<i class="fa fa-check"></i> {{budget['libelle']}} : {{ budget['montant']|number_format(2, ',', ' ') }} €
 		
-		                <li class="list-group-item"><i class="fa fa-check "></i> 
+									<i class="fa fa-check"></i> 
 		
-						{% set ratio = (service['montantCommandesPassees'] / service['budget'] )*100 %}
-		                {% if ratio < 65 %}
-		                	{% set class = "success" %}
-		                {% elseif ratio < 85 %}
-		                	{% set class = "warning" %}
-		                {% else %}
-		                	{% set class = "danger" %}
-		                {% endif %}
-		                    <div class="progress progress">
-		                        <div class="progress-bar progress-bar-{{class}}" role="progressbar" aria-valuenow="{{ratio}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ratio}}%">
-		                            <span class="sr-only">{{ratio|number_format(2)}}%</span>
-		                        </div>
-							</div>
+									{% set ratio = (budget['montantUtilise'] / budget['montant'] )*100 %}
+						    
+						            {% if ratio < 65 %}
+						               	{% set class = "success" %}
+									{% elseif ratio < 85 %}
+						               	{% set class = "warning" %}
+						            {% else %}
+						            	{% set class = "danger" %}
+						            {% endif %}
+				                
+				                
+				                    <div class="progress progress"  style="margin-top:10px">
+				                        <div class="progress-bar progress-bar-{{class}}" role="progressbar" aria-valuenow="{{ratio}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ratio}}%">
+				                            <span class="sr-only">{{ratio|number_format(2)}}%</span>
+				                        </div>
+									</div>
 							
-		                </li>
-		
+							</li>
+						
+						{% endfor %}
+		            
 		            </ul>
 		            
+		            
 		            <div class="panel-footer">
-		                <a class="btn btn-success" href="{{ path('jc_commande_liste', {'service': service.nom}) }}">Voir les commandes du service {{service.nom}}</a>
+		                <a class="btn btn-success" href="{{ path('jc_commande_liste', {'service': service}) }}">Voir les commandes du service {{service}}</a>
 		            </div>
 		        
 		        </div>

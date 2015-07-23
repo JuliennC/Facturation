@@ -71,15 +71,23 @@ public function findPasseEtatDansEntreDates($etat, $dateDebut, $dateFin) {
 
 	    return $qb = $this
 	    	->createQueryBuilder('cpe')
+			->addSelect('COUNT(cpe.id) AS nombre')
+			
 			->leftJoin('cpe.etat','ec')
 			->where('ec.libelle = :etat')
 			->setParameter('etat', $etat)
+			
+			->leftJoin('cpe.commande','com')
+			->addSelect('com')
+		
 			 
             ->andWhere('cpe.datePassage > :annee')
            	->setParameter('annee', $annee)
            	
            	->andWhere('cpe.datePassage < :annee2')
            	->setParameter('annee2', strval($annee+1))
+			
+			->groupBy('com.id')
 			
 			->getQuery()
 	    	->getResult()

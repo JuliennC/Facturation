@@ -10,7 +10,14 @@ class ImputationType extends AbstractType
 {
 	
 		
-	
+	protected $listeBudgets;
+
+	 function __construct($listeBudgets)  {
+
+        $this->listeBudgets = $listeBudgets;
+
+    }
+
 	
 	
     /**
@@ -26,7 +33,16 @@ class ImputationType extends AbstractType
         
 			->add('section')
     
-                
+            ->add('budget', 'entity', array(
+				    'class'    => 'JCCommandeBundle:Budget',
+				    'choices'   => $this->listeBudgets,
+				    'multiple'  => false ,
+				    'expanded' => false,
+					'error_bubbling' => false,
+					))
+
+ 
+              
             ->add('estFacture','checkbox', array('required'=>false, 'error_bubbling' => true ));
         ;
     }
