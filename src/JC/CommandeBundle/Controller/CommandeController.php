@@ -1066,7 +1066,7 @@ class CommandeController extends Controller
 		$em->persist($info_Coll_5_2);
 		
 		
-
+ 
 
 		$coll6 = new Collectivite();
 		$coll6 -> setNom('essey-les-Nancy');
