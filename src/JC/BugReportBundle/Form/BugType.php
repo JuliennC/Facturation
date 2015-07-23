@@ -25,7 +25,7 @@ class BugType extends AbstractType
             ->add('utilisateur')
             ->add('circonstances', 'textarea', array('required' => true , 'error_bubbling' => true))
             ->add('commentaire', 'textarea', array('required' => true , 'error_bubbling' => true))
-			
+            ->add('image',      new ImageType())
 			->add('envoyer', 'submit');
 
         ;

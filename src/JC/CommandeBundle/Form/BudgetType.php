@@ -36,6 +36,8 @@ class BudgetType extends AbstractType
 				'error_bubbling' => false,
 				))
 					
+					
+			
             ->add('libelle', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('montant', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
 

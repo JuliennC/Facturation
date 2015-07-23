@@ -32,10 +32,18 @@ class BugReportController extends Controller
 		if ($form->isValid()) {
 
 			
+			$session = $request->getSession();
+			$session->getFlashBag()->add('Success', 'Votre report à bien été envoyé.');
+
+			 // Ajoutez cette ligne :
+			 // c'est elle qui déplace l'image là où on veut les stocker
+			 $bug->getImage()->upload();
+			
 			$em->persist($bug);
 			
            	$em->flush();
         	
+				return $this->redirect($this->generateUrl('jc_bug_report_homepage'));
 
 		}	    			
 

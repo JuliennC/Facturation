@@ -29,21 +29,18 @@ class ImputationType extends AbstractType
         $builder
             ->add('libelle', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('sousFonction', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
-            ->add('article', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
-        
+            ->add('article', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))        
 			->add('section')
-    
-            ->add('budget', 'entity', array(
-				    'class'    => 'JCCommandeBundle:Budget',
-				    'choices'   => $this->listeBudgets,
-				    'multiple'  => false ,
-				    'expanded' => false,
-					'error_bubbling' => false,
-					))
-
- 
-              
-            ->add('estFacture','checkbox', array('required'=>false, 'error_bubbling' => true ));
+            ->add('estFacture','checkbox', array('required'=>false, 'error_bubbling' => true ))
+        
+        
+			->add('listeImputationConcerneBudget', 'collection', array(
+            	'label' => false,
+		        'type'         => new ImputationConcerneBudgetType(),
+		        'error_bubbling' => true,
+		        'mapped' => false,
+		        'by_reference' => false)   )
+        
         ;
     }
     

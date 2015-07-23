@@ -5,6 +5,7 @@ namespace JC\BugReportBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use JC\BugReportBundle\Entity\Image;
 
 /**
  * Bug
@@ -65,9 +66,40 @@ class Bug
 	/**
      * @var string
      *
-     * @ORM\Column(name="Libelle", type="string", length=255)
+     * @ORM\Column(name="Libelle", type="string", length=255, nullable=true)
      */
     private $libelle;
+    
+    
+	/**
+   * @ORM\OneToOne(targetEntity="JC\BugReportBundle\Entity\Image", cascade={"persist"})
+   * @ORM\JoinColumn(nullable=false)
+   */
+    private $image;
+    
+    
+	/**
+     * Set image
+     *
+     * @param Image $image
+     * @return Bug
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 
 
 
