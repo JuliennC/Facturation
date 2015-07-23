@@ -417,7 +417,8 @@ class CommandeController extends Controller
                                 } else {
                                     $lieu = new Livraison();
                                 }
-                                
+
+                                $lieu->setNom($commande->getNomLivraison());                                
                                 $lieu->setAdresse($commande->getAdresseLivraison());
                                 $lieu->setComplementAdresse($commande->getComplementAdresseLivraison());
                                 $lieu->setCodePostal($commande->getCodePostalLivraison());
@@ -438,7 +439,8 @@ class CommandeController extends Controller
                                 } else {
                                     $fournisseur = new Fournisseur();
                                 }
-                                
+
+                                $lieu->setNom($commande->getNomFournisseur());                                
                                 $fournisseur->setAdresse($commande->getAdresseFournisseur());
                                 $fournisseur->setComplementAdresse($commande->getComplementAdresseFournisseur());
                                 $fournisseur->setCodePostal($commande->getCodePostalFournisseur());
