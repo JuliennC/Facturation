@@ -63,6 +63,8 @@ use JC\CommandeBundle\Form\TempsPasseType;
 use JC\CommandeBundle\Form\ListeTempsPassesType;
 
 
+use JC\CommandeBundle\Entity\ImputationConcerneBudget;
+
 
 
 
@@ -453,6 +455,9 @@ $em = $this->getDoctrine()->getManager();
 
 	 	
 		$form->handleRequest($request);
+
+
+		set_time_limit(0);
 
         	
 		//Si aucune requête, alors on affiche simplement les formulaires
@@ -1003,13 +1008,41 @@ $em = $this->getDoctrine()->getManager();
 
 	 	//Si le formulaire est valide, on sauvegarde dans la base
 		if ($form->isValid()) {
+			
+				$t = $form->get('listeImputations')[0];
 
 			//On sauvegarde les activites dans la base
-        	foreach($form->get('listeImputations')->getData() as $imp) {
+        	foreach($form->get('listeImputations') as $imp) {
 
 				//On ne sauvegarde pas celle qui ont un nom null
-				if ($imp->getLibelle() != null) {
-					$em->persist($imp);
+				if ($imp->getData()->getLibelle() != null) {
+									
+					//On supprime toutes les ImputationConcerneBudget, et on les enregistres ceux présents
+					$listeICB = $em->getRepository('JCCommandeBundle:ImputationConcerneBudget')->findAvecImputationEtAnnee($imp->getData(),$annee); 
+					
+					//on les suprime
+					foreach($listeICB as $icb) {
+						$em->remove($icb);
+					}
+					
+					
+					//On enregistre les nouveaux
+					
+					//On récupère les checkbox des budgets
+					$listeCheckBoxBudgets = $imp->get('listeImputationConcerneBudget')->getData();
+					dump($listeCheckBoxBudgets);
+					//on les enregistre
+					foreach($listeCheckBoxBudgets as $idBudget){
+						
+						$icb = new ImputationConcerneBudget();
+						$icb->setImputation($imp->getData());
+						$icb->setBudget($em->getRepository('JCCommandeBundle:Budget')->findOneById($idBudget));
+						
+						$em->persist($icb);
+					}
+	
+					
+					$em->persist($imp->getData());
 				}
 			}
         	
@@ -1023,7 +1056,7 @@ $em = $this->getDoctrine()->getManager();
 	    	
 	    
 	    
-	 		return $this->render('JCAdminBundle:Admin:modif_imputations.html.twig', array('form'=>$form->createView()));
+	 		return $this->render('JCAdminBundle:Admin:modif_imputations.html.twig', array('form'=>$form->createView(), 'annee'=>$annee));
 		}
 	 }
 

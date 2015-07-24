@@ -34,7 +34,8 @@ class BudgetRepository extends EntityRepository
 		return $this
 		->createQueryBuilder('b')
 		->where('b.annee = :annee')
-		->setParameter('annee', $annee);
+		->setParameter('annee', $annee)
+		->orderBy('b.libelle', 'ASC');
 
 	}
 }

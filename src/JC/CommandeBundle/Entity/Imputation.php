@@ -63,6 +63,43 @@ class Imputation
    
 
 
+	// Ne sert que pour le formulaire admin
+	private $listeImputationConcerneBudget;
+
+
+
+	
+     public function __construct()
+    {
+        $this->listeImputationConcerneBudget = new ArrayCollection();
+    }
+
+
+
+
+	/**
+     * @return ArrayCollection
+     */
+    public function getlisteImputationConcerneBudget()
+    {
+        return $this->listeImputationConcerneBudget;
+    }
+
+
+
+
+	/**
+     * @param ArrayCollection $a
+     * @return $this
+     */
+    public function setlisteImputationConcerneBudget($a)
+    {
+        $this->listeImputationConcerneBudget = $a;
+
+        return $this;
+    }
+
+
 
 
     /**

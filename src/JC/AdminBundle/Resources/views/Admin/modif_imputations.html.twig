@@ -13,6 +13,21 @@
 				
 		<div class='table-responsive col-md-12'>
 
+
+
+			<nav>
+				<ul class="pager">
+					<li class='pull-right'><a href="{{  path('jc_admin_homepage', {'annee': (annee+1) }) }}">{{annee+1}} <span aria-hidden="true">&rarr;</span></a></li>
+			    	<li class='pull-right'><a href="{{  path('jc_admin_homepage', {'annee': (annee-1) }) }}"><span aria-hidden="true">&larr;</span> {{annee-1}}</a></li>
+	
+					<li class='pull-left'>	{{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-success save glyphicon glyphicon-floppy-disk' } }) }} </li> 
+	
+			    </ul>
+			</nav>
+
+
+
+
 			<div class="panel panel-primary filterable">
 			    <div class="panel-heading">
 			        <h3 class="panel-title">Imputations</h3>
@@ -67,11 +82,26 @@
 								  <div class="modal-dialog" role="document">
 								    <div class="modal-content">
 								      <div class="modal-header">
-								        <h4 class="modal-title">Lier aux budgets</h4>
+								        <h4 class="modal-title">Budgets de l'année {{annee}}</h4>
 								      </div>
 								      <div class="modal-body">
 									  	
-									  	{{form_widget(imputation.listeImputationConcerneBudget)}}
+									  	{# On parcours les checkbox #}
+									  	
+									  	{% for child in imputation.listeImputationConcerneBudget %}
+									  		
+									  		<div class='row'>
+										  		<div class='container'>
+											  		<div class='col-md-12'>
+											  			
+											  			{{ form_widget(child) }}
+											  			{{ form_label(child) }}
+											  			
+											  		</div>
+											  	</div>	
+										  	</div>
+										  	
+									  	{% endfor %}
 									  	
 								      </div>
 								      <div class="modal-footer">

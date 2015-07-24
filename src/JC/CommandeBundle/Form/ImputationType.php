@@ -14,7 +14,12 @@ class ImputationType extends AbstractType
 
 	 function __construct($listeBudgets)  {
 
-        $this->listeBudgets = $listeBudgets;
+	 	$this->listeBudgets = array();
+
+        foreach($listeBudgets as $b){
+	        
+	    	$this->listeBudgets[$b->getId()] = $b->__toString() ;
+	    }
 
     }
 
@@ -36,14 +41,12 @@ class ImputationType extends AbstractType
             ->add('estFacture','checkbox', array('required'=>false, 'error_bubbling' => true ))
         
         
-			// On s'oocupe des différentes villes
+			// On s'oocupe des différentes budget
 			->add('listeImputationConcerneBudget', 'choice', array('choices' => $this->listeBudgets, 
 											'label'=> false,
-											'mapped' => false,
 											'multiple'=> true,
 											'expanded' => true,
 											'error_bubbling' => true))
-        
         ;
     }
     
