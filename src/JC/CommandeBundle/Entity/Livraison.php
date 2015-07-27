@@ -74,6 +74,12 @@ class Livraison
      */
     private $telephone;
 
+	/**
+     * @var integer
+     *
+     * @ORM\Column(name="Fax", type="string", length=255, nullable=true)
+     */
+    private $fax;
 
 
 
@@ -247,5 +253,30 @@ class Livraison
     public function getTelephone()
     {
         return $this->telephone;
+    }
+    
+    
+    
+    /**
+     * Set fax
+     *
+     * @param string $fax
+     * @return Livraison
+     */
+    public function setFax($fax)
+    {
+        $this->fax = $fax;
+
+        return $this;
+    }
+
+    /**
+     * Get fax
+     *
+     * @return string 
+     */
+    public function getFax()
+    {
+        return $this->fax;
     }
 }

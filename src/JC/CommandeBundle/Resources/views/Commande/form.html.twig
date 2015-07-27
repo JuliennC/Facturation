@@ -86,6 +86,9 @@
 					<p class='col-md-4'><b>Telephone*</b> : <div> {{ form_widget(form.telephoneLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
 				</div>
 	
+				<div class='row'>	          	
+					<p class='col-md-4'><b>Fax</b> : <div> {{ form_widget(form.faxLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
+				</div>	
 				
 			</div>
 		</div>
@@ -166,10 +169,12 @@
 					<p class='col-md-4'><b>Telephone*</b> : <div> {{ form_widget(form.telephoneFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
 				</div>
 				
+				
 				<div class='row'>	          	
 					<p class='col-md-4'><b>Fax</b> : <div> {{ form_widget(form.faxFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
 				</div>				
   							
+			
 			
 				{% if commande.contactFournisseur != "" or commande.emailContactFournisseur != "" %}
 				

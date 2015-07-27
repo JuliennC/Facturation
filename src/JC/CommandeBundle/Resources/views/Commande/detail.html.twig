@@ -92,7 +92,13 @@
 				<p><b>Complément</b> : {{ commande.livraison.complementAdresse }}</p>
 				<p><b>Code postal</b> : {{ commande.livraison.codePostal }} {{ commande.livraison.ville }}</p>
 				<p><b>Téléphone</b> : {{ commande.livraison.telephone }}</p>
-  							
+  				
+  				{% if commande.faxLivraison != ""  %}
+					<p><b>Fax</b> : {{ commande.faxLivraison }} </p>
+				{% else  %}
+					<p><b>Fax</b> : - </p>
+				{% endif %}
+  						
 			</div>
 		</div>
 
@@ -106,20 +112,21 @@
 				<p><b>Complément</b> : {{ commande.fournisseur.complementAdresse }}</p>
 				<p><b>Code postal</b> : {{ commande.fournisseur.codePostal }} {{ commande.fournisseur.ville }}</p>
 				<p><b>Téléphone</b> : {{ commande.fournisseur.telephone }}</p>
-				<p><b>Fax</b> : {{ commande.fournisseur.fax }} </p>
-  							
+				
+  				{% if commande.contactFournisseur != ""  %}
+					<p><b>Fax</b> : {{ commande.fournisseur.fax }} </p>
+				{% else  %}
+					<p><b>Fax</b> : - </p>
+				{% endif %}
+
   							
   				{% if commande.contactFournisseur != ""  %}
-			
 					<p><b>Contact</b> : {{ form_widget(form.contactFournisseur) }}</p>
-				
 				{% endif %}
 				
 				
 				{% if commande.emailContactFournisseur != ""  %}
-			
-						<p><b>Email Contact</b> : {{ form_widget(form.emailContactFournisseur) }}</p>					
-				
+					<p><b>Email Contact</b> : {{ form_widget(form.emailContactFournisseur) }}</p>					
 				{% endif %}
 
 

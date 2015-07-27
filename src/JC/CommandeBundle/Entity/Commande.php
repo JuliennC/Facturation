@@ -416,8 +416,13 @@ class Commande
      */
     private $telephoneLivraison;
 
-
-
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="Faxlivraison", type="string", length=255, nullable=true)
+     * @Assert\Regex("/^[0-9]+$/", message="Veuillez entrer un numéro de fax pour de livraison valide.")  
+     */
+    private $faxLivraison;
 
    
    
@@ -1130,5 +1135,30 @@ public function __construct() {
         return $this->emailContactFournisseur;
     }
 	 
+
+	
+	/**
+     * Set faxLivraison
+     *
+     * @param string $faxLivraison
+     * @return Commande
+     */
+    public function setFaxLivraison($faxLivraison)
+    {
+        $this->faxLivraison = $faxLivraison;
+
+        return $this;
+    }
+
+    /**
+     * Get faxLivraison
+     *
+     * @return Service 
+     */
+    public function getFaxLivraison()
+    {
+        return $this->faxLivraison;
+    }
+
 
 }

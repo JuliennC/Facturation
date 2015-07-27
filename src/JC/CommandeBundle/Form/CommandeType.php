@@ -131,7 +131,8 @@ class CommandeType extends AbstractType
             ->add('codePostalLivraison', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('villeLivraison', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('telephoneLivraison', 'text', array('required' => true , 'error_bubbling' => true))
-			
+			->add('faxLivraison', 'text', array('required' => true , 'error_bubbling' => true))
+
                                                                                 
             ->add('nomFournisseur', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('adresseFournisseur', 'text', array('required' => true , 'error_bubbling' => true))
