@@ -15,6 +15,22 @@ SET time_zone = "+00:00";
 --
 
 --
+-- Contenu de la table `CleRepartition`
+--
+
+INSERT INTO `CleRepartition` (`id`, `Nom`) VALUES
+(1, 'Nombre d''habitants'),
+(2, 'Nombre de bulletins de salaire'),
+(3, 'Nombre de mouvements comptables'),
+(4, 'Nombre de téléphones'),
+(5, 'Nombre de smart/tab'),
+(6, 'Nombre de postes Epn'),
+(7, 'Nombre de postes Adm'),
+(8, 'Nombre de postes Ecole'),
+(9, 'Participation');
+
+
+--
 -- Contenu de la table `Activite`
 --
 
@@ -37,6 +53,67 @@ INSERT INTO `Activite` (`id`, `Nom`, `Est_Ancienne_Activite`, `cleRepartition_id
 (16, 'Gérer SIG', 0, 9),
 (17, 'Gérer SOC', 0, 9),
 (18, 'Gérer CULT', 0, 9);
+
+
+
+
+
+
+--
+-- Contenu de la table `Collectivite`
+--
+
+INSERT INTO `Collectivite` (`id`, `Nom`, `Date_Debut_Mutualisation`, `Date_Fin_Mutualisation`) VALUES
+(1, 'Opéra National de Lorraine', '2010-01-01', '2050-01-01'),
+(2, 'Mairie de Nancy', '2010-01-01', '2050-01-01'),
+(3, 'Mairie de Vandoeuvre', '2010-01-01', '2050-01-01'),
+(4, 'Mairie dArt-sur-meurthe', '2010-01-01', '2050-01-01'),
+(5, 'Mairie d Essey-lès-Nancy', '2010-01-01', '2050-01-01'),
+(6, 'Mairie de Jarville', '2010-01-01', '2050-01-01'),
+(7, 'Mairie de Laxou', '2010-01-01', '2050-01-01'),
+(8, 'Mairie de Malzéville', '2010-01-01', '2050-01-01'),
+(9, 'Mairie de Saint-Max', '2010-01-01', '2050-01-01'),
+(10, 'Mairie de Seichamps', '2010-01-01', '2050-01-01'),
+(11, 'Mairie de Laneuveville', '2010-01-01', '2050-01-01'),
+(12, 'Mairie de Ludres', '2010-01-01', '2050-01-01'),
+(13, 'Mairie de Maxeville', '2010-01-01', '2050-01-01'),
+(14, 'Mairie de Pulnoy', '2010-01-01', '2050-01-01'),
+(15, 'Mairie de Saulxures', '2010-01-01', '2050-01-01'),
+(16, 'CCAS de Nancy', '2010-01-01', '2050-01-01'),
+(17, 'SIS', '2010-01-01', '2050-01-01'),
+(18, 'Communauté Urbaine du Grand Nancy', '2010-01-01', '2050-01-01'),
+(19, 'Mairie de Viller-lès-Nancy', '2010-01-01', '2050-01-01'),
+(20, 'Budget annexe hydraulique', '2010-01-01', '2050-01-01'),
+(21, 'SIVU', '2010-01-01', '2050-01-01'),
+(22, 'Sillon Lorrain', '2010-01-01', '2050-01-01'),
+(23, 'Mairie de Fléville', '2010-01-01', '2050-01-01'),
+(24, 'Mairie d Houdemont', '2010-01-01', '2050-01-01'),
+(25, 'Mairie d Heillecourt', '2010-01-01', '2050-01-01'),
+(26, 'Mairie de Dommartemont', '2010-01-01', '2050-01-01'),
+(27, 'Mairie de Tomblaine', '2010-01-01', '2050-01-01'),
+(28, 'CCAS de Vandoeurvre', '2010-01-01', '2050-01-01'),
+(29, 'CCAS de Laxou', '2010-01-01', '2050-01-01'),
+(30, 'ONL', '2010-01-01', '2050-01-01');
+
+
+--
+-- Contenu de la table `EtatCommande`
+--
+
+INSERT INTO `EtatCommande` (`id`, `Libelle`) VALUES
+(1, 'Creee'),
+(2, 'Enregistree'),
+(3, 'Engagee'),
+(4, 'Payee');
+
+--
+-- Contenu de la table `Fournisseur`
+--
+
+INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`) VALUES
+(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', '0383080808'),
+(2, 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', '0383020202');
+
 
 --
 -- Contenu de la table `Application`
@@ -216,132 +293,6 @@ INSERT INTO `Application` (`id`, `fournisseur_id`, `Nom`, `Libelle`) VALUES
 (180, 1, 'GEST Sondage et enquete', 'Ville de NANCY');
 
 --
--- Contenu de la table `Budget`
---
-
-INSERT INTO `Budget` (`id`, `service_id`, `Montant`, `Annee`, `Libelle`) VALUES
-(1, 1, 2500, 2015, 'Logiciel - b'),
-(2, 3, 10000, 2015, 'Logiciel - e'),
-(3, 2, 12000, 2015, 'Logiciel - i'),
-(4, 5, 10000, 2015, 'Materiel - c'),
-(5, 4, 10000, 2015, 'Formation- s');
-
---
--- Contenu de la table `CleRepartition`
---
-
-INSERT INTO `CleRepartition` (`id`, `Nom`) VALUES
-(1, 'Nombre d''habitants'),
-(2, 'Nombre de bulletins de salaire'),
-(3, 'Nombre de mouvements comptables'),
-(4, 'Nombre de téléphones'),
-(5, 'Nombre de smart/tab'),
-(6, 'Nombre de postes Epn'),
-(7, 'Nombre de postes Adm'),
-(8, 'Nombre de postes Ecole'),
-(9, 'Participation');
-
---
--- Contenu de la table `Collectivite`
---
-
-INSERT INTO `Collectivite` (`id`, `Nom`, `Date_Debut_Mutualisation`, `Date_Fin_Mutualisation`) VALUES
-(1, 'Opéra National de Lorraine', '2010-01-01', '2050-01-01'),
-(2, 'Mairie de Nancy', '2010-01-01', '2050-01-01'),
-(3, 'Mairie de Vandoeuvre', '2010-01-01', '2050-01-01'),
-(4, 'Mairie dArt-sur-meurthe', '2010-01-01', '2050-01-01'),
-(5, 'Mairie d Essey-lès-Nancy', '2010-01-01', '2050-01-01'),
-(6, 'Mairie de Jarville', '2010-01-01', '2050-01-01'),
-(7, 'Mairie de Laxou', '2010-01-01', '2050-01-01'),
-(8, 'Mairie de Malzéville', '2010-01-01', '2050-01-01'),
-(9, 'Mairie de Saint-Max', '2010-01-01', '2050-01-01'),
-(10, 'Mairie de Seichamps', '2010-01-01', '2050-01-01'),
-(11, 'Mairie de Laneuveville', '2010-01-01', '2050-01-01'),
-(12, 'Mairie de Ludres', '2010-01-01', '2050-01-01'),
-(13, 'Mairie de Maxeville', '2010-01-01', '2050-01-01'),
-(14, 'Mairie de Pulnoy', '2010-01-01', '2050-01-01'),
-(15, 'Mairie de Saulxures', '2010-01-01', '2050-01-01'),
-(16, 'CCAS de Nancy', '2010-01-01', '2050-01-01'),
-(17, 'SIS', '2010-01-01', '2050-01-01'),
-(18, 'Communauté Urbaine du Grand Nancy', '2010-01-01', '2050-01-01'),
-(19, 'Mairie de Viller-lès-Nancy', '2010-01-01', '2050-01-01'),
-(20, 'Budget annexe hydraulique', '2010-01-01', '2050-01-01'),
-(21, 'SIVU', '2010-01-01', '2050-01-01'),
-(22, 'Sillon Lorrain', '2010-01-01', '2050-01-01'),
-(23, 'Mairie de Fléville', '2010-01-01', '2050-01-01'),
-(24, 'Mairie d Houdemont', '2010-01-01', '2050-01-01'),
-(25, 'Mairie d Heillecourt', '2010-01-01', '2050-01-01'),
-(26, 'Mairie de Dommartemont', '2010-01-01', '2050-01-01'),
-(27, 'Mairie de Tomblaine', '2010-01-01', '2050-01-01'),
-(28, 'CCAS de Vandoeurvre', '2010-01-01', '2050-01-01'),
-(29, 'CCAS de Laxou', '2010-01-01', '2050-01-01'),
-(30, 'ONL', '2010-01-01', '2050-01-01');
-
---
--- Contenu de la table `Commande`
---
-
-INSERT INTO `Commande` (`id`, `service_id`, `application_id`, `fournisseur_id`, `livraison_id`, `activite_id`, `imputation_id`, `Reference`, `Date_Livraison`, `Ventilation`, `Engagement`, `Libelle_Facturation`, `Total_TTC`, `Utilisateur`, `NomFournisseur`, `AdresseFournisseur`, `Complement_Adresse_Fournisseur`, `Code_Postal_Fournisseur`, `VilleFournisseur`, `TelephoneFournisseur`, `NomLivraison`, `AdresseLivraison`, `Complement_Adresse_Livraison`, `Code_Postal_Livraison`, `VilleLivraison`, `TelephoneLivraison`) VALUES
-(1, 2, 173, 1, 1, 10, 46, NULL, '2015-10-03 00:00:00', 'Mutualisee', '123', 'Libelle facture', '1851.52', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212'),
-(2, 1, 173, 2, 1, 18, 1, 'refz', '2015-07-10 00:00:00', 'Mutualisee', 'r', 'eer', '0.00', 'BIET Alain', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212'),
-(3, 2, 173, 1, 2, 18, 1, 'qs', '2015-07-11 00:00:00', 'Mutualisee', NULL, 'qsd', '0.00', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212'),
-(4, 2, 173, 1, 2, 18, 1, NULL, '2015-07-09 00:00:00', 'Mutualisee', 'aze', 'aaz', '0.00', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212');
-
---
--- Contenu de la table `CommandeConcerneCollectivite`
---
-
-INSERT INTO `CommandeConcerneCollectivite` (`id`, `commande_id`, `collectivite_id`, `Repartion`) VALUES
-(47, 2, 5, 'Participation'),
-(60, 1, 16, 'Nombre de mouvements comptables'),
-(61, 1, 25, 'Nombre de mouvements comptables'),
-(62, 1, 3, 'Nombre de mouvements comptables'),
-(63, 1, 19, 'Nombre de mouvements comptables'),
-(64, 3, 18, 'Participation'),
-(65, 3, 5, 'Participation'),
-(66, 4, 29, 'Participation'),
-(67, 4, 18, 'Participation'),
-(68, 4, 23, 'Participation'),
-(69, 4, 7, 'Participation'),
-(70, 4, 13, 'Participation');
-
---
--- Contenu de la table `CommandePasseEtat`
---
-
-INSERT INTO `CommandePasseEtat` (`id`, `commande_id`, `etat_id`, `datePassage`) VALUES
-(1, 1, 1, '2015-07-16 00:00:00'),
-(2, 1, 2, '2015-07-16 00:00:00'),
-(3, 1, 3, '2015-07-16 00:00:00'),
-(5, 2, 1, '2015-07-18 00:00:00'),
-(6, 2, 2, '2015-07-18 00:00:00'),
-(9, 1, 2, '2015-07-21 13:13:59'),
-(10, 1, 3, '2015-07-21 15:18:32'),
-(11, 1, 4, '2015-07-21 15:28:58'),
-(12, 3, 1, '2015-07-23 14:32:15'),
-(13, 3, 2, '2015-07-23 14:32:16'),
-(14, 4, 1, '2015-07-27 12:47:51'),
-(15, 4, 2, '2015-07-27 12:47:51');
-
---
--- Contenu de la table `EtatCommande`
---
-
-INSERT INTO `EtatCommande` (`id`, `Libelle`) VALUES
-(1, 'Creee'),
-(2, 'Enregistree'),
-(3, 'Engagee'),
-(4, 'Payee');
-
---
--- Contenu de la table `Fournisseur`
---
-
-INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`) VALUES
-(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', '0383080808'),
-(2, 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', '0383020202');
-
---
 -- Contenu de la table `Imputation`
 --
 
@@ -411,17 +362,6 @@ INSERT INTO `Imputation` (`id`, `Libelle`, `Sous_fonction`, `Article`, `Section`
 (63, 'Installations générales', '020.3', '2135', 'Investissement', 0),
 (64, 'entretien et réparations sur biens mobiliers', '020.3', '61558.300', 'Fonctionnement', 0);
 
---
--- Contenu de la table `ImputationConcerneBudget`
---
-
-INSERT INTO `ImputationConcerneBudget` (`id`, `imputation_id`, `budget_id`) VALUES
-(17, 8, 1),
-(18, 8, 3),
-(19, 8, 5),
-(20, 10, 4),
-(21, 41, 3),
-(22, 46, 3);
 
 --
 -- Contenu de la table `InformationCollectivite`
@@ -700,28 +640,12 @@ INSERT INTO `InformationCollectivite` (`id`, `collectivite_id`, `Nombre`, `Annee
 (270, 30, '0', 2015, 9);
 
 --
--- Contenu de la table `LigneCommande`
---
-
-INSERT INTO `LigneCommande` (`id`, `commande_id`, `tva_id`, `Libelle`, `Reference`, `Quantite`, `Prix_Unitaire`, `Total_TTC`, `Commentaire`) VALUES
-(1, 1, 3, 'Ligne commande test', 'REF l_c_test', 13, '135.00', '1851.52', 'Aucun');
-
---
 -- Contenu de la table `Livraison`
 --
 
 INSERT INTO `Livraison` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`) VALUES
 (1, 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212'),
 (2, 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212');
-
---
--- Contenu de la table `MasseSalariale`
---
-
-INSERT INTO `MasseSalariale` (`id`, `service_id`, `Montant`, `Annee`) VALUES
-(4, 1, 10000, 2015),
-(5, 3, 20000, 2015),
-(6, 2, 30000, 2015);
 
 --
 -- Contenu de la table `Service`
@@ -733,6 +657,18 @@ INSERT INTO `Service` (`id`, `Nom`, `Est_Ancien_Service`) VALUES
 (3, 'Etude', 0),
 (4, 'SIG', 0),
 (5, 'Cyberbase', 0);
+
+--
+-- Contenu de la table `Budget`
+--
+
+INSERT INTO `Budget` (`id`, `service_id`, `Montant`, `Annee`, `Libelle`) VALUES
+(1, 1, 2500, 2015, 'Logiciel - b'),
+(2, 3, 10000, 2015, 'Logiciel - e'),
+(3, 2, 12000, 2015, 'Logiciel - i'),
+(4, 5, 10000, 2015, 'Materiel - c'),
+(5, 4, 10000, 2015, 'Formation- s');
+
 
 --
 -- Contenu de la table `TempsPasse`
@@ -1298,3 +1234,85 @@ INSERT INTO `TVA` (`id`, `pourcentage`) VALUES
 INSERT INTO `Utilisateur` (`id`, `service_id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `Nom`, `Prenom`) VALUES
 (49, 2, 'testA', 'testa', 'a@a.fr', 'a@a.fr', 1, '', 'mdp', '2015-07-27 10:33:10', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, 'nomA', 'prenomA'),
 (50, 3, 'testC', 'testc', 't@f.fr', 't@f.fr', 1, '', 'mdp', '2015-07-21 15:10:12', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:11:"ROLE_COMPTA";}', 0, NULL, 'nomC', 'prenomC');
+
+
+
+
+--
+-- Contenu de la table `Commande`
+--
+
+INSERT INTO `Commande` (`id`, `service_id`, `application_id`, `fournisseur_id`, `livraison_id`, `activite_id`, `imputation_id`, `Reference`, `Date_Livraison`, `Ventilation`, `Engagement`, `Libelle_Facturation`, `Total_TTC`, `Utilisateur`, `NomFournisseur`, `AdresseFournisseur`, `Complement_Adresse_Fournisseur`, `Code_Postal_Fournisseur`, `VilleFournisseur`, `TelephoneFournisseur`, `NomLivraison`, `AdresseLivraison`, `Complement_Adresse_Livraison`, `Code_Postal_Livraison`, `VilleLivraison`, `TelephoneLivraison`) VALUES
+(1, 2, 173, 1, 1, 10, 46, NULL, '2015-10-03 00:00:00', 'Mutualisee', '123', 'Libelle facture', '1851.52', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212'),
+(2, 1, 173, 2, 1, 18, 1, 'refz', '2015-07-10 00:00:00', 'Mutualisee', 'r', 'eer', '0.00', 'BIET Alain', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212'),
+(3, 2, 173, 1, 2, 18, 1, 'qs', '2015-07-11 00:00:00', 'Mutualisee', NULL, 'qsd', '0.00', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212'),
+(4, 2, 173, 1, 2, 18, 1, NULL, '2015-07-09 00:00:00', 'Mutualisee', 'aze', 'aaz', '0.00', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212');
+
+--
+-- Contenu de la table `LigneCommande`
+--
+
+INSERT INTO `LigneCommande` (`id`, `commande_id`, `tva_id`, `Libelle`, `Reference`, `Quantite`, `Prix_Unitaire`, `Total_TTC`, `Commentaire`) VALUES
+(1, 1, 3, 'Ligne commande test', 'REF l_c_test', 13, '135.00', '1851.52', 'Aucun');
+
+
+--
+-- Contenu de la table `CommandeConcerneCollectivite`
+--
+
+INSERT INTO `CommandeConcerneCollectivite` (`id`, `commande_id`, `collectivite_id`, `Repartion`) VALUES
+(47, 2, 5, 'Participation'),
+(60, 1, 16, 'Nombre de mouvements comptables'),
+(61, 1, 25, 'Nombre de mouvements comptables'),
+(62, 1, 3, 'Nombre de mouvements comptables'),
+(63, 1, 19, 'Nombre de mouvements comptables'),
+(64, 3, 18, 'Participation'),
+(65, 3, 5, 'Participation'),
+(66, 4, 29, 'Participation'),
+(67, 4, 18, 'Participation'),
+(68, 4, 23, 'Participation'),
+(69, 4, 7, 'Participation'),
+(70, 4, 13, 'Participation');
+
+--
+-- Contenu de la table `CommandePasseEtat`
+--
+
+INSERT INTO `CommandePasseEtat` (`id`, `commande_id`, `etat_id`, `datePassage`) VALUES
+(1, 1, 1, '2015-07-16 00:00:00'),
+(2, 1, 2, '2015-07-16 00:00:00'),
+(3, 1, 3, '2015-07-16 00:00:00'),
+(5, 2, 1, '2015-07-18 00:00:00'),
+(6, 2, 2, '2015-07-18 00:00:00'),
+(9, 1, 2, '2015-07-21 13:13:59'),
+(10, 1, 3, '2015-07-21 15:18:32'),
+(11, 1, 4, '2015-07-21 15:28:58'),
+(12, 3, 1, '2015-07-23 14:32:15'),
+(13, 3, 2, '2015-07-23 14:32:16'),
+(14, 4, 1, '2015-07-27 12:47:51'),
+(15, 4, 2, '2015-07-27 12:47:51');
+
+
+--
+-- Contenu de la table `ImputationConcerneBudget`
+--
+
+INSERT INTO `ImputationConcerneBudget` (`id`, `imputation_id`, `budget_id`) VALUES
+(17, 8, 1),
+(18, 8, 3),
+(19, 8, 5),
+(20, 10, 4),
+(21, 41, 3),
+(22, 46, 3);
+
+
+--
+-- Contenu de la table `MasseSalariale`
+--
+
+INSERT INTO `MasseSalariale` (`id`, `service_id`, `Montant`, `Annee`) VALUES
+(4, 1, 10000, 2015),
+(5, 3, 20000, 2015),
+(6, 2, 30000, 2015);
+
+
