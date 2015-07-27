@@ -979,7 +979,6 @@ class AdminController extends Controller
 		//On récupère les imputationsConcerneBudget	 		 	
 		$listeICB = $em->getRepository('JCCommandeBundle:ImputationConcerneBudget')->findAvecAnnee($annee); 
 		
-		$listeICBTries = array();
 
 		//On trie les imputationConcerneBudget en fonction des imputation
 		foreach($listeImp as $imp){
@@ -992,8 +991,8 @@ class AdminController extends Controller
 					
 				}
 			}
-			
 		}	
+
 
 	 		 	
 	 	//On crée le formulaire		
@@ -1004,13 +1003,22 @@ class AdminController extends Controller
 	 	//Si le formulaire est valide, on sauvegarde dans la base
 		if ($form->isValid()) {
 			
-			$t = $form->get('listeImputations')[0];
-
 
         	foreach($form->get('listeImputations') as $imp) {
 
 				//On ne sauvegarde pas celle qui ont un nom null
 				if ($imp->getData()->getLibelle() != null) {
+									
+					//On regarde si c'est une nouvelle imputation
+					if(! in_array($imp->getData(), $listeImp)){
+						
+						//Si c'est une nouvelle imputaion, il faut récupérer la section
+						dump($imp->get('section'));
+						$imp->getData()->setSection($imp->get('section')->getData());
+						
+					}
+									
+									
 									
 					//on suprime les imputationConcerneBudget
 					foreach($listeICB as $icb) {
@@ -1046,7 +1054,7 @@ class AdminController extends Controller
 
     	} else {
 	    	
-	    
+		dump($form->getErrorsAsString());
 	    
 	 		return $this->render('JCAdminBundle:Admin:modif_imputations.html.twig', array('form'=>$form->createView(), 'annee'=>$annee));
 		}

@@ -430,6 +430,15 @@ $(document).ready(function() {
 						+"</td>"		
 						
 						
+						
+						
+						
+						+"<td>"
+							+"Veuillez d'abord enregistrer l'imputation avant de la lier aux budgets"
+						+"</td>"
+						
+						
+						
 						+"<td>" 
 							+"<input type='checkbox' id='jc_commandebundle_listeimputations_listeImputations___name___estFacture' name='jc_commandebundle_listeimputations[listeImputations][__name__][estFacture]' value='1' checked=checked'>" 
 						+"</td>"

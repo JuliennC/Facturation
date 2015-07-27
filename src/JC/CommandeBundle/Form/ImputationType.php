@@ -47,7 +47,10 @@ class ImputationType extends AbstractType
             ->add('article', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))        
             ->add('estFacture','checkbox', array('required'=>false, 'error_bubbling' => true ))
         
-        
+			->add('section', 'choice', array('choices'=>array('Fonctionnement'=>'Fonctionnement', 'Investissement'=>'Investissement'),
+										'required'=>false,
+										'mapped'=>false))
+			
 			// On s'oocupe des différentes budget
 			->add('listeImputationConcerneBudget', 'choice', array('choices' => $this->listeBudgets, 
 											'label'=> false,
@@ -57,27 +60,6 @@ class ImputationType extends AbstractType
 											'error_bubbling' => true))
         ;
 
-			
-			
-		
-		
-		// Below is used in edit modus, when a car is bound to the form, to load car selectbox
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $data = $event->getData();
-            $form = $event->getForm();
-			dump($data);
-            if (null === $data)
-                return;
- 
-            /*$accessor = PropertyAccess::createPropertyAccessor();
- 
-            $car = $accessor->getValue($data, 'car');
-            $brand = ($car) ? $car->getBrand() : null;
- 
-            $addCars($form, $brand);*/
-        });
-		
-    
     }
     
     
