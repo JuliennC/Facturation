@@ -44,19 +44,28 @@ TODO liste :
 	-> FAIT faire le formulaire de connection admin
 	-> FAIT revoir le suivi du budget (faire des « lignes de budget » connecté chacune à un service)
 	-> FAIT Demander à severine si un budget ne concerne qu’une imputation	: Nons
+	-> FAIT Revoir la page d’accueil avec les nouveaux budgets
+	-> FAIT Voir pour admin imputation concerne budget de donner la liste des budgets au lieu de faire une requête.
 
+	
+	-> Voir s’il y a une lenteur depuis contact fournisseur
 
+	-> Mettre email de contact pour livraison
+	-> Mettre un contact fournisseur (nom + email)
+	-> Voir pour remettre un num fax ?
+	-> enlever l’obligation de ref dans une ligne commande ?
+	-> faire une fonction qui supprime les espaces d’un numéro de téléphone
+	-> ligne avec prix total HT et TTC en bas des ligne commandes
 
+	-> addresse de livraison courrier et colis ????
 
 	-> Voir pourquoi les commandes ne sont pas sélectionnée dans les autres navigateurs
 	
-	-> Revoir la page d’accueil avec les nouveaux budgets
 
 	-> faire une fonction recherche pour la table applications dans admin
 
 	-> faire le paiement des commandes.
 
-	-> Voir pour admin imputation concerne budget de donner la liste des budgets au lieu de faire une requête.
 
 	-> FAIT Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca. —> On garde comme ca, si on change, ca change pour toutes les commandes de l’année en cours OU NON (oublie de préciser ou non).
 

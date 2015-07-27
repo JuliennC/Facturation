@@ -21,7 +21,10 @@ class FournisseurType extends AbstractType
             ->add('codePostal', 'text', array('required' => true, 'error_bubbling' => true))
             ->add('ville', 'text', array('required' => true, 'error_bubbling' => true))
             ->add('telephone', 'text', array('required' => true, 'error_bubbling' => true))
-            //->add('fax', 'text')
+            ->add('fax', 'text', array('required' => true, 'error_bubbling' => true))
+            ->add('contact', 'text', array('required' => true, 'error_bubbling' => true))
+            ->add('emailContact', 'text', array('required' => true, 'error_bubbling' => true))
+
         ;
     }
     

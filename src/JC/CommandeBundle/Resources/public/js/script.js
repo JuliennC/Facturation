@@ -1,4 +1,8 @@
 
+
+
+
+
 /*
 *	Fonction qui coche les checbox de la ville pass√©e en paramettre
 */
@@ -168,6 +172,20 @@ function metEnPlaceVentilation(ventil){
 */
 $(document).ready(function() {
 	
+	
+	/*
+	*	Fonction qui permet de rentrer les contacts du fournisseur
+	*/
+	
+	$("#boutonContactFournisseur").on("click", function(){
+	
+					
+		$("#boutonContactFournisseur").remove();
+		
+		
+		$("#cacheContactFournisseur").attr('style','');
+		
+	});
 	
 	
 	/*

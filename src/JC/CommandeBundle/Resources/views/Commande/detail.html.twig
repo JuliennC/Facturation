@@ -106,10 +106,26 @@
 				<p><b>Complément</b> : {{ commande.fournisseur.complementAdresse }}</p>
 				<p><b>Code postal</b> : {{ commande.fournisseur.codePostal }} {{ commande.fournisseur.ville }}</p>
 				<p><b>Téléphone</b> : {{ commande.fournisseur.telephone }}</p>
-				
-				{# Mettre le numéro de fax ? #}
-				{# <p>Fax : {{ commande.fournisseur.fax }} #}
+				<p><b>Fax</b> : {{ commande.fournisseur.fax }} </p>
   							
+  							
+  				{% if commande.contactFournisseur != ""  %}
+			
+					<p><b>Contact</b> : {{ form_widget(form.contactFournisseur) }}</p>
+				
+				{% endif %}
+				
+				
+				{% if commande.emailContactFournisseur != ""  %}
+			
+						<p><b>Email Contact</b> : {{ form_widget(form.emailContactFournisseur) }}</p>					
+				
+				{% endif %}
+
+
+				
+				</div>
+  				
 			</div>		
   							
 		</div>

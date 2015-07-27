@@ -67,11 +67,11 @@
                                                             
                                                             
 				<div class='row'>	          	
-					<p class='col-md-4'><b>Nom *</b> : <div> {{ form_widget(form.nomLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
+					<p class='col-md-4'><b>Nom*</b> : <div> {{ form_widget(form.nomLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
 				</div>
 				
 				<div class='row'>	          	
-					<p class='col-md-4'><b>Adresse *</b> : <div> {{ form_widget(form.adresseLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
+					<p class='col-md-4'><b>Adresse*</b> : <div> {{ form_widget(form.adresseLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
 				</div>
 				
 				<div class='row'>	          	
@@ -79,12 +79,13 @@
 				</div>
 								
 				<div class='row'>	          	
-					<p class='col-md-4'><b>Ville *</b> : <div> {{ form_widget(form.villeLivraison, {'attr': {'class':'col-md-4' , 'placeholder':'Ex : Nancy'}}) }}</div> <div> 																	{{ form_widget(form.codePostalLivraison, {'attr': {'class':'col-md-3 pull-right' , 'placeholder':'Ex : 54000'}}) }}</div></p>
+					<p class='col-md-4'><b>Ville*</b> : <div> {{ form_widget(form.villeLivraison, {'attr': {'class':'col-md-4' , 'placeholder':'Ex : Nancy'}}) }}</div> <div> 																	{{ form_widget(form.codePostalLivraison, {'attr': {'class':'col-md-3 pull-right' , 'placeholder':'Ex : 54000'}}) }}</div></p>
 				</div>
 				
 				<div class='row'>	          	
-					<p class='col-md-4'><b>Telephone *</b> : <div> {{ form_widget(form.telephoneLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
+					<p class='col-md-4'><b>Telephone*</b> : <div> {{ form_widget(form.telephoneLivraison, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
 				</div>
+	
 				
 			</div>
 		</div>
@@ -146,11 +147,11 @@
                                 </legend>
 					          	
 				<div class='row'>	          	
-					<p class='col-md-4'><b>Nom *</b> : <div> {{ form_widget(form.nomFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
+					<p class='col-md-4'><b>Nom*</b> : <div> {{ form_widget(form.nomFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
 				</div>								
 								
 				<div class='row'>	          	
-					<p class='col-md-4'><b>Adresse *</b> : <div> {{ form_widget(form.adresseFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
+					<p class='col-md-4'><b>Adresse*</b> : <div> {{ form_widget(form.adresseFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
 				</div>
 		
 				<div class='row'>	          	
@@ -158,13 +159,42 @@
 				</div>
 				
 				<div class='row'>	          	
-					<p class='col-md-4'><b>Ville *</b> : <div> {{ form_widget(form.villeFournisseur, {'attr': {'class':'col-md-4' , 'placeholder':'Ex : Nancy'}}) }}</div> <div> 																{{ form_widget(form.codePostalFournisseur, {'attr': {'class':'col-md-3 pull-right' , 'placeholder':'Ex : 54000'}}) }}</div></p>
+					<p class='col-md-4'><b>Ville*</b> : <div> {{ form_widget(form.villeFournisseur, {'attr': {'class':'col-md-4' , 'placeholder':'Ex : Nancy'}}) }}</div> <div> 																{{ form_widget(form.codePostalFournisseur, {'attr': {'class':'col-md-3 pull-right' , 'placeholder':'Ex : 54000'}}) }}</div></p>
 				</div>
   							
   				<div class='row'>	          	
-					<p class='col-md-4'><b>Telephone *</b> : <div> {{ form_widget(form.telephoneFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
+					<p class='col-md-4'><b>Telephone*</b> : <div> {{ form_widget(form.telephoneFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
+				</div>
+				
+				<div class='row'>	          	
+					<p class='col-md-4'><b>Fax</b> : <div> {{ form_widget(form.faxFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
 				</div>				
-  			
+  							
+			
+				{% if commande.contactFournisseur != "" or commande.emailContactFournisseur != "" %}
+				
+					<div id='cacheContactFournisseur'>
+					
+				{% else %}	
+				
+					<a id='boutonContactFournisseur'> Contact Fournisseur </a>
+
+					<div id='cacheContactFournisseur' style='display:none'>
+
+				{% endif %}
+
+					<div class='row'>	          	
+			
+						<p class='col-md-4'><b>Contact</b> : <div> {{ form_widget(form.contactFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
+					</div>
+				
+					<div class='row'>	          	
+						<p class='col-md-4'><b>Email Contact</b> :<div> {{ form_widget(form.emailContactFournisseur, {'attr': {'class':'col-md-8' , 'display':'block'}}) }}</div></p>
+					</div>
+				
+				</div>
+				
+				
 			</div>		
   							
 		</div>

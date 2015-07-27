@@ -173,10 +173,40 @@ class Commande
      * @var string
      *
      * @ORM\Column(name="TelephoneFournisseur", type="string", length=255, nullable=false)
-     * @Assert\NotBlank(message="Veuillez entrer un numÃ©ro de tÃ©lÃ©phone de fournisseur valide.")
-     * @Assert\Regex("/^[0-9]+$/", message="Veuillez entrer un numÃ©ro de tÃ©lÃ©phone de fournisseur valide.")  
+     * @Assert\NotBlank(message="Veuillez entrer un numÃ©ro de téléphone de fournisseur valide.")
+     * @Assert\Regex("/^[0-9]+$/", message="Veuillez entrer un numéro de téléphone de fournisseur valide.")  
      */
     private $telephoneFournisseur;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="FaxFournisseur", type="string", length=255, nullable=true)
+     * @Assert\Regex("/^[0-9]+$/", message="Veuillez entrer un numéro de fax pour de fournisseur valide.")  
+     */
+    private $faxFournisseur;
+    
+
+	 /**
+     * @var string
+     *
+     * @ORM\Column(name="ContactFournisseur", type="string", length=255, nullable=true)
+     */
+    private $contactFournisseur;
+
+
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="EmailContactFournisseur", type="string", length=255, nullable=true)
+     * @Assert\Regex("/^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/", message="Veuillez entrer une addresse email valide pour le fournisseur.")  
+     */
+    private $emailContactFournisseur;
+
+
+
+
 
    
   /**
@@ -1025,6 +1055,80 @@ public function __construct() {
         return $this->service;
     }
 	 
+	 
+	 
+	 
+	 /**
+     * Set faxFournisseur
+     *
+     * @param string $faxFournisseur
+     * @return Commande
+     */
+    public function setFaxFournisseur($faxFournisseur)
+    {
+        $this->faxFournisseur = $faxFournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get faxFournisseur
+     *
+     * @return Service 
+     */
+    public function getFaxFournisseur()
+    {
+        return $this->faxFournisseur;
+    }
+	 
+	 
+	 /**
+     * Set contactFournisseur
+     *
+     * @param string $contactFournisseur
+     * @return Commande
+     */
+    public function setContactFournisseur($contactFournisseur)
+    {
+        $this->contactFournisseur = $contactFournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get contactFournisseur
+     *
+     * @return Service 
+     */
+    public function getContactFournisseur()
+    {
+        return $this->contactFournisseur;
+    }
+	 
+	 
+	
+	/**
+     * Set emailContactFournisseur
+     *
+     * @param string $emailContactFournisseur
+     * @return Commande
+     */
+    public function setEmailContactFournisseur($emailContactFournisseur)
+    {
+        $this->emailContactFournisseur = $emailContactFournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get emailContactFournisseur
+     *
+     * @return Service 
+     */
+    public function getEmailContactFournisseur()
+    {
+        return $this->emailContactFournisseur;
+    }
 	 
 
 }
