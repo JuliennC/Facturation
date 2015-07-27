@@ -21,6 +21,10 @@ class ImputationConcerneBudgetRepository extends EntityRepository
 			->leftJoin('icb.budget','b')
 			->addSelect('b')
 
+			->leftJoin('icb.imputation','i')
+			->addSelect('i')
+
+
 			->where('b.annee = :annee ')
 			
 			->setParameter('annee',$annee)

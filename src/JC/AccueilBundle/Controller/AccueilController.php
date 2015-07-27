@@ -57,6 +57,28 @@ class AccueilController extends Controller
 		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansAnnee("Enregistree", $annee);
 		
 		
+		
+		//On récupère la liste des imputations avec les budgets associés
+		$listeICB = $em->getRepository('JCCommandeBundle:ImputationConcerneBudget')->findAvecAnnee($annee); 
+		
+		$listeICBOrganisee = array();
+		
+		//On organise un tableau pour accèder plus facilement aux informations
+		foreach($listeICB as $icb){
+			
+			//Si c'est la première fois qu'on rencontre l'imputation
+			if(! array_key_exists($icb->getImputation()->getId(), $listeICBOrganisee)){
+				$listeICBOrganisee[$icb->getImputation()->getId()] = array();
+			}
+			
+			//On stock le budget
+			array_push($listeICBOrganisee[$icb->getImputation()->getId()], $icb->getBudget());
+		}
+		
+		
+		
+		dump($listeICBOrganisee);
+		
 		//On calcule le total des commandes créées dans l'annee donnée		
 		$infoCommandes = array();
 		$infoCommandes['nombreCommandesPassees'] = 0;
@@ -101,11 +123,56 @@ class AccueilController extends Controller
 			}
 			
 			
-			//On stocke les infos
-			$infoServices[$commande->getService()->getNom()][$commande->getImputation()->getBudget()->getLibelle()]['montantUtilise'] += $commande->getTotalTTC();
+			//On récupère l'imputation de la commande
+			$imputation = $commande->getImputation();
 			
+			$budgetTrouve = null;
+			
+			//On prend un compteur pour être sur qu'une imputation n'est pas reliée à deux budget d'un même service
+			$i = 0;
+			
+			
+			//Si la clé n'existe pas c'est que l'imputation n'est relié à aucun budget
+			if (! array_key_exists($imputation->getId(), $listeICBOrganisee)) {
+				
+				$session = new Session();
+				$session->getFlashBag()->add('Warning', 'L\'imputation '.$imputation->getLibelle().' n\'est reliée à aucun budget du service '.$commande->getService()->getNom());
+
+
+			//Sinon on peut lancer le calcul
+			} else {
+				
+				//On va regarder à quel budget de CE service correspond l'imputation
+				foreach($listeICBOrganisee[$imputation->getId()] as $budget){
+
+					//On regarde quel budget correspond au service de la commande
+					if($budget->getService() === $commande->getService()){
+						
+						$budgetTrouve = $budget->getLibelle();
+						$i++;
+					}
+				}
+				
+				
+				//Si service === null, c'est qu'aucun budget de ce service n'est lié à l'imputation, c'est donc une erreur
+				if($budgetTrouve === null){
+					
+					$session = new Session();
+					$session->getFlashBag()->add('Warning', 'L\'imputation '.$imputation->getLibelle().' n\' reliée à aucun budget du service '.$commande->getService()->getNom());
+				
+				} else if ($i > 1) {
+					
+					$session = new Session();
+					$session->getFlashBag()->add('Warning', 'L\'imputation '.$imputation->getLibelle().' est reliée à plusieurs budgets du service '.$commande->getService()->getNom());
+							
+				} else {
+					
+					//On stocke les infos
+					$infoServices[$commande->getService()->getNom()][$budgetTrouve]['montantUtilise'] += $commande->getTotalTTC();
+				
+				}
+			}
 		}
-		
 		
 		
 		dump($infoServices);

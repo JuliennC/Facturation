@@ -440,7 +440,7 @@ class CommandeController extends Controller
                                     $fournisseur = new Fournisseur();
                                 }
 
-                                $$fournisseur->setNom($commande->getNomFournisseur());                                
+                                $fournisseur->setNom($commande->getNomFournisseur());                                
                                 $fournisseur->setAdresse($commande->getAdresseFournisseur());
                                 $fournisseur->setComplementAdresse($commande->getComplementAdresseFournisseur());
                                 $fournisseur->setCodePostal($commande->getCodePostalFournisseur());
