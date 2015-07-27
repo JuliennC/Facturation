@@ -101,6 +101,19 @@ class Imputation
 
 
 
+	/**
+     * @param ArrayCollection $a
+     * @return $this
+     */
+    public function addImputationConcerneBudget($icb)
+    {
+        $this->listeImputationConcerneBudget[] = $icb;
+
+        return $this;
+    }
+
+
+
 
     /**
      * Get id

@@ -6,13 +6,22 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormError;
+
+
+
 class ImputationType extends AbstractType
 {
 	
 		
 	protected $listeBudgets;
 
+
 	 function __construct($listeBudgets)  {
+
+	 	
 
 	 	$this->listeBudgets = array();
 
@@ -31,13 +40,11 @@ class ImputationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	   
-	    
-        $builder
+	 			
+			$builder
             ->add('libelle', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('sousFonction', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))
             ->add('article', 'text', array('required' => true , 'error_bubbling' => true, 'label' => false))        
-			->add('section')
             ->add('estFacture','checkbox', array('required'=>false, 'error_bubbling' => true ))
         
         
@@ -46,9 +53,35 @@ class ImputationType extends AbstractType
 											'label'=> false,
 											'multiple'=> true,
 											'expanded' => true,
+
 											'error_bubbling' => true))
         ;
+
+			
+			
+		
+		
+		// Below is used in edit modus, when a car is bound to the form, to load car selectbox
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+			dump($data);
+            if (null === $data)
+                return;
+ 
+            /*$accessor = PropertyAccess::createPropertyAccessor();
+ 
+            $car = $accessor->getValue($data, 'car');
+            $brand = ($car) ? $car->getBrand() : null;
+ 
+            $addCars($form, $brand);*/
+        });
+		
+    
     }
+    
+    
+    
     
     /**
      * @param OptionsResolverInterface $resolver

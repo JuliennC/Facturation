@@ -84,9 +84,6 @@ class AdminController extends Controller
 
 
 
-
-
-
 		$formulaireEnvoye = $request->request->all();
 		
 		/*
@@ -432,36 +429,14 @@ class AdminController extends Controller
 		}
 
 
-		
 
-
-		 $em = $this->getDoctrine()->getManager();
-
-		//On doit donner la liste des clés
-	 	$listeCles = $em->getRepository('JCCommandeBundle:CleRepartition')->findAll(); 
-		        	
-
-$em = $this->getDoctrine()->getManager();
-
-	 	//On récupère la liste de toutes les activites
-	 	$listeImp = $em->getRepository('JCCommandeBundle:Imputation')->getQueryOrdreAlpha($annee)->getQuery()->getResult(); 
-	 	
-	 	//Liste qui sera transformée en formulaire
-	 	$listeImputations = new ListeImputations();
-	 	$listeImputations ->setListeImputations($listeImp);
-	 		 	
-	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
-        $form = $this->get('form.factory')->create(new ListeImputationsType($em,$annee), $listeImputations);
-
-	 	
-		$form->handleRequest($request);
-
+	
 
 		set_time_limit(0);
 
         	
 		//Si aucune requête, alors on affiche simplement les formulaires
-		return $this->render('JCAdminBundle:Admin:index.html.twig', array('request'=>$request, 'annee' => $annee, 'listeCles'=>$listeCles));
+		return $this->render('JCAdminBundle:Admin:index.html.twig', array('request'=>$request, 'annee' => $annee));
 		
 
 		
@@ -995,42 +970,59 @@ $em = $this->getDoctrine()->getManager();
 
 	 	//On récupère la liste de toutes les activites
 	 	$listeImp = $em->getRepository('JCCommandeBundle:Imputation')->getQueryOrdreAlpha($annee)->getQuery()->getResult(); 
+	 
 	 	
 	 	//Liste qui sera transformée en formulaire
 	 	$listeImputations = new ListeImputations();
 	 	$listeImputations ->setListeImputations($listeImp);
 	 		 	
-	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
-        $form = $this->get('form.factory')->create(new ListeImputationsType($em,$annee), $listeImputations);
+		//On récupère les imputationsConcerneBudget	 		 	
+		$listeICB = $em->getRepository('JCCommandeBundle:ImputationConcerneBudget')->findAvecAnnee($annee); 
+		
+		$listeICBTries = array();
 
+		//On trie les imputationConcerneBudget en fonction des imputation
+		foreach($listeImp as $imp){
+						
+			foreach($listeICB as $icb){
+				
+				if($imp === $icb->getImputation()){
+
+					$imp->addImputationConcerneBudget($icb->getBudget()->getId());
+					
+				}
+			}
+			
+		}	
+
+	 		 	
+	 	//On crée le formulaire		
+        $form = $this->get('form.factory')->create(new ListeImputationsType($em,$annee), $listeImputations);
 	 	
 		$form->handleRequest($request);
 
 	 	//Si le formulaire est valide, on sauvegarde dans la base
 		if ($form->isValid()) {
 			
-				$t = $form->get('listeImputations')[0];
+			$t = $form->get('listeImputations')[0];
 
-			//On sauvegarde les activites dans la base
+
         	foreach($form->get('listeImputations') as $imp) {
 
 				//On ne sauvegarde pas celle qui ont un nom null
 				if ($imp->getData()->getLibelle() != null) {
 									
-					//On supprime toutes les ImputationConcerneBudget, et on les enregistres ceux présents
-					$listeICB = $em->getRepository('JCCommandeBundle:ImputationConcerneBudget')->findAvecImputationEtAnnee($imp->getData(),$annee); 
-					
-					//on les suprime
+					//on suprime les imputationConcerneBudget
 					foreach($listeICB as $icb) {
 						$em->remove($icb);
 					}
 					
 					
-					//On enregistre les nouveaux
+					//On enregistre les nouveaux imputationConcerneBudget
 					
 					//On récupère les checkbox des budgets
 					$listeCheckBoxBudgets = $imp->get('listeImputationConcerneBudget')->getData();
-					dump($listeCheckBoxBudgets);
+
 					//on les enregistre
 					foreach($listeCheckBoxBudgets as $idBudget){
 						

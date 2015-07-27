@@ -13,11 +13,12 @@ class ListeImputationsType extends AbstractType
 	protected $em;
 	protected $annee;
 	
-
+	
     function __construct(EntityManager $em, $annee)
     {
         $this->em = $em;
         $this->annee = $annee;
+		
     }
 
 
@@ -28,7 +29,8 @@ class ListeImputationsType extends AbstractType
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    {    	
+
 	    	    
 	  	//On récupère tous les budgets pour ne pas avoir à faire autant de requete que de budget
 		$listeBudgets = $this->em->getRepository('JCCommandeBundle:Budget')->findByAnnee($this->annee);

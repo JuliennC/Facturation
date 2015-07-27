@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class ImputationConcerneBudgetRepository extends EntityRepository
 {
 	
-	public function findAvecImputationEtAnnee($imputation, $annee){
+	public function findAvecAnnee($annee){
 		
 		return $this
 			->createQueryBuilder('icb')
@@ -21,10 +21,9 @@ class ImputationConcerneBudgetRepository extends EntityRepository
 			->leftJoin('icb.budget','b')
 			->addSelect('b')
 
-			->where('b.annee = :annee AND icb.imputation = :imputation')
+			->where('b.annee = :annee ')
 			
 			->setParameter('annee',$annee)
-			->setParameter('imputation',$imputation)
 	
 			->getQuery()	
 			->getResult();
