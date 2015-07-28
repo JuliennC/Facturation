@@ -55,7 +55,7 @@ function remetValeur(nomColl, idColl){
 	*	Elle envoie la requete et indique la r√©ponse
 	*/
 function changementEtatCommande(idC, etatC){
-	
+
 	if(etatC == "Payee" || etatC == "Desengager"){
 		
 		var data = 'id='+idC;
@@ -83,7 +83,6 @@ function changementEtatCommande(idC, etatC){
 	
 	
 	} else {
-		alert(etatC);
 		
 		$(".hidden_etat").attr('value',etatC);
 
@@ -416,7 +415,7 @@ $(document).ready(function() {
 	$(".choix_activite r").change(function() {
 
 		var nomActivite = $( ".choix_activite option:selected").getNom();
-		alert(nomActivite);
+
 	
 		var DATA = 'act=' + nomActivite;
 	

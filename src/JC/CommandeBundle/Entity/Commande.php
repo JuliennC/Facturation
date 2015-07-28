@@ -424,6 +424,14 @@ class Commande
      */
     private $faxLivraison;
 
+
+
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="MontantPaye", type="string", length=255, nullable=true)
+     */
+    private $montantPaye;
    
    
    
@@ -1159,6 +1167,34 @@ public function __construct() {
     {
         return $this->faxLivraison;
     }
+
+
+
+	/**
+     * Set montantPaye
+     *
+     * @param string $montantPaye
+     * @return Commande
+     */
+    public function setMontantPaye($montantPaye)
+    {
+        $this->montantPaye = $montantPaye;
+
+        return $this;
+    }
+
+    /**
+     * Get montantPaye
+     *
+     * @return Service 
+     */
+    public function getMontantPaye()
+    {
+        return $this->montantPaye;
+    }
+    
+    
+    
 
 
 }

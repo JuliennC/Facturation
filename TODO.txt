@@ -51,9 +51,8 @@ TODO liste :
 	-> FAIT faire une fonction qui supprime les espaces d’un numéro de téléphone
 	-> FAIT enlever l’obligation de ref dans une ligne commande ?
 
-
-	-> Voir s’il y a une lenteur depuis contact fournisseur
-
+	-> Gestion des forfaits
+	-> Ajouter un commentaire interne (commande)??
 	-> ligne avec prix total HT et TTC en bas des ligne commandes
 
 	-> addresse de livraison courrier et colis ????
