@@ -56,7 +56,7 @@ class AccueilController extends Controller
 		// On récupète toutes les commandes qui ont été Enregistrée dans l'année 'date'
 		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansAnnee("Enregistree", $annee);
 		
-		
+		dump('Nombre de commande : '.sizeof($listePasseEtat));
 		
 		//On récupère la liste des imputations avec les budgets associés
 		$listeICB = $em->getRepository('JCCommandeBundle:ImputationConcerneBudget')->findAvecAnnee($annee); 
