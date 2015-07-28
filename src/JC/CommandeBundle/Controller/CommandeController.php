@@ -25,6 +25,7 @@ use JC\CommandeBundle\Entity\InformationCollectivite;
 use JC\CommandeBundle\Entity\MasseSalariale;
 use JC\CommandeBundle\Entity\TempsPasse;
 use JC\CommandeBundle\Entity\Imputation;
+use JC\CommandeBundle\Entity\PaiementCommande;
 
 use JC\CommandeBundle\Form\CommandeType;
 
@@ -519,7 +520,6 @@ class CommandeController extends Controller
 
 	  		if( $idCom != '' && $nvlEtat != '') {
 		    
-	
 				$em = $this->getDoctrine()->getManager();
 	
 	            $com = $em->getRepository('JCCommandeBundle:Commande')->findOneById($idCom) ;
@@ -549,6 +549,8 @@ class CommandeController extends Controller
 	  	
 	  	
 	  	
+	  	
+	  	
 	  	/*
 	  	*		Fonction pour le paiement d'une commande
 	  	*/
@@ -561,19 +563,58 @@ class CommandeController extends Controller
 
 			$montant = '';
 	        $montant = $request->get('montant');
-
+			$montant = preg_replace('/"/', '', $montant);
+			$montant = preg_replace('/,/', '.', $montant);
 
 	  		if( $idCom != '' && $montant != '') {
 	
 				$em = $this->getDoctrine()->getManager();
-	
-	            $com = $em->getRepository('JCCommandeBundle:Commande')->findOneById($idCom) ;
 				
+				//On enregistre le paiement dans la commande pour éviter d'avoir des requetes et des sommes à faire à chaque fois 
+				// que l'on veut savoir le total payé pour une commande
+	            $com = $em->getRepository('JCCommandeBundle:Commande')->findOneById($idCom) ;				
 				$com->setMontantPaye($com->getMontantPaye() + $montant);
-				
 				$em->persist($com);
+				dump('Montant Paye : '.gettype("".$com->getMontantPaye()));
+				dump('Montant TTC : '.gettype($com->getTotalTTC()));
+
+				//On garde une trace du paiement
+				$paiementCommande = new PaiementCommande();
+				$paiementCommande->setCommande($com);
+				$paiementCommande->setMontant($montant);
+				$paiementCommande->setDatePaiement(new \DateTime());
+				$em->persist($paiementCommande);
 				
-				$em->flush();
+				
+				
+				//Si c'est le premier paiement, on enregistre un état paiement
+				if ($com->getEtat() === "Engagee"){
+					
+					$etatPaiement = new CommandePasseEtat();
+					$etatPaiement -> setCommande($com);
+					$etatPaiement -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle("Paiement"));
+					$etatPaiement -> setDatePassage(new \Datetime());
+					$em->persist($etatPaiement);
+				}  
+				
+
+				//On teste si le montant du paiement + le total déjà payé est égale au montant de la facture
+				// Il est important de ne pas mettre de else if, si on paie pour la premiere fois, la commande en entière
+				if("".$com->getMontantPaye() === $com->getTotalTTC()) {
+					dump("".$com->getMontantPaye() === $com->getTotalTTC());
+					$etatTermine = new CommandePasseEtat();
+					$etatTermine -> setCommande($com);
+					$etatTermine -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle("Terminee"));
+					$etatTermine -> setDatePassage(new \Datetime());
+					$em->persist($etatTermine);	
+			
+									$em->flush();
+
+				}
+			
+			
+
+
 				//On prepare la reponse
 				$response = new JsonResponse(true);
 

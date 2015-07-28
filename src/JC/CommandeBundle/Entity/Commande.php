@@ -70,7 +70,7 @@ class Commande
      * @var string
      *
      * @ORM\Column(name="Libelle_Facturation", type="string", length=255, nullable=false)
-	 * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Veuillez entrer libelle pour la facturation.")
      */
     private $libelleFacturation;
 
@@ -429,7 +429,7 @@ class Commande
 	/**
      * @var string
      *
-     * @ORM\Column(name="MontantPaye", type="string", length=255, nullable=true)
+     * @ORM\Column(name="MontantPaye", type="decimal", scale=2, nullable=false)
      */
     private $montantPaye;
    
@@ -622,19 +622,21 @@ class Commande
 
 
 
-// FONCTIONS 
-
-public function __construct() {
-				
+	// FONCTIONS 
+	
+	public function __construct() {
+					
 		$this->totalTTC = "0";
-
-        $this->listelignesCommande = new ArrayCollection();
-        
-        $this->ventilation = "Directe";
-        
-        $this->etats = new ArrayCollection();
-}
-
+	
+	    $this->listelignesCommande = new ArrayCollection();
+	        
+	    $this->ventilation = "Directe";
+	        
+	    $this->etats = new ArrayCollection();
+	    
+	    $this->montantPaye = '0';
+	}
+	
 
 
 
@@ -648,7 +650,10 @@ public function __construct() {
 
 
 	public function getEtat(){
+		
+		//On prend une vieille date pour pouvoir comparer les date des états, on est sur qu'aucun état n'est plus encien
 		$dateEtat = new \DateTime("1970-01-01 00:00:00.0");
+		
 		$etat = null;
 		
 		foreach($this->etats as $e){
@@ -1186,7 +1191,7 @@ public function __construct() {
     /**
      * Get montantPaye
      *
-     * @return Service 
+     * @return string 
      */
     public function getMontantPaye()
     {
