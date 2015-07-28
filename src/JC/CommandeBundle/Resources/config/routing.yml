@@ -25,6 +25,8 @@ jc_commande_modification:
         expose: true
 
 
+
+
 #Route pour action ajax
 jc_commande_get_tva:
     path:	/commande/get_tva
@@ -40,12 +42,8 @@ jc_commande_change_etat:
         expose: true
 
 
-
-#a supprimer par la suite, sert uniquement à remplir la base de donnée
-jc_commande_bdd:
-    path:      /insert_donnees
-    defaults:  { _controller: JCCommandeBundle:Commande:bdd }
-
- 
- 
- 
+jc_commande_paiement_commande:
+    path:	/commande/paiementCommande
+    defaults:  { _controller: JCCommandeBundle:Commande:paiementCommande }
+    options:
+        expose: true

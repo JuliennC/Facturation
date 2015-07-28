@@ -184,7 +184,7 @@ class CommandeController extends Controller
 			$commande -> setListeLignesCommande($em->getRepository('JCCommandeBundle:LigneCommande')->findLignesCommandeAvecCommande($commande->getId()));
 
 			//	On verifie l'etat de la commande
-			if( ($commande->getEtat() === "Engagee") || ($commande->getEtat() === "Paiement partiel") || ($commande->getEtat() === "Terminee")){
+			if( ($commande->getEtat() === "Engagee") || ($commande->getEtat() === "Paiement") || ($commande->getEtat() === "Terminee")){
 				
 				//Si la commande est envoye ou Paiement partiel, on ne peux pas la modifier. en renvoie donc sur la page detail
 				return $this->redirect($this->generateUrl('jc_commande_detail', array('id' => $commande->getId())));
@@ -499,59 +499,7 @@ class CommandeController extends Controller
 	  
 	  
 	  
-		/*
-		*		Fonction qui retourne les applications correspondantes √† une activite  
-	  	*/
-	  	public function applicationPourActiviteAction() {
-		  
-	  
-	  		$request = $this->container->get('request');
-
-	  		//if($request->isXmlHttpRequest()) {
-		    
-	        $nomActivite = '';
-	        $nomActivite = $request->get('act');
-	
-			$em = $this->getDoctrine()->getManager();
-
-
-	        if($nomActivite != '') {
-
-
-	               $repository = $em->getRepository('JCCommandeBundle:Application') ;
-	
-				   $applications = $repository->getApplicationWithActiviteName($nomActivite)->getQuery()->getResult();
-
-				   $tabNomApplications = array();
-				   
-				   /*foreach($applications as $app) {
-					   array_push($tabNomApplications, $app->getNom());
-				   }*/
-
-				   //On prepare la reponse
-				   $response = new JsonResponse($applications);
-				   /*$response->setData(array(
-				   		'data' => $tabNomApplications
-				   	));*/
-
-
-															
-                    return $response;
-                    
-                    
-				   /*return $this->container->get('templating')->renderResponse('MyAppFilmothequeBundle:Acteur:liste.html.twig', array(
-				   'acteurs' => $acteurs*/
-	           
-	        } else {
-				echo("non");
-		    	return $this->redirect($this->generateUrl('jc_commande_creation'));
-	        }
-	
-	        
-	    
-			
-	  	}
-	  	  
+		
 	  	  
 	  	  
 	  	  
@@ -581,6 +529,49 @@ class CommandeController extends Controller
 				$etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle($nvlEtat));
 				$etatCree -> setDatePassage(new \Datetime());
 				$em->persist($etatCree);
+				
+				$em->flush();
+				//On prepare la reponse
+				$response = new JsonResponse(true);
+
+	            return $response;
+
+
+            }  else {
+	            
+	            $response = new JsonResponse("Non non ..");
+																			
+	            return $response;
+            }
+   	        	
+		}
+	  	
+	  	
+	  	
+	  	
+	  	/*
+	  	*		Fonction pour le paiement d'une commande
+	  	*/
+	  	public function paiementCommandeAction() {
+		  
+		  	$request = $this->container->get('request');
+		  	
+	        $idCom = '';
+	        $idCom = $request->get('id');
+
+			$montant = '';
+	        $montant = $request->get('montant');
+
+
+	  		if( $idCom != '' && $montant != '') {
+	
+				$em = $this->getDoctrine()->getManager();
+	
+	            $com = $em->getRepository('JCCommandeBundle:Commande')->findOneById($idCom) ;
+				
+				$com->setMontantPaye($com->getMontantPaye() + $montant);
+				
+				$em->persist($com);
 				
 				$em->flush();
 				//On prepare la reponse

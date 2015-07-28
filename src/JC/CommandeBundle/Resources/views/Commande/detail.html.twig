@@ -16,12 +16,14 @@
 			
 				{% if is_granted('ROLE_COMPTA') %}
 
-					{# ----- Si la commande est "Engagee", on propose de la désengager (de la repasser en enregistrer) ou de la passer "Payee"----- #}
+					{# ----- Si la commande est "Engagee", on propose de la désengager (de la repasser en enregistrer) ou on propose le paiement ----- #}
 
 					{% if commande.etat == "Engagee" %}
+				
+				
 						--><button class='btn btn-warning col-md-3 vcenter' data-toggle="modal" data-target="#modalDesengager">Desengager</button><!--
 						
-						--><button class='btn btn-warning col-md-3 col-md-offset-1 vcenter' data-toggle="modal" data-target="#modalPayer">Payer</button>
+						--><button class='btn btn-warning col-md-3 col-md-offset-1 vcenter' data-toggle="modal" data-target="#modalPayer">Paiement</button>
 
 						<!-- Modal -->
 						<div class="modal fade" id="modalDesengager" tabindex="-1" role="dialog" aria-labelledby="modalDesengager">
@@ -45,7 +47,24 @@
 			
 			
 						
-						<!-- Modal -->
+						
+
+
+					{# ----- Si la commande est "Paiement", on propose de continuer le paiement ----- #}
+
+					{% elseif commande.etat == "Paiement" %}
+						
+						--><button class='btn btn-warning col-md-3 col-md-offset-1 vcenter' data-toggle="modal" data-target="#modalPayer">Payer</button>
+			
+			
+					{# NE PAS SUPPRIMER #}		
+					{% else %}
+						-->
+					{% endif %}
+
+
+					
+					<!-- Modal (sorti des if, pour qu'il soit accessible pour les deux états -->
 						<div class="modal fade" id="modalPayer" tabindex="-1" role="dialog" aria-labelledby="modalPayer">
 						  	<div class="modal-dialog" role="document">
 						    	<div class="modal-content">
@@ -54,28 +73,23 @@
 										<h4 class="modal-title">Êtes-vous sûr ?</h4>
 									</div>
 									<div class="modal-body">
-										<p>En marquant cette commande comme "Payee" vous ne pourrez-plus la modifier.</p>
-										<p>Êtes-vous sur de vouloir changer le statut de la commande ?</p>
+										<p>Entrez le montant du paiement : <input id='inputMontant' class='col-md-offset-1' type='text' placeholder='Ex : 1 500'/> € </p>
 									</div>
 									<div class="modal-footer">
 								        <button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
-								        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande({{commande.id}},'Payee')">Confirmer</button>
+								        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="paiementCommande({{commande.id}})">Confirmer</button>
 									</div>
 								</div>
 							</div>
 						</div>
-			
-			
-					{# NE PAS SUPPRIMER #}
-					{% else %}
-						-->
-					{% endif %}
 
-
+						
 				{# NE PAS SUPPRIMER #}		
 				{% else %}
 					-->
 				{% endif %}
+
+				
 		
 			</div>
 	</div>

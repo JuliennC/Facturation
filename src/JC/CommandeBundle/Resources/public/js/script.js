@@ -1,4 +1,30 @@
+	/* 
+	*	Fonction pour enregistrer un paiement
+	*/
+function paiementCommande(idC){
 
+	// On récupère le montant entré par l'utilisateur
+	var montant = document.getElementById("inputMontant").value;
+
+	var data = 'id='+idC+'&montant='+montant;
+
+	// On envoie la requete	
+	$.ajax({
+		type: "get",
+		url: Routing.generate('jc_commande_paiement_commande'),
+		data: data,
+		success: function(json){	
+	   				
+	   		if (json == true) {
+				//On recharge la page
+				location.reload();
+			
+			} else {
+				alert("Erreur pendant le payement, veuillez re-essayer. "+json);	
+			}
+        }
+    });    
+}
 
 
 
