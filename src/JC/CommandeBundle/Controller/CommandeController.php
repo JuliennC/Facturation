@@ -424,6 +424,7 @@ class CommandeController extends Controller
                                 $lieu->setCodePostal($commande->getCodePostalLivraison());
                                 $lieu->setVille($commande->getVilleLivraison());
                                 $lieu->setTelephone($commande->getTelephoneLivraison());
+                                $lieu->setFax($commande->getFaxLivraison());
                                 $em->persist($lieu);
                                                                     
                                 $commande->setLivraison($lieu);
@@ -446,6 +447,7 @@ class CommandeController extends Controller
                                 $fournisseur->setCodePostal($commande->getCodePostalFournisseur());
                                 $fournisseur->setVille($commande->getVilleFournisseur());
                                 $fournisseur->setTelephone($commande->getTelephoneFournisseur());
+                                $fournisseur->setFax($commande->getFaxFournisseur());
                                 $em->persist($fournisseur);
                                 
                                 $commande->setFournisseur($fournisseur);

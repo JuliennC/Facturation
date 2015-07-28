@@ -46,22 +46,20 @@ TODO liste :
 	-> FAIT Demander à severine si un budget ne concerne qu’une imputation	: Nons
 	-> FAIT Revoir la page d’accueil avec les nouveaux budgets
 	-> FAIT Voir pour admin imputation concerne budget de donner la liste des budgets au lieu de faire une requête.
+	-> FAIT Mettre fax pour livraison
+	-> FAIT Mettre un contact fournisseur (nom + email)
+	-> FAIT faire une fonction qui supprime les espaces d’un numéro de téléphone
+	-> FAIT enlever l’obligation de ref dans une ligne commande ?
 
-	
+
 	-> Voir s’il y a une lenteur depuis contact fournisseur
 
-	-> Mettre email de contact pour livraison
-	-> Mettre un contact fournisseur (nom + email)
-	-> Voir pour remettre un num fax ?
-	-> enlever l’obligation de ref dans une ligne commande ?
-	-> faire une fonction qui supprime les espaces d’un numéro de téléphone
 	-> ligne avec prix total HT et TTC en bas des ligne commandes
 
 	-> addresse de livraison courrier et colis ????
 
 	-> Voir pourquoi les commandes ne sont pas sélectionnée dans les autres navigateurs
 	
-
 	-> faire une fonction recherche pour la table applications dans admin
 
 	-> faire le paiement des commandes.

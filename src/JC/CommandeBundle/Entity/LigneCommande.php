@@ -35,8 +35,6 @@ class LigneCommande
      * @var string
      *
      * @ORM\Column(name="Reference", type="string", length=255)
-     * @Assert\NotBlank(message="Veuillez entrer une référence valide.")
-     * @Assert\Length(min=2,  minMessage="Veuillez entrer une référence valide.")
      */
     private $reference;
 

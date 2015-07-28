@@ -235,6 +235,50 @@ class CommandeType extends AbstractType
 
         // adding the validator to the FormBuilderInterface
         $builder->addEventListener(FormEvents::POST_BIND, $villeValidator);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //On ajoute une validation pour les collectivites
+        $modifTelephone = function(FormEvent $event){
+	                    
+            $data = $event->getData();
+            
+            //Tableau des numéro de téléphone/fax a changer
+            $listeNum = array('telephoneLivraison', 'telephoneFournisseur', 'faxLivraison', 'faxFournisseur');
+            
+            foreach($listeNum as $num) {
+	         
+	         	//On récupère le numero de téléphone 
+			 	$numeroTelephone = $data[$num];
+            
+	            //On enlève tous les espaces qu'il peut y avoir
+            	$numeroTelephone = preg_replace('/\s+/', '', $numeroTelephone);
+			
+				//On remet le numero de téléphone
+    	        $data[$num] = $numeroTelephone;
+	            $event->setData($data);            
+	            
+            }
+				    
+	    };
+
+        // adding the validator to the FormBuilderInterface
+        $builder->addEventListener(FormEvents::PRE_BIND, $modifTelephone);
     }
     
 

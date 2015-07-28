@@ -49,8 +49,9 @@
 
                                                                     {% for livraison in listeLivraisons %}
                                                                         <tr>
-                                                                            <td onclick="setInfos('Livraison','{{livraison.nom}}', '{{livraison.adresse}}', '{{livraison.complementAdresse}}', '{{livraison.ville}}',
-                                                                                    '{{livraison.codePostal}}','{{livraison.telephone}}')">{{ livraison.nom }}</td>
+                                                                            <td onclick="setInfos('Livraison','{{livraison.nom}}', '{{livraison.adresse}}', 																					'{{livraison.complementAdresse}}', '{{livraison.ville}}',
+                                                                                    '{{livraison.codePostal}}','{{livraison.telephone}}', '{{livraison.fax}}'
+                                                                                    )">{{ livraison.nom }}</td>
                                                                         </tr>
                                                                     {% endfor %}
 
@@ -134,8 +135,8 @@
                                                                     {% for fournisseur in listeFournisseurs %}
                                                                         <tr>
                                                                         
-                                                                            <td onclick="setInfos('Fournisseur','{{fournisseur.nom}}', '{{fournisseur.adresse}}', '{{fournisseur.complementAdresse}}', '{{fournisseur.ville}}',
-                                                                                    '{{fournisseur.codePostal}}','{{fournisseur.telephone}}')">{{ fournisseur.nom }}</td>
+                                                                            <td onclick="setInfos('Fournisseur','{{fournisseur.nom}}', '{{fournisseur.adresse}}', 																					'{{fournisseur.complementAdresse}}', '{{fournisseur.ville}}',
+                                                                                    '{{fournisseur.codePostal}}','{{fournisseur.telephone}}', 																					'{{fournisseur.fax}}')">{{ fournisseur.nom }}</td>
                                                                         </tr>
                                                                     {% endfor %}
 

@@ -94,7 +94,7 @@ function changementEtatCommande(idC, etatC){
    
 
 
-function setInfos(type, nom, adresse, complementAdresse, ville, codePostal, telephone){
+function setInfos(type, nom, adresse, complementAdresse, ville, codePostal, telephone, fax){
     
     console.log(type);
     document.getElementById('jc_commandebundle_commande_nom'+type).value = nom;
@@ -103,6 +103,7 @@ function setInfos(type, nom, adresse, complementAdresse, ville, codePostal, tele
     document.getElementById('jc_commandebundle_commande_ville'+type).value = ville;
     document.getElementById('jc_commandebundle_commande_codePostal'+type).value = codePostal;
     document.getElementById('jc_commandebundle_commande_telephone'+type).value = telephone;
+    document.getElementById('jc_commandebundle_commande_fax'+type).value = fax;
     
     $("#bouton_close_modal_"+type).click();
 }
@@ -179,10 +180,10 @@ $(document).ready(function() {
 	
 	$("#boutonContactFournisseur").on("click", function(){
 	
-					
+		//On supprime le bouton
 		$("#boutonContactFournisseur").remove();
 		
-		
+		//On affiche les champs
 		$("#cacheContactFournisseur").attr('style','');
 		
 	});

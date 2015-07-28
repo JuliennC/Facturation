@@ -89,23 +89,6 @@ class Fournisseur
 
 
 
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="Contact", type="string", length=255, nullable=true)
-     */
-    private $contact;
-	
-
-
-	
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="EmailContact", type="string", length=255, nullable=true)
-     */
-    private $emailContact;
-
 
 
 // DEBUT CLES ETRANGERES
@@ -297,52 +280,6 @@ class Fournisseur
     
     
     
-    /**
-     * Set contact
-     *
-     * @param string $contact
-     * @return Fournisseur
-     */
-    public function setContact($contact)
-    {
-        $this->contact = $contact;
-
-        return $this;
-    }
-
-    /**
-     * Get contact
-     *
-     * @return string 
-     */
-    public function getContact()
-    {
-        return $this->contact;
-    }
-    
-    
-    
-    /**
-     * Set emailContact
-     *
-     * @param string $emailContact
-     * @return Fournisseur
-     */
-    public function setEmailContact($emailContact)
-    {
-        $this->emailContact = $emailContact;
-
-        return $this;
-    }
-
-    /**
-     * Get emailContact
-     *
-     * @return string 
-     */
-    public function getEmailContact()
-    {
-        return $this->emailContact;
-    }
+   
     
 }
