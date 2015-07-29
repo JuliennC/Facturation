@@ -219,7 +219,7 @@ class LigneCommande
      */
     public function getPrixUnitaire()
     {
-        return $this->prixUnitaire;
+        return  "".$this->prixUnitaire;
     }
 
     /**
@@ -242,7 +242,7 @@ class LigneCommande
      */
     public function getTotalTTC()
     {
-        return $this->totalTTC;
+        return  "".$this->totalTTC;
     }
 
     /**

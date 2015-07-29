@@ -50,6 +50,7 @@ TODO liste :
 	-> FAIT Mettre un contact fournisseur (nom + email)
 	-> FAIT faire une fonction qui supprime les espaces d’un numéro de téléphone
 	-> FAIT enlever l’obligation de ref dans une ligne commande ?
+	-> FAIT faire le paiement des commandes.
 
 	-> Gestion des forfaits
 	-> Ajouter un commentaire interne (commande)??
@@ -61,7 +62,6 @@ TODO liste :
 	
 	-> faire une fonction recherche pour la table applications dans admin
 
-	-> faire le paiement des commandes.
 
 
 	-> FAIT Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca. —> On garde comme ca, si on change, ca change pour toutes les commandes de l’année en cours OU NON (oublie de préciser ou non).

@@ -70,9 +70,10 @@
 						    	<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Êtes-vous sûr ?</h4>
+										<h4 class="modal-title">Paiement de la commande</h4>
 									</div>
 									<div class="modal-body">
+										<p> Il reste {{commande.totalTTC - commande.montantPaye}} € à payer pour cette commande.</p>
 										<p>Entrez le montant du paiement : <input id='inputMontant' class='col-md-offset-1' type='text' placeholder='Ex : 1 500'/> € </p>
 									</div>
 									<div class="modal-footer">
@@ -169,14 +170,9 @@
 					<p><b>Suivi par</b> : {{ commande.utilisateur }}</p>
 					<p><b>Date création</b> : {{ commande.dateCreation|date('d/m/Y') }}</p>
 					
-					<p><b>Date d'envoi</b> : {{ commande.dateEnvoi|date('d/m/Y') }}</p>
+					<p><b>Date d'engagement</b> : {{ commande.dateEngagement|date('d/m/Y') }}</p>
 
-					{% if commande.datePaiement %}
-						<p><b>Date de paiement</b> : {{ commande.datePaiement|date('d/m/Y') }} </p>
-					{% else %}
-						<p><b>Date de paiement</b> : - </p>
-					{% endif %}
-
+					
 					{% if commande.dateLivraison %}
 						<p><b>Date de livraison</b> : {{ commande.dateLivraison|date('d/m/Y') }} </p>
 					{% else %}

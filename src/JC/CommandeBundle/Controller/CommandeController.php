@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 use JC\CommandeBundle\Entity\Commande;
 use JC\CommandeBundle\Entity\Utilisateur;
 use JC\CommandeBundle\Entity\Fournisseur;
@@ -481,6 +483,9 @@ class CommandeController extends Controller
 					array_push($tabReponse, array('id' => $t->getId(), 'pourcentage' => $t->getPourcentage()));
 				}
 				
+				
+				
+				
 				//On prepare la reponse
 				$response = new JsonResponse($tabReponse);
 																			
@@ -575,8 +580,8 @@ class CommandeController extends Controller
 	            $com = $em->getRepository('JCCommandeBundle:Commande')->findOneById($idCom) ;				
 				$com->setMontantPaye($com->getMontantPaye() + $montant);
 				$em->persist($com);
-				dump('Montant Paye : '.gettype("".$com->getMontantPaye()));
-				dump('Montant TTC : '.gettype($com->getTotalTTC()));
+				
+
 
 				//On garde une trace du paiement
 				$paiementCommande = new PaiementCommande();
@@ -585,6 +590,16 @@ class CommandeController extends Controller
 				$paiementCommande->setDatePaiement(new \DateTime());
 				$em->persist($paiementCommande);
 				
+				//Booléan qui définie si aucune erreur n'est trouvée
+				$flush = true;
+				
+				//Si le montant entré est inférieur à 0
+				if($montant < 0){
+					$flush = false;
+					
+					$session = new Session();
+					$session->getFlashBag()->add('Error', 'Vous ne pouvez pas entré un montant négatif.');
+				}
 				
 				
 				//Si c'est le premier paiement, on enregistre un état paiement
@@ -600,20 +615,28 @@ class CommandeController extends Controller
 
 				//On teste si le montant du paiement + le total déjà payé est égale au montant de la facture
 				// Il est important de ne pas mettre de else if, si on paie pour la premiere fois, la commande en entière
-				if("".$com->getMontantPaye() === $com->getTotalTTC()) {
-					dump("".$com->getMontantPaye() === $com->getTotalTTC());
+				if($com->getMontantPaye() === $com->getTotalTTC()) {
+
 					$etatTermine = new CommandePasseEtat();
 					$etatTermine -> setCommande($com);
 					$etatTermine -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle("Terminee"));
 					$etatTermine -> setDatePassage(new \Datetime());
 					$em->persist($etatTermine);	
 			
-									$em->flush();
+				//Si le montant est supérieur au montant de la commande, on refuse et on met un message d'erreur
+				} else {
 
+					$flush = false;
+
+					$session = new Session();
+					$session->getFlashBag()->add('Error', 'Le montant entré + le montant déjà payé pour cette commande est supérieur au total de la commande.');
 				}
+				
+				
 			
-			
-
+				if ($flush) {
+					$em->flush();
+				}
 
 				//On prepare la reponse
 				$response = new JsonResponse(true);

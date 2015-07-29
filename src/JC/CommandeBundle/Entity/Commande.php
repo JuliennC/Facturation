@@ -626,7 +626,7 @@ class Commande
 	
 	public function __construct() {
 					
-		$this->totalTTC = "0";
+		$this->totalTTC = 0;
 	
 	    $this->listelignesCommande = new ArrayCollection();
 	        
@@ -634,7 +634,7 @@ class Commande
 	        
 	    $this->etats = new ArrayCollection();
 	    
-	    $this->montantPaye = '0';
+	    $this->montantPaye = 0;
 	}
 	
 
@@ -668,16 +668,12 @@ class Commande
 	}
 
 
-	public function getDateEnvoi(){
-		return $this->getCommandePasseEtat("Envoyee");
+	public function getDateEngagement(){
+		return $this->getCommandePasseEtat("Engagee");
 	}
 
 	public function getDateCreation(){
 		return $this->getCommandePasseEtat("Creee");
-	}
-
-	public function getDatePaiement(){
-		return $this->getCommandePasseEtat("Payee");
 	}
 
 
@@ -794,7 +790,7 @@ class Commande
 
     public function getTotalTTC()
 	{
-	   return $this->totalTTC;
+	   return  "".$this->totalTTC;
 	}
    
   
@@ -1195,7 +1191,7 @@ class Commande
      */
     public function getMontantPaye()
     {
-        return $this->montantPaye;
+        return "".$this->montantPaye;
     }
     
     
