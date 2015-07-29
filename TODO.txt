@@ -51,11 +51,14 @@ TODO liste :
 	-> FAIT faire une fonction qui supprime les espaces d’un numéro de téléphone
 	-> FAIT enlever l’obligation de ref dans une ligne commande ?
 	-> FAIT faire le paiement des commandes.
+	-> FAIT ligne avec prix total HT et TTC en bas des ligne commandes
+	-> FAIT Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca. —> On garde comme ca, si on change, ca change pour toutes les commandes de l’année en cours OU NON (oublie de préciser ou non).
+
+
 
 	-> Gestion des forfaits
-	-> Ajouter un commentaire interne (commande)??
-	-> ligne avec prix total HT et TTC en bas des ligne commandes
 
+	-> Ajouter un commentaire interne (commande)??
 	-> addresse de livraison courrier et colis ????
 
 	-> Voir pourquoi les commandes ne sont pas sélectionnée dans les autres navigateurs
@@ -63,11 +66,7 @@ TODO liste :
 	-> faire une fonction recherche pour la table applications dans admin
 
 
-
-	-> FAIT Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca. —> On garde comme ca, si on change, ca change pour toutes les commandes de l’année en cours OU NON (oublie de préciser ou non).
-
-
-		-> demander si une activité peut changer de clé en cours d’année, si non, changer pour prendre directement l’activite de la commande. ATTENTION, si on change comme ça, ça veut dire que si on veut changer de clé pour X raison, les commandes antérieures ne seront pas affectées.
+	-> demander si une activité peut changer de clé en cours d’année, si non, changer pour prendre directement l’activite de la commande. ATTENTION, si on change comme ça, ça veut dire que si on veut changer de clé pour X raison, les commandes antérieures ne seront pas affectées.
 	
 	-> finir les pdf
 	

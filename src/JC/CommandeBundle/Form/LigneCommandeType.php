@@ -18,7 +18,7 @@ class LigneCommandeType extends AbstractType
     {
         $builder
             ->add('libelle', 'textarea', array('required' => true , 'error_bubbling' => true))
-            ->add('reference', 'text', array('required' => true , 'error_bubbling' => true))
+            ->add('reference', 'text', array('required' => false , 'error_bubbling' => true))
             ->add('quantite', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('prixUnitaire', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('totalTTC', 'hidden')

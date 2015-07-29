@@ -55,7 +55,7 @@ class CommandeType extends AbstractType
         $builder
         
 
-            ->add('reference', 'text' , array('error_bubbling' => true))
+            ->add('reference', 'text' , array('error_bubbling' => true, 'required'=>false))
             ->add('libelleFacturation', 'textarea' , array('error_bubbling' => true))
 
                                                 
