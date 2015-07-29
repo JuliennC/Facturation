@@ -31,6 +31,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        web_path: %kernel.root_dir%/../web
 
 # Assetic Configuration
 assetic:

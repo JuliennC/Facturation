@@ -56,7 +56,7 @@ class FacturationController extends Controller
 		//On récupère toutes les ccc
 		//L'annee passé en paramêtre est l'année à laquelle la DSIT a payé la facture
 		// Généralement n-1
-		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansAnnee("Payee", $annee);  
+		$listePasseEtat = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findPasseEtatDansAnnee("Terminee", $annee);  
 		
 		
 		//On parcours les passages d'états,
@@ -271,8 +271,8 @@ class FacturationController extends Controller
 	    $collectivite = $em->getRepository('JCCommandeBundle:Collectivite')->findOneByNom($nomCollectivite); 
 	    
 	    //On recupere les commandes concernant la collectivite, qui sont passées à l'etat payée en 20xx ($annee)
-	    // (On ne passe pas par CommandePasseEtat car il y a plus de CommandePasseEtat(Payee) que de CommandeConcerne(Collectivite))
-	    $listeCCC = $em->getRepository('JCCommandeBundle:Commande')->findCommandePourCollectiviteAvecStatutPourAnnee($collectivite, "Payee", $annee);  
+	    // (On ne passe pas par CommandePasseEtat car il y a plus de CommandePasseEtat(terminee) que de CommandeConcerne(Collectivite))
+	    $listeCCC = $em->getRepository('JCCommandeBundle:Commande')->findCommandePourCollectiviteAvecStatutPourAnnee($collectivite, "Terminee", $annee);  
 		
 		
 		//On crée le tableau qui contiendra les données

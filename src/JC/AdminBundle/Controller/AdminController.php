@@ -1013,7 +1013,7 @@ class AdminController extends Controller
 					if(! in_array($imp->getData(), $listeImp)){
 						
 						//Si c'est une nouvelle imputaion, il faut récupérer la section
-						dump($imp->get('section'));
+
 						$imp->getData()->setSection($imp->get('section')->getData());
 						
 					}
@@ -1054,7 +1054,7 @@ class AdminController extends Controller
 
     	} else {
 	    	
-		dump($form->getErrorsAsString());
+
 	    
 	 		return $this->render('JCAdminBundle:Admin:modif_imputations.html.twig', array('form'=>$form->createView(), 'annee'=>$annee));
 		}

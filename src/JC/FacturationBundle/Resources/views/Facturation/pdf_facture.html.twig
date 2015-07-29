@@ -48,28 +48,33 @@
 
 <page backtop="5%" backbottom="5%" backleft="5%" backright="5%">
 
-	<div id="date_edition" class="right"> Date d'édition : {{ "now"|date("m/d/Y") }} </div>
+	<img src="{{ web_path~asset('/bundles/jcfacturation/images/logo_cugn.jpg') }}" alt="Example"/>
+	
 
 	<h3 id="titre_page" class="couleur_titre" > Facture DSIT Récapitulative pour l'année {{annee}}</h3>
 	
 	<h4 id="nom_collectivite" > {{infosColl['nomColl']}}</h4>
 
+	<div id="date_edition" > Date d'édition : {{ "now"|date("d/m/Y") }} </div>
+
+
+
 <!--	<div class="information left"><i>Tous les montant sont indiqués en TTC</i></div>  -->
 	
 	
-	<table style='width: 100%;'>
+	<table align='center' style='width: 100%;'>
 	
 		<tr>
 			<th class='border_bottom couleur_Nom_Collonne' rowspan='2 style='width: 40%;'> Activite </th>
-			<th class='border_bottom couleur_Nom_Collonne' colspan='2' style='width: 30%;'> Facture </th>
-			<th class='border_bottom couleur_Nom_Collonne' rowspan='2' colspan='2' style='width: 30%';> Masse Salariale </th>
+			<th class='border_bottom couleur_Nom_Collonne' colspan='2' style='width: 30%;'> Fonctionnement </th>
+			<th class='border_bottom couleur_Nom_Collonne' rowspan='2' colspan='2' style='width: 30%';> Investissement </th>
 		</tr>
 
 
 
 		<tr>
-			<td class='border_right border_bottom' style='width: 15%; height:30px; text-align:center;'> Investissement </td>
-			<td class='border_right border_left border_bottom' style='width: 15%; height:30px; text-align:center;'> Fonctionnement </td>
+			<td class='border_right border_bottom' style='width: 15%; height:30px; text-align:center;'> Factures </td>
+			<td class='border_right border_left border_bottom' style='width: 15%; height:30px; text-align:center;'> Assistance DSIT </td>
 		</tr>
 		
 		
@@ -130,17 +135,18 @@
 								
 								<td class='center border_left border_right' > 
 									<label >
-										{{ application['Investissement']|number_format(2, ',', ' ') }} €
-									</label>
-								</td>
-								
-								<td class='center border_left border_right' > 
-									<label>
 										{{ application['Fonctionnement']|number_format(2, ',', ' ') }} €
 									</label>
 								</td>
-															
+								
 								<td class='border_right'> </td>
+								
+								<td class='center border_left border_right' > 
+									<label>
+										{{ application['Investissement']|number_format(2, ',', ' ') }} €
+									</label>
+								</td>
+															
 
 
 							</tr>
@@ -154,21 +160,21 @@
 
 							<td class='center border_right {{border_bottom}}'>
 								<label>
-									<strong>{{ activite['montantFactures']['Investissement']|number_format(2, ',', ' ') }} € </strong>
-								</label>
-							</td>
-		
-		
-							<td class='center border_right {{border_bottom}}'>
-								<label>
 									<strong>{{ activite['montantFactures']['Fonctionnement']|number_format(2, ',', ' ') }} € </strong>
 								</label>
 							</td>
-								
-								
+		
+							
 							<td class='center border_left border_right' > 
 								<label>
 									<strong>{{ activite['montantMasseSalariale']|number_format(2, ',', ' ') }} € </strong>
+								</label>
+							</td>
+							
+		
+							<td class='center border_right {{border_bottom}}'>
+								<label>
+									<strong>{{ activite['montantFactures']['Investissement']|number_format(2, ',', ' ') }} € </strong>
 								</label>
 							</td>
 
@@ -192,18 +198,10 @@
 		
 							<td class='center border_right {{border_bottom}}'>
 								<label>
-									{{ activite['montantFactures']['Investissement']|number_format(2, ',', ' ') }} €
-								</label>
-							</td>
-		
-							<td class='center border_right {{border_bottom}}'>
-								<label>
 									{{ activite['montantFactures']['Fonctionnement']|number_format(2, ',', ' ') }} €
 								</label>
 							</td>
-		
-							
-							
+										
 		
 							<!-- On affiche le montants de la masse salariale -->
 		
@@ -212,6 +210,14 @@
 									{{ activite['montantMasseSalariale']|number_format(2, ',', ' ') }} €
 								</label>
 							</td>
+		
+		
+							<td class='center border_right {{border_bottom}}'>
+								<label>
+									{{ activite['montantFactures']['Investissement']|number_format(2, ',', ' ') }} €
+								</label>
+							</td>
+		
 							
 						</tr>		
 					
@@ -242,22 +248,24 @@
 
 					<td class='center' style='border: solid 1px gray;' > 
 						<label>
-							{{infosColl['totalFactures']['Investissement']|number_format(2, ',', ' ')}} €
-						</label>
-					</td>
-					
-					<td class='center' style='border: solid 1px gray;' > 
-						<label>
 							{{infosColl['totalFactures']['Fonctionnement']|number_format(2, ',', ' ')}} €
 						</label>
 					</td>
 			
-				
+					
 					<td class='center' style='border: solid 1px gray;' > 
 						<label>
 							{{infosColl['montantMassesSalariales']|number_format(2, ',', ' ')}} € 
 						</label>
 					</td>
+			
+					
+					<td class='center' style='border: solid 1px gray;' > 
+						<label>
+							{{infosColl['totalFactures']['Investissement']|number_format(2, ',', ' ')}} €
+						</label>
+					</td>
+			
 				</tr>
 				
 				
@@ -265,13 +273,13 @@
 										
 					<td colspan='2' class='center border_right border_bottom border_top' > 
 						<label>
-							{{(infosColl['totalFactures']['Investissement'] + infosColl['totalFactures']['Fonctionnement'] )|number_format(2, ',', ' ') }} € 
+							{{ (infosColl['totalFactures']['Fonctionnement'] + infosColl['montantMassesSalariales'])|number_format(2, ',', ' ') }} € 
 						</label>
 					</td>
 					
 					<td class='center' style='border: solid 1px gray;' > 
 						<label>
-							{{infosColl['montantMassesSalariales']|number_format(2, ',', ' ')}} € 
+							{{ infosColl['totalFactures']['Investissement']|number_format(2, ',', ' ') }} € 
 						</label>
 					</td>
 					
