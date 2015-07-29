@@ -247,6 +247,7 @@ function metEnPlaceVentilation(ventil){
 $(document).ready(function() {
 	
 	
+	
 	/*
 	*	Fonction qui permet de rentrer les contacts du fournisseur
 	*/

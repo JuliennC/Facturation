@@ -636,6 +636,7 @@ class Commande
 	public function __construct() {
 					
 		$this->totalTTC = 0;
+		$this->totalHT = 0;
 	
 	    $this->listelignesCommande = new ArrayCollection();
 	        
@@ -651,7 +652,7 @@ class Commande
 
 
 
-// GETTER ET SETTER
+	// GETTER ET SETTER
 
 	public function addEtat(CommandePasseEtat $etat){
 		$this->etats->add($etat);

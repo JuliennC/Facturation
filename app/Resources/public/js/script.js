@@ -1,6 +1,10 @@
 $(document).ready(function() 
  {
-	 
+
+  //Pour empêcher les navigateurs de vouloir valider les forms (Symfony s'en occupe)
+  $("form").attr("novalidate",true);
+
+
   // Pour afficher le modal de connection correctement
   $('#modalConnection').appendTo("body") 
 	 
