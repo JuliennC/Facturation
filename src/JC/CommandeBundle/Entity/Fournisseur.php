@@ -88,6 +88,22 @@ class Fournisseur
     private $fax;
 
 
+	 /**
+     * @var string
+     *
+     * @ORM\Column(name="Contact", type="string", length=255, nullable=true)
+     * @Assert\Length(min=2,  minMessage="Veuillez entrer un nom de contact de fournisseur valide.")
+     */
+    private $contact;
+
+
+	 /**
+     * @var string
+     *
+     * @ORM\Column(name="EmailContact", type="string", length=255, nullable=true)
+     * @Assert\Regex("/^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/", message="Veuillez entrer une addresse email valide pour le fournisseur.")  
+     */
+    private $emailContact;
 
 
 
@@ -281,5 +297,51 @@ class Fournisseur
     
     
    
-    
+     /**
+     * Set contact
+     *
+     * @param string $contact
+     * @return Commande
+     */
+    public function setContact($contact)
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Get contact
+     *
+     * @return Service 
+     */
+    public function getContact()
+    {
+        return $this->contact;
+    }
+	 
+	
+	/**
+     * Set emailContact
+     *
+     * @param string $emailContact
+     * @return Commande
+     */
+    public function setEmailContact($emailContact)
+    {
+        $this->emailContact = $emailContact;
+
+        return $this;
+    }
+
+    /**
+     * Get emailContact
+     *
+     * @return Service 
+     */
+    public function getEmailContact()
+    {
+        return $this->emailContact;
+    }
+	 
 }

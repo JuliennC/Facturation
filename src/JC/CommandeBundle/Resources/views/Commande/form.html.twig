@@ -15,7 +15,7 @@
 				<legend>Livraison 
 				
                                     {# On ne donne la possibilite de choisir une livraison qu'au moment de creer la commande #}
-                                    {% if commande.etat == "Creee"%}
+
                                     
                                         <!-- Bouton execution modal -->
                                         <div class='pull-right'>
@@ -62,7 +62,6 @@
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
-                                    {%endif%}
                                 </legend>
                             
                                                             
@@ -101,7 +100,6 @@
                                     <!-- Bouton execution modal -->
                                     
                                     {# On ne donne la possibilite de choisir une livraison qu'au moment de creer la commande #}
-                                    {% if commande.etat == "Creee"%}
                                     
                                         <div class='pull-right'>
                                             <a class="clickable" data-toggle="modal" data-target="#modalFournisseur" data-container="body">
@@ -136,7 +134,7 @@
                                                                         <tr>
                                                                         
                                                                             <td onclick="setInfos('Fournisseur','{{fournisseur.nom}}', '{{fournisseur.adresse}}', 																					'{{fournisseur.complementAdresse}}', '{{fournisseur.ville}}',
-                                                                                    '{{fournisseur.codePostal}}','{{fournisseur.telephone}}', 																					'{{fournisseur.fax}}')">{{ fournisseur.nom }}</td>
+                                                                                    '{{fournisseur.codePostal}}','{{fournisseur.telephone}}', 																																	'{{fournisseur.fax}}', '{{fournisseur.contact}}', '{{fournisseur.emailContact}}')">{{ fournisseur.nom }}</td>
                                                                         </tr>
                                                                     {% endfor %}
 
@@ -147,7 +145,6 @@
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
-                                    {%endif%}
                                 </legend>
 					          	
 				<div class='row'>	          	

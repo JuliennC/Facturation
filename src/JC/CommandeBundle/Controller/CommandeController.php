@@ -269,11 +269,10 @@ class CommandeController extends Controller
                 // et le lien du fournisseur et la commande
 
                 if($etat === "Creee"){
-                    $this->CreeeToEnregistree($commande);
-                    $etat = "Enregistree";
-                
+                    $etat = "Enregistree";                
                 }
                 
+                $this->miseAJourLivraisonEtFournisseur($commande);
                         
                 
                             
@@ -406,12 +405,10 @@ class CommandeController extends Controller
 	  	// ---------- AUTRES FONCTIONS ----------
 	
         
-                /*
-	  	* Fonction qui enregistre les infos lorsqu'une commande n'est que Creee,
-                * elle enregistre les changements dans les tables livraison et fournisseur
-                * elle retourne la commande
+        /*
+	  	* Fonction qui enregistre les changements dans les tables livraison et fournisseur
 	  	*/
-	  	public function CreeeToEnregistree($commande) {
+	  	public function miseAJourLivraisonEtFournisseur($commande) {
                     			$em = $this->getDoctrine()->getManager();
 
                     // ----- On enregistre le lieux -----
@@ -456,6 +453,9 @@ class CommandeController extends Controller
                                 $fournisseur->setVille($commande->getVilleFournisseur());
                                 $fournisseur->setTelephone($commande->getTelephoneFournisseur());
                                 $fournisseur->setFax($commande->getFaxFournisseur());
+                                $fournisseur->setContact($commande->getContactFournisseur());
+                                $fournisseur->setEmailContact($commande->getEmailContactFournisseur());
+
                                 $em->persist($fournisseur);
                                 
                                 $commande->setFournisseur($fournisseur);

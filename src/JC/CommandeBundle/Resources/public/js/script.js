@@ -119,7 +119,7 @@ function changementEtatCommande(idC, etatC){
    
 
 
-function setInfos(type, nom, adresse, complementAdresse, ville, codePostal, telephone, fax){
+function setInfos(type, nom, adresse, complementAdresse, ville, codePostal, telephone, fax, contact, emailContact){
     
     console.log(type);
     document.getElementById('jc_commandebundle_commande_nom'+type).value = nom;
@@ -129,6 +129,13 @@ function setInfos(type, nom, adresse, complementAdresse, ville, codePostal, tele
     document.getElementById('jc_commandebundle_commande_codePostal'+type).value = codePostal;
     document.getElementById('jc_commandebundle_commande_telephone'+type).value = telephone;
     document.getElementById('jc_commandebundle_commande_fax'+type).value = fax;
+
+	if(type == "Fournisseur"){
+
+    	document.getElementById('jc_commandebundle_commande_contact'+type).value = contact;
+	    document.getElementById('jc_commandebundle_commande_emailContact'+type).value = emailContact;
+		
+	}
     
     $("#bouton_close_modal_"+type).click();
 }
@@ -196,11 +203,7 @@ function calculTotauxCommande(){
 		var pourcentage = tva.replace("%", "");
 
 		totalHT = parseFloat(totalHT) + parseFloat((quantite * prixUnitaire).toFixed(2));
-		totalTTC = parseFloat(totalTTC) + parseFloat(((quantite * prixUnitaire) * (1 + (pourcentage/100))).toFixed(2));
-		
-		console.log('Ligne : '+i+" : "+totalHT);		
-		console.log('Ligne : '+i+" : "+totalTTC);		
-
+		totalTTC = parseFloat(totalTTC) + parseFloat(((quantite * prixUnitaire) * (1 + (pourcentage/100))).toFixed(2));	
 	}
 	
 	
