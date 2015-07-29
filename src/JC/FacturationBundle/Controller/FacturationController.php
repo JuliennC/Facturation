@@ -93,7 +93,7 @@ class FacturationController extends Controller
     public function calculAction($nomCollectivite, $annee) {
 	    
 	    
-		$tabRes = $this->calculFacturation($nomCollectivite, $annee);
+		$tabRes = $this->calculFacturation($nomCollectivite, $annee, false);
 		
 
 		
@@ -134,7 +134,7 @@ class FacturationController extends Controller
 	    // On récupète toutes les activites
 		$listeActivite = $em->getRepository('JCCommandeBundle:Activite')->findAll();  
 
-		$tabRes = $this->calculFacturation($nomCollectivite, $annee);
+		$tabRes = $this->calculFacturation($nomCollectivite, $annee, true);
 
 
 		
@@ -261,7 +261,7 @@ class FacturationController extends Controller
 	 * 					 - 'tabMassesSalariales' qui contient les informations des masses salariales que la collectivite doit payer
 	 */
     
-	 public function calculFacturation($nomCollectivite, $annee) {
+	 public function calculFacturation($nomCollectivite, $annee, $pdf) {
 		 
 		 
 		$em = $this->getDoctrine()->getManager();
@@ -345,7 +345,7 @@ class FacturationController extends Controller
 
 					//Si le $info->getNombre() == 0, c'est qu'il y a sans doute eu un oubli dans la table des infos
 					//On met donc un flash message Warning pour avertir, et être sur que cela est volontaire
-					if ($info->getNombre() === 0 || $info->getNombre() === "0"){
+					if (($info->getNombre() === 0 || $info->getNombre() === "0") && ! $pdf){
 						
 						$session = new Session();
 						$session->getFlashBag()->add('Warning', 'Attention : La clé '.$info->getCleRepartition()->getNom().' est à 0 pour '.$collectivite->getNom());
@@ -361,10 +361,12 @@ class FacturationController extends Controller
 					//Si le total des clès fait 0, alors on change en 1 ( ce qui ne change rien, car le seul cas serait 0/0 --> donc 0/1 )
 					// et c'est qu'il y a sans doute eu un oubli dans la table des infos
 					//On met donc un flash message Warning pour avertir, et être sur que cela est volontaire
-					if ($totalCle === 0 || $totalCle === "0") {
+					if (($totalCle === 0 || $totalCle === "0") ) {
 						
-						$session = new Session();
-						$session->getFlashBag()->add('Warning', 'Attention : La somme des clés '.$info->getCleRepartition()->getNom().' = 0.');
+						if(! $pdf){
+							$session = new Session();
+							$session->getFlashBag()->add('Warning', 'Attention : La somme des clés '.$info->getCleRepartition()->getNom().' = 0.');
+						}
 						
 						$totalCle = 1;
 					}
@@ -443,7 +445,7 @@ class FacturationController extends Controller
 		
 		
 		//Si aucune masse salariale n'est définie pour l'année, on le signale, cela doit être une erreur
-		if (sizeof($listeMassesSalarialesAnnee) === 0){
+		if ((sizeof($listeMassesSalarialesAnnee) === 0) && ! $pdf){
 			
 			$session = new Session();
 			$session->getFlashBag()->add('Warning', 'Attention : Aucune masse salariale n\'a pas été définie pour l\'année '.$annee.'.');
@@ -494,10 +496,12 @@ class FacturationController extends Controller
 			*	Cela doit être une erreur car sinon la masse salariale du service ne sera JAMAIS repartie sur les collectivites
 			*/
 				
-			if($nbCommandeService === 0 && $ms->getMontant()){
-					
-				$session = new Session();
-				$session->getFlashBag()->add('Warning', 'Attention : Aucune commande ne concerne le service '.$service.'. Ce qui veut dire que la masse salariale du service ('.$ms->getMontant().' €) ne sera pas répartie sur les collectivites !');
+			if(($nbCommandeService === 0 && $ms->getMontant()) ){
+				
+				if(! $pdf){
+					$session = new Session();
+					$session->getFlashBag()->add('Warning', 'Attention : Aucune commande ne concerne le service '.$service.'. Ce qui veut dire que la masse salariale du service ('.$ms->getMontant().' €) ne sera pas répartie sur les collectivites !');	
+				}
 					
 				//On passe à un autre service
 				continue;

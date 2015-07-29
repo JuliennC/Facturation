@@ -50,7 +50,7 @@
 						<td>{{ commande.totalTTC|number_format(2, ',', ' ')}}</td>
 						<td> 
 						
-							{% if (commande.etat == "Engagee") or (commande.etat == "Payee") %}
+							{% if (commande.etat == "Engagee") or (commande.etat == "Paiement") or (commande.etat == "Terminee") %}
 								<a class='btn btn-info col-md-10 col-md-offset-1' href="{{ path('jc_commande_detail', {'id': commande.id}) }}" >Voir détail</a> 
 						 	
 						 	{% else %}

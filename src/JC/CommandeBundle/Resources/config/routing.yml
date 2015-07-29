@@ -25,6 +25,13 @@ jc_commande_modification:
         expose: true
 
 
+      
+        
+jc_commande_pdf_facture:
+    path:     /commande/pdf/{idCommande}/{envoyer}
+    defaults: { _controller: JCCommandeBundle:Commande:genererPDFFacture }
+  
+  
 
 
 #Route pour action ajax

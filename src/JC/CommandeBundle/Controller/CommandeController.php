@@ -658,5 +658,37 @@ class CommandeController extends Controller
             }
    	        	
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		   
+    		
+
+     public function genererPDFFactureAction($idCommande, $envoyer)
+    {
+		
+		//On récupere les activites
+		$em = $this->getDoctrine()->getManager();
+	  	    
+	  	//On récupère la commande
+	    $commande = $em->getRepository('JCCommandeBundle:Commande')->findOneById($idCommande) ;				
+	  	
+	  	
+		$content = $this->renderView('JCCommandeBundle:Commande:pdf_facture.html.twig', array('commande' => $commande));
+		 
+	    $pdfData = $this->get('obtao.pdf.generator')->outputPdf($content,array('font'=>'Arial','format'=>'P'));
+	
+	    $response = new Response($pdfData);
+	    $response->headers->set('Content-Type', 'application/pdf');
+	
+	    return $response;
+	}
 	  	  
 }
