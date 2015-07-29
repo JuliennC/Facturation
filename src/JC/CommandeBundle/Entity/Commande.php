@@ -82,6 +82,15 @@ class Commande
      */
     private $totalTTC;
     
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Total_HT", type="decimal", scale=2, nullable=false)
+     */
+    private $totalHT;
+    
+    
 
 // DEBUT CLES ETRANGERES
 
@@ -807,6 +816,35 @@ class Commande
 		$this->totalTTC = $total;
 	   return $this;
 	}
+  
+  
+  
+	/**
+     * Get TotalHT
+     *
+     * @return string
+     */
+
+    public function getTotalHT()
+	{
+	   return  "".$this->totalHT;
+	}
+   
+  
+	
+	/**
+     * Set TotalHT
+     *
+     * @param string $total
+     * @return Commande
+     */
+
+    public function setTotalHT($total)
+	{
+		$this->totalHT = $total;
+	   return $this;
+	}
+  
   
   
     /**

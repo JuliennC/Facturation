@@ -350,26 +350,37 @@
 		      	
 			  	</tr>
                                 
-                                {% set i = 0 %}
-                                {% for ligne in form.listeLignesCommande %}
+                    {% set i = 0 %}
+                    {% for ligne in form.listeLignesCommande %}
 
-                    <tr>
-                    
-						<td> <a class='supprimer_ligne_commande'><span class="glyphicon glyphicon-remove-circle"></span></a> </td>
-						<td> {{ form_widget(ligne.libelle, {'attr': {'class':'col-md-12'}}) }} </td>
-						<td> {{ form_widget(ligne.commentaire, {'attr': {'class':'col-md-12'}}) }} </td>
-						<td> {{ form_widget(ligne.reference, {'attr': {'class':'col-md-12'}}) }} </td>
-						<td> {{ form_widget(ligne.quantite, {'attr': {'class':'col-md-12', 'onkeyup':'calcul_TTC('~i~');'}}) }} </td>
-						<td> {{ form_widget(ligne.prixUnitaire, {'attr': {'class':'col-md-11', 'onkeyup':'calcul_TTC('~i~');'}}) }} €</td>
-						<td> {{ form_widget(ligne.tva, {'attr': {'class':'col-md-12', 'onchange':'calcul_TTC('~i~');'}}) }}</td>
-                        <td> <span class='col-md-12' id='total_TTC_{{i}}' value='0.00 €'></spans> </td>
-                        	{{ form_widget(ligne.totalTTC) }}
-						
-                            <script> calcul_TTC({{i}}); </script>
-					</tr>
-					{% set i = i+1 %}
+	                    <tr class='ligne_commande'>
+	                    
+							<td> <a class='supprimer_ligne_commande'><span class="glyphicon glyphicon-remove-circle"></span></a> </td>
+							<td> {{ form_widget(ligne.libelle, {'attr': {'class':'col-md-12'}}) }} </td>
+							<td> {{ form_widget(ligne.commentaire, {'attr': {'class':'col-md-12'}}) }} </td>
+							<td> {{ form_widget(ligne.reference, {'attr': {'class':'col-md-12'}}) }} </td>
+							<td> {{ form_widget(ligne.quantite, {'attr': {'class':'col-md-12 quantite', 'onkeyup':'calcul_TTC('~i~');'}}) }} </td>
+							<td> {{ form_widget(ligne.prixUnitaire, {'attr': {'class':'col-md-11 prixUnitaire', 'onkeyup':'calcul_TTC('~i~');'}}) }} €</td>
+							<td> {{ form_widget(ligne.tva, {'attr': {'class':'col-md-12 tva', 'onchange':'calcul_TTC('~i~');'}}) }}</td>
+	                        <td> <span class='col-md-12' id='total_TTC_{{i}}'>{{ligne.vars.value.totalTTC }}€</span> </td>
+	                        	{{ form_widget(ligne.totalTTC) }}
+							
+						</tr>
+						{% set i = i+1 %}
 
 					{% endfor %}
+					
+					
+					<tr id='ligne_totaux'>
+			        
+			        	<td colspan=8 >
+			        		
+			        		<div class='col-md-6'> Total HT = <span id='total_commande_HT'>{{commande.totalHT}}</span> €</div>			        	
+			        		<div class='col-md-6'> Total TTC = <span id='total_commande_TTC'>{{commande.totalTTC}}</span> €</div>			        	
+
+			        	</td>
+						
+			        </tr>
 			  
 			    </tbody>
 			</table>

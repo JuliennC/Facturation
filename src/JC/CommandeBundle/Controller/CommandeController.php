@@ -348,19 +348,25 @@ class CommandeController extends Controller
 				
 				
 			
-			    $montantCommande = 0;
+			    $montantTTCCommande = 0;
+			    $montantHTCommande = 0;
+
 			    
 			    foreach($nouveauTabLigneCommande as $n){
 				    
-				    //On additionne le montant total de la commande
-				    $montantCommande += $n->getTotalTTC();
+				    //On additionne le montant total TTC de la commande
+				    $montantTTCCommande += $n->getTotalTTC();
+				    
+				    //On additionne le montant total HT de la commande
+				    $montantHTCommande += ($n->getQuantite() * $n->getPrixUnitaire()) ;
 				    
 					$n -> setCommande($commande);
 					$em->persist($n);
 			    }
 
 				//On remet le bon montant de la commnande
-				$commande -> setTotalTTC($montantCommande);
+				$commande -> setTotalTTC($montantTTCCommande);
+				$commande -> setTotalHT($montantHTCommande);
 					
 				$em->persist($commande);
         		$em->flush();

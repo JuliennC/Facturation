@@ -160,11 +160,59 @@ function calcul_TTC(id){
 
     var total = (quantite * prix_unitaire * (1 + (p/100))).toFixed(2);
 
+	//On affiche le total de la ligne
     var label_total = document.getElementById('total_TTC_'+id);
     label_total.innerHTML = total+"€";
     
+    //On marque (dans le champs caché du formulaire) le total de la ligne
     document.getElementById('jc_commandebundle_commande_listeLignesCommande_'+id+'_totalTTC').value = total;
+
+	calculTotauxCommande();
+
 }  
+
+
+
+
+/*
+*	Fonction qui calcule le total HT et TTC d'une commande
+*/
+function calculTotauxCommande(){
+
+	//on récupère toutes les lignes commandes
+	var listeLignesCommande = document.getElementsByClassName("ligne_commande");
+	
+	var totalHT = 0;
+	var totalTTC = 0;
+	
+	for (var i = 0, len = listeLignesCommande.length; i < len; i++) {
+		
+		var ligne = listeLignesCommande[i];
+
+		var quantite = ligne.getElementsByClassName("quantite")[0].value;
+		var prixUnitaire = ligne.getElementsByClassName("prixUnitaire")[0].value;
+		var select = ligne.getElementsByClassName("tva")[0];
+		var tva = select.options[select.selectedIndex].text;
+		var pourcentage = tva.replace("%", "");
+
+		totalHT = parseFloat(totalHT) + parseFloat((quantite * prixUnitaire).toFixed(2));
+		totalTTC = parseFloat(totalTTC) + parseFloat(((quantite * prixUnitaire) * (1 + (pourcentage/100))).toFixed(2));
+		
+		console.log('Ligne : '+i+" : "+totalHT);		
+		console.log('Ligne : '+i+" : "+totalTTC);		
+
+	}
+	
+	
+	
+
+	//On marque le total de la commande HT
+    document.getElementById('total_commande_HT').textContent = totalHT;
+
+	//On marque le total de la commande TTC
+    document.getElementById('total_commande_TTC').textContent = totalTTC;
+                //parseFloat
+};
 
 
 
@@ -266,15 +314,15 @@ $(document).ready(function() {
 						"</td>"+
 						
 						"<td>"+ 
-							"<input type='text' onkeyup='calcul_TTC(__name__);' id='jc_commandebundle_commande_listeLignesCommande___name___quantite' name='jc_commandebundle_commande[listeLignesCommande][__name__][quantite]' required='required' class='col-md-12'>"+ 
+							"<input type='text' onkeyup='calcul_TTC(__name__);' id='jc_commandebundle_commande_listeLignesCommande___name___quantite' name='jc_commandebundle_commande[listeLignesCommande][__name__][quantite]' required='required' class='col-md-12 quantite'>"+ 
 						"</td>"+
 						
 						"<td>"+
-							"<input type='text' onkeyup='calcul_TTC(__name__);'  id='jc_commandebundle_commande_listeLignesCommande___name___prixUnitaire' name='jc_commandebundle_commande[listeLignesCommande][__name__][prixUnitaire]' required='required' class='col-md-11'> €"+
+							"<input type='text' onkeyup='calcul_TTC(__name__);'  id='jc_commandebundle_commande_listeLignesCommande___name___prixUnitaire' name='jc_commandebundle_commande[listeLignesCommande][__name__][prixUnitaire]' required='required' class='col-md-11 prixUnitaire'> €"+
 						"</td>"+
 							
 						"<td>"+
-						 	"<select onchange='calcul_TTC(__name__);' id='jc_commandebundle_commande_listeLignesCommande___name___tva' name='jc_commandebundle_commande[listeLignesCommande][__name__][tva]' class='col-md-12'>";
+						 	"<select onchange='calcul_TTC(__name__);' id='jc_commandebundle_commande_listeLignesCommande___name___tva' name='jc_commandebundle_commande[listeLignesCommande][__name__][tva]' class='col-md-12 tva'>";
 						 	
 						 	//On va chercher les taux de TVA dans la base
 						 	
@@ -324,8 +372,8 @@ $(document).ready(function() {
 								        newLigne = newLigne.replace(/__name__/g, index);
 								        
 								        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
-								        var newLi = jQuery('<tr></tr>').html(newLigne);
-								        newLi.appendTo(tableL);
+								        var newLi = jQuery('<tr class="ligne_commande"></tr>').html(newLigne);
+								        $('#ligne_totaux').before(newLi);
 								        
 								        //	On remet la valeur par d√©faut
 										$.ajaxSetup({async: true});
