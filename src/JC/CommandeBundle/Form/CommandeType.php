@@ -131,7 +131,7 @@ class CommandeType extends AbstractType
             ->add('codePostalLivraison', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('villeLivraison', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('telephoneLivraison', 'text', array('required' => true , 'error_bubbling' => true))
-			->add('faxLivraison', 'text', array('required' => true , 'error_bubbling' => true))
+			->add('faxLivraison', 'text', array('required' => false , 'error_bubbling' => true))
 
                                                                                 
             ->add('nomFournisseur', 'text', array('required' => true , 'error_bubbling' => true))
@@ -140,7 +140,7 @@ class CommandeType extends AbstractType
             ->add('codePostalFournisseur', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('villeFournisseur', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('telephoneFournisseur', 'text', array('required' => true , 'error_bubbling' => true))
-            ->add('faxFournisseur', 'text', array('required' => true , 'error_bubbling' => true))
+            ->add('faxFournisseur', 'text', array('required' => false , 'error_bubbling' => true))
             ->add('contactFournisseur', 'text', array('required' => true , 'error_bubbling' => true))
             ->add('emailContactFournisseur', 'text', array('required' => true , 'error_bubbling' => true))
 
