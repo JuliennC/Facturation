@@ -32,7 +32,8 @@
 	
 			--><button class='btn btn-success col-md-2 col-md-offset-3 vcenter' data-toggle="modal" data-target="#modalFacturePDF">PDF</button>
 	
-		</div>
+			</div>
+			
 			<!-- Modal -->
 			<div class="modal fade" id="modalDesengager" tabindex="-1" role="dialog" aria-labelledby="modalDesengager">
 			  	<div class="modal-dialog" role="document">
@@ -61,7 +62,9 @@
 			{# ----- Si la commande est "Paiement", on propose de continuer le paiement ----- #}
 
 			{% elseif commande.etat == "Paiement" %}
-						
+				
+				--><div class='vcenter col-md-6 col-md-offset-1'><!--
+				
 				--><button class='btn btn-warning col-md-3  vcenter' data-toggle="modal" data-target="#modalPayer">Payer</button><!--
 			
 				--><button class='btn btn-warning col-md-3 col-md-offset-1 vcenter' data-toggle="modal" data-target="#modalTerminer">Terminer</button><!--
@@ -97,7 +100,7 @@
 				{% elseif commande.etat == "Terminee" %}
 					
 						
-					
+				--><div class='vcenter col-md-6 col-md-offset-1'>
 					
 					
 				{% else %}
