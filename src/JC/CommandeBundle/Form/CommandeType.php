@@ -68,6 +68,15 @@ class CommandeType extends AbstractType
                                                 ))
 
 
+			->add('dateEnvoi', 'date', array('widget' => 'single_text',
+                                                'input' => 'datetime',
+                                                'format' => 'dd/MM/yyyy',
+                                                'attr' => array('class' => 'date'),
+                                                'error_bubbling' => true
+                                                ))
+							
+
+
             ->add('engagement', 'text', array('required' => false , 'error_bubbling' => true))
             ->add('imputation',  'entity', array(
 				'class'    => 'JCCommandeBundle:Imputation',

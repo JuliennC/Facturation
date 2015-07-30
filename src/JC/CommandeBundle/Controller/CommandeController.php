@@ -697,7 +697,7 @@ class CommandeController extends Controller
 		
 		if($envoyer === 'true'){
 			
-			$content = $this->renderView('JCCommandeBundle:Commande:pdf_facture.html.twig', array('commande' => $commande, 'tabLignesCommande'=>$tabLignesCommande));
+			$content = $this->renderView('JCCommandeBundle:Commande:pdf_facture_a_envoyer.html.twig', array('commande' => $commande, 'tabLignesCommande'=>$tabLignesCommande));
 
 		    $pdfData = $this->get('obtao.pdf.generator')->outputPdf($content,array('font'=>'Arial','format'=>'p'));
 		
@@ -705,10 +705,36 @@ class CommandeController extends Controller
 		    $response->headers->set('Content-Type', 'application/pdf');
 		    
 			return $response;
+			
+			
 
-		}
+		} else if ($envoyer === 'false') {
 		
-		else {
+		
+			//On récupère les collectivites concernées
+		    $listeCollectivites = $em->getRepository('JCCommandeBundle:CommandeConcerneCollectivite')->findByCommande($commande);	
+		  	
+		  	//Pour le PDF il faut envoyé un tableau du style : ("a" => "1", "b" => "2")
+		  	$tabCollectivites = array();	
+		  	
+		  	foreach($listeCollectivites as $collectivite){
+	
+		  		$tabCollectivites[$collectivite->getId()] = $collectivite;
+		  	}
+		
+		
+			$content = $this->renderView('JCCommandeBundle:Commande:pdf_facture_a_concerver.html.twig', array('commande' => $commande, 'tabLignesCommande'=>$tabLignesCommande, 'tabCollectivites'=>$tabCollectivites));
+
+		    $pdfData = $this->get('obtao.pdf.generator')->outputPdf($content,array('font'=>'Arial','format'=>'p'));
+		
+		    $response = new Response($pdfData);
+		    $response->headers->set('Content-Type', 'application/pdf');
+		    
+			return $response;	
+	 
+	 
+	 
+	 	} else {
 			
 				    return $this->render('JCCommandeBundle:Commande:pdf_facture.html.twig', array('commande' => $commande, 'tabLignesCommande'=>$tabLignesCommande));
 

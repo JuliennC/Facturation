@@ -238,7 +238,7 @@
 							<p class='col-md-4'><b>Suivi par</b> :</p>    
 							<div> {{ form_widget(form.utilisateur, {'attr': {'class':'col-md-6'}} )}} </div>
 						</div> 
-						<p><b>Date creation</b> : {{ date()|date('d/m/Y') }}</p>  
+						<p><b>Date d'envoi</b> : {{ form_widget(form.dateEnvoi, {'attr' : {'class':'datepicker_readonly'}}) }}</p>  
 						
 
 						<p><b>Date de livraison</b> : {{ form_widget(form.dateLivraison, {'attr' : {'class':'datepicker_readonly'}}) }}	</p>  				

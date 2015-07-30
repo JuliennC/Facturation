@@ -45,6 +45,16 @@ class Commande
     private $dateLivraison;
 
 
+	/**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Date_Envoi", type="datetime", nullable=true)
+	 * @Assert\DateTime()
+     */
+    private $dateEnvoi;
+
+
+
     /**
      * @var string
      *
@@ -762,6 +772,32 @@ class Commande
     {
         return $this->dateLivraison;
     }
+
+
+
+	/**
+	 * Set dateEnvoi
+     *
+     * @param \DateTime $dateEnvoi
+     * @return Commande
+     */
+    public function setDateEnvoi($dateEnvoi)
+    {
+        $this->dateEnvoi = $dateEnvoi;
+
+        return $this;
+    }
+
+    /**
+     * Get dateEnvoi
+     *
+     * @return \DateTime 
+     */
+    public function getDateEnvoi()
+    {
+        return $this->dateEnvoi;
+    }
+
 
     
 

@@ -26,17 +26,16 @@
 
 <page backtop="1%" backbottom="5%" backleft="5%" backright="5%">
 
-	<img src="{{ web_path~asset('/bundles/jcfacturation/images/logo_cugn.jpg') }}" alt="Example"/>
 	
 	
-	<h3 id="bon_interne" style="font-weight:lighter;" class="center"> DETAIL A COMMANDER </h3>
-	
-	
+	<h3 id="bon_interne" style="font-weight:lighter;" class="center"> BON INTERNE  N°{{commande.id}}</h3>
 	
 	
 	
 	
-	<table class="border_test" style="margin-top:50px" >
+	
+	
+	<table class="border_test" style="margin-top:30px" >
 	
 	
 		<tr>
@@ -160,7 +159,7 @@
 	
 	
 		<tr>
-			<td colspan='2' style='height:50px'> {{commande.libelleFacturation}} </td>
+			<td colspan='2' style='height:50px; '> {{commande.libelleFacturation}} </td>
 		</tr>
 	
 	
@@ -168,25 +167,49 @@
 
 		<tr>
 			<td> 
-				<div class="border_2" style='height:70px'>
-					<div class='center vcenter' style='height:40px'> Réference interne de la commande </div>
+				<div class="border_2" style='height:60px'>
+					<div class='center vcenter' style='height:30px'> Réference interne de la commande </div>
 					<div class='center vcenter'> {{commande.reference}} </div>
 				</div>
 			</td>
+			
+			
+			<td>
+				<div style='margin-left:50px; font-size:12px;'> Code Activite : {{commande.activite.id}} {{commande.activite.nom}} </div>
+				<div style='margin-left:50px; font-size:12px;'> Code Application : {{commande.application.id}}  {{commande.application.nom}}  </div>			
+			</td>
+			
 		</tr>
 	
 	
 
 
 		<tr>
-			<td> Réf interne : ?? </td>
 			<td> 
-				<div style='margin-left:90px;'> Affaire suivie par {{commande.utilisateur}} </div>
-				<div style='margin-left:90px;'> Date de création {{commande.dateCreation |date('Y-m-d')}} </div>
+				<div class='vcenter' style="height:40px">Numéro d'engagement : {{commande.engagement}} </div>	
+
+				<div style="height:20px">Date de créatoin : {{commande.dateCreation|date('d-m-Y')}} </div>				
+				{% if commande.dateEnvoi|date('d-m-Y') != ""%}
+					<div style="height:20px"> Date d'envoi : {{commande.dateEnvoi |date('d-m-Y')}} </div>
+				{% else %}
+					<div style="height:20px"> Date d'envoi : - </div>
+				{% endif %}				
+		</td>
+			
+			
+		</tr>
+		
+		
+		
+		
+		<tr>
+			<td> 
+				<div > Affaire suivie par {{commande.utilisateur}} </div>
 			</td>
 		</tr>
 		
-	
+		
+		
 	</table>
 	
 	
@@ -235,19 +258,24 @@
 		</tr>
 		
 		
-		
-
-		<tr>
-			<td colspan="6"> 
-
-					<div style="height:30px; margin-left:550px;" class="center vbottom">Le Directeur</div>
-					<div style="height:30px; margin-left:550px;" class="center vcenter">Marcel HAYON </div>
-				
-			</td>
-		</tr>
-		
-		
 	</table>
+	
+	
+	
+	
+	<div style="margin-top:30px" class="border_1">
+		<div style="margin-top:30px; margin-left:30px"> Ventilation : {{commande.ventilation}} </div>
+		
+		
+		{% for ccc in tabCollectivites %}
+		
+			<div style="margin-left:250px; height:20px;"> {{ccc.collectivite.nom}} {% if ccc.commande.ventilation == "directe" %} : {{ccc.repartition}} {% endif %} </div>
+		
+		
+		{% endfor %}
+	
+	<div style="margin-bottom:30px"></div>
+	</div>
 	
 	
 	

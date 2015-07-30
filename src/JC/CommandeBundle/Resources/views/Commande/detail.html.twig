@@ -221,6 +221,12 @@
 					<p><b>Suivi par</b> : {{ commande.utilisateur }}</p>
 					<p><b>Date création</b> : {{ commande.dateCreation|date('d/m/Y') }}</p>
 					
+					{% if commande.dateEnvoi %}
+						<p><b>Date d'envoi</b> : {{ commande.dateEnvoi|date('d/m/Y') }}</p>					
+					{% else %}
+						<p><b>Date de d'envoi</b> : - </p>
+					{% endif %}						
+						
 					<p><b>Date d'engagement</b> : {{ commande.dateEngagement|date('d/m/Y') }}</p>
 
 					
