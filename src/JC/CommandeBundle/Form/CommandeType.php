@@ -71,9 +71,8 @@ class CommandeType extends AbstractType
             ->add('engagement', 'text', array('required' => false , 'error_bubbling' => true))
             ->add('imputation',  'entity', array(
 				'class'    => 'JCCommandeBundle:Imputation',
-				'property' => 'libelle',
 				'query_builder' => function(ImputationRepository $repo) {
-									return $repo->queryFindAll();} ,
+									return $repo->getQueryOrdreAlpha();} ,
 				'error_bubbling' => true))
 				
 				

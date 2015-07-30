@@ -13,6 +13,13 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Imputation
 {
+	
+	public function __tostring(){
+		return $this->sousFonction.' - '.$this->article;
+	}
+	
+	
+	
     /**
      * @var integer
      *

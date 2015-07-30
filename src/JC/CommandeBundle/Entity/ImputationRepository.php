@@ -25,7 +25,7 @@ class ImputationRepository extends EntityRepository
 	public function getQueryOrdreAlpha() {
     return $this
       ->createQueryBuilder('i')
-      ->orderBy('i.libelle', 'ASC')
+      ->orderBy('i.article', 'ASC')
       ->orderBy('i.sousFonction', 'ASC')
 
     ;
