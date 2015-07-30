@@ -4,72 +4,108 @@
 
 {% block jccommande_body %}
 
-	<div class='row'>
+<div class='row'>
 	
+	<div class='col-md-5 vcenter'>
 		{% if commande.etat == "Creee" %}
-		
-			<div class='h3 col-md-6'>Création d'une commande </div>
-		
+			
+			<div class='h3'>Création d'une commande </div>
+			
 		{% else %}
-			
-			<div class='h3 col-md-6'>Modification de la commande n° : {{commande.id}} </div>
-
-		{% endif%}
-		<div class='pull-right  col-md-6'> 
-			
-			<p class='col-md-5 h3 vcenter'>Etat : {{commande.etat}} </p><!--
-			
-			{# Si l'utilisateur a le role compta, alors il peut changer engager la commande (ou la supprimer) #}
-			
-			{% if is_granted('ROLE_COMPTA') %}
-			
-				{# ----- Si la commande est "Enregistree", on propose de la passer "Engager" ----- #}
 				
-				{% if commande.etat == "Enregistree" %}
-					--><button class='btn btn-warning col-md-3 vcenter' data-toggle="modal" data-target="#modalEngager">Engager</button><!--
-					
-					--><button class='btn btn-danger col-md-3 col-md-offset-1 vcenter' data-toggle="modal" data-target="#modalSupprimer">Supprimer</button>
+			<div class='h3'>Modification de la commande n° : {{commande.id}} </div>
 	
-					<!-- Modal Engager -->
-					<div class="modal fade" id="modalEngager" tabindex="-1" role="dialog" aria-labelledby="modalEngager">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					        <h4 class="modal-title">Êtes-vous sûr ?</h4>
-					      </div>
-					      <div class="modal-body">
-						  	<p>En marquant cette commande comme "Engagee" vous ne pourrez-plus la modifier.</p>
-						  	<p>Êtes-vous sur de vouloir changer le statut de la commande ?</p>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
-					        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande({{commande.id}},'Engagee')">Confirmer</button>
-					      </div>
+		{% endif%}
+
+		<div class='h3'>Etat : {{commande.etat}} </div>
+
+	</div><!--
+			
+
+		{# Si l'utilisateur a le role compta, alors il peut changer engager la commande (ou la supprimer) #}
+			
+		{% if is_granted('ROLE_COMPTA') %}
+
+
+			
+			{# ----- Si la commande est "Enregistree", on propose de la passer "Engager" ----- #}
+				
+			{% if commande.etat == "Enregistree" %}
+
+				--><div class='vcenter col-md-6 col-md-offset-1'><!--
+
+				--><button class='btn btn-warning col-md-3 vcenter' data-toggle="modal" data-target="#modalEngager">Engager</button><!--
+					
+				--><button class='btn btn-danger col-md-3 col-md-offset-1 vcenter' data-toggle="modal" data-target="#modalSupprimer">Supprimer</button><!--
+	
+				--><button class='btn btn-success col-md-2 col-md-offset-3 vcenter' data-toggle="modal" data-target="#modalFacturePDF">PDF</button>
+
+			</div>
+				
+				<!-- Modal Engager -->
+				<div class="modal fade" id="modalEngager" tabindex="-1" role="dialog" aria-labelledby="modalEngager">
+					<div class="modal-dialog" role="document">
+				    	<div class="modal-content">
+					    	<div class="modal-header">
+					        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">Êtes-vous sûr ?</h4>
+							</div>
+							<div class="modal-body">
+						  		<p>En marquant cette commande comme "Engagee" vous ne pourrez-plus la modifier.</p>
+						  		<p>Êtes-vous sur de vouloir changer le statut de la commande ?</p>
+						  	</div>
+						  	<div class="modal-footer">
+					        	<button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
+								<button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande({{commande.id}},'Engagee')">Confirmer</button>
+							</div>
 					    </div>
-					  </div>
 					</div>
+				</div>
+				
+				
 					
 					
-					<!-- Modal  Supprimer-->
-					<div class="modal fade" id="modalSupprimer" tabindex="-1" role="dialog" aria-labelledby="modalSupprimer">
-					  <div class="modal-dialog" role="document">
+				<!-- Modal  Supprimer-->
+				<div class="modal fade" id="modalSupprimer" tabindex="-1" role="dialog" aria-labelledby="modalSupprimer">
+					<div class="modal-dialog" role="document">
 					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					        <h4 class="modal-title">Êtes-vous sûr ?</h4>
-					      </div>
-					      <div class="modal-body">
-						  	<p>En marquant cette commande comme "Supprimee" vous ne pourrez-plus la modifier.</p>
-						  	<p>Êtes-vous sur de vouloir changer le statut de la commande ?</p>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
-					        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande({{commande.id}},'Supprimee')">Confirmer</button>
-					      </div>
+					    	<div class="modal-header">
+					        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">Êtes-vous sûr ?</h4>
+							</div>
+							<div class="modal-body">
+						  		<p>En marquant cette commande comme "Supprimee" vous ne pourrez-plus la modifier.</p>
+						  		<p>Êtes-vous sur de vouloir changer le statut de la commande ?</p>
+						  	</div>
+						  	<div class="modal-footer">
+					        	<button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
+								<button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande({{commande.id}},'Supprimee')">Confirmer</button>
+							</div>
 					    </div>
-					  </div>
 					</div>
+				</div>
+				
+				
+				
+				
+				<div class="modal fade" id="modalFacturePDF" tabindex="-1" role="dialog" aria-labelledby="modalFacturePDF">
+					  	<div class="modal-dialog" role="document">
+					    	<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title">Quel type de facture voulez-vous ?</h4>
+								</div>
+								<div class="modal-body">
+									<div class='row'>
+										<div  class='col-md-12'>
+										<a class='btn btn-info col-md-4 col-md-offset-1' href=" {{ path('jc_commande_pdf_facture', {idCommande : commande.id, envoyer : 'true' } ) }}" target="_blank"> Facture à envoyer </a>
+										<a class='btn btn-info col-md-4 col-md-offset-2' href=" {{ path('jc_commande_pdf_facture', {idCommande : commande.id, envoyer : 'false' } ) }}" target="_blank"> Facture à concerver </a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>			
 					
 				
 				{# NE PAS SUPPRIMER  !!!!!#}
@@ -78,26 +114,33 @@
 				{% endif %}
 				
 
-			{# NE PAS SUPPRIMER  !!!!!#}				
-			{% else %}
-				 -->
-			{% endif %}
+		{% else %}
+	
+				--><button class='btn btn-success col-md-2 col-md-offset-3 vcenter' data-toggle="modal" data-target="#modalFacturePDF">PDF</button>
+	
+	
+				<div class="modal fade" id="modalFacturePDF" tabindex="-1" role="dialog" aria-labelledby="modalFacturePDF">
+					  	<div class="modal-dialog" role="document">
+					    	<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title">Quel type de facture voulez-vous ?</h4>
+								</div>
+								<div class="modal-body">
+									<div class='row'>
+										<div  class='col-md-12'>
+										<a class='btn btn-info col-md-4 col-md-offset-1' href=" {{ path('jc_commande_pdf_facture', {idCommande : commande.id, envoyer : 'true' } ) }}" target="_blank"> Facture à envoyer </a>
+										<a class='btn btn-info col-md-4 col-md-offset-2' href=" {{ path('jc_commande_pdf_facture', {idCommande : commande.id, envoyer : 'false' } ) }}" target="_blank"> Facture à concerver </a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>				
+	
+	{% endif %}
 			
 						
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-
-		</div>
 	</div>
 	
   {{ include("JCCommandeBundle:Commande:form.html.twig") }}
