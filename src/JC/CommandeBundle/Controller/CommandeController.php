@@ -678,17 +678,41 @@ class CommandeController extends Controller
 		$em = $this->getDoctrine()->getManager();
 	  	    
 	  	//On récupère la commande
-	    $commande = $em->getRepository('JCCommandeBundle:Commande')->findOneById($idCommande) ;				
+	    $commande = $em->getRepository('JCCommandeBundle:Commande')->findOneById($idCommande);				
+	  	
+	  	//On récupère les lignes de la commande
+	    $listeLignesCommande = $em->getRepository('JCCommandeBundle:LigneCommande')->findByCommande($commande);	
+	  	
+	  	//Pour le PDF il faut envoyé un tableau du style : ("a" => "1", "b" => "2")
+	  	$tabLignesCommande = array();
+
+
+	  	foreach($listeLignesCommande as $ligne){
+
+	  		$tabLignesCommande[$ligne->getId()] = $ligne;
+	  	}
 	  	
 	  	
-		$content = $this->renderView('JCCommandeBundle:Commande:pdf_facture.html.twig', array('commande' => $commande));
-		 
-	    $pdfData = $this->get('obtao.pdf.generator')->outputPdf($content,array('font'=>'Arial','format'=>'p'));
-	
-	    $response = new Response($pdfData);
-	    $response->headers->set('Content-Type', 'application/pdf');
-	
-	    return $response;
+	  	
+		
+		if($envoyer === 'true'){
+			
+			$content = $this->renderView('JCCommandeBundle:Commande:pdf_facture.html.twig', array('commande' => $commande, 'tabLignesCommande'=>$tabLignesCommande));
+
+		    $pdfData = $this->get('obtao.pdf.generator')->outputPdf($content,array('font'=>'Arial','format'=>'p'));
+		
+		    $response = new Response($pdfData);
+		    $response->headers->set('Content-Type', 'application/pdf');
+		    
+			return $response;
+
+		}
+		
+		else {
+			
+				    return $this->render('JCCommandeBundle:Commande:pdf_facture.html.twig', array('commande' => $commande, 'tabLignesCommande'=>$tabLignesCommande));
+
+		}
 	}
 	  	  
 }

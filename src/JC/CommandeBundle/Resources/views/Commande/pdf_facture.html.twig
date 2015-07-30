@@ -3,14 +3,18 @@
 		
 	.left    	{ text-align: left; }
 	.right    	{ text-align: right; }
-	.adresse	{ width: 350px; font-size:9px}
+	.center    	{ text-align: center; }
+	.vcenter    	{ vertical-align: middle; }	
+	.vbottom    	{ vertical-align: bottom; }	
 	
-	div			{ margin-top:5px; }
+	.border_test		{ border: 1px solid black}
+	.border_1		{ border: 1px solid black }
+	.border_2		{ border: 2px solid black }
+	.petit_text		{ font-size:9px }
 	
-	.border		{ border: 1px solid black}
+	table		{ table-layout:fixed; width : 50%; }
 	
 	
-	table		{ width : 50%; }
 </style>
 
 
@@ -20,44 +24,168 @@
 
 
 
-<page backtop="5%" backbottom="5%" backleft="5%" backright="5%">
+<page backtop="1%" backbottom="5%" backleft="5%" backright="5%">
 
 	<img src="{{ web_path~asset('/bundles/jcfacturation/images/logo_cugn.jpg') }}" alt="Example"/>
 	
+	
+	<h3 id="bon_interne" style="font-weight:lighter;" class="center"> DETAIL A COMMANDER </h3>
+	
+	
+	
+	
+	
+	
+	<table class="border_test" style="margin-top:50px" >
+	
+	
+		<tr>
+			<td><div style="height:30px; font-size:15px; font-weight:bold;"><u> Adresse de facturation </u></div></td>
+			<td><div style='height:30px; margin-left:110px; font-size:15px; font-weight:bold;'><u> Adresse du fournisseur </u></div></td>
+		</tr>
+	
 
-	<h3 id="bon_interne" > BON INTERNE N° {{commande.id}}</h3>
-	
-	<table class="border">
-	
-		<tr >
+
+
+		<tr>
 			
-			<td class="border">
-				<div>
-					<h4><u> Adresse de facturation </u></h4>
-			
+			<td class="border_test" style="padding:0;" >
+				<div class='border_test'>		
+
 					<div>Communauté Urbaine du Grand Nancy</div>
 					<div>Direction des systèmes d'Informations</div>
 					<div>22-24, viaduc Kennedy</div>
 					<div>54000 NANCY</div>
 					<div>Tél : 03.83.91.84.37</div>
+				{% set i = 5 %}	
+					{% if commande.contactFournisseur != "" %}
+						<div style="color:white"> Compense taille et position si contact fournisseur </div>	
+					{% endif %}
+					
+					{% if commande.complementAdresseFournisseur != "" %}
+						<div style="color:white"> Compense taille et position si contact fournisseur </div>
+					{% endif %}
+					
+					{% if commande.faxFournisseur != "" %}
+						<div style="color:white"> Compense taille et position si contact fournisseur </div>
+					{% endif %}
+
+					{% if commande.emailContactFournisseur != "" %}
+						<div style="color:white"> Compense taille et position si contact fournisseur </div>
+					{% endif %}
+
+
 				</div>
 			</td>
 		
+
 		
-		
-			<td class="border">
-				<div style="margin-left:40px">
-					<h4><u> Adresse de facturation </u></h4>
-				
-					<div>Communauté Urbaine du Grand Nancy</div>
-					<div>Direction des systèmes d'Informations</div>
-					<div>22-24, viaduc Kennedy</div>
-					<div>54000 NANCY</div>
-					<div>Tél : 03.83.91.84.37</div>
+			<td class="border_test">
+				<div class="border_test" style='margin-left:110px;'>				
+					
+					{# On compte la compensation #}
+					
+					<div> {{ commande.nomFournisseur }} </div>
+					
+					{% if commande.contactFournisseur != "" %}
+						<div> A l'attention de {{ commande.contactFournisseur }} </div>
+					{% endif %}
+					
+					<div> {{ commande.adresseFournisseur }} </div>
+					
+					{% if commande.complementAdresseFournisseur != "" %}
+						<div> {{ commande.complementAdresseFournisseur }} </div>
+					{% endif %}
+
+					<div> {{ commande.codePostalFournisseur }} {{ commande.villeFournisseur }}</div>
+
+
+					<div>Tél : {{ commande.telephoneFournisseur }}</div>
+
+					{% if commande.faxFournisseur != "" %}
+						<div> Fax {{ commande.faxFournisseur }} </div>
+					{% endif %}
+					
+					{% if commande.emailContactFournisseur != "" %}
+						<div> Email contact {{ commande.emailContactFournisseur }} </div>
+					{% endif %}
+					
+					
+					
+						<div style="color:white"> Compense taille et position si contact fournisseur </div>
 				</div>
 			</td>
 		
 		</tr>
+	
+	
+
+
+		<tr>
+			<td style="height:30px; font-size:15px; font-weight:bold;"><u> Adresse de livraison </u></td>
+		</tr>
+	
+	
+
+
+		<tr>
+		
+			<td class="border_test">
+				<div class="border_test">				
+					<div> {{ commande.nomLivraison }} </div>
+					
+					
+					<div> {{ commande.adresseLivraison }} </div>
+					
+					{% if commande.complementAdresseLivraison != "" %}
+						<div> {{ commande.complementAdresseLivraison }} </div>
+					{% endif %}
+
+					<div> {{ commande.codePostalLivraison }} {{ commande.villeLivraison }}</div>
+
+
+					<div>Tél : {{ commande.telephoneLivraison }}</div>
+
+					{% if commande.faxLivraison != "" %}
+						<div> Fax {{ commande.faxLivraison }} </div>
+					{% endif %}
+					
+
+				</div>
+			</td>
+		
+		</tr>
+	
+	
+	
+	
+		<tr>
+			<td colspan='2' style='height:50px'> {{commande.libelleFacturation}} </td>
+		</tr>
+	
+	
+
+
+		<tr>
+			<td> 
+				<div class="border_2" style='height:70px'>
+					<div class='center vcenter' style='height:40px'> Réference interne de la commande </div>
+					<div class='center vcenter'> {{commande.reference}} </div>
+				</div>
+			</td>
+		</tr>
+	
+	
+
+
+		<tr>
+			<td> Réf interne : ?? </td>
+			<td> 
+				<div style='margin-left:90px;'> Affaire suivie par {{commande.utilisateur}} </div>
+				<div style='margin-left:90px;'> Date de création {{commande.dateCreation |date('Y-m-d')}} </div>
+			</td>
+		</tr>
+		
 	
 	</table>
 	
@@ -65,9 +193,62 @@
 	
 
 
+	<table class="border_test" style='width:100%; margin-top:30px; border-collapse: collapse;'>
+	
+	
+		<tr>
+			<td class="border_test center" style='border-left:1px solid black; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		background-color:#D8D8D8; width:30%; height:30px;'>Libellé</td>
+			<td class="border_test center" style='border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		background-color:#D8D8D8; width:20%; height:30px;'>Référence</td>
+			<td class="border_test center" style='border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		background-color:#D8D8D8; width:10%; height:30px;'>Qte</td>
+			<td class="border_test center" style='border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		background-color:#D8D8D8; width:15%; height:30px;'>PU <span class='petit_text'>(HT ou TTC)</span></td>
+			<td class="border_test center" style='border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		background-color:#D8D8D8; width:12%; height:30px;'>TVA <span class='petit_text'>si PU HT</span></td>
+			<td class="border_test center" style='border-left:1px solid grey; border-right:1px solid black; border-top:1px solid black; border-bottom:1px solid black;																		background-color:#D8D8D8; width:15%; height:30px;'>Montant TTC</td>
+		</tr>
+	
+	
+		{% for ligne in tabLignesCommande %}
 
+			<tr>
+				
+				<td class="border_test" style="border-left:1px solid black; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		width:30%; height:30px;">{{ligne.libelle}}</td>
+				<td class="border_test" style="border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		width:20%; height:30px">{{ligne.reference}}</td>
+				<td class="border_test center" style="'border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		height:30px">{{ligne.quantite}}</td>
+				<td class="border_test center" style="'border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		height:30px">{{ligne.prixUnitaire}}</td>
+				<td class="border_test center" style="'border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		height:30px">{{ligne.tva.pourcentage}}</td>
+				<td class="border_test center" style="border-left:1px solid grey; border-right:1px solid black; border-top:1px solid black; border-bottom:1px solid black;																		height:30px">{{ligne.totalTTC}}</td>
+				
+			</tr>
+			
+		{% endfor %}
 
+	
+		<tr>
+			<td colspan="5" style="border-left:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;"> 
+				<span style="height:30px; margin-left:450px; font-size:15px; font-weight:bold;">
+					TOTAL TTC 
+				</span>
+			</td>
+			
+			<td style="height:30px; font-size:15px; font-weight:bold; border-right:1px solid black; border-top:1px solid black; border-bottom:1px solid black;">
+				{{commande.totalTTC}}
+			</td>
+		</tr>
+		
+		
+		
 
+		<tr>
+			<td colspan="6"> 
+
+					<div style="height:30px; margin-left:550px;" class="center vbottom">Le Directeur</div>
+					<div style="height:30px; margin-left:550px;" class="center vcenter">Marcel HAYON </div>
+				
+			</td>
+		</tr>
+		
+		
+	</table>
+	
 	
 	
 </page>
@@ -76,6 +257,5 @@
 
 <page_footer>
 
-	<div id="numero_page" class="right">Page [[page_cu]] sur [[page_nb]]</div>
 
 </page_footer>
