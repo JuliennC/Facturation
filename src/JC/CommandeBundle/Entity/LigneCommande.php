@@ -34,7 +34,7 @@ class LigneCommande
     /**
      * @var string
      *
-     * @ORM\Column(name="Reference", type="string", length=255)
+     * @ORM\Column(name="Reference", type="string", length=255, nullable=true)
      */
     private $reference;
 
