@@ -630,7 +630,7 @@ class CommandeController extends Controller
 					$em->persist($etatTermine);	
 			
 				//Si le montant est supérieur au montant de la commande, on refuse et on met un message d'erreur
-				} else {
+				} else if ($com->getMontantPaye() > $com->getTotalTTC()) {
 
 					$flush = false;
 

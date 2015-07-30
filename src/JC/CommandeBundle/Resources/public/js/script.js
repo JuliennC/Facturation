@@ -82,17 +82,18 @@ function remetValeur(nomColl, idColl){
 	*/
 function changementEtatCommande(idC, etatC){
 
-	if(etatC == "Payee" || etatC == "Desengager"){
+	if(etatC == "Payee" || etatC == "Desengager" || etatC == "Terminee"){
 		
 		var data = 'id='+idC;
 		
-		if(etatC == "Payee"){
-			
-			 data += '&etat='+'Payee';
-
-		} else if(etatC == "Desengager"){
+	
+		if(etatC == "Desengager"){
 
 			 data += '&etat='+'Enregistree';			
+	
+		} else {
+			
+			data += '&etat='+etatC;			
 		}
 		
 		//On appelle la route qui va mettre la commande à payée

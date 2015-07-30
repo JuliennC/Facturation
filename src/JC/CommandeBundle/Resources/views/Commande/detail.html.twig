@@ -54,7 +54,34 @@
 
 					{% elseif commande.etat == "Paiement" %}
 						
-						--><button class='btn btn-warning col-md-3 col-md-offset-1 vcenter' data-toggle="modal" data-target="#modalPayer">Payer</button>
+						--><button class='btn btn-warning col-md-3  vcenter' data-toggle="modal" data-target="#modalPayer">Payer</button><!--
+			
+						--><button class='btn btn-warning col-md-3 col-md-offset-1 vcenter' data-toggle="modal" data-target="#modalTerminer">Terminer</button>
+			
+						
+						<!-- Modal -->
+						<div class="modal fade" id="modalTerminer" tabindex="-1" role="dialog" aria-labelledby="modalTerminer">
+						  	<div class="modal-dialog" role="document">
+						    	<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title">Êtes-vous sûr ?</h4>
+									</div>
+									<div class="modal-body">
+										<p>Êtes-vous sur de vouloir terminer cette commande ?</p>
+									</div>
+									<div class="modal-footer">
+								        <button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
+								        <button type="button" class="col-md-4 btn btn-success pull-right" data-dismiss="modal" onclick="changementEtatCommande({{commande.id}},'Terminee')">Confirmer</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+							
+			
+			
+			
 			
 			
 					{# NE PAS SUPPRIMER #}		
