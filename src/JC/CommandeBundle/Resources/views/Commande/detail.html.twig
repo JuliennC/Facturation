@@ -159,12 +159,12 @@
 
   							
   				{% if commande.contactFournisseur != ""  %}
-					<p><b>Contact</b> : {{ form_widget(form.contactFournisseur) }}</p>
+					<p><b>Contact</b> : {{ commande.contactFournisseur }}</p>
 				{% endif %}
 				
 				
 				{% if commande.emailContactFournisseur != ""  %}
-					<p><b>Email Contact</b> : {{ form_widget(form.emailContactFournisseur) }}</p>					
+					<p><b>Email Contact</b> : {{ commande.emailContactFournisseur }}</p>					
 				{% endif %}
 
 

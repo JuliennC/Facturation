@@ -3,12 +3,14 @@
 		
 	.left    	{ text-align: left; }
 	.right    	{ text-align: right; }
-	.adresse	{ width: 350px; float: left; }
+	.adresse	{ width: 350px; font-size:9px}
 	
 	div			{ margin-top:5px; }
 	
 	.border		{ border: 1px solid black}
 	
+	
+	table		{ width : 50%; }
 </style>
 
 
@@ -25,27 +27,42 @@
 
 	<h3 id="bon_interne" > BON INTERNE N° {{commande.id}}</h3>
 	
-	<div class='adresse border'>
-		<h4><u> Adresse de facturation </u></h4>
+	<table class="border">
+	
+		<tr >
+			
+			<td class="border">
+				<div>
+					<h4><u> Adresse de facturation </u></h4>
+			
+					<div>Communauté Urbaine du Grand Nancy</div>
+					<div>Direction des systèmes d'Informations</div>
+					<div>22-24, viaduc Kennedy</div>
+					<div>54000 NANCY</div>
+					<div>Tél : 03.83.91.84.37</div>
+				</div>
+			</td>
 		
-		<div>Communauté Urbaine du Grand Nancy</div>
-		<div>Direction des systèmes d'Informations</div>
-		<div>22-24, viaduc Kennedy</div>
-		<div>54000 NANCY</div>
-		<div>Tél : 03.83.91.84.37</div>
-	</div>
-
-
-	<div class='adresse border'>
-		<h4><u> Adresse de facturation </u></h4>
 		
-		<div>Communauté Urbaine du Grand Nancy</div>
-		<div>Direction des systèmes d'Informations</div>
-		<div>22-24, viaduc Kennedy</div>
-		<div>54000 NANCY</div>
-		<div>Tél : 03.83.91.84.37</div>
-	</div>
-
+		
+			<td class="border">
+				<div style="margin-left:40px">
+					<h4><u> Adresse de facturation </u></h4>
+				
+					<div>Communauté Urbaine du Grand Nancy</div>
+					<div>Direction des systèmes d'Informations</div>
+					<div>22-24, viaduc Kennedy</div>
+					<div>54000 NANCY</div>
+					<div>Tél : 03.83.91.84.37</div>
+				</div>
+			</td>
+		
+		</tr>
+	
+	</table>
+	
+	
+	
 
 
 
