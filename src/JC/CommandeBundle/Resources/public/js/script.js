@@ -1,6 +1,40 @@
-	/* 
-	*	Fonction pour enregistrer un paiement
-	*/
+
+
+/* 
+*	Fonction pour supprimer un paiement
+*/
+function supprimerPaiementCommande(idP){
+
+	var data = 'idPaiement='+idP;
+
+	// On envoie la requete	
+	$.ajax({
+		type: "get",
+		url: Routing.generate('jc_commande_supprimer_paiement_facture'),
+		data: data,
+		success: function(json){	
+	   				
+	   		if (json == true) {
+				//On recharge la page
+				
+				location.reload();
+			
+			} else {
+				alert("Erreur : "+json);	
+			}
+        }
+    });    
+}
+
+
+
+
+
+
+
+/* 
+*	Fonction pour enregistrer un paiement
+*/
 function paiementCommande(idC){
 
 	// On récupère le montant entré par l'utilisateur
@@ -20,7 +54,7 @@ function paiementCommande(idC){
 				location.reload();
 			
 			} else {
-				alert("Erreur pendant le payement, veuillez re-essayer. "+json);	
+				alert("Erreur pendant le payement, veuillez re-essayer. ");	
 			}
         }
     });    

@@ -84,11 +84,10 @@ class CommandeController extends Controller
 
 	    
 	    //---------- Recuperation de la commande ----------
+	    $em =  $this->getDoctrine()->getManager();
 	    
 	    // On recupere le repository
-	    $repository = $this->getDoctrine()
-	      ->getManager()
-	      ->getRepository('JCCommandeBundle:Commande') ;
+	    $repository = $em->getRepository('JCCommandeBundle:Commande') ;
 
 		// On recupere l'entite correspondante √† l'id $id
 		$commande = $repository->find($id);
@@ -103,10 +102,21 @@ class CommandeController extends Controller
 		//	Si la commande n'est ni Paiement partiel, ni Engagee, on redirige vers la page de moficiation
 		if( ($commande->getEtat() === "Creee") || ($commande->getEtat() === "Enregistree")){
 								
-			//Si la commande est envoye ou Paiement partiel, on ne peux pas la modifier. en renvoie donc sur la page detail
+			//Si la commande est cree ou enregistrée, on ne peux pas la modifier. en renvoie donc sur la page detail
 			return $this->redirect($this->generateUrl('jc_commande_modification', array('id' => $commande->getId())));
 		}
 			
+
+		$listePaiement = array();
+
+		// Si la commande est en "paiement" on récupère les paiements fait
+		//	Si la commande n'est ni Paiement partiel, ni Engagee, on redirige vers la page de moficiation
+		if( $commande->getEtat() === "Paiement" ){
+								
+			//Si la commande est envoye ou Paiement partiel, on ne peux pas la modifier. en renvoie donc sur la page detail
+			$listePaiement = $em->getRepository('JCCommandeBundle:PaiementCommande')->findByCommande($commande);		
+			
+		}
 
 
 		//---------- Recuperation des ligne de la commande ----------
@@ -133,7 +143,7 @@ class CommandeController extends Controller
 
 	 	    	    		
 			return $this->render( 'JCCommandeBundle:Commande:detail.html.twig', array('commande' => $commande ,
-																						'tabTransition' => $tabTransition) );
+																						'tabTransition' => $tabTransition, 'listePaiement'=>$listePaiement) );
 	    
 	
 	}
@@ -740,5 +750,63 @@ class CommandeController extends Controller
 
 		}
 	}
+	
+	
+	
+	
+	     
+	public function supprimerPaiementFactureAction(){
+		$request = $this->container->get('request');
+		  	
+	    $idPaiement = '';
+	    $idPaiement = $request->get('idPaiement');
+		
+		if($idPaiement === ''){
+			return  new JsonResponse("Id de paiement incorrecte.");
+		}
+		
+		
+		if( $this->container->get('security.authorization_checker')->isGranted('ROLE_COMPTA') ) {
+			
+			$em = $this->getDoctrine()->getManager();
+
+			
+			//On récupère le paiement 
+		    $paiement = $em->getRepository('JCCommandeBundle:PaiementCommande')->findById($idPaiement)[0];	
+
+		    //On récupère la commande pour décrémenter le montant du paiement
+		    $commande = $paiement->getCommande();
+		    
+		    $commande->setMontantPaye( $commande->getMontantPaye() - $paiement->getMontant() );
+			
+			//On regarde s'il y a d'autre paiement
+		    $listePaiements = $em->getRepository('JCCommandeBundle:PaiementCommande')->findByCommande($commande);	
+
+			//S'il n'y en a pas d'autre, on supprime l'état paiement
+			if(sizeof($listePaiements) === 1){
+				
+		   		$etatPaiement = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findEtatPourCommande($commande,'Paiement')[0];	
+
+		   		$em->remove($etatPaiement);
+			}
+		    
+		    $em->remove($paiement);
+		    $em->flush();
+		    
+		    return new JsonResponse(true);
+		
+		
+		} else {
+			
+			return  new JsonResponse("Vous devez être connecté en tant que comptable ou administrateur pour supprimer un paiement.");
+		}
+		
+		
+		
+	}
+
+	
+	
+	
 	  	  
 }

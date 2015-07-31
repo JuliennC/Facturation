@@ -32,6 +32,16 @@ jc_commande_pdf_facture:
     defaults: { _controller: JCCommandeBundle:Commande:genererPDFFacture }
   
   
+  
+  
+jc_commande_supprimer_paiement_facture:
+    path:     /commande/supprimerPaiement
+    defaults: { _controller: JCCommandeBundle:Commande:supprimerPaiementFacture }  
+    options:
+        expose: true
+
+
+
 
 
 #Route pour action ajax
@@ -54,3 +64,4 @@ jc_commande_paiement_commande:
     defaults:  { _controller: JCCommandeBundle:Commande:paiementCommande }
     options:
         expose: true
+

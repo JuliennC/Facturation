@@ -120,6 +120,18 @@
 								<div class="modal-body">
 									<p> Il reste {{commande.totalTTC - commande.montantPaye}} € à payer pour cette commande.</p>
 									<p>Entrez le montant du paiement : <input id='inputMontant' class='col-md-offset-1' type='text' placeholder='Ex : 1 500'/> € </p>
+
+									<div>
+									
+										<p><b>Liste des payements</b> :</p>
+										
+										{% for paiement in listePaiement %}
+									
+											{{paiement.datePaiement|date('d-m-Y')}} : {{paiement.montant}}   -  <a onclick="supprimerPaiementCommande({{paiement.id}})">Supprimer</a>
+									
+										{% endfor %}
+									</div>
+
 								</div>
 								<div class="modal-footer">
 							        <button type="button" class="col-md-4 btn btn-danger pull-left"  data-dismiss="modal">Annuler</button>
