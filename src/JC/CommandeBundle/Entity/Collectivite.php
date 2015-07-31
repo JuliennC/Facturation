@@ -12,6 +12,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Collectivite
 {
+	
+	public function __toString(){
+		return $this->nom;
+	}
+	
+	
     /**
      * @var integer
      *

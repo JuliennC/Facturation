@@ -1,0 +1,88 @@
+{% form_theme form 'JCAdminBundle:Form:fields.html.twig' %}
+
+
+<div class='row'>
+	{{ form_errors(form) }}
+</div>
+
+
+<div class='row' id='form_forfait'>
+
+	{{ form_start(form) }}
+ 
+				
+		<div class='table-responsive'>
+		
+		
+		
+
+<nav>
+	<ul class="pager">
+    	<li class="previous"><a href="{{  path('jc_admin_homepage', {'annee': (annee-1) }) }}"><span aria-hidden="true">&larr;</span> {{annee-1}}</a></li>
+		<li class="next"><a href="{{  path('jc_admin_homepage', {'annee': (annee+1) }) }}">{{annee+1}} <span aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+</nav>
+
+
+
+			<div class="panel panel-primary filterable">
+			    <div class="panel-heading">
+				        				       
+				      	<h3 class="panel-title">Forfait</h3>
+
+				
+			        <div class="pull-right">
+			            {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-success save btn-xs glyphicon glyphicon-floppy-disk' } }) }}                    
+			        </div>
+			    </div>
+		
+		
+				
+				<table class="table table-hover table_center">
+			  
+				    <thead>
+				    	<tr class="filters">										
+                        	<th class='col-md-5'>Collectivite</th>
+                        	<th class='col-md-5 col-md-2'>Montant</th>
+							
+						</tr>								
+				    </thead>
+
+					
+					<tbody id='body_forfait' >
+					
+					
+						<tr id='last_tr_forfait'>
+			      
+			      			<td colspan='3'> <a class='btn btn-xs btn-success btn_ajouter' id='ajouter_forfait' > Ajouter un forfait </a> </td>
+			      	
+				  		</tr>  
+				  		
+				  		
+						{# On parcours les forfaits #}
+						{% for forfait in form.listeForfaits %}
+										
+							  	<tr>
+							  	
+									<td> {{form_widget(forfait.montant, {'attr': {'class':'col-md-10 col-md-offset-1'}} )}} </td>				
+									<td> {{form_widget(forfait.collectivite, {'attr': {'class':'col-md-10 col-md-offset-1'}} )}} </td>				
+											
+								</tr>
+										
+							
+						{% endfor %}
+				
+						
+						
+				
+						
+				  
+				  </tbody>
+				  
+				</table>
+			</div>
+			
+		</div>	
+	
+		{{ form_end(form) }}
+</div>

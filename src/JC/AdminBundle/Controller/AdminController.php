@@ -62,6 +62,10 @@ use JC\CommandeBundle\Entity\ListeTempsPasses;
 use JC\CommandeBundle\Form\TempsPasseType;
 use JC\CommandeBundle\Form\ListeTempsPassesType;
 
+use JC\CommandeBundle\Entity\Forfait;
+use JC\CommandeBundle\Entity\ListeForfaits;
+use JC\CommandeBundle\Form\ForfaitType;
+use JC\CommandeBundle\Form\ListeForfaitsType;
 
 use JC\CommandeBundle\Entity\ImputationConcerneBudget;
 
@@ -77,7 +81,6 @@ class AdminController extends Controller
 		if($annee === "html"){
 			 $annee = date('Y');
 		}
-
 
 
 
@@ -1281,6 +1284,53 @@ class AdminController extends Controller
 	}
 
 
+
+
+
+
+	/*
+	 *	Pour modifier les Forfaits 
+	 */
+	 public function modificationForfaitsAction(Request $request, $annee) {
+
+	 	$em = $this->getDoctrine()->getManager();
+
+	 	//On récupère la liste de toutes les forfaits de l'année
+	 	$listeForf = $em->getRepository('JCCommandeBundle:Forfait')->findByAnnee($annee); 
+	 	
+	 	//Liste qui sera transformée en formulaire
+	 	$listeForfaits = new ListeForfaits();
+	 	$listeForfaits ->setListeForfaits($listeForf);
+	 		 	
+	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
+        $form = $this->get('form.factory')->create(new ListeForfaitsType($em), $listeForfaits);
+
+	 	
+		$form->handleRequest($request);
+
+	 	//Si le formulaire est valide, on sauvegarde dans la base
+		if ($form->isValid()) {
+
+			//On sauvegarde les activites dans la base
+        	foreach($form->get('listeForfaits')->getData() as $f) {
+
+				//On ne sauvegarde pas celle qui ont un nom null
+				if ($f->getMontant() != null) {
+					$em->persist($f);
+				}
+			}
+        	
+        	
+        	$em->flush();
+        	
+
+			return new Response('true');
+
+    	} else {
+
+	 		return $this->render('JCAdminBundle:Admin:modif_forfaits.html.twig', array('form'=>$form->createView(), 'annee'=>$annee));
+		}
+	 }
 
 
 

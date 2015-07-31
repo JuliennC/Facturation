@@ -25,6 +25,7 @@
             <li><a href="#tab9" data-toggle="tab">Imputations</a></li>
             <li><a href="#tab10" data-toggle="tab">Masses Salariales</a></li>
             <li><a href="#tab11" data-toggle="tab">Temps Passés</a></li>
+            <li><a href="#tab12" data-toggle="tab">Forfait</a></li>
 
           </ul>
         </div>
@@ -308,6 +309,30 @@
 			{% else %}
 			
 			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab11">
+
+				<div class="alert-message alert-message-danger">
+	                <h4>Oops ..</h4>		                
+	                <p> Seuls les administrateurs ont accès à cette page. </p>
+				</div>
+
+			</div>
+
+		{% endif %}
+
+
+
+
+		
+		{# Seuls les admin peuvent modifier ces informations #}
+	  	{% if is_granted('ROLE_ADMIN') %}
+			
+			 <div class="tab-pane col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 main" id="tab12">
+		    	{{ render(controller("JCAdminBundle:Admin:modificationForfaits" , { 'request' :request, 'annee':annee })) }}	
+		    </div>
+		    	
+			{% else %}
+			
+			<div class="tab-pane  col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="tab12">
 
 				<div class="alert-message alert-message-danger">
 	                <h4>Oops ..</h4>		                
