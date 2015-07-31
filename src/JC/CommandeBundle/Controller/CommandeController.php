@@ -540,16 +540,29 @@ class CommandeController extends Controller
 	        $nvlEtat = $request->get('etat');
 
 	  		if( $idCom != '' && $nvlEtat != '') {
-		    
-				$em = $this->getDoctrine()->getManager();
-	
+		  		
+		  		$em = $this->getDoctrine()->getManager();
+		  		
 	            $com = $em->getRepository('JCCommandeBundle:Commande')->findOneById($idCom) ;
-				
-				$etatCree = new CommandePasseEtat();
-				$etatCree -> setCommande($com);
-				$etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle($nvlEtat));
-				$etatCree -> setDatePassage(new \Datetime());
-				$em->persist($etatCree);
+
+
+		  		//Si l'état est "revenir", on supprime juste l'état terminé
+		  		if($nvlEtat === "Revenir"){
+			  		
+			  		$etatPaiement = $em->getRepository('JCCommandeBundle:CommandePasseEtat')->findEtatPourCommande($com,'Terminee')[0];	
+
+			  		$em->remove($etatPaiement);
+			  		
+			  		
+		  		} else {
+		   					
+					$etatCree = new CommandePasseEtat();
+					$etatCree -> setCommande($com);
+					$etatCree -> setEtat($em->getRepository('JCCommandeBundle:EtatCommande')->findOneByLibelle($nvlEtat));
+					$etatCree -> setDatePassage(new \Datetime());
+					$em->persist($etatCree);
+
+				}
 				
 				$em->flush();
 				//On prepare la reponse
@@ -631,7 +644,7 @@ class CommandeController extends Controller
 
 				//On teste si le montant du paiement + le total déjà payé est égale au montant de la facture
 				// Il est important de ne pas mettre de else if, si on paie pour la premiere fois, la commande en entière
-				if($com->getMontantPaye() === $com->getTotalTTC()) {
+				if(floatval($com->getMontantPaye()) === floatval($com->getTotalTTC())) {
 
 					$etatTermine = new CommandePasseEtat();
 					$etatTermine -> setCommande($com);

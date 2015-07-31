@@ -116,7 +116,7 @@ function remetValeur(nomColl, idColl){
 	*/
 function changementEtatCommande(idC, etatC){
 
-	if(etatC == "Payee" || etatC == "Desengager" || etatC == "Terminee"){
+	if(etatC == "Payee" || etatC == "Desengager" || etatC == "Terminee" || etatC == "Revenir"){
 		
 		var data = 'id='+idC;
 		

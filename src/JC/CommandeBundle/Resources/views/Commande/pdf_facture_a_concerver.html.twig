@@ -238,7 +238,7 @@
 				<td class="border_test center" style="'border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		height:30px">{{ligne.quantite}}</td>
 				<td class="border_test center" style="'border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		height:30px">{{ligne.prixUnitaire}}</td>
 				<td class="border_test center" style="'border-left:1px solid grey; border-right:1px solid grey; border-top:1px solid black; border-bottom:1px solid black;																		height:30px">{{ligne.tva.pourcentage}}</td>
-				<td class="border_test center" style="border-left:1px solid grey; border-right:1px solid black; border-top:1px solid black; border-bottom:1px solid black;																		height:30px">{{ligne.totalTTC}}</td>
+				<td class="border_test center" style="border-left:1px solid grey; border-right:1px solid black; border-top:1px solid black; border-bottom:1px solid black;																		height:30px">{{ligne.totalTTC|number_format(2, ',', ' ') }}</td>
 				
 			</tr>
 			
@@ -253,7 +253,7 @@
 			</td>
 			
 			<td style="height:30px; font-size:15px; font-weight:bold; border-right:1px solid black; border-top:1px solid black; border-bottom:1px solid black;">
-				{{commande.totalTTC}}
+				{{commande.totalTTC|number_format(2, ',', ' ') }}
 			</td>
 		</tr>
 		
