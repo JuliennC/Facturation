@@ -43,33 +43,25 @@ class CommandeController extends Controller
 	/*
 	*	Page principale, remplace en quelque sorte index
 	*/
-	  public function listeAction($service)
+	  public function listeAction($page)
 	  {
 		$em = $this->getDoctrine()->getManager();
 		
+		if($page === "html" || $page < 0){
+			//On recupere les 15 premières commandes
+			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15DernieresCommandes();  	
+			
+			$page = 1;
 		
-		
-		if($service != "html"){
-
-			//On recupere le service
-			$s = $em->getRepository('JCCommandeBundle:Service')->findOneByNom($service);
-			
-			//On recupère toutes les personnes du service
-			$pers = $em->getRepository('JCCommandeBundle:Utilisateur')->findByService($s);
-			
-			//Et on recupere les commande
-			$listeCommande = $em->getRepository('JCCommandeBundle:Commande')->findByUtilisateur($pers);  	
-
-			
 		} else {
-		
-			// On recupere toutes les commandes
-			$listeCommande = $em->getRepository('JCCommandeBundle:Commande')->findAll();  	
+			dump('ok');
+			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15CommandesAPartirDe($page);  	
 		}
-		
 
-	    return $this->render( 'JCCommandeBundle:Commande:liste.html.twig', array('tabCommande' => $listeCommande) );
+
+	    return $this->render( 'JCCommandeBundle:Commande:liste.html.twig', array('tabCommande' => $listeCommandes, 'page'=>$page) );
 	  }
+	  
 	  
 	  
 	  

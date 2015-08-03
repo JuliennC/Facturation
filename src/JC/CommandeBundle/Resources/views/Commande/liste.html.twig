@@ -3,70 +3,77 @@
 {% block title %}{{ parent() }} - Liste des commandes{% endblock %}
 
 {% block jccommande_body %}
-  <h2>Liste des commandes !</h2>
+  <h2>Liste des commandes </h2>
   
   
   
-  
+    <div class="container top30">
     
-    
-    
-    <div class="row">
-        <div class="panel panel-primary filterable">
-            <div class="panel-heading">
-                <h3 class="panel-title">Commandes</h3>
-                <div class="pull-right">
-                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
-                </div>
-            </div>
-            <table class="table   table_center">
-            
-                <thead>
-                	<tr class="filters">
-                	    <th><input type="text" class="form-control col-md-2" placeholder="Date" disabled></th>
-                	    <th><input type="text" class="form-control col-md-2" placeholder="Etat" disabled></th>
-                		<th><input type="text" class="form-control col-md-1" placeholder="Service" disabled></th>
-                		<th><input type="text" class="form-control col-md-2" placeholder="Utilisateur" disabled></th>
-                		<th><input type="text" class="form-control col-md-1" placeholder="Fournisseur" disabled></th>
-                		<th><input type="text" class="form-control col-md-2" placeholder="Total TTC" disabled></th>
-						<th class='col-md-2'></th>
-			        </tr>
-                </thead>
+    	
 
-                <tbody>
-                    
-                <tr>
-            		<td colspan='7'> <a class='btn btn-success btn_ajouter' href="{{ path('jc_commande_creation') }}" > Créer une commande </a> </td>
-				</tr>    
-                    
-                    
-                {% for commande in tabCommande %}
-			        <tr>
-						<td>{{ commande.dateCreation|date('d/m/Y') }}</td>
-						<td>{{ commande.etat }}</td>
-						<td>{{ commande.service.nom }}</td>
-						<td>{{ commande.utilisateur}}</td>
-						<td>{{ commande.fournisseur.nom }}</td>
-						<td>{{ commande.totalTTC|number_format(2, ',', ' ')}}</td>
-						<td> 
+		<nav>
+			<ul class="pager">
+		    	<li class="previous"><a href="{{  path('jc_commande_liste', {'page': page-1 }) }}"><span aria-hidden="true">&larr;</span>Précédent</a></li>
+				<li class="next"><a href="{{  path('jc_commande_liste', {'page': page+1 }) }}">Suivant<span aria-hidden="true">&rarr;</span></a></li>
+		    </ul>
+		</nav>
+
+
+    
+    	{% for commande in tabCommande %}
+		
+			<div class="row top30">
+				<div class=" col-xs-12 col-md-offset-1 col-md-10 ">
+					<ul class="event-list">
 						
-							{% if (commande.etat == "Engagee") or (commande.etat == "Paiement") or (commande.etat == "Terminee") %}
-								<a class='btn btn-info col-md-10 col-md-offset-1' href="{{ path('jc_commande_detail', {'id': commande.id}) }}" >Voir détail</a> 
-						 	
-						 	{% else %}
-							 	<a class='btn btn-warning col-md-10 col-md-offset-1' href="{{ path('jc_commande_modification', {'id': commande.id}) }}" >Modification</a> 
-							{% endif %}
-						</td>
-					</tr>
-					
-				{% endfor %}
-   
-                    
-                    
-                </tbody>
-            </table>
-        </div>
-    </div>
+						<li>
+							<div class="carre_time col-md-2">
+								<time class="col-md-2" datetime="2014-07-20 0000">
+									<span class="day">{{commande.dateCreation|date('d')}}</span>
+									<span class="month">{{commande.dateCreation|date('M')}}</span>
+									<span class="year">{{commande.dateCreation|date('Y')}}</span>
+								</time>
+							</div>
+							
+							<div class="info col-md-10">
+								<div class="info col-md-8">
+									<h2 class="title">n°{{commande.id}} - {{commande.libelleFacturation}}</h2>
+									<p class="desc">{{commande.reference}}</p>
+									<ul class='col-md-12'>
+										<li class='col-md-4'>{{commande.utilisateur}}</li>
+										<li class='col-md-4'>{{commande.service}}</li>
+										<li class='col-md-4'><span class="fa fa-money"></span>{{commande.totalTTC|number_format(2, ',', ' ')}}€</li>
+									</ul>
+								</div>
+								
+								<div class="info center col-md-4">
+									<div class="vcenter desc col-md-12"><p>Etat : {{commande.etat}}</p></div>
+									<ul class='col-md-12'>
+										<li class='col-md-12'>
+											
+											{% if (commande.etat == "Engagee") or (commande.etat == "Paiement") or (commande.etat == "Terminee") %}
+												<a class='btn btn-info col-md-12' href="{{ path('jc_commande_detail', {'id': commande.id}) }}" >Voir détail</a> 
+										 	
+										 	{% else %}
+											 	<a class='btn btn-warning col-md-12' href="{{ path('jc_commande_modification', {'id': commande.id}) }}" >Modification</a> 
+											{% endif %}
+										
+										</li>
+									</ul>
+								</div>
+								
+							</div>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+	
+		{% endfor %}
+	</div>
+
+  
+  
   
    
   

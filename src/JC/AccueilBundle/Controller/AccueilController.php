@@ -87,7 +87,8 @@ class AccueilController extends Controller
 		$infoCommandes['montantCommandesDirectes'] = 0;
 		$infoCommandes['nombreCommandesMutualisees'] = 0;
 		$infoCommandes['montantCommandesMutualisees'] = 0;
-
+		$infoCommandes['nombreCommandesForfaits'] = 0;
+		$infoCommandes['montantCommandesForfaits'] = 0;
 
 		
 		foreach($listePasseEtat as $etat){
@@ -119,6 +120,16 @@ class AccueilController extends Controller
 
 				//On calcul le montant des commandes mutualisees
 				$infoCommandes['montantCommandesMutualisees'] += $commande->getTotalTTC();
+
+	
+	
+			} else if($commande->getVentilation() == 'Forfait'){
+					
+				//On calcul le nombre de commandes mutualisees
+				$infoCommandes['nombreCommandesForfaits'] += 1;
+
+				//On calcul le montant des commandes mutualisees
+				$infoCommandes['montantCommandesForfaits'] += $commande->getTotalTTC();
 
 			}
 			

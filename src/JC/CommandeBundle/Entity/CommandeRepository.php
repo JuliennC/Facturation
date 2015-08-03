@@ -3,6 +3,7 @@
 namespace JC\CommandeBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * CommandeRepository
@@ -78,6 +79,37 @@ class CommandeRepository extends EntityRepository
 	}
 
 
+
+	//Retourne les 15 commandes à partir de la page :page
+	public function find15CommandesAPartirDe($page){
+		
+		$qb = $this->createQueryBuilder('c');
+						
+		$qb	->orderBy('c.id','DESC')
+			->setFirstResult(2*($page-1))
+			->setMaxResults(2);
+			
+		$pag = new Paginator($qb, $fetchJoinCollection = true);
+		return $pag->getQuery()->getResult();
+		
+		
+
+	}
+
+
+
+	//Retourne les 15 dernières commandes 
+	public function find15DernieresCommandes(){
+		
+		return $this			
+			->createQueryBuilder('c')
+			->orderBy('c.id','DESC')						
+			->setMaxResults(2)
+	
+			->getQuery()	
+			->getResult();
+
+	}
 
 	
 }

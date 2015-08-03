@@ -1,4 +1,153 @@
 
+    
+    .event-list {
+		list-style: none;
+		font-family: 'Lato', sans-serif;
+		margin: 0px;
+		padding: 0px;
+	}
+	.event-list > li {
+		background-color: rgb(255, 255, 255);
+		box-shadow: 0px 0px 3px rgb(51, 51, 51);
+		box-shadow: 0px 0px 3px rgba(51, 51, 51, 0.7);
+		padding: 0px;
+		margin: 0px 0px 0px;
+	}
+	.event-list > li > div > time {
+		display: inline-block;
+		color: rgb(255, 255, 255);
+		background-color: rgba(167, 224, 255, 1);
+		text-align: center;
+		text-transform: uppercase;
+	}
+	.event-list > li > .carre_time {
+		background-color: rgba(167, 224, 255, 1);
+	}
+	.event-list > li > div > time > span {
+		display: none;
+	}
+	.event-list > li > div > time > .day {
+		display: block;
+		font-size: 43pt;
+		font-weight: 50;
+		line-height: 1;
+		padding-top: 3px;
+
+	}
+	.event-list > li > div > time > .month {
+		display: block;
+		font-size: 20pt;
+		font-weight: 70;
+		line-height: 1;
+	}
+	
+	.event-list > li > div > time > .year {
+		display: block;
+		font-size: 20pt;
+		font-weight: 70;
+		line-height: 1;
+	}
+	
+
+	.info {
+		background-color: rgb(245, 245, 245);
+	}
+	
+	.event-list > li > div > .info {
+		padding-top: 10px;
+		text-align: center;
+	}
+	.event-list > li > div > .info > .title {
+		font-size: 17pt;
+		font-weight: 700;
+		margin-top: 3px;
+	}
+	.event-list > li > div > .info > .desc {
+		font-size: 13pt;
+		font-weight: 300;
+	}
+	
+	.event-list > li > div > .info > ul{
+		display: table;
+		list-style: none;
+		padding-bottom: 6px;
+		text-align: center;
+	}
+	.event-list > li > .social > ul {
+		display: table;
+		list-style: none;
+		text-align: center;
+	}
+	
+	.event-list > li > div > .info > ul > li,
+	.event-list > li > .social > ul > li {
+		display: table-cell;
+		font-size: 11pt;
+		font-weight: 300;
+	}
+    .event-list > li > div > .info > ul > li > a {
+		display: block;
+		text-decoration: none;
+	} 
+   
+     
+	
+	
+
+	@media (min-width: 768px) {
+		.event-list > li {
+			position: relative;
+			display: block;
+			width: 100%;
+			height: 120px;
+		}
+		.event-list > li > div > time,
+		.event-list > li > img  {
+			display: inline-block;
+		}
+		.event-list > li > div > time,
+		.event-list > li > img {
+			width: 100%;
+			float: left;
+		}
+		.event-list > li > div > .info {
+			background-color: rgb(245, 245, 245);
+			overflow: hidden;
+		}
+		.event-list > li > div > time {
+			width: 100%;
+			height: 120px;
+			padding: 0px;
+			margin: 0px;
+		}
+		.event-list > li > div > .info {
+			position: relative;
+			height: 120px;
+			text-align: left;
+		}	
+		
+		.event-list > li > div > .info > ul {
+			position: absolute;
+			bottom: 0px;
+		}
+		
+		.event-list > li > div > .info > .detail_commande {
+			background-color: green;
+			top: 0px;
+		}
+		
+		.center { text-align: center !important;}
+		.vcenter > p { margin-top: 20px !important;}
+
+}
+
+
+
+
+
+
+
+
 
 
 .glyphicon-remove-circle {
@@ -22,11 +171,6 @@
 }
 
 
-.form_comm_info {
-	
-	height: 26px;
-	vertical-align: center;
-}
 
 
 .noActive {
