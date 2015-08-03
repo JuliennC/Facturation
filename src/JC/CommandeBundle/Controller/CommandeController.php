@@ -54,7 +54,7 @@ class CommandeController extends Controller
 			$page = 1;
 		
 		} else {
-			dump('ok');
+
 			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15CommandesAPartirDe($page);  	
 		}
 
