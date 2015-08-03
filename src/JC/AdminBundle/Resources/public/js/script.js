@@ -537,5 +537,88 @@ $(document).ready(function() {
 		
 		
 		
+		
+		
+		
+	/*
+	*	Fonction pour ajouter un forfait
+	*/
+	
+	$("#ajouter_forfait").on('click', function(){
+      	
+      	// Dans le contenu de l'attribut ¬´ data-prototype ¬ª, on remplace :
+	  	// - le texte "__name__label__" qu'il contient par le label du champ
+	  	// - le texte "__name__" qu'il contient par le num√©ro du champ
+	  	
+	  	var tableL = $("#body_forfait");
+                
+        //On fait -1 car il y a la ligne du bouton "ajouter"
+	  	var index = (tableL.find('tr').length)-1;
+	  	
+	  	
+	 
+	  	//On doit récupérer les options du select 
+	  	// Pour cela, on récupère les options du premier utilisateur(en partant du principe qu'il y a au moins 1 forfait ....)
+	  	var strOptions = "";
+	  	//On récupère la ligne du premier utilisateur
+	  	var tr = tableL.find("tr:last");
+	 
+	  	//On va chercher son select, et on parcours les options
+	  	tr.find("select:first option").each(function() {
+									
+			//On créé un string que l'on ajoutera au moment voulu
+			strOptions += "<option value='"+$(this).val()+"'>";
+			strOptions += $(this).text();
+			strOptions += "</option>";
+
+		});
+								
+        
+           
+    
+   
+    var newLigne = 	"<tr>"
+    
+    					+"<td></td>"
+    
+    					+"<td>" 
+							+"<select id='jc_commandebundle_listeforfaits_listeForfaits___name___collectivite' name='jc_commandebundle_listeforfaits[listeForfaits][__name__][collectivite]' class='col-md-10 col-md-offset-1'>"
+		
+								+strOptions
+								
+							+"</select>" 
+						+"</td>"
+    
+						+"<td>" 
+							+"<input type='text' id='jc_commandebundle_listeforfaits_listeForfaits___name___montant' name='jc_commandebundle_listeforfaits[listeForfaits][__name__][montant]' required='required' maxlength='255' class='col-md-10 col-md-offset-1'>" 
+						+"</td>"
+														
+					+"</tr>";
+										
+						 	
+		// remplace les "__name__" utilis√©s dans l'id 
+        // par un nombre unique 
+        newLigne = newLigne.replace(/__name__/g, index);
+								        
+        // cr√©er une nouvelle liste d'√©l√©ments et l'ajoute √† notre liste
+        $('#last_tr_forfait').after(newLigne);
+								        
+								     
+        return false;				
+						        
+		});    
+		
+		
+		
+	/*
+	*	Fonction pour supprimer un forfait
+	*/
+	
+	$(".supprimer_forfait").on('click', function(){
+      	
+     
+	  	$(this).parent().parent().remove();
+               
+		});
 	
 });    

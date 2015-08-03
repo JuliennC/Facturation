@@ -57,6 +57,7 @@ TODO liste :
 	-> FAIT pouvoir supprimer une facture
 
 
+	-> voir pour la création des utilisateurs (avec les mots de passes cryptés)
 	-> voir la gestion des commandes supprimées
 	-> Gestion des forfaits
 	-> enlever de al facturation les imputation marquée comme non facturée 

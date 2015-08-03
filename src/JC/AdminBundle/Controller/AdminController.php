@@ -420,7 +420,7 @@ class AdminController extends Controller
 			if($form_est_valid->getContent() === 'true'){
 				
 				$session = $request->getSession();
-				$session->getFlashBag()->add('Success', 'Les temps passés ont été enregistrées avec succès.');
+				$session->getFlashBag()->add('Success', 'Les temps passés ont été enregistrés avec succès.');
 				
 				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
 			
@@ -428,6 +428,36 @@ class AdminController extends Controller
 				
 				$session = $request->getSession();
 				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des temps passés');
+			}
+		
+		
+		
+		
+		
+		
+		//Si le formulaire envoyé est le formulaire des forfaits
+		} else if(isset($formulaireEnvoye['jc_commandebundle_listeforfaits'])) {
+				
+			//A ce moment, on veut savoir si le form est valide
+			/*
+			*	Si le form est valide, la fonction renvoie 'true'
+			*	Sinon la fonction renvoie le template
+			*/
+			$form_est_valid = $this->modificationForfaitsAction($request, $annee);
+			
+			
+			//Donc si le form est valide, on redirige
+			if($form_est_valid->getContent() === 'true'){
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Success', 'Les forfaits ont été enregistrés avec succès.');
+				
+				return $this->redirect($this->generateUrl('jc_admin_homepage', array($annee)));
+			
+			} else {
+				
+				$session = $request->getSession();
+				$session->getFlashBag()->add('Error', 'Erreur dans l\'enregistrement des forfaits');
 			}
 		}
 
@@ -1301,7 +1331,38 @@ class AdminController extends Controller
 	 	//Liste qui sera transformée en formulaire
 	 	$listeForfaits = new ListeForfaits();
 	 	$listeForfaits ->setListeForfaits($listeForf);
-	 		 	
+	 	
+	 	//Si aucun forfait n'est trouvé, c'est que l'on rentre pour la première fois dans la page forfait pour l'année donnée, 
+	 	//On va donc récupérer les forfaits de l'année précédente
+	 	if(sizeof($listeForf) === 0){
+		 	
+		 	//On récupère la liste de toutes les forfaits de l'année
+		 	$listeForf = $em->getRepository('JCCommandeBundle:Forfait')->findByAnnee($annee-1); 
+
+
+		 	
+		 	//On parcours tous les forfaits trouvés l'année passée pour les renouveller cette année
+		 	foreach($listeForf as $forfait){
+			 	
+			 	$nouveauForfait = new Forfait();
+			 	$nouveauForfait->setCollectivite($forfait->getCollectivite());
+			 	$nouveauForfait->setMontant($forfait->getMontant());
+			 	$nouveauForfait->setAnnee($annee);
+
+			 	$listeForfaits ->addForfait($nouveauForfait);
+			 	
+			 	//On enregistre le forfait dans la base
+			 	$em->persist($nouveauForfait);
+
+		 	}
+		 	
+		 	$em->flush();
+		 	
+		 	$listeForfaits ->setListeForfaits($listeForf);
+	 	}
+	 		
+
+	 	 	
 	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
         $form = $this->get('form.factory')->create(new ListeForfaitsType($em), $listeForfaits);
 
@@ -1314,9 +1375,20 @@ class AdminController extends Controller
 			//On sauvegarde les activites dans la base
         	foreach($form->get('listeForfaits')->getData() as $f) {
 
-				//On ne sauvegarde pas celle qui ont un nom null
+				//On ne sauvegarde pas celle qui ont un montant null
 				if ($f->getMontant() != null) {
+					$f->setAnnee($annee);
 					$em->persist($f);
+				}
+					
+			}
+			
+			//On regarde si des forfaits ont été supprimés
+			foreach($listeForf as $forfait){
+					
+				if (! in_array($forfait, $form->get('listeForfaits')->getData())) {
+
+					$em->remove($forfait);
 				}
 			}
         	

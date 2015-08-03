@@ -326,7 +326,7 @@
 		{# Seuls les admin peuvent modifier ces informations #}
 	  	{% if is_granted('ROLE_ADMIN') %}
 			
-			 <div class="tab-pane col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 main" id="tab12">
+			 <div class="tab-pane col-sm-11 col-sm-offset-3 col-md-8 col-md-offset-1 main" id="tab12">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationForfaits" , { 'request' :request, 'annee':annee })) }}	
 		    </div>
 		    	
