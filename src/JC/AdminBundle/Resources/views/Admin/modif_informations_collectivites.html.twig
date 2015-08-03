@@ -15,7 +15,7 @@
 									
 							{% set i = 0 %}				
 		
-							{% for cle in listeCles %}
+							{% for cle in listeCles if cle.nom != "Participation" %}
 											
 								{% if i == 0 %}		
 									<li class="active">

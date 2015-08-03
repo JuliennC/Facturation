@@ -50,6 +50,8 @@ class FacturationController extends Controller
    			//On stockera les commande directes
    		    $tabColl[$coll->getNom()]['Directe'] = 0;
 
+   			//On stockera les forfait
+   		    $tabColl[$coll->getNom()]['Forfait'] = 0;
 	    }
 
 	    
@@ -282,6 +284,8 @@ class FacturationController extends Controller
 		$infosColl['nbDirectes'] = 0;
 		$infosColl['montantMutualisees'] = 0;
 		$infosColl['montantDirectes'] = 0;
+		$infosColl['nbForfaits'] = 0;
+		$infosColl['montantForfaits'] = 0;
 		$infosColl['montantInvestissement'] = 0;
 		$infosColl['montantFonctionnement'] = 0;
 		
@@ -299,6 +303,8 @@ class FacturationController extends Controller
 		//On stock les commandes
 		$tabCommandes = array();
 
+		//On stock les forfaits déjà comptés pour ne pas les compter deux fois
+		$forfaitsComptes = array();
 
 		//On parcours les commande concerne collectivite pour faire les calculs
 		foreach($listeCCC as $ccc){
@@ -307,17 +313,21 @@ class FacturationController extends Controller
 			$commande = $ccc->getCommande();
 			
 			//On stock les infos de la commande dans le tableau
-			$tabCommandes[$commande->getId()] = array();
 			
-			$tabCommandes[$commande->getId()]['id'] = $commande->getId();
-			$tabCommandes[$commande->getId()]['ventilation'] = $commande->getVentilation();
-			$tabCommandes[$commande->getId()]['imputation'] = $commande->getImputation()->getSection();
-			$tabCommandes[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
-			$tabCommandes[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
-			$tabCommandes[$commande->getId()]['montantTotal'] = $commande->getTotalTTC();
-			$tabCommandes[$commande->getId()]['application'] = $commande->getApplication()->getNom();
+
+				$tabCommandes[$commande->getId()] = array();
+				
+				$tabCommandes[$commande->getId()]['id'] = $commande->getId();
+				$tabCommandes[$commande->getId()]['ventilation'] = $commande->getVentilation();
+				$tabCommandes[$commande->getId()]['imputation'] = $commande->getImputation()->getSection();
+				$tabCommandes[$commande->getId()]['activite'] = $commande->getActivite()->getNom();
+				$tabCommandes[$commande->getId()]['dateCreation'] = $commande->getDateCreation();
+				$tabCommandes[$commande->getId()]['montantTotal'] = $commande->getMontantPaye();
+				$tabCommandes[$commande->getId()]['application'] = $commande->getApplication()->getNom();
 
 
+			
+			
 
 				//Si la commande est une commande mutualisée,
 				if($commande->getVentilation() === "Mutualisee"){
@@ -341,43 +351,66 @@ class FacturationController extends Controller
 					//On récupere l'InformationCollectivité
 					$info = $infosColl[$commande->getActivite()->getCleRepartition()->getNom()];
 
-
-
-					//Si le $info->getNombre() == 0, c'est qu'il y a sans doute eu un oubli dans la table des infos
-					//On met donc un flash message Warning pour avertir, et être sur que cela est volontaire
-					if (($info->getNombre() === 0 || $info->getNombre() === "0") && ! $pdf){
+					//Si la clé de répartition est "Participation" , on doit faire en fonction du temps passé
+					if($info->getCleRepartition()->getNom() === "Participation"){
 						
-						$session = new Session();
-						$session->getFlashBag()->add('Warning', 'Attention : La clé '.$info->getCleRepartition()->getNom().' est à 0 pour '.$collectivite->getNom());
-					}
+						//On va chercher le temps passé
+						$temps = $em->getRepository('JCCommandeBundle:TempsPasse')->findOneAvecAnneeEtActivitePourCollectivite($annee, $commande->getActivite(), $collectivite)[0];
 					
-
-					//On récupere la "somme des clés", ceci afin de faire un ratio pour la collectivite
-					$totalCle = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findSommeDeCleEtAnneePourCommande($info->getCleRepartition(), $annee, $commande)[1];
-
-
-
-					//On fait le ratio
-					//Si le total des clès fait 0, alors on change en 1 ( ce qui ne change rien, car le seul cas serait 0/0 --> donc 0/1 )
-					// et c'est qu'il y a sans doute eu un oubli dans la table des infos
-					//On met donc un flash message Warning pour avertir, et être sur que cela est volontaire
-					if (($totalCle === 0 || $totalCle === "0") ) {
-						
-						if(! $pdf){
+						//Si le $temps == null, c'est qu'il y a sans doute eu un oubli dans la table des infos
+						//On met donc un flash message Error pour avertir
+						if ($temps === null){
+							
 							$session = new Session();
-							$session->getFlashBag()->add('Warning', 'Attention : La somme des clés '.$info->getCleRepartition()->getNom().' = 0.');
+							$session->getFlashBag()->add('Error', 'Attention : La clé '.$info->getCleRepartition()->getNom().' est à 0 pour '.$collectivite->getNom());
+						
+							return $this->redirect($this->generateUrl('jc_facturation_homepage', array($annee)));						
+						}
+
+						//Le nombre de l'info est le pourcentage du temps passés
+						$info->setNombre($temps->getPourcentage());
+						
+						//Le total des clés (donc du temps passé) est 100
+						$totalCle = 100;
+					
+					//Sinon	
+					} else {
+
+						//Si le $info->getNombre() == 0, c'est qu'il y a sans doute eu un oubli dans la table des infos
+						//On met donc un flash message Warning pour avertir, et être sur que cela est volontaire
+						if (($info->getNombre() === 0 || $info->getNombre() === "0") && ! $pdf){
+							
+							$session = new Session();
+							$session->getFlashBag()->add('Warning', 'Attention : La clé '.$info->getCleRepartition()->getNom().' est à 0 pour '.$collectivite->getNom());
 						}
 						
-						$totalCle = 1;
+	
+						//On récupere la "somme des clés", ceci afin de faire un ratio pour la collectivite
+						$totalCle = $em->getRepository('JCCommandeBundle:InformationCollectivite')->findSommeDeCleEtAnneePourCommande($info->getCleRepartition(), $annee, $commande)[1];
+	
+	
+	
+						//On fait le ratio
+						//Si le total des clès fait 0, alors on change en 1 ( ce qui ne change rien, car le seul cas serait 0/0 --> donc 0/1 )
+						// et c'est qu'il y a sans doute eu un oubli dans la table des infos
+						//On met donc un flash message Warning pour avertir, et être sur que cela est volontaire
+						if (($totalCle === 0 || $totalCle === "0") ) {
+							
+							if(! $pdf){
+								$session = new Session();
+								$session->getFlashBag()->add('Warning', 'Attention : La somme des clés '.$info->getCleRepartition()->getNom().' = 0.');
+							}
+							
+							$totalCle = 1;
+						}
 					}
-					
 					
 					
 					
 					$ratio = $info->getNombre() / $totalCle;
 						
 					//On calcule le montant à payer grâce au ratio
-					$montant = $ratio * $commande->getTotalTTC();
+					$montant = $ratio * $commande->getMontantPaye();
 					
 					//On stocke le ratio
 					$tabCommandes[$commande->getId()]['repartition'] = ($ratio*100);
@@ -404,7 +437,7 @@ class FacturationController extends Controller
 					
 					//Pour le calcul, c'est plus simple
 					//On prend la répartition (le pourcentage) et on le multiplie au total de la facture
-					$montant = $commande->getTotalTTC() * ($ccc->getRepartition()/100);
+					$montant = $commande->getMontantPaye() * ($ccc->getRepartition()/100);
 					
 					
 					//On met les infos
@@ -414,13 +447,54 @@ class FacturationController extends Controller
 
 					$tabCommandes[$commande->getId()]['montantAPayer'] = $montant;
 					$tabCommandes[$commande->getId()]['repartition'] = $ccc->getRepartition();
-				}			
-			
-			
-			
-			
+				
+				
+				
+				//Sinon, si c'est une commande directe
+				} else if($commande->getVentilation() === "Forfait"){
+
+					//On récupère le forfait
+					$listeForfaits = $em->getRepository('JCCommandeBundle:Forfait')->findForfaitsPourCollectiviteEtApplicationPourAnnee($collectivite, $commande->getApplication(),$annee);
+					
+					//Si une commande forfait est cochée alors qu'aucun forfait n'est entré, alors il y a une erreur
+					if(sizeof($listeForfaits) === 0){
+						
+						$session = new Session();
+						$session->getFlashBag()->add('Error', 'Erreur : Aucun forfait pour '.$collectivite->getNom().' pour l\'application '.$commande->getApplication()->getNom().' - (commande n°'.$commande->getId().')');
+
+						return $this->redirect($this->generateUrl('jc_facturation_homepage', array($annee)));
+					}
+					
+					
+					$forfait = $listeForfaits[0];
+					
+					//Si on a pas encore compté le forfait
+					if(! in_array($forfait, $forfaitsComptes)){
+						
+						//On met le forfait dans le tableau
+						array_push($forfaitsComptes, $forfait);
+						
+						//On met les infos
+						$infosColl['montantForfaits'] += $forfait->getMontant();
+						$infosColl['nbForfaits'] += 1;
+						$infosColl['montant'.$commande->getImputation()->getSection()] += $forfait->getMontant();
+
+						$tabCommandes[$commande->getId()]['montantAPayer'] = $forfait->getMontant();
+						$tabCommandes[$commande->getId()]['repartition'] = $ccc->getRepartition();
+					
+					//Si on a déjà compté le forfait, on ne compte pas la commande
+					} else {
+						
+						unset($tabCommandes[$commande->getId()]);
+					}
+
+					
+				}						
 			
 		}
+    
+    
+    
     
     
     
@@ -470,7 +544,7 @@ class FacturationController extends Controller
 			
 			
 			//On compte le nombre de commande qui concerne le service
-			$nbCommandeService = 0;
+			$montantCommandesService = 0;
 			
 			//On parcours les commandes
 			foreach($listeCCC as $ccc){
@@ -480,7 +554,7 @@ class FacturationController extends Controller
 				
 				//On compte le nombre de commande qui correspondent à l'activite
 				if ($commande->getService() === $service){
-					$nbCommandeService ++;
+					$montantCommandesService += $commande->getMontantPaye();
 				
 				//Si la commande ne concerne pas le service, on la supprime du tableau
 				} else {
@@ -496,7 +570,7 @@ class FacturationController extends Controller
 			*	Cela doit être une erreur car sinon la masse salariale du service ne sera JAMAIS repartie sur les collectivites
 			*/
 				
-			if(($nbCommandeService === 0 && $ms->getMontant()) ){
+			if(($montantCommandesService === 0 && $ms->getMontant()) ){
 				
 				if(! $pdf){
 					$session = new Session();
@@ -513,7 +587,7 @@ class FacturationController extends Controller
 			//On parcours les activites
 			foreach($listeActivites as $activite) {
 				
-				$nbCommandesActivite = 0;
+				$montantCommandesActivite = 0;
 
 				//On parcours les commandes
 				foreach($listeCCC as $ccc){
@@ -524,7 +598,7 @@ class FacturationController extends Controller
 					//On compte le nombre de commande qui correspondent à l'activite
 					if ($commande->getActivite() === $activite){
 						
-						$nbCommandesActivite ++;
+						$montantCommandesActivite += $commande->getMontantPaye();
 					}	
 				}				
 				
@@ -541,7 +615,7 @@ class FacturationController extends Controller
 				*
 				*	Car on est obligé de facturer une partie de la masse si le nombre de commande est > 0
 				*/
-				if(sizeof($tempsPasse) === 0 && $nbCommandesActivite != 0) {
+				if(sizeof($tempsPasse) === 0 && $montantCommandesActivite != 0) {
 					
 					$session = new Session();
 					$session->getFlashBag()->add('Error', 'Erreur : Le temps passé pour '.$collectivite->getNom().' pour l\'activité '.$activite->getNom().' n\'a pas été définie.');
@@ -552,7 +626,7 @@ class FacturationController extends Controller
 				$tempsPasse = $tempsPasse[0];
 				
 				//On calule le montant dû par la collectivite
-				$masseDeLActivite = $ms->getMontant() * ($nbCommandesActivite / $nbCommandeService);
+				$masseDeLActivite = $ms->getMontant() * ($montantCommandesActivite / $montantCommandesService);
 			
 			
 				/*	S'il le temps passé en pourcentage est 0, ET QUE le nb de commandes concernant l'activité est à 0
@@ -560,7 +634,7 @@ class FacturationController extends Controller
 				*
 				*	Car on est obligé de facturer une partie de la masse si le nombre de commande est > 0
 				*/
-				if($tempsPasse->getPourcentage() === 0 && $nbCommandesActivite != 0) {
+				if($tempsPasse->getPourcentage() === 0 && $montantCommandesActivite != 0) {
 					
 					$session = new Session();
 					$session->getFlashBag()->add('Error', 'Erreur : Le temps passé pour '.$collectivite->getNom().' pour l\'activité '.$activite->getNom().' est de 0.');

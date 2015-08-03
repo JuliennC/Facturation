@@ -18,14 +18,14 @@
             <li><a href="#tab2" data-toggle="tab">Informations Collectivités </a></li>
             <li><a href="#tab3" data-toggle="tab">Clés de répartition </a></li>
             <li><a href="#tab4" data-toggle="tab">Utilisateurs</a></li>
-            <li><a href="#tab5" data-toggle="tab">Service</a></li>
+            <li><a href="#tab5" data-toggle="tab">Services</a></li>
             <li><a href="#tab6" data-toggle="tab">Budgets des services</a></li>
             <li><a href="#tab7" data-toggle="tab">Activites</a></li>
             <li><a href="#tab8" data-toggle="tab">Applications</a></li>
             <li><a href="#tab9" data-toggle="tab">Imputations</a></li>
             <li><a href="#tab10" data-toggle="tab">Masses Salariales</a></li>
             <li><a href="#tab11" data-toggle="tab">Temps Passés</a></li>
-            <li><a href="#tab12" data-toggle="tab">Forfait</a></li>
+            <li><a href="#tab12" data-toggle="tab">Forfaits</a></li>
 
           </ul>
         </div>
@@ -326,7 +326,7 @@
 		{# Seuls les admin peuvent modifier ces informations #}
 	  	{% if is_granted('ROLE_ADMIN') %}
 			
-			 <div class="tab-pane col-sm-11 col-sm-offset-3 col-md-8 col-md-offset-1 main" id="tab12">
+			 <div class="tab-pane col-sm-11 col-sm-offset-3 col-md-11 col-md-offset-1 main" id="tab12">
 		    	{{ render(controller("JCAdminBundle:Admin:modificationForfaits" , { 'request' :request, 'annee':annee })) }}	
 		    </div>
 		    	

@@ -55,11 +55,11 @@ TODO liste :
 	-> FAIT Demander a Severine si les imputations peuvent changer (fonctionnement/investissement) d’une année à l’autre. Si oui, voir les infos à garder « en dur » dans la commande. Sinon, laisse comme ca. —> On garde comme ca, si on change, ca change pour toutes les commandes de l’année en cours OU NON (oublie de préciser ou non).
 	-> FAIT finir les pdf
 	-> FAIT pouvoir supprimer une facture
+	-> FAIT Gestion des forfaits
 
 
 	-> voir pour la création des utilisateurs (avec les mots de passes cryptés)
 	-> voir la gestion des commandes supprimées
-	-> Gestion des forfaits
 	-> enlever de al facturation les imputation marquée comme non facturée 
 
 	-> Ajouter un commentaire interne (commande)??

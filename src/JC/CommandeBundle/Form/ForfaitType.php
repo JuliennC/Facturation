@@ -10,11 +10,13 @@ class ForfaitType extends AbstractType
 {	
 	
 	protected $listeCollectivites;
-	
+	protected $listeApplications;
 
-    function __construct($listeCollectivites)
+
+    function __construct($listeCollectivites, $listeApplications)
     {
         $this->listeCollectivites = $listeCollectivites;
+        $this->listeApplications = $listeApplications;
     }
 
 
@@ -36,7 +38,16 @@ class ForfaitType extends AbstractType
 				    'multiple'  => false ,
 				    'expanded' => false,
 					'error_bubbling' => false,
-					));
+					))
+					
+					
+			->add('application', 'entity', array(
+				    'class'    => 'JCCommandeBundle:Application',
+				    'choices'   => $this->listeApplications,
+				    'multiple'  => false ,
+				    'expanded' => false,
+					'error_bubbling' => false,
+					))
         ;
     }
     

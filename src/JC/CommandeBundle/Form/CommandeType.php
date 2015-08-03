@@ -177,7 +177,7 @@ class CommandeType extends AbstractType
             $form = $event->getForm();
             
             //Si c'est une commande mutualisee, 
-            if ($form->get('ventilation')->getData() == "Mutualisee"){
+            if ($form->get('ventilation')->getData() === "Mutualisee" || $form->get('ventilation')->getData() === "Forfait" ){
 	            
 	            //Pour que le form soit valide, il faut qu'au moins une ville soit selectionnee
 
@@ -186,12 +186,12 @@ class CommandeType extends AbstractType
 	            
 	            //On s'assure qu'il y en ai au moins une
 	            if ( sizeof($villes) < 1) {
-	              $form['villes_concernees']->addError(new FormError("Vous devez sélectionner au moins une ville."));
+	              $form['villes_concernees']->addError(new FormError("Vous devez sélectionner au moins une collectivite."));
 	            }
 	        }
 	    
 			//Si c'est une commande directe
-			else if($form->get('ventilation')->getData() == "Directe"){
+			else if($form->get('ventilation')->getData() === "Directe"){
 			
 				//Pour que le formulaire soit valide, il faut qu'au moins un champs cache 
 				// ai une 'value' non vide

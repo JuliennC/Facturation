@@ -27,16 +27,18 @@ class ListeForfaitsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	     //On récupère toutes les collectivites pour ne pas avoir à faire autant de requêtes que d'applications
+	     //On récupère toutes les collectivites et applications pour ne pas avoir à faire autant de requêtes que d'applications
 		$listeCollectivites = $this->em->getRepository('JCCommandeBundle:Collectivite')->findAllOrdreAlpha();
+		$listeApplications = $this->em->getRepository('JCCommandeBundle:Application')->getApplicationOrdreAlpha();
 
 	    
 	    
         $builder
             ->add('listeForfaits', 'collection', array(
             	'label' => false,
-		        'type'         => new ForfaitType($listeCollectivites),
+		        'type'         => new ForfaitType($listeCollectivites, $listeApplications),
 		        'allow_add'    => true,
+		        'allow_delete'    => true,
 		        'error_bubbling' => true,
 		        'by_reference' => false))
 

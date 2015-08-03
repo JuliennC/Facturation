@@ -321,7 +321,7 @@ class CommandeController extends Controller
 	            
 	            //Si la commande est une commande mutualisee,
 	            //On doit uniquement recupere les villes grâce à leur checkbox
-	            } else if($ventilation === "Mutualisee") {
+	            } else if($ventilation === "Mutualisee" || $ventilation === "Forfait") {
 		            
 		            //On recupere les villes selectionnees dans le formulaire
 					$listeNomVillesChoisiesFormulaire = $form->get('villes_concernees')->getData();

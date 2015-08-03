@@ -70,7 +70,7 @@ function paiementCommande(idC){
 
  	console.log('remet '+ventilation);
 
- 	if(ventilation == "Mutualisee"){
+ 	if(ventilation == "Mutualisee" || ventilation == "Forfait"){
         
         //On marque le checkbox
         console.log('met ville : '+nomColl);
@@ -89,8 +89,9 @@ function paiementCommande(idC){
 			document.getElementById('input_repartition_'+nomColl).setAttribute('value',repartition);
 			document.getElementById('jc_commandebundle_commande_repartition'+idColl).setAttribute('value',repartition);
 		}
+	
 		
-	} else {
+	} else {		
 		alerte ("Erreur de ventilation.. ");
 	}
 	
@@ -274,6 +275,7 @@ function supprimerLigneCommande(numero){
 function metEnPlaceVentilation(ventil){
 	if(ventil.indexOf('Directe')>-1) { $('#boutonDirecte').click();}
 	else if(ventil.indexOf('Mutualisee')>-1){ $('#boutonMutualisee').click();}
+	else if(ventil.indexOf('Forfait')>-1){ $('#boutonForfait').click();}
 	else {alert("Erreur de ventilation.. '"+ventil+"'");}
 }
 
@@ -444,8 +446,9 @@ $(document).ready(function() {
 		if( $(this).attr("id") == 'boutonDirecte'){
 			
 			//On affiche les bouton en consequence
-			$('#boutonDirecte').attr('class', 'btn btn-success col-md-4 col-md-offset-2');
-			$('#boutonMutualisee').attr('class', 'btn noActive col-md-4');
+			$('#boutonDirecte').attr('class', 'btn btn-success col-md-2 col-md-offset-3');
+			$('#boutonMutualisee').attr('class', 'btn noActive col-md-2');
+			$('#boutonForfait').attr('class', 'btn noActive col-md-2');
 
 			//On met l'attribut ventilation
 			$(".hidden_ventilation").attr('value','Directe');						
@@ -463,9 +466,10 @@ $(document).ready(function() {
 			
 		} else if( $(this).attr("id") == 'boutonMutualisee'){
 			
-			//On met les boutons en consequence
-			$('#boutonDirecte').attr('class', 'btn noActive col-md-4 col-md-offset-2');
-			$('#boutonMutualisee').attr('class', 'btn btn-success col-md-4');		
+			//On affiche les bouton en consequence
+			$('#boutonDirecte').attr('class', 'btn noActive col-md-2 col-md-offset-3');
+			$('#boutonMutualisee').attr('class', 'btn  btn-success col-md-2');
+			$('#boutonForfait').attr('class', 'btn noActive col-md-2');		
 			
 			//On met la valeur de ventilation
 			$(".hidden_ventilation").attr('value','Mutualisee');
@@ -479,6 +483,22 @@ $(document).ready(function() {
 			
 
 
+		} else if( $(this).attr("id") == 'boutonForfait'){
+			
+			//On met les boutons en consequence
+			$('#boutonDirecte').attr('class', 'btn noActive col-md-2 col-md-offset-3');
+			$('#boutonMutualisee').attr('class', 'btn noActive col-md-2');		
+			$('#boutonForfait').attr('class', 'btn btn-success col-md-2');		
+
+			//On met la valeur de ventilation
+			$(".hidden_ventilation").attr('value','Forfait');
+
+			//On chache les input
+			$(".contientInput").hide();
+			
+			//On remet le checkbox visible
+			$('.contientCheck').show();
+			
 		}
 
 	});
@@ -520,39 +540,6 @@ $(document).ready(function() {
 
 	
 
-	/*
-	* Lorsque l'on choisi une activite, 
-	* la liste des applications devient la liste des applications 
-	* en lien avec l'activite
-	*/
-	$(".choix_activite r").change(function() {
-
-		var nomActivite = $( ".choix_activite option:selected").getNom();
-
-	
-		var DATA = 'act=' + nomActivite;
-	
-		$.ajax({
-	        type: "get",
-	        url: "applicationPourActivite",
-	        data: DATA,
-	        success: function(json){
-	
-				$('.choix_application').find('option').remove();
-	
-	   			
-	           $.each(json, function(index, value){
-			   
-			   		alert(value[0]);
-				   	$(".choix_application").append('<option valuse="'+ value.nom+'">'+ value.nom+'</option>');
-	
-				})
-	
-	        }
-	    });    
-
-	}); 
-	
 	
 });
 

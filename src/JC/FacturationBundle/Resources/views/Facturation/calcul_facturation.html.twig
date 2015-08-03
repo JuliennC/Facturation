@@ -17,8 +17,9 @@
 		
 			<p> {{infosColl['nbMutualisees']}} commandes mutualisée(s), soit un total de {{infosColl['montantMutualisees']|number_format(2, ',', ' ') }} €
 			<p> {{infosColl['nbDirectes']}} commandes directe(s), soit un total de {{infosColl['montantDirectes']|number_format(2, ',', ' ') }} €
+			<p> {{infosColl['nbForfaits']}} forfait(s), soit un total de {{infosColl['montantForfaits']|number_format(2, ',', ' ') }} €
 			
-			<p> <strong> Total  des commandes : </strong> {{(infosColl['montantMutualisees'] + infosColl['montantDirectes'])|number_format(2, ',', ' ') }} €
+			<p> <strong> Total  des commandes : </strong> {{(infosColl['montantMutualisees'] + infosColl['montantDirectes'] + infosColl['montantForfaits'])|number_format(2, ',', ' ') }} €
 
 			<hr>
 
@@ -26,7 +27,7 @@
 			
 			<hr>
 			
-			<p> <strong> Total : {{ (infosColl['montantMassesSalariales'] + infosColl['montantMutualisees'] + infosColl['montantDirectes'])|number_format(2, ',', ' ') }} € </strong>
+			<p> <strong> Total : {{ (infosColl['montantMassesSalariales'] + infosColl['montantMutualisees'] + infosColl['montantDirectes'] + infosColl['montantForfaits'])|number_format(2, ',', ' ') }} € </strong>
 		</div><!--
 			--><a class="btn btn-success col-md-5 col-md-offset-1 vcenter" href=" {{ path('jc_facturation_pdf_facture', {nomCollectivite : infosColl['nomColl'], annee : annee } ) }}" target="_blank">Générer la facture en PDF</a>
 		
@@ -109,7 +110,7 @@
           
                     
                     
-                {% for commande in tabCommandes %}
+                {% for commande in tabCommandes if commande.ventilation != "Forfait"%}
 			        <tr>
 						<td>{{ commande['id'] }}</td>
 						<td>{{ commande['ventilation'] }}</td>

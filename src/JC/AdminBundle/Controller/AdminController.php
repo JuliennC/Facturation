@@ -565,6 +565,7 @@ class AdminController extends Controller
 		//On récupère toutes les clés
 		$listeCles = $em->getRepository('JCCommandeBundle:CleRepartition')->findAll(); 
 
+
 		//On récupère la liste des informations collectivités, pour les collectivites "mutualisées" au cours de l'année $année
 		//C'est à dire : - date début mutualisation <= $annee
 		// 				- ET date fin mutualisation >= $annee
@@ -1365,9 +1366,10 @@ class AdminController extends Controller
 	 	 	
 	 	//On crée le formulaire (c'est lui qui contient chaque form pour chaque clé)
         $form = $this->get('form.factory')->create(new ListeForfaitsType($em), $listeForfaits);
-
-	 	
+        	 	
 		$form->handleRequest($request);
+
+
 
 	 	//Si le formulaire est valide, on sauvegarde dans la base
 		if ($form->isValid()) {
@@ -1377,11 +1379,14 @@ class AdminController extends Controller
 
 				//On ne sauvegarde pas celle qui ont un montant null
 				if ($f->getMontant() != null) {
+
+
 					$f->setAnnee($annee);
 					$em->persist($f);
 				}
-					
 			}
+			
+
 			
 			//On regarde si des forfaits ont été supprimés
 			foreach($listeForf as $forfait){
@@ -1391,12 +1396,11 @@ class AdminController extends Controller
 					$em->remove($forfait);
 				}
 			}
-        	
-        	
+			
         	$em->flush();
         	
-
 			return new Response('true');
+
 
     	} else {
 

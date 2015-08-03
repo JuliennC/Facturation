@@ -557,7 +557,7 @@ $(document).ready(function() {
 	  	
 	  	
 	 
-	  	//On doit récupérer les options du select 
+	  	//On doit récupérer les options du premier select 
 	  	// Pour cela, on récupère les options du premier utilisateur(en partant du principe qu'il y a au moins 1 forfait ....)
 	  	var strOptions = "";
 	  	//On récupère la ligne du premier utilisateur
@@ -572,7 +572,25 @@ $(document).ready(function() {
 			strOptions += "</option>";
 
 		});
-								
+		
+		
+		
+		
+		//On doit récupérer les options du dernier select 
+	  	// Pour cela, on récupère les options du premier utilisateur(en partant du principe qu'il y a au moins 1 forfait ....)
+	  	var strOptions2 = "";
+	  	//On récupère la ligne du premier utilisateur
+	  	var tr = tableL.find("tr:last");
+	 
+	  	//On va chercher son select, et on parcours les options
+	  	tr.find("select:last option").each(function() {
+									
+			//On créé un string que l'on ajoutera au moment voulu
+			strOptions2 += "<option value='"+$(this).val()+"'>";
+			strOptions2 += $(this).text();
+			strOptions2 += "</option>";
+
+		});					
         
            
     
@@ -592,8 +610,19 @@ $(document).ready(function() {
 						+"<td>" 
 							+"<input type='text' id='jc_commandebundle_listeforfaits_listeForfaits___name___montant' name='jc_commandebundle_listeforfaits[listeForfaits][__name__][montant]' required='required' maxlength='255' class='col-md-10 col-md-offset-1'>" 
 						+"</td>"
-														
-					+"</tr>";
+						
+						
+						+"<td>" 
+							+"<select id='jc_commandebundle_listeforfaits_listeForfaits___name___application' name='jc_commandebundle_listeforfaits[listeForfaits][__name__][application]' class='col-md-10 col-md-offset-1'>"
+		
+								+strOptions2
+								
+							+"</select>" 
+						+"</td>"		
+																
+					+"</tr>"
+					
+					;
 										
 						 	
 		// remplace les "__name__" utilis√©s dans l'id 

@@ -39,11 +39,20 @@ class Forfait
     
     
     /**
-   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Collectivite", cascade={"persist"})
-   * @ORM\JoinColumn(nullable=false)
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Collectivite")
+   * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
    */
    private $collectivite;
     
+    
+    
+    /**
+   * @ORM\ManyToOne(targetEntity="JC\CommandeBundle\Entity\Application")
+   * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+   */
+   private $application;
+    
+
     
 
 
@@ -127,6 +136,30 @@ class Forfait
     public function getCollectivite()
     {
         return $this->collectivite;
+    }
+
+
+	/**
+     * Set application
+     *
+     * @param Application $application
+     * @return Forfait
+     */
+    public function setApplication($application)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Get application
+     *
+     * @return Application 
+     */
+    public function getApplication()
+    {
+        return $this->application;
     }
 
 
