@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost:8889
--- Généré le :  Mer 29 Juillet 2015 à 08:50
+-- Généré le :  Lun 03 Août 2015 à 13:58
 -- Version du serveur :  5.5.42
 -- Version de PHP :  5.4.42
 
@@ -395,18 +395,20 @@ CREATE TABLE `Commande` (
   `ContactFournisseur` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `EmailContactFournisseur` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `Faxlivraison` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `MontantPaye` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `MontantPaye` decimal(10,2) NOT NULL,
+  `Total_HT` decimal(10,2) NOT NULL,
+  `Date_Envoi` datetime DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `Commande`
 --
 
-INSERT INTO `Commande` (`id`, `service_id`, `application_id`, `fournisseur_id`, `livraison_id`, `activite_id`, `imputation_id`, `Reference`, `Date_Livraison`, `Ventilation`, `Engagement`, `Libelle_Facturation`, `Total_TTC`, `Utilisateur`, `NomFournisseur`, `AdresseFournisseur`, `Complement_Adresse_Fournisseur`, `Code_Postal_Fournisseur`, `VilleFournisseur`, `TelephoneFournisseur`, `NomLivraison`, `AdresseLivraison`, `Complement_Adresse_Livraison`, `Code_Postal_Livraison`, `VilleLivraison`, `TelephoneLivraison`, `FaxFournisseur`, `ContactFournisseur`, `EmailContactFournisseur`, `Faxlivraison`, `MontantPaye`) VALUES
-(1, 2, 173, 1, 1, 10, 46, NULL, '2015-10-03 00:00:00', 'Mutualisee', '123', 'Libelle facture', '1851.52', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '0.00'),
-(2, 2, 173, 2, 1, 18, 1, 'refz', '2015-07-10 00:00:00', 'Mutualisee', 'r', 'eer', '29386.42', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '0.00'),
-(3, 2, 173, 1, 2, 18, 1, 'qs', '2015-07-11 00:00:00', 'Mutualisee', NULL, 'qsd', '0.00', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '0.00'),
-(4, 2, 173, 1, 2, 18, 1, NULL, '2015-07-09 00:00:00', 'Mutualisee', 'aze', 'aaz', '0.00', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '0.00');
+INSERT INTO `Commande` (`id`, `service_id`, `application_id`, `fournisseur_id`, `livraison_id`, `activite_id`, `imputation_id`, `Reference`, `Date_Livraison`, `Ventilation`, `Engagement`, `Libelle_Facturation`, `Total_TTC`, `Utilisateur`, `NomFournisseur`, `AdresseFournisseur`, `Complement_Adresse_Fournisseur`, `Code_Postal_Fournisseur`, `VilleFournisseur`, `TelephoneFournisseur`, `NomLivraison`, `AdresseLivraison`, `Complement_Adresse_Livraison`, `Code_Postal_Livraison`, `VilleLivraison`, `TelephoneLivraison`, `FaxFournisseur`, `ContactFournisseur`, `EmailContactFournisseur`, `Faxlivraison`, `MontantPaye`, `Total_HT`, `Date_Envoi`) VALUES
+(7, 2, 10, 2, 1, 18, 8, 'ReFint78_3', '2015-07-07 00:00:00', 'Mutualisee', '123', 'libelle', '4801.30', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '4791.30', '4551.00', '2015-07-09 00:00:00'),
+(8, 2, 10, 1, 2, 18, 8, NULL, '2015-08-19 00:00:00', 'Forfait', NULL, 'libelle', '447310.03', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '10.00', '418046.76', '2015-08-22 00:00:00'),
+(9, 2, 10, 2, 2, 18, 8, 'ref', '2015-08-04 00:00:00', 'Forfait', NULL, 'libelle', '5966.02', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '10.00', '5655.00', '2015-08-13 00:00:00'),
+(10, 2, 10, 2, 2, 18, 8, 'ref', '2015-08-11 00:00:00', 'Forfait', NULL, 're', '5400.07', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '10.00', '5289.00', '2015-08-06 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -419,25 +421,20 @@ CREATE TABLE `CommandeConcerneCollectivite` (
   `commande_id` int(11) NOT NULL,
   `collectivite_id` int(11) NOT NULL,
   `Repartion` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `CommandeConcerneCollectivite`
 --
 
 INSERT INTO `CommandeConcerneCollectivite` (`id`, `commande_id`, `collectivite_id`, `Repartion`) VALUES
-(64, 3, 18, 'Participation'),
-(65, 3, 5, 'Participation'),
-(66, 4, 29, 'Participation'),
-(67, 4, 18, 'Participation'),
-(68, 4, 23, 'Participation'),
-(69, 4, 7, 'Participation'),
-(70, 4, 13, 'Participation'),
-(86, 2, 5, 'Participation'),
-(95, 1, 16, 'Nombre de mouvements comptables'),
-(96, 1, 25, 'Nombre de mouvements comptables'),
-(97, 1, 3, 'Nombre de mouvements comptables'),
-(98, 1, 19, 'Nombre de mouvements comptables');
+(147, 7, 29, 'Participation'),
+(148, 7, 18, 'Participation'),
+(149, 7, 25, 'Participation'),
+(153, 9, 18, 'Participation'),
+(154, 9, 6, 'Participation'),
+(157, 10, 18, 'Participation'),
+(158, 10, 24, 'Participation');
 
 -- --------------------------------------------------------
 
@@ -450,22 +447,36 @@ CREATE TABLE `CommandePasseEtat` (
   `commande_id` int(11) NOT NULL,
   `etat_id` int(11) NOT NULL,
   `datePassage` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `CommandePasseEtat`
 --
 
 INSERT INTO `CommandePasseEtat` (`id`, `commande_id`, `etat_id`, `datePassage`) VALUES
-(1, 1, 1, '2015-07-16 00:00:00'),
-(2, 1, 2, '2015-07-16 00:00:00'),
-(5, 2, 1, '2015-07-18 00:00:00'),
-(6, 2, 2, '2015-07-18 00:00:00'),
-(12, 3, 1, '2015-07-23 14:32:15'),
-(13, 3, 2, '2015-07-23 14:32:16'),
-(14, 4, 1, '2015-07-27 12:47:51'),
-(15, 4, 2, '2015-07-27 12:47:51'),
-(38, 1, 3, '2015-07-29 08:39:48');
+(72, 7, 1, '2015-07-31 11:07:18'),
+(73, 7, 2, '2015-07-31 11:07:19'),
+(74, 7, 3, '2015-07-31 11:07:50'),
+(76, 7, 4, '2015-07-31 11:17:22'),
+(77, 8, 1, '2015-08-03 10:09:05'),
+(78, 8, 2, '2015-08-03 10:09:06'),
+(79, 8, 2, '2015-08-03 10:14:09'),
+(80, 8, 2, '2015-08-03 10:14:32'),
+(84, 7, 5, '2015-08-03 12:34:29'),
+(85, 8, 2, '2015-08-03 12:36:42'),
+(86, 8, 3, '2015-08-03 12:37:02'),
+(87, 8, 4, '2015-08-03 12:37:16'),
+(89, 9, 1, '2015-08-03 12:47:24'),
+(90, 9, 2, '2015-08-03 12:47:25'),
+(91, 9, 2, '2015-08-03 12:49:37'),
+(92, 9, 3, '2015-08-03 12:52:47'),
+(93, 9, 4, '2015-08-03 12:52:56'),
+(94, 9, 5, '2015-08-03 12:53:01'),
+(95, 10, 1, '2015-08-03 13:09:04'),
+(96, 10, 2, '2015-08-03 13:09:05'),
+(97, 10, 3, '2015-08-03 13:09:16'),
+(98, 10, 4, '2015-08-03 13:09:24'),
+(99, 10, 5, '2015-08-03 13:10:01');
 
 -- --------------------------------------------------------
 
@@ -492,6 +503,27 @@ INSERT INTO `EtatCommande` (`id`, `Libelle`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `forfait`
+--
+
+CREATE TABLE `forfait` (
+  `id` int(11) NOT NULL,
+  `collectivite_id` int(11) NOT NULL,
+  `annee` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `montant` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `application_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `forfait`
+--
+
+INSERT INTO `forfait` (`id`, `collectivite_id`, `annee`, `montant`, `application_id`) VALUES
+(8, 18, '2015', '1231', 10);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `Fournisseur`
 --
 
@@ -503,16 +535,18 @@ CREATE TABLE `Fournisseur` (
   `Code_Postal` int(11) NOT NULL,
   `Ville` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Telephone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Fax` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+  `Fax` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Contact` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `EmailContact` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `Fournisseur`
 --
 
-INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`) VALUES
-(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', '0383080808'),
-(2, 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', '0383020202');
+INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`, `Contact`, `EmailContact`) VALUES
+(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', NULL, NULL, NULL),
+(2, 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', NULL, 'contact f', 'email@fournisseur.fr');
 
 -- --------------------------------------------------------
 
@@ -946,20 +980,22 @@ CREATE TABLE `LigneCommande` (
   `commande_id` int(11) NOT NULL,
   `tva_id` int(11) NOT NULL,
   `Libelle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Reference` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Reference` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `Quantite` int(11) NOT NULL,
   `Prix_Unitaire` decimal(10,2) NOT NULL,
   `Total_TTC` decimal(10,2) NOT NULL,
   `Commentaire` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `LigneCommande`
 --
 
 INSERT INTO `LigneCommande` (`id`, `commande_id`, `tva_id`, `Libelle`, `Reference`, `Quantite`, `Prix_Unitaire`, `Total_TTC`, `Commentaire`) VALUES
-(1, 1, 3, 'Ligne commande test', 'REF l_c_test', 13, '135.00', '1851.52', 'Aucun'),
-(2, 2, 2, 'test', 'ref l_c_test', 123, '234.00', '29386.42', 'test');
+(5, 7, 3, 'libelle', 'ref1', 123, '37.00', '4801.30', 'com'),
+(6, 8, 4, 'libelle', 'erf', 12, '34837.23', '447310.03', 'com'),
+(7, 9, 3, 'li', 'refg', 87, '65.00', '5966.02', 'com'),
+(8, 10, 2, 'li', 'def', 43, '123.00', '5400.07', '-');
 
 -- --------------------------------------------------------
 
@@ -1008,6 +1044,16 @@ CREATE TABLE `ListeClesRepartition` (
 --
 
 CREATE TABLE `ListeCollectivites` (
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ListeForfaits`
+--
+
+CREATE TABLE `ListeForfaits` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1119,7 +1165,17 @@ CREATE TABLE `PaiementCommande` (
   `commande_id` int(11) NOT NULL,
   `DatePaiement` datetime NOT NULL,
   `Montant` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `PaiementCommande`
+--
+
+INSERT INTO `PaiementCommande` (`id`, `commande_id`, `DatePaiement`, `Montant`) VALUES
+(22, 7, '2015-07-31 11:17:42', '4791.3'),
+(23, 8, '2015-08-03 12:37:16', '10'),
+(24, 9, '2015-08-03 12:52:56', '10'),
+(25, 10, '2015-08-03 13:09:24', '10');
 
 -- --------------------------------------------------------
 
@@ -1252,7 +1308,7 @@ INSERT INTO `TempsPasse` (`id`, `activite_id`, `collectivite_id`, `Pourcentage`,
 (87, 15, 18, 0, 2015),
 (88, 16, 18, 0, 2015),
 (89, 17, 18, 0, 2015),
-(90, 18, 18, 0, 2015),
+(90, 18, 18, 50, 2015),
 (91, 1, 5, 0, 2015),
 (92, 2, 5, 0, 2015),
 (93, 3, 5, 0, 2015),
@@ -1735,32 +1791,32 @@ INSERT INTO `TVA` (`id`, `pourcentage`) VALUES
 CREATE TABLE `Utilisateur` (
   `id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
-  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `username_canonical` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email_canonical` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `enabled` tinyint(1) NOT NULL,
-  `salt` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `username_canonical` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email_canonical` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT NULL,
+  `salt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
-  `locked` tinyint(1) NOT NULL,
-  `expired` tinyint(1) NOT NULL,
+  `locked` tinyint(1) DEFAULT NULL,
+  `expired` tinyint(1) DEFAULT NULL,
   `expires_at` datetime DEFAULT NULL,
   `confirmation_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password_requested_at` datetime DEFAULT NULL,
-  `roles` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
-  `credentials_expired` tinyint(1) NOT NULL,
+  `roles` longtext COLLATE utf8_unicode_ci COMMENT '(DC2Type:array)',
+  `credentials_expired` tinyint(1) DEFAULT NULL,
   `credentials_expire_at` datetime DEFAULT NULL,
   `Nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Prenom` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `Utilisateur`
 --
 
 INSERT INTO `Utilisateur` (`id`, `service_id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `Nom`, `Prenom`) VALUES
-(49, 2, 'testA', 'testa', 'a@a.fr', 'a@a.fr', 1, '', 'mdp', '2015-07-28 11:38:42', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, 'nomA', 'prenomA'),
+(49, 2, 'testA', 'testa', 'a@a.fr', 'a@a.fr', 1, '', 'mdp', '2015-08-03 08:02:27', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, 'nomA', 'prenomA'),
 (50, 3, 'testC', 'testc', 't@f.fr', 't@f.fr', 1, '', 'mdp', '2015-07-21 15:10:12', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:11:"ROLE_COMPTA";}', 0, NULL, 'nomC', 'prenomC');
 
 --
@@ -1842,6 +1898,14 @@ ALTER TABLE `EtatCommande`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `forfait`
+--
+ALTER TABLE `forfait`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `IDX_7408FD1EA7991F51` (`collectivite_id`),
+  ADD KEY `IDX_7408FD1E3E030ACD` (`application_id`);
+
+--
 -- Index pour la table `Fournisseur`
 --
 ALTER TABLE `Fournisseur`
@@ -1917,6 +1981,12 @@ ALTER TABLE `ListeClesRepartition`
 -- Index pour la table `ListeCollectivites`
 --
 ALTER TABLE `ListeCollectivites`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `ListeForfaits`
+--
+ALTER TABLE `ListeForfaits`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2036,22 +2106,27 @@ ALTER TABLE `Collectivite`
 -- AUTO_INCREMENT pour la table `Commande`
 --
 ALTER TABLE `Commande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT pour la table `CommandeConcerneCollectivite`
 --
 ALTER TABLE `CommandeConcerneCollectivite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=159;
 --
 -- AUTO_INCREMENT pour la table `CommandePasseEtat`
 --
 ALTER TABLE `CommandePasseEtat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=100;
 --
 -- AUTO_INCREMENT pour la table `EtatCommande`
 --
 ALTER TABLE `EtatCommande`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT pour la table `forfait`
+--
+ALTER TABLE `forfait`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT pour la table `Fournisseur`
 --
@@ -2086,7 +2161,7 @@ ALTER TABLE `InformationsCollectiviteListe`
 -- AUTO_INCREMENT pour la table `LigneCommande`
 --
 ALTER TABLE `LigneCommande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `ListeActivites`
 --
@@ -2111,6 +2186,11 @@ ALTER TABLE `ListeClesRepartition`
 -- AUTO_INCREMENT pour la table `ListeCollectivites`
 --
 ALTER TABLE `ListeCollectivites`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `ListeForfaits`
+--
+ALTER TABLE `ListeForfaits`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `ListeImputations`
@@ -2151,7 +2231,7 @@ ALTER TABLE `MasseSalariale`
 -- AUTO_INCREMENT pour la table `PaiementCommande`
 --
 ALTER TABLE `PaiementCommande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT pour la table `Service`
 --
@@ -2171,7 +2251,7 @@ ALTER TABLE `TVA`
 -- AUTO_INCREMENT pour la table `Utilisateur`
 --
 ALTER TABLE `Utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=53;
 --
 -- Contraintes pour les tables exportées
 --
@@ -2224,6 +2304,13 @@ ALTER TABLE `CommandeConcerneCollectivite`
 ALTER TABLE `CommandePasseEtat`
   ADD CONSTRAINT `FK_8B01505982EA2E54` FOREIGN KEY (`commande_id`) REFERENCES `Commande` (`id`),
   ADD CONSTRAINT `FK_8B015059D5E86FF` FOREIGN KEY (`etat_id`) REFERENCES `EtatCommande` (`id`);
+
+--
+-- Contraintes pour la table `forfait`
+--
+ALTER TABLE `forfait`
+  ADD CONSTRAINT `FK_7408FD1E3E030ACD` FOREIGN KEY (`application_id`) REFERENCES `Application` (`id`),
+  ADD CONSTRAINT `FK_7408FD1EA7991F51` FOREIGN KEY (`collectivite_id`) REFERENCES `Collectivite` (`id`);
 
 --
 -- Contraintes pour la table `ImputationConcerneBudget`
