@@ -1,6 +1,6 @@
 jc_commande_liste:
-    path:      /commande/liste/{page}
-    defaults:  { _controller: JCCommandeBundle:Commande:liste, page:html }
+    path:      /commande/liste/{page}/{service}
+    defaults:  { _controller: JCCommandeBundle:Commande:liste, page:html, service:html }
     requirements:
         page:    ([0-9]+)
     

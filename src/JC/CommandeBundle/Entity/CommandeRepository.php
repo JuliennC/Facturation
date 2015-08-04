@@ -111,5 +111,26 @@ class CommandeRepository extends EntityRepository
 
 	}
 
+
+
+	//Retourne les 15 dcommandes d'un service avec :page
+	public function find15CommandesAPartirDePourService($page, $service){
+		
+		$qb = $this->createQueryBuilder('c');
+						
+		$qb	->leftJoin("c.service","s")
+			->where("s.nom = :service")
+			->setParameter("service", $service)
+			->orderBy('c.id','DESC')
+			->setFirstResult(2*($page-1))
+			->setMaxResults(2);
+			
+		$pag = new Paginator($qb, $fetchJoinCollection = true);
+		return $pag->getQuery()->getResult();
+		
+		
+
+	}
+
 	
 }

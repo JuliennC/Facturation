@@ -43,21 +43,49 @@ class CommandeController extends Controller
 	/*
 	*	Page principale, remplace en quelque sorte index
 	*/
-	  public function listeAction($page)
+	  public function listeAction($page, $service)
 	  {
+		  //on compte le nombre de fois que l'on rentre dans la fonction, pour stopper si aucune commande n'est entrée pour un service
+		  //Cela évite de faire une boucle infinie
+		  static $compte = 0;
+		  
 		$em = $this->getDoctrine()->getManager();
 		
-		if($page === "html" || $page < 0){
-			//On recupere les 15 premières commandes
-			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15DernieresCommandes();  	
-			
-			$page = 1;
 		
+		if($service === "html"){
+			
+			if($page === "html" || $page < 1){
+				//On recupere les 15 premières commandes
+				$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15DernieresCommandes();  	
+				
+				$page = 1;
+			
+			} else {
+	
+				$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15CommandesAPartirDe($page);  	
+			}
+		
+		
+		//Si un service en mentionné
 		} else {
-
-			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15CommandesAPartirDe($page);  	
+			
+			if($page === "html" || $page < 1){
+				//On recupere les 15 premières commandes
+				
+				$page = 1;
+			
+			} 
+	
+				$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15CommandesAPartirDePourService($page, $service);  	
+						
 		}
 
+
+		//S'il n'y a plus de commande, on retourne à la page d'avant
+		if(sizeof($listeCommandes) === 0 && $compte != 2 ){
+			$compte ++;
+			return $this->listeAction($page-1, $service);
+		}
 
 	    return $this->render( 'JCCommandeBundle:Commande:liste.html.twig', array('tabCommande' => $listeCommandes, 'page'=>$page) );
 	  }
