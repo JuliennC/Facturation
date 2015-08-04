@@ -108,16 +108,11 @@
 					</div>			
 					
 				
-				{# NE PAS SUPPRIMER  !!!!!#}
-				{% else %}
-				 -->
-				{% endif %}
 				
-
-		{% else %}
-	
+				{% elseif commande.etat != "Creee" %}
+				
+				
 				--><button class='btn btn-success col-md-2 col-md-offset-3 vcenter' data-toggle="modal" data-target="#modalFacturePDF">PDF</button>
-	
 	
 				<div class="modal fade" id="modalFacturePDF" tabindex="-1" role="dialog" aria-labelledby="modalFacturePDF">
 					  	<div class="modal-dialog" role="document">
@@ -136,11 +131,20 @@
 								</div>
 							</div>
 						</div>
-					</div>				
-	
+					</div>	
+				</div>			
+				
+				{# NE PAS SUPPRIMER  !!!!!#}
+				{% else %}
+				 -->
+				{% endif %}
+				
+
+				
+		{% else  %}
+				 -->
 	{% endif %}
 			
-						
 	</div>
 	
   {{ include("JCCommandeBundle:Commande:form.html.twig") }}
