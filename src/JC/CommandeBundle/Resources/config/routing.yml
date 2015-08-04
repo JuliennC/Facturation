@@ -36,13 +36,6 @@ jc_commande_pdf_facture:
   
   
   
-jc_commande_supprimer_paiement_facture:
-    path:     /commande/supprimerPaiement
-    defaults: { _controller: JCCommandeBundle:Commande:supprimerPaiementFacture }  
-    options:
-        expose: true
-
-
 
 
 
@@ -66,4 +59,12 @@ jc_commande_paiement_commande:
     defaults:  { _controller: JCCommandeBundle:Commande:paiementCommande }
     options:
         expose: true
+
+
+jc_commande_supprimer_paiement_facture:
+    path:     /commande/supprimerPaiement
+    defaults: { _controller: JCCommandeBundle:Commande:supprimerPaiementFacture }  
+    options:
+        expose: true
+
 

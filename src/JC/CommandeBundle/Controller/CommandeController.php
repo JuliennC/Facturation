@@ -250,7 +250,6 @@ class CommandeController extends Controller
 			*/
 			$ancienneVentilation = $commande->getVentilation();
 			
-			
 			//	On Creee le formulaire avec la commande
             $form = $this->get('form.factory')->create(new CommandeType($em), $commande);
 			$form->handleRequest($request);
@@ -420,9 +419,22 @@ class CommandeController extends Controller
 				
 			} else {
                             
+                                 dump($form->get('villes_concernees')->getData());
+
+				/*
+				*	Booleen qui sert a savoir s'il faut remettre les valeurs présentes dans la BDD
+				*	Si on arrive au moment de la création
+				*/
+                $remet_ancien = false;        
+
+                if ($form->get("villes_concernees")->getData() === null){
+	                $remet_ancien = true;
+                }
+                
+
                 //On affiche le formulaire, il faut donc plus d'informations
 				return $this->render('JCCommandeBundle:Commande:modification.html.twig', array( 'form' => $form->createView(), 'commande'=>$commande , 
-																								'cCCDejaBDD'=>$cCCDejaBDD, 'ancienneVentilation'=>$ancienneVentilation, 																										'tabVilles'=>$listeToutesLesVilles, 'listeLivraisons'=>$listeLivraisons, 																										'listeFournisseurs'=>$listeFournisseurs));	
+																								'cCCDejaBDD'=>$cCCDejaBDD, 'ancienneVentilation'=>$ancienneVentilation, 																										'tabVilles'=>$listeToutesLesVilles, 'listeLivraisons'=>$listeLivraisons, 																																'listeFournisseurs'=>$listeFournisseurs, 'remet_ancien'=>$remet_ancien));	
 	    	}
 	    	  
 		

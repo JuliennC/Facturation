@@ -8,8 +8,7 @@ security:
         
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
-        ROLE_SERVICE:     [ROLE_SERVICE]
-        ROLE_COMPTA:      [ROLE_COMPTA, ROLE_SERVICE]
+        ROLE_COMPTA:      [ROLE_COMPTA]
         ROLE_ADMIN:       [ROLE_SERVICE, ROLE_COMPTA, ROLE_ADMIN]
         
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
@@ -22,7 +21,6 @@ security:
         in_memory:
             memory:
                 users:
-                    service:  { password: mdpservice, roles: [ 'ROLE_SERVICE' ] }
                     compta:	  { password: mdpcompta,  roles: [ 'ROLE_COMPTA'] }
                     admin:    { password: mdpadmin,   roles: [ 'ROLE_ADMIN' ] }
 

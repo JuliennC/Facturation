@@ -4,6 +4,4 @@ jc_accueil_homepage:
     requirements:
         annee:    ([0-9]+)
 
-jc_accueil_recherche:
-    path:     /recherche/
-    defaults: { _controller: JCAccueilBundle:Accueil:recherche }
+

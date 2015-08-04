@@ -411,16 +411,36 @@
  
 			$( document ).ready(function() {
 				
-				{# On coche les villes selectionnees dans la database #}
-				{# On se sert pour cela de la ventilation de la base de donnée (l'ancienne ventilation s'il sagit d'un changement) #}
-				{% for ccc in cCCDejaBDD %}
-					metVille('{{ancienneVentilation}}','{{ccc.collectivite.nom}}','{{ccc.collectivite.id}}','{{ccc.repartition}}');
-				{% endfor %}
+				{% if remet_ancien == true %}
 				
-				{# On remet les valeurs saisie si une erreur etait dans le form #}
-				{% for ville in tabVilles %}
-					remetValeur('{{ville.nom}}','{{ville.id}}');
-				{% endfor %}
+					{# On coche les villes selectionnees dans la database #}
+					{# On se sert pour cela de la ventilation de la base de donnée (l'ancienne ventilation s'il sagit d'un changement) #}
+					{% for ccc in cCCDejaBDD %}
+						metVille('{{ancienneVentilation}}','{{ccc.collectivite.nom}}','{{ccc.collectivite.id}}','{{ccc.repartition}}');
+					{% endfor %}
+				
+				
+				{% else %}
+				
+					{% if form.ventilation.vars.value == 'Mutualisée' or form.ventilation.vars.value == 'Forfait' %}
+				
+						{# On remet les valeurs saisie si une erreur etait dans le form #}
+						{% for ville in form.villes_concernees %}
+							remetValeur('{{ville.vars['value']}}', '{{ville.vars['checked']}}', '{{commande.ventilation|json_encode()|raw}}');
+						{% endfor %}
+
+
+					{% else %}
+
+						{% for ville in tabVilles %}
+
+							remetValeur('{{ville.nom}}', '{{ville.nom}}', '{{commande.ventilation|json_encode()|raw}}');
+
+						{% endfor%}
+
+					{% endif %}
+				{% endif%}
+				
 				
 				
 				

@@ -92,10 +92,11 @@ function paiementCommande(idC){
 	
 		
 	} else {		
-		alerte ("Erreur de ventilation.. ");
+		alert ("Erreur de ventilation.. ");
 	}
 	
 }
+
 
 
 
@@ -103,9 +104,28 @@ function paiementCommande(idC){
 *	Fonction qui remet les valeurs en commande directe
 *	d'un precedent formulaire (avec fautes)
 */
-function remetValeur(nomColl, idColl){
-	document.getElementById('input_repartition_'+nomColl).setAttribute('value',$('#jc_commandebundle_commande_repartition'+idColl).val());
+function remetValeur(nomColl, checked, ventilation){
 	
+	ventilation = ventilation.replace(/"/g, '');
+	
+	if(ventilation == "Mutualisée" || ventilation == "Forfait"){
+		
+		console.log('l');
+		if(checked == 1){
+			
+			//On recupere la ville selectionnee
+			var checkbox = document.getElementById("jc_commandebundle_commande_villes_concernees_"+nomColl);
+	        //Dans les deux cas (mutualise et directe) on met check le checkbox
+			checkbox.setAttribute('checked', 'checked');
+		}
+
+	} else {
+		
+		repartition = $('input[attr_nom_ville="'+nomColl+'"]').val();
+		document.getElementById('input_repartition_'+nomColl).setAttribute('value',repartition);
+		console.log($('input[attr_nom_ville="'+nomColl+'"]'));
+	}
+
 }
 
 
@@ -273,9 +293,12 @@ function supprimerLigneCommande(numero){
 
 
 function metEnPlaceVentilation(ventil){
-	if(ventil.indexOf('Directe')>-1) { $('#boutonDirecte').click();}
-	else if(ventil.indexOf('Mutualisee')>-1){ $('#boutonMutualisee').click();}
-	else if(ventil.indexOf('Forfait')>-1){ $('#boutonForfait').click();}
+	
+	ventil = ventil.replace(/"/g, '');
+	
+	if(ventil == 'Directe') { $('#boutonDirecte').click();}
+	else if(ventil== 'Mutualisee'){ $('#boutonMutualisee').click();}
+	else if(ventil == 'Forfait'){ $('#boutonForfait').click();}
 	else {alert("Erreur de ventilation.. '"+ventil+"'");}
 }
 
@@ -521,9 +544,11 @@ $(document).ready(function() {
 
 
 
-
+	/*
+	*	Lorsqu'un % dans une commande directe est saisie
+	*/
 	$('.contientInput input').on('keyup',function(){
-		
+				
 		//On recupere la ville concernee
 		var villeConcernee = $(this).attr('for');
 		
