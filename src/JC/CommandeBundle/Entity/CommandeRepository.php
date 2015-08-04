@@ -86,8 +86,8 @@ class CommandeRepository extends EntityRepository
 		$qb = $this->createQueryBuilder('c');
 						
 		$qb	->orderBy('c.id','DESC')
-			->setFirstResult(2*($page-1))
-			->setMaxResults(2);
+			->setFirstResult(3*($page-1))
+			->setMaxResults(3);
 			
 		$pag = new Paginator($qb, $fetchJoinCollection = true);
 		return $pag->getQuery()->getResult();
@@ -104,7 +104,7 @@ class CommandeRepository extends EntityRepository
 		return $this			
 			->createQueryBuilder('c')
 			->orderBy('c.id','DESC')						
-			->setMaxResults(2)
+			->setMaxResults(3)
 	
 			->getQuery()	
 			->getResult();
@@ -122,8 +122,8 @@ class CommandeRepository extends EntityRepository
 			->where("s.nom = :service")
 			->setParameter("service", $service)
 			->orderBy('c.id','DESC')
-			->setFirstResult(2*($page-1))
-			->setMaxResults(2);
+			->setFirstResult(3*($page-1))
+			->setMaxResults(3);
 			
 		$pag = new Paginator($qb, $fetchJoinCollection = true);
 		return $pag->getQuery()->getResult();
