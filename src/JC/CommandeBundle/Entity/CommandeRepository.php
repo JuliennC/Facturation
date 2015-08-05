@@ -84,10 +84,16 @@ class CommandeRepository extends EntityRepository
 	public function find15CommandesAPartirDe($page){
 		
 		$qb = $this->createQueryBuilder('c');
-						
+		
+		/*				
+		* ATTENTION, Si vous changer le nombre de résultat par page (ici 15), n'oublier pas de changer dans le twig liste.html.twig 
+		* La condition {% if tabCommande|length == 15 %} !
+		* Sinon, les fleches de navigation ne s'afficheront pas
+		*/
+		
 		$qb	->orderBy('c.id','DESC')
-			->setFirstResult(3*($page-1))
-			->setMaxResults(3);
+			->setFirstResult(15*($page-1))
+			->setMaxResults(15);
 			
 		$pag = new Paginator($qb, $fetchJoinCollection = true);
 		return $pag->getQuery()->getResult();
@@ -105,13 +111,19 @@ class CommandeRepository extends EntityRepository
 	public function find15CommandesAPartirDePourService($page, $service){
 		
 		$qb = $this->createQueryBuilder('c');
+				
+		/*				
+		* ATTENTION, Si vous changer le nombre de résultat par page (ici 15), n'oublier pas de changer dans le twig liste.html.twig 
+		* La condition {% if tabCommande|length == 15 %} !
+		* Sinon, les fleches de navigation ne s'afficheront pas
+		*/
 						
 		$qb	->leftJoin("c.service","s")
 			->where("s.nom = :service")
 			->setParameter("service", $service)
 			->orderBy('c.id','DESC')
-			->setFirstResult(3*($page-1))
-			->setMaxResults(3);
+			->setFirstResult(15*($page-1))
+			->setMaxResults(15);
 			
 		$pag = new Paginator($qb, $fetchJoinCollection = true);
 		return $pag->getQuery()->getResult();

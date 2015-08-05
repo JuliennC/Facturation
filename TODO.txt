@@ -59,40 +59,13 @@ TODO liste :
 	-> FAIT demander si une activité peut changer de clé en cours d’année, si non, changer pour prendre directement l’activite de la commande. ATTENTION, si on change comme ça, ça veut dire que si on veut changer de clé pour X raison, les commandes antérieures ne seront pas affectées.
 	-> FAIT Voir pourquoi les commandes ne sont pas sélectionnée dans les autres navigateurs
 	-> FAIT voir la gestion des commandes supprimées
-
-
-	-> voir pour la création des utilisateurs (avec les mots de passes cryptés)
-	-> enlever de al facturation les imputation marquée comme non facturée 
-
-	-> Ajouter un commentaire interne (commande)??
-	-> addresse de livraison courrier et colis ????
-
-	
-
-
-	
+	-> FAIT faire une recherche
 	
 
 
 
 
-
-A LA FIN : 
-
-	-> revoir les commentaires
-	-> revoir les noms des variables
-	-> revoir les type des attributs
 	
 
-TESTS : 
-
-	-> tester les passage de paramètre avec de fausses valeurs pour s’assurer qu’on renvoie vers des pages d’erreur partout et faire avec ID (pour éviter les pb d’encodage)
-
-	-> Faire différents tests avec des commandes sur plusieurs années
 
 
-
-DETAILS :
-
-	-> formatter le total d’une commande dans form.html.twig
-	-> revoir la fonction de trie dans les tableau (js)
