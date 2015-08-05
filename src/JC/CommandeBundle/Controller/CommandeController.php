@@ -419,7 +419,7 @@ class CommandeController extends Controller
 				
 			} else {
                             
-                                 dump($form->get('villes_concernees')->getData());
+
 
 				/*
 				*	Booleen qui sert a savoir s'il faut remettre les valeurs présentes dans la BDD
