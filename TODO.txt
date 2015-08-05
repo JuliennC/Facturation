@@ -58,10 +58,10 @@ TODO liste :
 	-> FAIT Gestion des forfaits
 	-> FAIT demander si une activité peut changer de clé en cours d’année, si non, changer pour prendre directement l’activite de la commande. ATTENTION, si on change comme ça, ça veut dire que si on veut changer de clé pour X raison, les commandes antérieures ne seront pas affectées.
 	-> FAIT Voir pourquoi les commandes ne sont pas sélectionnée dans les autres navigateurs
+	-> FAIT voir la gestion des commandes supprimées
 
 
 	-> voir pour la création des utilisateurs (avec les mots de passes cryptés)
-	-> voir la gestion des commandes supprimées
 	-> enlever de al facturation les imputation marquée comme non facturée 
 
 	-> Ajouter un commentaire interne (commande)??

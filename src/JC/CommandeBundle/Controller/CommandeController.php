@@ -28,8 +28,10 @@ use JC\CommandeBundle\Entity\MasseSalariale;
 use JC\CommandeBundle\Entity\TempsPasse;
 use JC\CommandeBundle\Entity\Imputation;
 use JC\CommandeBundle\Entity\PaiementCommande;
+use JC\CommandeBundle\Entity\Recherche;
 
 use JC\CommandeBundle\Form\CommandeType;
+use JC\CommandeBundle\Form\RechercheType;
 
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -43,51 +45,129 @@ class CommandeController extends Controller
 	/*
 	*	Page principale, remplace en quelque sorte index
 	*/
-	  public function listeAction($page, $service)
+	  public function listeAction(Request $request, $page, $service)
 	  {
 		  //on compte le nombre de fois que l'on rentre dans la fonction, pour stopper si aucune commande n'est entrée pour un service
 		  //Cela évite de faire une boucle infinie
 		  static $compte = 0;
-		  
+
+		
+		
+		if ($page === "html" || $page < 1){
+			$page = 1;
+		} 
+		
+		
+		
 		$em = $this->getDoctrine()->getManager();
+				  
+		  
+		//C'est ici qu'on indique les champs sur lesquels peuvent s'éffectuer la recherche
+		$listeChampsRecherche = array('Numéro de commande', 'Etat', 'Référence', 'Utilisateur', 'Service', 'Nom Fournisseur', 'Date de création', 'Date d\'envoi');
+		 
+		  
+		//	On Creee le formulaire avec la commande
+		$form = $this->get('form.factory')->create(new RechercheType($listeChampsRecherche));
+		$form->handleRequest($request);
+		
+		// On stocke la contrainte
+		$contrainte = "";
+		
+		    			        
+
+		if ($form->isValid()){
+			
+			$contrainte = $listeChampsRecherche[$form->get('objet')->getData()];
+				
+				
+			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15CommandesAPartirDeAvecContrainte($contrainte, $form->get('valeur')->getData());  	
+				
+				
+			
+			//Si on recherche sur l'état, il faut que l'on regarde si le dernier état est celui rechercher, pas si simple en SQL
+			if($form->get('objet')->getData() === array_search("Etat", $listeChampsRecherche)) {
+				
+				$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->findAll();
+				
+				//On parcours les commandes
+				foreach($listeCommandes as $com){
+					
+					//Si leur dernière état n'est pas celui rechercher, on supprime
+					if($com->getEtat() != $form->get('valeur')->getData()){
+						unset($listeCommandes[array_search($com, $listeCommandes)]);
+					}
+				}
+				
+				
+				
+				
+			} else if($form->get('objet')->getData() === array_search("Date de création", $listeChampsRecherche)) {
+				
+				$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->findAll();
+				
+				//On parcours les commandes
+				foreach($listeCommandes as $com){
+					
+					//on récupère l'interval entre les deux date
+					$dateRecherchee = new \DateTime($form->get('valeur')->getData());
+					
+					//Si le jour de la création n'est pas celui qu'on cherque, on supprime
+					if($dateRecherchee->format('Y-m-d') != $com->getDateCreation()->format('Y-m-d')){
+						unset($listeCommandes[array_search($com, $listeCommandes)]);
+					}
+
+				}
+
+				
+			} else if($form->get('objet')->getData() === array_search("Date d'envoi", $listeChampsRecherche)) {
+				
+				$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->findAll();
+				
+				//On parcours les commandes
+				foreach($listeCommandes as $com){
+					
+					//on récupère l'interval entre les deux date
+					$dateRecherchee = new \DateTime($form->get('valeur')->getData());
+					
+					//Si le jour de la création n'est pas celui qu'on cherque, on supprime
+					if($dateRecherchee->format('Y-m-d') != $com->getDateEnvoi()->format('Y-m-d')){
+						unset($listeCommandes[array_search($com, $listeCommandes)]);
+					}
+
+				}
+
+				
+			}
+				
+				
+				
+			//S'il n'y a plus de commande, on retourne à la page d'avant
+				if(sizeof($listeCommandes) === 0 && $compte != 2 ){
+					$compte ++;
+					return $this->listeAction($request, $page-1, $service);
+			}		
+				
+		    return $this->render( 'JCCommandeBundle:Commande:liste.html.twig', array('request'=>$request, 'form'=>$form->createView(), 'tabCommande' => $listeCommandes, 'page'=>$page) );
+
+		}
 		
 		
+		
+		//Si aucun formulaire n'est soumis, on affiche normalement
 		if($service === "html"){
 			
-			if($page === "html" || $page < 1){
-				//On recupere les 15 premières commandes
-				$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15DernieresCommandes();  	
-				
-				$page = 1;
+			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15CommandesAPartirDe($page);  	
 			
-			} else {
-	
-				$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15CommandesAPartirDe($page);  	
-			}
-		
 		
 		//Si un service en mentionné
 		} else {
-			
-			if($page === "html" || $page < 1){
-				//On recupere les 15 premières commandes
-				
-				$page = 1;
-			
-			} 
-	
-				$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15CommandesAPartirDePourService($page, $service);  	
+
+			$listeCommandes = $em->getRepository('JCCommandeBundle:Commande')->find15CommandesAPartirDePourService($page, $service);  	
 						
 		}
+				
 
-
-		//S'il n'y a plus de commande, on retourne à la page d'avant
-		if(sizeof($listeCommandes) === 0 && $compte != 2 ){
-			$compte ++;
-			return $this->listeAction($page-1, $service);
-		}
-
-	    return $this->render( 'JCCommandeBundle:Commande:liste.html.twig', array('tabCommande' => $listeCommandes, 'page'=>$page) );
+	    return $this->render( 'JCCommandeBundle:Commande:liste.html.twig', array('request'=>$request, 'form'=>$form->createView(), 'tabCommande' => $listeCommandes, 'page'=>$page) );
 	  }
 	  
 	  
@@ -217,7 +297,7 @@ class CommandeController extends Controller
 			$commande -> setListeLignesCommande($em->getRepository('JCCommandeBundle:LigneCommande')->findLignesCommandeAvecCommande($commande->getId()));
 
 			//	On verifie l'etat de la commande
-			if( ($commande->getEtat() === "Engagee") || ($commande->getEtat() === "Paiement") || ($commande->getEtat() === "Terminee")){
+			if( ($commande->getEtat() === "Engagee") || ($commande->getEtat() === "Paiement") || ($commande->getEtat() === "Terminee") || ($commande->getEtat() === "Supprimee")){
 				
 				//Si la commande est envoye ou Paiement partiel, on ne peux pas la modifier. en renvoie donc sur la page detail
 				return $this->redirect($this->generateUrl('jc_commande_detail', array('id' => $commande->getId())));
@@ -440,6 +520,15 @@ class CommandeController extends Controller
 		
 	}
 
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 	  
 	  
 	  

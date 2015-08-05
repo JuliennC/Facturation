@@ -2,23 +2,53 @@
 
 {% block title %}{{ parent() }} - Liste des commandes{% endblock %}
 
-{% block jccommande_body %}
-  <h2>Liste des commandes </h2>
-  
+{% block jccommande_body %}  
   
   
     <div class="container top30">
     
-    	
+
+		<div class='row'>
+			{{ form_errors(form) }}
+		</div>
+		
+		
+		{{ form_start(form) }}
+		
+			<div class="row col-md-12" >
+			
+				<div class="col-md-3 col-md-offset-2" style="padding-right:0px;">
+					{{form_widget(form.objet, {'attr': {'class':'form-control' , 'placeholder':'Recherche ..' }} )}}
+				</div>
+				
+				<div class="col-md-3" style="padding-left:0px;">	    	
+					{{form_widget(form.valeur, {'attr': {'class':'form-control'}} )}}		
+				</div>
+				
+				<div class="col-md-2">	    	
+					{{form_widget(form.Rechercher, {'attr': {'class':'form-control'}} )}}		
+				</div>
+				
+			</div>
+		
+		
+		{{ form_end(form) }}
+		
+		
+				<hr class='col-md-12 top30'>
+
+		{% if tabCommande|length == 15 %}
 
 		<nav>
-			<ul class="pager">
-		    	<li class="previous"><a href="{{  path('jc_commande_liste', {'page': page-1 }) }}"><span aria-hidden="true">&larr;</span> Précédent</a></li>
-				<li class="next"><a href="{{  path('jc_commande_liste', {'page': page+1 }) }}">Suivant <span aria-hidden="true">&rarr;</span></a></li>
+			<ul class="pager top30">
+				{% if page == 0 %}
+		    		<li class="previous"><a href="{{  path('jc_commande_liste', {'request':request, 'page': page-1 }) }}"><span aria-hidden="true">&larr;</span> Précédent</a></li>
+				{% endif %}
+				<li class="next"><a href="{{  path('jc_commande_liste', {'request':request, 'page': page+1 }) }}">Suivant <span aria-hidden="true">&rarr;</span></a></li>
 		    </ul>
 		</nav>
 
-
+		{% endif %}
     
     	{% for commande in tabCommande %}
 		

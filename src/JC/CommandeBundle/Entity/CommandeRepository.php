@@ -98,18 +98,6 @@ class CommandeRepository extends EntityRepository
 
 
 
-	//Retourne les 15 dernières commandes 
-	public function find15DernieresCommandes(){
-		
-		return $this			
-			->createQueryBuilder('c')
-			->orderBy('c.id','DESC')						
-			->setMaxResults(3)
-	
-			->getQuery()	
-			->getResult();
-
-	}
 
 
 
@@ -128,8 +116,68 @@ class CommandeRepository extends EntityRepository
 		$pag = new Paginator($qb, $fetchJoinCollection = true);
 		return $pag->getQuery()->getResult();
 		
+	}
+	
+	
+	
+	
+	public function find15CommandesAPartirDeAvecContrainte($contrainte, $valeur){
 		
+		$qb = $this->createQueryBuilder('c');
+	
+		if($contrainte === "Numéro de commande"){
+			
+			$qb	
+			->where("c.id = :valeur")
+			->setParameter("valeur", $valeur)
+			;
+		
+		
+		
+		} else if($contrainte === "Utilisateur"){
+			
+			$qb	
+			->where("c.utilisateur LIKE :valeur")
+			->setParameter("valeur", "%".$valeur."%")
+			;
 
+
+
+		} else if($contrainte === "Service"){
+			
+			$qb	
+			->leftJoin('c.service','s')
+			->where("s.nom LIKE :valeur")
+			->setParameter("valeur", "%".$valeur."%")
+			;
+		
+		
+		
+		} else if($contrainte === "Référence"){
+			
+			$qb	
+			->where("c.reference LIKE :valeur")
+			->setParameter("valeur", "%".$valeur."%")
+			;
+		
+		
+		
+		} else if($contrainte === "Nom Fournisseur"){
+			
+			$qb	
+			->where("c.nomFournisseur LIKE :valeur")
+			->setParameter("valeur", "%".$valeur."%")
+			;
+		}	
+		
+			
+			
+			
+		$qb ->orderBy('c.id','DESC');
+
+		
+		
+		return $qb->getQuery()->getResult();
 	}
 
 	
