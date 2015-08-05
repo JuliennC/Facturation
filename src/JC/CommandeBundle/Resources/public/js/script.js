@@ -107,12 +107,11 @@ function paiementCommande(idC){
 function remetValeur(nomColl, checked, ventilation){
 	
 	ventilation = ventilation.replace(/"/g, '');
-	
-	if(ventilation == "Mutualisée" || ventilation == "Forfait"){
+		console.log('Ventilation : '+ventilation);
+	if(ventilation == "Mutualisee" || ventilation == "Forfait"){
 		
-		console.log('l');
 		if(checked == 1){
-			
+		console.log('l');
 			//On recupere la ville selectionnee
 			var checkbox = document.getElementById("jc_commandebundle_commande_villes_concernees_"+nomColl);
 	        //Dans les deux cas (mutualise et directe) on met check le checkbox
