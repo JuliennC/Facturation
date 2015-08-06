@@ -293,12 +293,7 @@ INSERT INTO `EtatCommande` (`id`, `Libelle`) VALUES
 (5, 'Terminee'),
 (6, 'Supprimee');
 
---
--- Contenu de la table `forfait`
---
 
-INSERT INTO `forfait` (`id`, `collectivite_id`, `annee`, `montant`, `application_id`) VALUES
-(8, 18, '2015', '1231', 10);
 
 
 --
