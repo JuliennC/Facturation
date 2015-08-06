@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost:8889
--- Généré le :  Lun 03 Août 2015 à 13:58
+-- Généré le :  Jeu 06 Août 2015 à 16:39
 -- Version du serveur :  5.5.42
 -- Version de PHP :  5.4.42
 
@@ -13,46 +13,7 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `facturation`
 --
---
---	ATTENTION : Ce fichier ne contient que les données qui ne changeront pas (exemple, les taux de TVA).
---				Il évite donc d'avoir à rentrer toutes les informations une à une
---	
---				La liste des appication est tirée d'Access
---		
---				Des données de test sont laissées afin de pouvoir commencer sur de "bonnes bases"
---
---				Pour la table Utilisateur, les deux utilisateur fournis servent pour la connection.
---				Cela évite que chacun ai un mot de passe, et qu'il faille entrer les roles dans chaque utilisateurs
---
 
--- --------------------------------------------------------
-
-
---
--- Contenu de la table `Activite`
---
-
-INSERT INTO `Activite` (`id`, `Nom`, `Est_Ancienne_Activite`, `cleRepartition_id`) VALUES
-(1, 'Gérer les postes Adm', 0, 7),
-(2, 'Gérer les smartphone/tablettes', 0, 5),
-(3, 'Gérer les postes Ecole', 0, 8),
-(4, 'Gérer les postes internet publiques', 0, 6),
-(5, 'Gérer les télécoms', 0, 4),
-(6, 'Gérer l''infrastructure', 0, 7),
-(7, 'Intervenir sur demande - Bureautique', 0, 9),
-(8, 'Intervenir sur demande - Infra', 0, 9),
-(9, 'Intervenir sur demande - Etude', 0, 9),
-(10, 'Gérer FI', 0, 3),
-(11, 'Gérer POP', 0, 1),
-(12, 'Gérer RH', 0, 2),
-(13, 'Gérer GEST', 0, 9),
-(14, 'Gérer TECH', 0, 9),
-(15, 'Gérer WEB', 0, 9),
-(16, 'Gérer SIG', 0, 9),
-(17, 'Gérer SOC', 0, 9),
-(18, 'Gérer CULT', 0, 9);
-
--- --------------------------------------------------------
 
 --
 -- Contenu de la table `Application`
@@ -231,17 +192,16 @@ INSERT INTO `Application` (`id`, `fournisseur_id`, `Nom`, `Libelle`) VALUES
 (179, 1, 'POP SEDI - Recensement militaire', ''),
 (180, 1, 'GEST Sondage et enquete', 'Ville de NANCY');
 
--- --------------------------------------------------------
-
 --
 -- Contenu de la table `Budget`
 --
 
 INSERT INTO `Budget` (`id`, `service_id`, `Montant`, `Annee`, `Libelle`) VALUES
-(1, 1, 2500, 2015, 'Budget test'),
-
-
--- --------------------------------------------------------
+(1, 1, 2500, 2015, 'Logiciel - b'),
+(2, 3, 10000, 2015, 'Logiciel - e'),
+(3, 2, 12000, 2015, 'Logiciel - i'),
+(4, 5, 10000, 2015, 'Materiel - c'),
+(5, 4, 10000, 2015, 'Formation- s');
 
 --
 -- Contenu de la table `CleRepartition`
@@ -258,7 +218,31 @@ INSERT INTO `CleRepartition` (`id`, `Nom`) VALUES
 (8, 'Nombre de postes Ecole'),
 (9, 'Participation');
 
--- --------------------------------------------------------
+
+
+--
+-- Contenu de la table `Activite`
+--
+
+INSERT INTO `Activite` (`id`, `Nom`, `Est_Ancienne_Activite`, `cleRepartition_id`) VALUES
+(1, 'Gérer les postes Adm', 0, 7),
+(2, 'Gérer les smartphone/tablettes', 0, 5),
+(3, 'Gérer les postes Ecole', 0, 8),
+(4, 'Gérer les postes internet publiques', 0, 6),
+(5, 'Gérer les télécoms', 0, 4),
+(6, 'Gérer l''infrastructure', 0, 7),
+(7, 'Intervenir sur demande - Bureautique', 0, 9),
+(8, 'Intervenir sur demande - Infra', 0, 9),
+(9, 'Intervenir sur demande - Etude', 0, 9),
+(10, 'Gérer FI', 0, 3),
+(11, 'Gérer POP', 0, 1),
+(12, 'Gérer RH', 0, 2),
+(13, 'Gérer GEST', 0, 9),
+(14, 'Gérer TECH', 0, 9),
+(15, 'Gérer WEB', 0, 9),
+(16, 'Gérer SIG', 0, 9),
+(17, 'Gérer SOC', 0, 9),
+(18, 'Gérer CULT', 0, 9);
 
 --
 -- Contenu de la table `Collectivite`
@@ -296,7 +280,94 @@ INSERT INTO `Collectivite` (`id`, `Nom`, `Date_Debut_Mutualisation`, `Date_Fin_M
 (29, 'CCAS de Laxou', '2010-01-01', '2050-01-01'),
 (30, 'ONL', '2010-01-01', '2050-01-01');
 
--- --------------------------------------------------------
+--
+-- Contenu de la table `Commande`
+--
+
+INSERT INTO `Commande` (`id`, `service_id`, `application_id`, `fournisseur_id`, `livraison_id`, `activite_id`, `imputation_id`, `Reference`, `Date_Livraison`, `Ventilation`, `Engagement`, `Libelle_Facturation`, `Total_TTC`, `Utilisateur`, `NomFournisseur`, `AdresseFournisseur`, `Complement_Adresse_Fournisseur`, `Code_Postal_Fournisseur`, `VilleFournisseur`, `TelephoneFournisseur`, `NomLivraison`, `AdresseLivraison`, `Complement_Adresse_Livraison`, `Code_Postal_Livraison`, `VilleLivraison`, `TelephoneLivraison`, `FaxFournisseur`, `ContactFournisseur`, `EmailContactFournisseur`, `Faxlivraison`, `MontantPaye`, `Total_HT`, `Date_Envoi`) VALUES
+(7, 4, 10, 2, 1, 18, 8, 'ReFint78_3', '2015-07-07 00:00:00', 'Mutualisee', '123', 'libelle pour facturation', '4801.30', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '4791.30', '4551.00', '2015-07-09 00:00:00'),
+(8, 2, 10, 1, 2, 18, 8, NULL, '2015-08-19 00:00:00', 'Forfait', NULL, 'libelle pour facturation', '447310.03', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '10.00', '418046.76', '2015-08-22 00:00:00'),
+(9, 2, 10, 2, 2, 18, 8, 'ref 453', '2015-08-04 00:00:00', 'Forfait', NULL, 'Achat de cartouches', '5966.02', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '10.00', '5655.00', '2015-08-13 00:00:00'),
+(10, 2, 10, 2, 2, 18, 8, 'ref 082', '2015-08-11 00:00:00', 'Forfait', NULL, 'Commande pour Coriolis', '5400.07', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '10.00', '5289.00', '2015-08-06 00:00:00'),
+(11, 2, 173, 2, 2, 18, 8, 'REFint78-4', '2015-08-05 00:00:00', 'Mutualisee', NULL, 'Commande pour Gestor', '15961.09', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '100.00', '15129.00', '2015-08-12 00:00:00'),
+(12, 2, 173, 1, 2, 18, 8, 'ref 642', '2015-08-12 00:00:00', 'Forfait', '123', 'Achat d''imprimantes', '1579.32', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '500.00', '1476.00', '2015-08-12 00:00:00'),
+(13, 2, 173, 1, 2, 18, 8, 'zer', '2015-08-13 00:00:00', 'Directe', NULL, 'er', '0.00', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '0.00', '0.00', '2015-08-06 00:00:00'),
+(14, 2, 173, 1, 2, 18, 8, 'ref', '2015-08-21 00:00:00', 'Mutualisee', NULL, 'libelle', '154.08', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '154.08', '144.00', '2015-08-07 00:00:00');
+
+--
+-- Contenu de la table `CommandeConcerneCollectivite`
+--
+
+INSERT INTO `CommandeConcerneCollectivite` (`id`, `commande_id`, `collectivite_id`, `Repartion`) VALUES
+(147, 7, 29, 'Participation'),
+(148, 7, 18, 'Participation'),
+(149, 7, 25, 'Participation'),
+(153, 9, 18, 'Participation'),
+(154, 9, 6, 'Participation'),
+(157, 10, 18, 'Participation'),
+(158, 10, 24, 'Participation'),
+(163, 11, 18, 'Participation'),
+(164, 11, 24, 'Participation'),
+(167, 12, 29, 'Participation'),
+(168, 12, 18, 'Participation'),
+(182, 13, 20, '50'),
+(183, 13, 28, '50'),
+(188, 14, 29, 'Participation'),
+(189, 14, 18, 'Participation');
+
+--
+-- Contenu de la table `CommandePasseEtat`
+--
+
+INSERT INTO `CommandePasseEtat` (`id`, `commande_id`, `etat_id`, `datePassage`) VALUES
+(72, 7, 1, '2015-07-31 11:07:18'),
+(73, 7, 2, '2015-07-31 11:07:19'),
+(74, 7, 3, '2015-07-31 11:07:50'),
+(76, 7, 4, '2015-07-31 11:17:22'),
+(77, 8, 1, '2015-08-03 10:09:05'),
+(78, 8, 2, '2015-08-03 10:09:06'),
+(79, 8, 2, '2015-08-03 10:14:09'),
+(80, 8, 2, '2015-08-03 10:14:32'),
+(84, 7, 5, '2015-08-03 12:34:29'),
+(85, 8, 2, '2015-08-03 12:36:42'),
+(86, 8, 3, '2015-08-03 12:37:02'),
+(87, 8, 4, '2015-08-03 12:37:16'),
+(89, 9, 1, '2015-08-03 12:47:24'),
+(90, 9, 2, '2015-08-03 12:47:25'),
+(91, 9, 2, '2015-08-03 12:49:37'),
+(92, 9, 3, '2015-08-03 12:52:47'),
+(93, 9, 4, '2015-08-03 12:52:56'),
+(94, 9, 5, '2015-08-03 12:53:01'),
+(95, 10, 1, '2015-08-03 13:09:04'),
+(96, 10, 2, '2015-08-03 13:09:05'),
+(97, 10, 3, '2015-08-03 13:09:16'),
+(98, 10, 4, '2015-08-03 13:09:24'),
+(99, 10, 5, '2015-08-03 13:10:01'),
+(100, 11, 1, '2015-08-03 20:04:30'),
+(101, 11, 2, '2015-08-03 20:04:31'),
+(102, 11, 3, '2015-08-03 20:06:11'),
+(103, 11, 2, '2015-08-03 20:06:40'),
+(104, 11, 3, '2015-08-03 20:07:04'),
+(106, 11, 4, '2015-08-03 20:07:54'),
+(108, 12, 1, '2015-08-04 08:34:03'),
+(109, 12, 2, '2015-08-04 08:34:05'),
+(110, 12, 3, '2015-08-04 08:44:48'),
+(111, 12, 4, '2015-08-04 08:48:22'),
+(112, 13, 1, '2015-08-04 17:52:30'),
+(113, 13, 2, '2015-08-04 17:52:31'),
+(114, 13, 2, '2015-08-04 17:52:44'),
+(115, 13, 2, '2015-08-04 17:52:57'),
+(116, 13, 2, '2015-08-04 17:53:36'),
+(117, 13, 2, '2015-08-04 18:01:38'),
+(118, 13, 2, '2015-08-04 18:02:10'),
+(119, 13, 6, '2015-08-05 08:35:45'),
+(120, 14, 1, '2015-08-05 09:56:31'),
+(121, 14, 2, '2015-08-05 09:56:32'),
+(122, 14, 3, '2015-08-05 09:56:50'),
+(123, 14, 2, '2015-08-05 09:57:20'),
+(124, 14, 3, '2015-08-05 09:57:28'),
+(126, 14, 4, '2015-08-05 09:58:46'),
+(128, 14, 5, '2015-08-05 09:59:30');
 
 --
 -- Contenu de la table `EtatCommande`
@@ -307,9 +378,8 @@ INSERT INTO `EtatCommande` (`id`, `Libelle`) VALUES
 (2, 'Enregistree'),
 (3, 'Engagee'),
 (4, 'Paiement'),
-(5, 'Terminee');
-
--- --------------------------------------------------------
+(5, 'Terminee'),
+(6, 'Supprimee');
 
 --
 -- Contenu de la table `forfait`
@@ -318,86 +388,99 @@ INSERT INTO `EtatCommande` (`id`, `Libelle`) VALUES
 INSERT INTO `forfait` (`id`, `collectivite_id`, `annee`, `montant`, `application_id`) VALUES
 (8, 18, '2015', '1231', 10);
 
--- --------------------------------------------------------
-
 --
 -- Contenu de la table `Fournisseur`
 --
 
 INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`, `Contact`, `EmailContact`) VALUES
-(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', NULL, 'Marc Dupont', 'marc.dupond@gmail.com'),
-
+(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', NULL, NULL, NULL),
 
 --
 -- Contenu de la table `Imputation`
 --
 
 INSERT INTO `Imputation` (`id`, `Libelle`, `Sous_fonction`, `Article`, `Section`, `Est_Facture`) VALUES
-(1, 'Cotisation ville-internet', '90.14', '6281,63', 'Fonctionnement', 0),
-(2, 'Cotisation mission Ecoter', '90.14', '6281.57', 'Fonctionnement', 0),
-(3, 'Cotisation Avicca', '90.14', '6281.56', 'Fonctionnement', 0),
-(4, 'Divers Travaux', '90.14', '2318-360', 'Investissement', 0),
-(5, 'Divers Travaux', '90.14', '2318-496', 'Investissement', 0),
-(6, 'Logiciels-  Piscines', '413', '205', 'Investissement', 0),
-(7, 'Matériels -Piscines', '413', '2183', 'Investissement', 0),
-(8, 'Eau : Participations (HT)', '01', '13918', 'Investissement', 0),
-(9, 'Eau : Logiciels (HT)', '01', '205', 'Investissement', 0),
-(10, 'Eau : Matériels (HT)', '01', '2183', 'Investissement', 0),
-(11, 'Eau : Instal.,outillages tech.et travaux  (HT)', '01', '2315', 'Investissement', 0),
-(12, 'Eau : Prestations de service (HT)', '01', '618.8', 'Fonctionnement', 0),
-(13, 'Eau : Maintenance (HT)', '01', '6156', 'Fonctionnement', 0),
-(14, 'Eau : Frais de telecom (HT)', '01', '6262', 'Fonctionnement', 0),
-(15, 'Ass. : Participations (HT)', '02', '13918', 'Investissement', 0),
-(16, 'Ass : Logiciels (HT)', '02', '205', 'Investissement', 0),
-(17, 'Ass : Matériels (HT)', '02', '2183', 'Investissement', 0),
-(18, 'Ass : Instal.,outillages tech.et travaux  (HT)', '02', '2315', 'Investissement', 0),
-(19, 'Ass : Prestations de service (HT)', '02', '618.8', 'Fonctionnement', 0),
-(20, 'Ass : Maintenance (HT)', '02', '6156', 'Fonctionnement', 0),
-(21, 'Ass : Frais de telecom (HT)', '02', '6262', 'Fonctionnement', 0),
-(22, 'Maintenance logiciels piscines', '413', '6156', 'Fonctionnement', 0),
-(23, 'Maintenance des logiciels', '020.3', '6156', 'Fonctionnement', 0),
-(24, 'Formations', '020.3', '6184', 'Fonctionnement', 0),
-(25, 'Prestations de service', '020.3', '6188', 'Fonctionnement', 0),
-(26, 'Annonces et insertions', '020.3', '6231', 'Fonctionnement', 0),
-(27, 'Frais de Telecommunication', '020.3', '6262', 'Fonctionnement', 0),
-(28, 'Autres fournitures- Achat de billet', '020.3', '60228', 'Fonctionnement', 0),
-(29, 'Fournitures petit équipement', '020.3', '60632', 'Fonctionnement', 0),
-(30, 'Cotisation "club utilisateur Coriolis"', '020.3', '6281.58', 'Fonctionnement', 0),
-(31, 'Remboursement de frais au Ciril', '020.3', '62878.3', 'Fonctionnement', 0),
-(32, 'Frais de telecommunication', '020.5', '6262', 'Fonctionnement', 0),
-(33, 'Maintenance des logiciels ( SIG)', '820.1', '6156', 'Fonctionnement', 0),
-(34, 'formations (SIG)', '820.1', '6184', 'Fonctionnement', 0),
-(35, 'Prestations de service (SIG)', '820.1', '6188', 'Fonctionnement', 0),
-(36, 'Maintenance Cyberbases - Abonnement', '90.16', '6156', 'Fonctionnement', 0),
-(37, 'Formations (Cyberbases)', '90.16', '6184', 'Fonctionnement', 0),
-(38, 'Prestations de service', '90.16', '6188', '', 0),
-(39, 'Frais de telecommunication', '90.16', '6262', '', 0),
-(40, 'Remboursement de frais de location', '90.16', '62878', '', 0),
-(41, 'Logiciels', '020.3', '2051', 'Investissement', 0),
-(42, 'Matériels', '020.3', '2183', 'Investissement', 0),
-(43, 'Travaux de cablages', '020.3', '2315', 'Investissement', 0),
-(44, 'Sub. d''équipement au Ciril', '020.3', '20418.22', 'Investissement', 0),
-(45, 'Divers Travaux -SIG-', '820.1', '2318', 'Investissement', 0),
-(46, 'logiciels', '90.14', '2051-308', 'Investissement', 0),
-(47, 'Matériels', '90.14', '2183-308', 'Investissement', 0),
-(48, 'Matériels', '90.14', '2183-360', 'Investissement', 0),
-(49, 'Mobiliers er autres', '90.14', '2184-308', 'Investissement', 0),
-(50, 'Cotisation ADULLACT', '90.14', '6281,59', 'Fonctionnement', 0),
-(51, 'locations mobiliers et immobiliers', '90.16', '6132', 'Fonctionnement', 0),
-(52, 'ImpSpécifique pour Nancy - report 2007', '020.2', '2183-Ncy', 'Investissement', 0),
-(53, 'Documentation générale et technique', '020.3', '6182-300', 'Fonctionnement', 0),
-(54, 'Documentation générale et technique', '020.3', '6182', 'Fonctionnement', 0),
-(55, 'Cotisation au club utilisateurs Droits de Cités', '020.3', '6281.75', 'Fonctionnement', 0),
-(56, 'Autres fournitures non stockées', '020.3', '60628', 'Fonctionnement', 0),
-(57, 'Etudes et recherches', '020.3', '617-300', 'Fonctionnement', 0),
-(58, 'Catalogues et imprimés', '020.3', '6236', 'Fonctionnement', 0),
-(59, 'Etudes Préopérationnelles', '020.3', '2031', 'Investissement', 0),
-(60, 'Travaux de réseau et voirie', '020.3', '2315', 'Investissement', 0),
-(61, 'Club Utilisateur', '020.3', '6281.91', 'Fonctionnement', 0),
-(62, 'Maintenance G-NY (PDU)', '820.3', '6156', 'Fonctionnement', 0),
-(63, 'Installations générales', '020.3', '2135', 'Investissement', 0),
-(64, 'Entretien et réparations sur biens mobiliers', '020.3', '61558.300', 'Fonctionnement', 0);
+(1, 'Cotisation ville-internet', '90.14', '6281,63', 'Fonctionnement', 1),
+(2, 'Cotisation mission Ecoter', '90.14', '6281.57', 'Fonctionnement', 1),
+(3, 'Cotisation Avicca', '90.14', '6281.56', 'Fonctionnement', 1),
+(4, 'Divers Travaux', '90.14', '2318-360', 'Investissement', 1),
+(5, 'Divers Travaux', '90.14', '2318-496', 'Investissement', 1),
+(6, 'Logiciels-  Piscines', '413', '205', 'Investissement', 1),
+(7, 'Matériels -Piscines', '413', '2183', 'Investissement', 1),
+(8, 'Eau : Participations (HT)', '01', '13918', 'Investissement', 1),
+(9, 'Eau : Logiciels (HT)', '01', '205', 'Investissement', 1),
+(10, 'Eau : Matériels (HT)', '01', '2183', 'Investissement', 1),
+(11, 'Eau : Instal.,outillages tech.et travaux  (HT)', '01', '2315', 'Investissement', 1),
+(12, 'Eau : Prestations de service (HT)', '01', '618.8', 'Fonctionnement', 1),
+(13, 'Eau : Maintenance (HT)', '01', '6156', 'Fonctionnement', 1),
+(14, 'Eau : Frais de telecom (HT)', '01', '6262', 'Fonctionnement', 1),
+(15, 'Ass. : Participations (HT)', '02', '13918', 'Investissement', 1),
+(16, 'Ass : Logiciels (HT)', '02', '205', 'Investissement', 1),
+(17, 'Ass : Matériels (HT)', '02', '2183', 'Investissement', 1),
+(18, 'Ass : Instal.,outillages tech.et travaux  (HT)', '02', '2315', 'Investissement', 1),
+(19, 'Ass : Prestations de service (HT)', '02', '618.8', 'Fonctionnement', 1),
+(20, 'Ass : Maintenance (HT)', '02', '6156', 'Fonctionnement', 1),
+(21, 'Ass : Frais de telecom (HT)', '02', '6262', 'Fonctionnement', 1),
+(22, 'Maintenance logiciels piscines', '413', '6156', 'Fonctionnement', 1),
+(23, 'Maintenance des logiciels', '020.3', '6156', 'Fonctionnement', 1),
+(24, 'Formations', '020.3', '6184', 'Fonctionnement', 1),
+(25, 'Prestations de service', '020.3', '6188', 'Fonctionnement', 1),
+(26, 'Annonces et insertions', '020.3', '6231', 'Fonctionnement', 1),
+(27, 'Frais de Telecommunication', '020.3', '6262', 'Fonctionnement', 1),
+(28, 'Autres fournitures- Achat de billet', '020.3', '60228', 'Fonctionnement', 1),
+(29, 'Fournitures petit équipement', '020.3', '60632', 'Fonctionnement', 1),
+(30, 'Cotisation "club utilisateur Coriolis"', '020.3', '6281.58', 'Fonctionnement', 1),
+(31, 'Remboursement de frais au Ciril', '020.3', '62878.3', 'Fonctionnement', 1),
+(32, 'Frais de telecommunication', '020.5', '6262', 'Fonctionnement', 1),
+(33, 'Maintenance des logiciels ( SIG)', '820.1', '6156', 'Fonctionnement', 1),
+(34, 'formations (SIG)', '820.1', '6184', 'Fonctionnement', 1),
+(35, 'Prestations de service (SIG)', '820.1', '6188', 'Fonctionnement', 1),
+(36, 'Maintenance Cyberbases - Abonnement', '90.16', '6156', 'Fonctionnement', 1),
+(37, 'Formations (Cyberbases)', '90.16', '6184', 'Fonctionnement', 1),
+(38, 'Prestations de service', '90.16', '6188', '', 1),
+(39, 'Frais de telecommunication', '90.16', '6262', '', 1),
+(40, 'Remboursement de frais de location', '90.16', '62878', '', 1),
+(41, 'Logiciels', '020.3', '2051', 'Investissement', 1),
+(42, 'Matériels', '020.3', '2183', 'Investissement', 1),
+(43, 'Travaux de cablages', '020.3', '2315', 'Investissement', 1),
+(44, 'Sub. d''équipement au Ciril', '020.3', '20418.22', 'Investissement', 1),
+(45, 'Divers Travaux -SIG-', '820.1', '2318', 'Investissement', 1),
+(46, 'logiciels', '90.14', '2051-308', 'Investissement', 1),
+(47, 'Matériels', '90.14', '2183-308', 'Investissement', 1),
+(48, 'Matériels', '90.14', '2183-360', 'Investissement', 1),
+(49, 'Mobiliers er autres', '90.14', '2184-308', 'Investissement', 1),
+(50, 'Cotisation ADULLACT', '90.14', '6281,59', 'Fonctionnement', 1),
+(51, 'locations mobiliers et immobiliers', '90.16', '6132', 'Fonctionnement', 1),
+(52, 'ImpSpécifique pour Nancy - report 2007', '020.2', '2183-Ncy', 'Investissement', 1),
+(53, 'Documentation générale et technique', '020.3', '6182-300', 'Fonctionnement', 1),
+(54, 'Documentation générale et technique', '020.3', '6182', 'Fonctionnement', 1),
+(55, 'Cotisation au club utilisateurs Droits de Cités', '020.3', '6281.75', 'Fonctionnement', 1),
+(56, 'Autres fournitures non stockées', '020.3', '60628', 'Fonctionnement', 1),
+(57, 'Etudes et recherches', '020.3', '617-300', 'Fonctionnement', 1),
+(58, 'Catalogues et imprimés', '020.3', '6236', 'Fonctionnement', 1),
+(59, 'Etudes Préopérationnelles', '020.3', '2031', 'Investissement', 1),
+(60, 'Travaux de réseau et voirie', '020.3', '2315', 'Investissement', 1),
+(61, 'Club Utilisateur', '020.3', '6281.91', 'Fonctionnement', 1),
+(62, 'Maintenance G-NY (PDU)', '820.3', '6156', 'Fonctionnement', 1),
+(63, 'Installations générales', '020.3', '2135', 'Investissement', 1),
+(64, 'entretien et réparations sur biens mobiliers', '020.3', '61558.300', 'Fonctionnement', 1);
 
+--
+-- Contenu de la table `forfait`
+--
+
+INSERT INTO `forfait` (`id`, `collectivite_id`, `annee`, `montant`, `application_id`) VALUES
+(1, 18, '2015', '1231', 10);
+
+
+
+
+--
+-- Contenu de la table `Budget`
+--
+
+INSERT INTO `Budget` (`id`, `service_id`, `Montant`, `Annee`, `Libelle`) VALUES
+(1, 1, 2500, 2015, 'Logiciel - test'),
 
 --
 -- Contenu de la table `Livraison`
@@ -406,7 +489,6 @@ INSERT INTO `Imputation` (`id`, `Libelle`, `Sous_fonction`, `Article`, `Section`
 INSERT INTO `Livraison` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`) VALUES
 (1, 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL),
 
--- --------------------------------------------------------
 
 
 --
@@ -420,7 +502,6 @@ INSERT INTO `Service` (`id`, `Nom`, `Est_Ancien_Service`) VALUES
 (4, 'SIG', 0),
 (5, 'Cyberbase', 0);
 
--- --------------------------------------------------------
 
 --
 -- Contenu de la table `TVA`
@@ -433,552 +514,10 @@ INSERT INTO `TVA` (`id`, `pourcentage`) VALUES
 (4, '7.00'),
 (5, '20.00');
 
--- --------------------------------------------------------
-
-
 --
 -- Contenu de la table `Utilisateur`
 --
 
 INSERT INTO `Utilisateur` (`id`, `service_id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `Nom`, `Prenom`) VALUES
-(49, 2, 'testA', 'testa', 'a@a.fr', 'a@a.fr', 1, '', 'mdp', '2015-08-03 08:02:27', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, 'nomA', 'prenomA'),
+(49, 2, 'testA', 'testa', 'a@a.fr', 'a@a.fr', 1, '', 'mdp', '2015-08-05 09:55:06', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, 'nomA', 'prenomA'),
 (50, 3, 'testC', 'testc', 't@f.fr', 't@f.fr', 1, '', 'mdp', '2015-07-21 15:10:12', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:11:"ROLE_COMPTA";}', 0, NULL, 'nomC', 'prenomC');
-
---
--- Index pour les tables exportées
---
-
---
--- Index pour la table `Activite`
---
-ALTER TABLE `Activite`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_4103374398F35CA9` (`cleRepartition_id`);
-
---
--- Index pour la table `Application`
---
-ALTER TABLE `Application`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_22C75216670C757F` (`fournisseur_id`);
-
---
--- Index pour la table `Budget`
---
-ALTER TABLE `Budget`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_745EF24DED5CA9E6` (`service_id`);
-
---
--- Index pour la table `bug`
---
-ALTER TABLE `bug`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_DC1F9F43DA5256D` (`image_id`);
-
---
--- Index pour la table `CleRepartition`
---
-ALTER TABLE `CleRepartition`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Collectivite`
---
-ALTER TABLE `Collectivite`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Commande`
---
-ALTER TABLE `Commande`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_979CC42BED5CA9E6` (`service_id`),
-  ADD KEY `IDX_979CC42B3E030ACD` (`application_id`),
-  ADD KEY `IDX_979CC42B670C757F` (`fournisseur_id`),
-  ADD KEY `IDX_979CC42B8E54FB25` (`livraison_id`),
-  ADD KEY `IDX_979CC42B9B0F88B1` (`activite_id`),
-  ADD KEY `IDX_979CC42B1E40325` (`imputation_id`);
-
---
--- Index pour la table `CommandeConcerneCollectivite`
---
-ALTER TABLE `CommandeConcerneCollectivite`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_71972E2A82EA2E54` (`commande_id`),
-  ADD KEY `IDX_71972E2AA7991F51` (`collectivite_id`);
-
---
--- Index pour la table `CommandePasseEtat`
---
-ALTER TABLE `CommandePasseEtat`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_8B01505982EA2E54` (`commande_id`),
-  ADD KEY `IDX_8B015059D5E86FF` (`etat_id`);
-
---
--- Index pour la table `EtatCommande`
---
-ALTER TABLE `EtatCommande`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `forfait`
---
-ALTER TABLE `forfait`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_7408FD1EA7991F51` (`collectivite_id`),
-  ADD KEY `IDX_7408FD1E3E030ACD` (`application_id`);
-
---
--- Index pour la table `Fournisseur`
---
-ALTER TABLE `Fournisseur`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Image`
---
-ALTER TABLE `Image`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Imputation`
---
-ALTER TABLE `Imputation`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ImputationConcerneBudget`
---
-ALTER TABLE `ImputationConcerneBudget`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_DD96CBFF1E40325` (`imputation_id`),
-  ADD KEY `IDX_DD96CBFF36ABA6B8` (`budget_id`);
-
---
--- Index pour la table `InformationCollectivite`
---
-ALTER TABLE `InformationCollectivite`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_F212DDF598F35CA9` (`cleRepartition_id`),
-  ADD KEY `IDX_F212DDF5A7991F51` (`collectivite_id`);
-
---
--- Index pour la table `InformationsCollectiviteListe`
---
-ALTER TABLE `InformationsCollectiviteListe`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `LigneCommande`
---
-ALTER TABLE `LigneCommande`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_CF33509A82EA2E54` (`commande_id`),
-  ADD KEY `IDX_CF33509A4D79775F` (`tva_id`);
-
---
--- Index pour la table `ListeActivites`
---
-ALTER TABLE `ListeActivites`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ListeApplications`
---
-ALTER TABLE `ListeApplications`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ListeBudgets`
---
-ALTER TABLE `ListeBudgets`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ListeClesRepartition`
---
-ALTER TABLE `ListeClesRepartition`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ListeCollectivites`
---
-ALTER TABLE `ListeCollectivites`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ListeForfaits`
---
-ALTER TABLE `ListeForfaits`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ListeImputations`
---
-ALTER TABLE `ListeImputations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ListeMassesSalariales`
---
-ALTER TABLE `ListeMassesSalariales`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ListeServices`
---
-ALTER TABLE `ListeServices`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ListeTempsPasses`
---
-ALTER TABLE `ListeTempsPasses`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ListeUtilisateurs`
---
-ALTER TABLE `ListeUtilisateurs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Livraison`
---
-ALTER TABLE `Livraison`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `MasseSalariale`
---
-ALTER TABLE `MasseSalariale`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_57DE69C1ED5CA9E6` (`service_id`);
-
---
--- Index pour la table `PaiementCommande`
---
-ALTER TABLE `PaiementCommande`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_E9D1EEDA82EA2E54` (`commande_id`);
-
---
--- Index pour la table `Service`
---
-ALTER TABLE `Service`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `TempsPasse`
---
-ALTER TABLE `TempsPasse`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_BB45A6C79B0F88B1` (`activite_id`),
-  ADD KEY `IDX_BB45A6C7A7991F51` (`collectivite_id`);
-
---
--- Index pour la table `TVA`
---
-ALTER TABLE `TVA`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `Utilisateur`
---
-ALTER TABLE `Utilisateur`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_9B80EC6492FC23A8` (`username_canonical`),
-  ADD UNIQUE KEY `UNIQ_9B80EC64A0D96FBF` (`email_canonical`),
-  ADD KEY `IDX_9B80EC64ED5CA9E6` (`service_id`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `Activite`
---
-ALTER TABLE `Activite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
---
--- AUTO_INCREMENT pour la table `Application`
---
-ALTER TABLE `Application`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=181;
---
--- AUTO_INCREMENT pour la table `Budget`
---
-ALTER TABLE `Budget`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT pour la table `bug`
---
-ALTER TABLE `bug`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `CleRepartition`
---
-ALTER TABLE `CleRepartition`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT pour la table `Collectivite`
---
-ALTER TABLE `Collectivite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
---
--- AUTO_INCREMENT pour la table `Commande`
---
-ALTER TABLE `Commande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT pour la table `CommandeConcerneCollectivite`
---
-ALTER TABLE `CommandeConcerneCollectivite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=159;
---
--- AUTO_INCREMENT pour la table `CommandePasseEtat`
---
-ALTER TABLE `CommandePasseEtat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=100;
---
--- AUTO_INCREMENT pour la table `EtatCommande`
---
-ALTER TABLE `EtatCommande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT pour la table `forfait`
---
-ALTER TABLE `forfait`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT pour la table `Fournisseur`
---
-ALTER TABLE `Fournisseur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT pour la table `Image`
---
-ALTER TABLE `Image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `Imputation`
---
-ALTER TABLE `Imputation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=65;
---
--- AUTO_INCREMENT pour la table `ImputationConcerneBudget`
---
-ALTER TABLE `ImputationConcerneBudget`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
---
--- AUTO_INCREMENT pour la table `InformationCollectivite`
---
-ALTER TABLE `InformationCollectivite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=271;
---
--- AUTO_INCREMENT pour la table `InformationsCollectiviteListe`
---
-ALTER TABLE `InformationsCollectiviteListe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `LigneCommande`
---
-ALTER TABLE `LigneCommande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT pour la table `ListeActivites`
---
-ALTER TABLE `ListeActivites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `ListeApplications`
---
-ALTER TABLE `ListeApplications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `ListeBudgets`
---
-ALTER TABLE `ListeBudgets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `ListeClesRepartition`
---
-ALTER TABLE `ListeClesRepartition`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `ListeCollectivites`
---
-ALTER TABLE `ListeCollectivites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `ListeForfaits`
---
-ALTER TABLE `ListeForfaits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `ListeImputations`
---
-ALTER TABLE `ListeImputations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `ListeMassesSalariales`
---
-ALTER TABLE `ListeMassesSalariales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `ListeServices`
---
-ALTER TABLE `ListeServices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `ListeTempsPasses`
---
-ALTER TABLE `ListeTempsPasses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `ListeUtilisateurs`
---
-ALTER TABLE `ListeUtilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `Livraison`
---
-ALTER TABLE `Livraison`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT pour la table `MasseSalariale`
---
-ALTER TABLE `MasseSalariale`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT pour la table `PaiementCommande`
---
-ALTER TABLE `PaiementCommande`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
---
--- AUTO_INCREMENT pour la table `Service`
---
-ALTER TABLE `Service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT pour la table `TempsPasse`
---
-ALTER TABLE `TempsPasse`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=541;
---
--- AUTO_INCREMENT pour la table `TVA`
---
-ALTER TABLE `TVA`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT pour la table `Utilisateur`
---
-ALTER TABLE `Utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=53;
---
--- Contraintes pour les tables exportées
---
-
---
--- Contraintes pour la table `Activite`
---
-ALTER TABLE `Activite`
-  ADD CONSTRAINT `FK_4103374398F35CA9` FOREIGN KEY (`cleRepartition_id`) REFERENCES `CleRepartition` (`id`);
-
---
--- Contraintes pour la table `Application`
---
-ALTER TABLE `Application`
-  ADD CONSTRAINT `FK_22C75216670C757F` FOREIGN KEY (`fournisseur_id`) REFERENCES `Fournisseur` (`id`);
-
---
--- Contraintes pour la table `Budget`
---
-ALTER TABLE `Budget`
-  ADD CONSTRAINT `FK_745EF24DED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`);
-
---
--- Contraintes pour la table `bug`
---
-ALTER TABLE `bug`
-  ADD CONSTRAINT `FK_DC1F9F43DA5256D` FOREIGN KEY (`image_id`) REFERENCES `Image` (`id`);
-
---
--- Contraintes pour la table `Commande`
---
-ALTER TABLE `Commande`
-  ADD CONSTRAINT `FK_979CC42B1E40325` FOREIGN KEY (`imputation_id`) REFERENCES `Imputation` (`id`),
-  ADD CONSTRAINT `FK_979CC42B3E030ACD` FOREIGN KEY (`application_id`) REFERENCES `Application` (`id`),
-  ADD CONSTRAINT `FK_979CC42B670C757F` FOREIGN KEY (`fournisseur_id`) REFERENCES `Fournisseur` (`id`),
-  ADD CONSTRAINT `FK_979CC42B8E54FB25` FOREIGN KEY (`livraison_id`) REFERENCES `Livraison` (`id`),
-  ADD CONSTRAINT `FK_979CC42B9B0F88B1` FOREIGN KEY (`activite_id`) REFERENCES `Activite` (`id`),
-  ADD CONSTRAINT `FK_979CC42BED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`);
-
---
--- Contraintes pour la table `CommandeConcerneCollectivite`
---
-ALTER TABLE `CommandeConcerneCollectivite`
-  ADD CONSTRAINT `FK_71972E2A82EA2E54` FOREIGN KEY (`commande_id`) REFERENCES `Commande` (`id`),
-  ADD CONSTRAINT `FK_71972E2AA7991F51` FOREIGN KEY (`collectivite_id`) REFERENCES `Collectivite` (`id`);
-
---
--- Contraintes pour la table `CommandePasseEtat`
---
-ALTER TABLE `CommandePasseEtat`
-  ADD CONSTRAINT `FK_8B01505982EA2E54` FOREIGN KEY (`commande_id`) REFERENCES `Commande` (`id`),
-  ADD CONSTRAINT `FK_8B015059D5E86FF` FOREIGN KEY (`etat_id`) REFERENCES `EtatCommande` (`id`);
-
---
--- Contraintes pour la table `forfait`
---
-ALTER TABLE `forfait`
-  ADD CONSTRAINT `FK_7408FD1E3E030ACD` FOREIGN KEY (`application_id`) REFERENCES `Application` (`id`),
-  ADD CONSTRAINT `FK_7408FD1EA7991F51` FOREIGN KEY (`collectivite_id`) REFERENCES `Collectivite` (`id`);
-
---
--- Contraintes pour la table `ImputationConcerneBudget`
---
-ALTER TABLE `ImputationConcerneBudget`
-  ADD CONSTRAINT `FK_DD96CBFF1E40325` FOREIGN KEY (`imputation_id`) REFERENCES `Imputation` (`id`),
-  ADD CONSTRAINT `FK_DD96CBFF36ABA6B8` FOREIGN KEY (`budget_id`) REFERENCES `Budget` (`id`);
-
---
--- Contraintes pour la table `InformationCollectivite`
---
-ALTER TABLE `InformationCollectivite`
-  ADD CONSTRAINT `FK_F212DDF598F35CA9` FOREIGN KEY (`cleRepartition_id`) REFERENCES `CleRepartition` (`id`),
-  ADD CONSTRAINT `FK_F212DDF5A7991F51` FOREIGN KEY (`collectivite_id`) REFERENCES `Collectivite` (`id`);
-
---
--- Contraintes pour la table `LigneCommande`
---
-ALTER TABLE `LigneCommande`
-  ADD CONSTRAINT `FK_CF33509A4D79775F` FOREIGN KEY (`tva_id`) REFERENCES `TVA` (`id`),
-  ADD CONSTRAINT `FK_CF33509A82EA2E54` FOREIGN KEY (`commande_id`) REFERENCES `Commande` (`id`);
-
---
--- Contraintes pour la table `MasseSalariale`
---
-ALTER TABLE `MasseSalariale`
-  ADD CONSTRAINT `FK_57DE69C1ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`);
-
---
--- Contraintes pour la table `PaiementCommande`
---
-ALTER TABLE `PaiementCommande`
-  ADD CONSTRAINT `FK_E9D1EEDA82EA2E54` FOREIGN KEY (`commande_id`) REFERENCES `Commande` (`id`);
-
---
--- Contraintes pour la table `TempsPasse`
---
-ALTER TABLE `TempsPasse`
-  ADD CONSTRAINT `FK_BB45A6C79B0F88B1` FOREIGN KEY (`activite_id`) REFERENCES `Activite` (`id`),
-  ADD CONSTRAINT `FK_BB45A6C7A7991F51` FOREIGN KEY (`collectivite_id`) REFERENCES `Collectivite` (`id`);
-
---
--- Contraintes pour la table `Utilisateur`
---
-ALTER TABLE `Utilisateur`
-  ADD CONSTRAINT `FK_9B80EC64ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `Service` (`id`);
