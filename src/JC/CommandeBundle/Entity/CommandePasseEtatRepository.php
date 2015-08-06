@@ -17,6 +17,7 @@ class CommandePasseEtatRepository extends EntityRepository
 		
 		return $this
 		->createQueryBuilder('cpe')
+		
 		->where('cpe.commande = :commande')
 		->setParameter('commande', $commande)
 		->orderBy('cpe.datePassage', 'DESC')
@@ -50,6 +51,7 @@ public function findPasseEtatDansEntreDates($etat, $dateDebut, $dateFin) {
 	    return $qb = $this
 	    	->createQueryBuilder('cpe')
 			->leftJoin('cpe.etat','ec')
+		
 			->where('ec.libelle = :etat')
 			->setParameter('etat', $etat)
 			 
@@ -79,6 +81,9 @@ public function findPasseEtatDansEntreDates($etat, $dateDebut, $dateFin) {
 			
 			->leftJoin('cpe.commande','com')
 			->addSelect('com')
+		
+			->leftJoin('com.imputation','imp')
+			->addSelect('imp')
 		
 			 
             ->andWhere('year(cpe.datePassage) = :annee')

@@ -76,6 +76,10 @@ class FacturationController extends Controller
 			//On dispatche la commande avec les collectivites concernées
 			foreach($listeTransition as $t){
 				
+				if($commande->getImputation()->getEstFacture() === false){
+					continue;
+				}
+				
 				$tabColl[$t->getCollectivite()->getNom()][$commande->getVentilation()] += 1;
 			}
 			
@@ -311,9 +315,14 @@ class FacturationController extends Controller
 			
 			//On recupere la commande
 			$commande = $ccc->getCommande();
+			
+			
+			//On ne continue pas si l'imputation de la commande n'est pas cochée "est facturée"
+			if($commande->getImputation()->getEstFacture() === false){
+				continue;
+			}
 						
 			//On stock les infos de la commande dans le tableau
-			
 
 				$tabCommandes[$commande->getId()] = array();
 				
@@ -553,7 +562,7 @@ class FacturationController extends Controller
 				$commande = $ccc->getCommande();
 				
 				//On compte le nombre de commande qui correspondent à l'activite
-				if ($commande->getService() === $service){
+				if ($commande->getService() === $service ){
 					$montantCommandesService += $commande->getMontantPaye();
 				
 				//Si la commande ne concerne pas le service, on la supprime du tableau
