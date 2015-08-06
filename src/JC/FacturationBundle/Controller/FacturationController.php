@@ -311,7 +311,7 @@ class FacturationController extends Controller
 			
 			//On recupere la commande
 			$commande = $ccc->getCommande();
-			
+						
 			//On stock les infos de la commande dans le tableau
 			
 
