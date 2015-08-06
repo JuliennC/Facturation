@@ -16,6 +16,14 @@ SET time_zone = "+00:00";
 
 
 --
+-- Contenu de la table `Fournisseur`
+--
+
+INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`, `Contact`, `EmailContact`) VALUES
+(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', NULL, NULL, NULL);
+
+
+--
 -- Contenu de la table `Application`
 --
 
@@ -183,7 +191,7 @@ INSERT INTO `Application` (`id`, `fournisseur_id`, `Nom`, `Libelle`) VALUES
 (170, 1, 'WEB Livre sur la Place', ''),
 (171, 1, 'WEB Mercure - Portail AGILEO', 'Intradoc'),
 (172, 1, 'WEB BDEL - Laxou', ''),
-(173, 2, 'AGGLONUM Maintenance', 'Agglomération Numérique'),
+(173, 1, 'AGGLONUM Maintenance', 'Agglomération Numérique'),
 (174, 1, 'AGGLONUM MOE & développement', 'Agglomération Numérique'),
 (175, 1, 'GEST Lotus développements spécifiques', ''),
 (176, 1, 'POP COMEST CIM EST', ''),
@@ -192,16 +200,7 @@ INSERT INTO `Application` (`id`, `fournisseur_id`, `Nom`, `Libelle`) VALUES
 (179, 1, 'POP SEDI - Recensement militaire', ''),
 (180, 1, 'GEST Sondage et enquete', 'Ville de NANCY');
 
---
--- Contenu de la table `Budget`
---
 
-INSERT INTO `Budget` (`id`, `service_id`, `Montant`, `Annee`, `Libelle`) VALUES
-(1, 1, 2500, 2015, 'Logiciel - b'),
-(2, 3, 10000, 2015, 'Logiciel - e'),
-(3, 2, 12000, 2015, 'Logiciel - i'),
-(4, 5, 10000, 2015, 'Materiel - c'),
-(5, 4, 10000, 2015, 'Formation- s');
 
 --
 -- Contenu de la table `CleRepartition`
@@ -280,94 +279,7 @@ INSERT INTO `Collectivite` (`id`, `Nom`, `Date_Debut_Mutualisation`, `Date_Fin_M
 (29, 'CCAS de Laxou', '2010-01-01', '2050-01-01'),
 (30, 'ONL', '2010-01-01', '2050-01-01');
 
---
--- Contenu de la table `Commande`
---
 
-INSERT INTO `Commande` (`id`, `service_id`, `application_id`, `fournisseur_id`, `livraison_id`, `activite_id`, `imputation_id`, `Reference`, `Date_Livraison`, `Ventilation`, `Engagement`, `Libelle_Facturation`, `Total_TTC`, `Utilisateur`, `NomFournisseur`, `AdresseFournisseur`, `Complement_Adresse_Fournisseur`, `Code_Postal_Fournisseur`, `VilleFournisseur`, `TelephoneFournisseur`, `NomLivraison`, `AdresseLivraison`, `Complement_Adresse_Livraison`, `Code_Postal_Livraison`, `VilleLivraison`, `TelephoneLivraison`, `FaxFournisseur`, `ContactFournisseur`, `EmailContactFournisseur`, `Faxlivraison`, `MontantPaye`, `Total_HT`, `Date_Envoi`) VALUES
-(7, 4, 10, 2, 1, 18, 8, 'ReFint78_3', '2015-07-07 00:00:00', 'Mutualisee', '123', 'libelle pour facturation', '4801.30', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '4791.30', '4551.00', '2015-07-09 00:00:00'),
-(8, 2, 10, 1, 2, 18, 8, NULL, '2015-08-19 00:00:00', 'Forfait', NULL, 'libelle pour facturation', '447310.03', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '10.00', '418046.76', '2015-08-22 00:00:00'),
-(9, 2, 10, 2, 2, 18, 8, 'ref 453', '2015-08-04 00:00:00', 'Forfait', NULL, 'Achat de cartouches', '5966.02', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '10.00', '5655.00', '2015-08-13 00:00:00'),
-(10, 2, 10, 2, 2, 18, 8, 'ref 082', '2015-08-11 00:00:00', 'Forfait', NULL, 'Commande pour Coriolis', '5400.07', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '10.00', '5289.00', '2015-08-06 00:00:00'),
-(11, 2, 173, 2, 2, 18, 8, 'REFint78-4', '2015-08-05 00:00:00', 'Mutualisee', NULL, 'Commande pour Gestor', '15961.09', 'nomA prenomA', 'Fournisseur test 2', '34 Rue Saint-Jean', '-', 54000, 'Nancy', '0383010101', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, 'contact f', 'email@fournisseur.fr', NULL, '100.00', '15129.00', '2015-08-12 00:00:00'),
-(12, 2, 173, 1, 2, 18, 8, 'ref 642', '2015-08-12 00:00:00', 'Forfait', '123', 'Achat d''imprimantes', '1579.32', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '500.00', '1476.00', '2015-08-12 00:00:00'),
-(13, 2, 173, 1, 2, 18, 8, 'zer', '2015-08-13 00:00:00', 'Directe', NULL, 'er', '0.00', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '0.00', '0.00', '2015-08-06 00:00:00'),
-(14, 2, 173, 1, 2, 18, 8, 'ref', '2015-08-21 00:00:00', 'Mutualisee', NULL, 'libelle', '154.08', 'nomA prenomA', 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', 'Lieu livraison test2', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL, NULL, NULL, NULL, '154.08', '144.00', '2015-08-07 00:00:00');
-
---
--- Contenu de la table `CommandeConcerneCollectivite`
---
-
-INSERT INTO `CommandeConcerneCollectivite` (`id`, `commande_id`, `collectivite_id`, `Repartion`) VALUES
-(147, 7, 29, 'Participation'),
-(148, 7, 18, 'Participation'),
-(149, 7, 25, 'Participation'),
-(153, 9, 18, 'Participation'),
-(154, 9, 6, 'Participation'),
-(157, 10, 18, 'Participation'),
-(158, 10, 24, 'Participation'),
-(163, 11, 18, 'Participation'),
-(164, 11, 24, 'Participation'),
-(167, 12, 29, 'Participation'),
-(168, 12, 18, 'Participation'),
-(182, 13, 20, '50'),
-(183, 13, 28, '50'),
-(188, 14, 29, 'Participation'),
-(189, 14, 18, 'Participation');
-
---
--- Contenu de la table `CommandePasseEtat`
---
-
-INSERT INTO `CommandePasseEtat` (`id`, `commande_id`, `etat_id`, `datePassage`) VALUES
-(72, 7, 1, '2015-07-31 11:07:18'),
-(73, 7, 2, '2015-07-31 11:07:19'),
-(74, 7, 3, '2015-07-31 11:07:50'),
-(76, 7, 4, '2015-07-31 11:17:22'),
-(77, 8, 1, '2015-08-03 10:09:05'),
-(78, 8, 2, '2015-08-03 10:09:06'),
-(79, 8, 2, '2015-08-03 10:14:09'),
-(80, 8, 2, '2015-08-03 10:14:32'),
-(84, 7, 5, '2015-08-03 12:34:29'),
-(85, 8, 2, '2015-08-03 12:36:42'),
-(86, 8, 3, '2015-08-03 12:37:02'),
-(87, 8, 4, '2015-08-03 12:37:16'),
-(89, 9, 1, '2015-08-03 12:47:24'),
-(90, 9, 2, '2015-08-03 12:47:25'),
-(91, 9, 2, '2015-08-03 12:49:37'),
-(92, 9, 3, '2015-08-03 12:52:47'),
-(93, 9, 4, '2015-08-03 12:52:56'),
-(94, 9, 5, '2015-08-03 12:53:01'),
-(95, 10, 1, '2015-08-03 13:09:04'),
-(96, 10, 2, '2015-08-03 13:09:05'),
-(97, 10, 3, '2015-08-03 13:09:16'),
-(98, 10, 4, '2015-08-03 13:09:24'),
-(99, 10, 5, '2015-08-03 13:10:01'),
-(100, 11, 1, '2015-08-03 20:04:30'),
-(101, 11, 2, '2015-08-03 20:04:31'),
-(102, 11, 3, '2015-08-03 20:06:11'),
-(103, 11, 2, '2015-08-03 20:06:40'),
-(104, 11, 3, '2015-08-03 20:07:04'),
-(106, 11, 4, '2015-08-03 20:07:54'),
-(108, 12, 1, '2015-08-04 08:34:03'),
-(109, 12, 2, '2015-08-04 08:34:05'),
-(110, 12, 3, '2015-08-04 08:44:48'),
-(111, 12, 4, '2015-08-04 08:48:22'),
-(112, 13, 1, '2015-08-04 17:52:30'),
-(113, 13, 2, '2015-08-04 17:52:31'),
-(114, 13, 2, '2015-08-04 17:52:44'),
-(115, 13, 2, '2015-08-04 17:52:57'),
-(116, 13, 2, '2015-08-04 17:53:36'),
-(117, 13, 2, '2015-08-04 18:01:38'),
-(118, 13, 2, '2015-08-04 18:02:10'),
-(119, 13, 6, '2015-08-05 08:35:45'),
-(120, 14, 1, '2015-08-05 09:56:31'),
-(121, 14, 2, '2015-08-05 09:56:32'),
-(122, 14, 3, '2015-08-05 09:56:50'),
-(123, 14, 2, '2015-08-05 09:57:20'),
-(124, 14, 3, '2015-08-05 09:57:28'),
-(126, 14, 4, '2015-08-05 09:58:46'),
-(128, 14, 5, '2015-08-05 09:59:30');
 
 --
 -- Contenu de la table `EtatCommande`
@@ -388,12 +300,6 @@ INSERT INTO `EtatCommande` (`id`, `Libelle`) VALUES
 INSERT INTO `forfait` (`id`, `collectivite_id`, `annee`, `montant`, `application_id`) VALUES
 (8, 18, '2015', '1231', 10);
 
---
--- Contenu de la table `Fournisseur`
---
-
-INSERT INTO `Fournisseur` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`, `Contact`, `EmailContact`) VALUES
-(1, 'Fournisseur test', '10 Rue du Pont', '2ème étage', 5400, 'Nancy', '0383090909', NULL, NULL, NULL),
 
 --
 -- Contenu de la table `Imputation`
@@ -474,20 +380,12 @@ INSERT INTO `forfait` (`id`, `collectivite_id`, `annee`, `montant`, `application
 
 
 
-
---
--- Contenu de la table `Budget`
---
-
-INSERT INTO `Budget` (`id`, `service_id`, `Montant`, `Annee`, `Libelle`) VALUES
-(1, 1, 2500, 2015, 'Logiciel - test'),
-
 --
 -- Contenu de la table `Livraison`
 --
 
 INSERT INTO `Livraison` (`id`, `Nom`, `Adresse`, `Complement_Adresse`, `Code_Postal`, `Ville`, `Telephone`, `Fax`) VALUES
-(1, 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL),
+(1, 'Lieu livraison test', '50 Rue Sainte-Catherine', '4eme étage', 54000, 'Nancy', '0383121212', NULL);
 
 
 
@@ -521,3 +419,17 @@ INSERT INTO `TVA` (`id`, `pourcentage`) VALUES
 INSERT INTO `Utilisateur` (`id`, `service_id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `Nom`, `Prenom`) VALUES
 (49, 2, 'testA', 'testa', 'a@a.fr', 'a@a.fr', 1, '', 'mdp', '2015-08-05 09:55:06', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 0, NULL, 'nomA', 'prenomA'),
 (50, 3, 'testC', 'testc', 't@f.fr', 't@f.fr', 1, '', 'mdp', '2015-07-21 15:10:12', 0, 0, NULL, NULL, NULL, 'a:1:{i:0;s:11:"ROLE_COMPTA";}', 0, NULL, 'nomC', 'prenomC');
+
+
+
+
+--
+-- Contenu de la table `Budget`
+--
+
+INSERT INTO `Budget` (`id`, `service_id`, `Montant`, `Annee`, `Libelle`) VALUES
+(1, 1, 2500, 2015, 'Logiciel - b'),
+(2, 3, 10000, 2015, 'Logiciel - e'),
+(3, 2, 12000, 2015, 'Logiciel - i'),
+(4, 5, 10000, 2015, 'Materiel - c'),
+(5, 4, 10000, 2015, 'Formation- s');
